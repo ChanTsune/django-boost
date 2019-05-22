@@ -2,7 +2,7 @@
 
 Extension library to boost development with django
 
-## instalation  
+## installation  
 
 ```
 pip install django-boost
