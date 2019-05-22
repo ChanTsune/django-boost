@@ -2,6 +2,8 @@
 
 Extension library to boost development with django
 
+[![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
+
 ## instalation  
 
 ```
@@ -218,13 +220,13 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)  
 
 
-### Acsess Mixins  
+### Access Mixins  
 
 #### ReAuthenticationRequiredMixin  
 
 ```py
 from django.views.generic import TemplateView
-from django_boost.views.mixin import ReAuthenticationRequiredMixin
+from django_boost.views.mixins import ReAuthenticationRequiredMixin
 
 class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
     template_name = "mypage.html"
@@ -234,7 +236,7 @@ class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
 ```py
 from datetime import timedelta
 from django.views.generic import TemplateView
-from django_boost.views.mixin import ReAuthenticationRequiredMixin
+from django_boost.views.mixins import ReAuthenticationRequiredMixin
 
 class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
     template_name = "mypage.html"
@@ -248,6 +250,27 @@ Can specify `int` and `timedelta` ,`None`.
 
 `logout=True`, Logout if the specified time limit has passed  
 `logout=False`, Do not logout Even if the specified time limit has passed  
+
+#### LimitedTermMixin  
+```py
+from datetime import datetime
+from django.views.generic import TemplateView
+from django_boost.views.mixins import LimitedTermMixin
+
+class LimitedTermMixin(LimitedTermMixin, TemplateView):
+    template_name = ''
+    start_datetime = datetime(year=2019, month=1, day=1)
+    end_datetime = datetime(year=2019, month=12, day=31)
+
+```
+
+Restrict the period of access.  
+`start_datetime` specifies the date and time when access will be available, and` end_datetime` with the last date and time when access is available.  
+
+You can change the date and time that can be accessed dynamically by overriding the `get_start_datetime` and` get_end_datetime` methods, respectively.  
+
+You can specify the exception class to be thrown when the condition accessible to `exception_class` is not met.  
+The default is the `Http404` exception.  
 
 ### Redirect Control Mixins  
 
