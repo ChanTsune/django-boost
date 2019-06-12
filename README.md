@@ -4,7 +4,7 @@ Extension library to boost development with django
 
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
-## instalation  
+## Installation  
 
 ```
 pip install django-boost
