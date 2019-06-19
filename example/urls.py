@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('start/',views.StartLimitView.as_view()),
     path('end/',views.EndLimitView.as_view()),
     path('se/',views.SELimitView.as_view()),
+    path('views/',include(views.CustomerViews().urls)),
 ]

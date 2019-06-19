@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
-from django.http import JsonResponse, Http404
+from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.http import is_safe_url
@@ -68,7 +68,8 @@ class AllowContentTypeMixin:
 
 
 class LimitedTermMixin:
-    """Restrict time to access mixin"""
+    """Restrict time to access mixin."""
+
     exception_class = Http404
     start_datetime = None
     end_datetime = None
@@ -94,7 +95,6 @@ class LimitedTermMixin:
         if not self.is_allowed_trem(now()):
             raise self.exception_class
         return super().dispatch(request, *args, **kwargs)
-
 
 
 class JsonRequestMixin(AllowContentTypeMixin):

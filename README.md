@@ -323,6 +323,27 @@ class CustomerSearchView(FormView):
 
 `MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `query set` that matches the form input content.  
 
+### GenericView  
+
+#### ModelCRUDViews  
+
+Provides easy creation of CRUDViews linked to model.  
+```py
+from django_boost.views.generic import ModelCRUDViews
+
+class CustomerViews(ModelCRUDViews):
+    model = Customer
+```
+
+```py
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path('views/',include(views.CustomerViews().urls)),
+]
+```
+
 ### Template Tags  
 
 Make Python built-in functions available in DjangoTemplate.  

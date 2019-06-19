@@ -6,12 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy as _
 from django_boost.views.generic import JsonView
 from django.utils.timezone import now
+from django_boost.views.generic import JsonView, ModelCRUDViews
 from django_boost.views.mixins import ReAuthenticationRequiredMixin
 from django_boost.views.mixins import RedirectToDetailMixin
 from django_boost.views.mixins import LimitedTermMixin
 from django_boost.http.response import Http409
 from .models import Customer
 from .forms import CustomerForm
+
 # Create your views here.
 
 
@@ -20,7 +22,6 @@ class IndexView(CreateView):
     extra_context = {"number": -10}
     form_class = CustomerForm
     success_url = _('index')
-
 
 
 class CustomerUpdateView(RedirectToDetailMixin, UpdateView):
@@ -64,3 +65,6 @@ class SELimitView(LimitedTermMixin, TemplateView):
     def get_end_datetime(self):
         return now() + timedelta(hours=1)
 
+
+class CustomerViews(ModelCRUDViews):
+    model = Customer
