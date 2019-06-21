@@ -290,7 +290,23 @@ class MyFormView(DynamicRedirectMixin, FormView):
 You can change the query string parameter name by changing `redirect_field_name`.  
 
 
-### form mixin  
+### Adittional Attribute Mixins  
+
+#### UserAgentMixin  
+```py
+from django.views.generic import TemplateView
+from django_boost.views.mixins import UserAgentMixin
+
+class SameView(UserAgentMixin,TemplateView):
+    pc_template_name = "pc_template.html"
+    tablet_template_name = "tablet_template.html"
+    mobile_template_name = "mobile_template.html"
+```
+
+Switch the template file to be displayed by user agent.  
+
+
+### Form Mixin  
 
 #### MuchedObjectGetMixin  
 Object of the condition that matches the form input content.
@@ -322,6 +338,27 @@ class CustomerSearchView(FormView):
 ```
 
 `MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `query set` that matches the form input content.  
+
+### GenericView  
+
+#### ModelCRUDViews  
+
+Provides easy creation of CRUDViews linked to model.  
+```py
+from django_boost.views.generic import ModelCRUDViews
+
+class CustomerViews(ModelCRUDViews):
+    model = Customer
+```
+
+```py
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path('views/',include(views.CustomerViews().urls)),
+]
+```
 
 ### Template Tags  
 

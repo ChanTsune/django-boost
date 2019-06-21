@@ -15,9 +15,12 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
     if requested hostname and settings.CORRECT_HOST does not match.
     """
 
+
+    conditions = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
+
     def __call__(self, request):
 
-        if not settings.DEBUG and hasattr(settings, 'CORRECT_HOST') and request.get_host() != settings.CORRECT_HOST:
+        if self.conditions and request.get_host() != settings.CORRECT_HOST:
             return HttpResponsePermanentRedirect(
                 '{scheme}://{host}{path}'.format(scheme=request.scheme,
                                                  host=settings.CORRECT_HOST,

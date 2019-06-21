@@ -54,7 +54,7 @@ def read(fname):
 
 setup(
     name='django_boost',
-    version='0.0.dev2',
+    version='0.0.dev3',
     description='Django Extension library',
     long_description=read('README.md'),
     url='https://github.com/ChanTsune/Django-Boost',

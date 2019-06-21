@@ -4,11 +4,12 @@ from datetime import timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
-from django.http import JsonResponse, Http404
+from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.http import is_safe_url
 from django.utils.timezone import now
+from user_agents import parse
 
 from django_boost.http import HttpResponseUnsupportedMediaType
 
@@ -68,7 +69,8 @@ class AllowContentTypeMixin:
 
 
 class LimitedTermMixin:
-    """Restrict time to access mixin"""
+    """Restrict time to access mixin."""
+
     exception_class = Http404
     start_datetime = None
     end_datetime = None
@@ -94,7 +96,6 @@ class LimitedTermMixin:
         if not self.is_allowed_trem(now()):
             raise self.exception_class
         return super().dispatch(request, *args, **kwargs)
-
 
 
 class JsonRequestMixin(AllowContentTypeMixin):
@@ -183,3 +184,25 @@ class ViewUserKwargsMixin:
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+
+class UserAgentMixin:
+
+    pc_template_name = None
+    tablet_template_name = None
+    mobile_template_name = None
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
+
+    def get_template_names(self):
+        tmp = super().get_template_names()
+        if self.request.user_agent.is_pc and pc_template_name:
+            return [self.pc_template_name] + tmp
+        if self.request.user_agent.is_tablet and tablet_template_name:
+            return [self.tablet_template_name] + tmp
+        if self.request.user_agent.is_mobile and mobile_template_name:
+            return [self.mobile_template_name] + tmp
+        return tmp
+
