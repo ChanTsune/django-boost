@@ -198,11 +198,11 @@ class UserAgentMixin:
 
     def get_template_names(self):
         tmp = super().get_template_names()
-        if self.request.user_agent.is_pc and pc_template_name:
+        if self.request.user_agent.is_pc and self.pc_template_name:
             return [self.pc_template_name] + tmp
-        if self.request.user_agent.is_tablet and tablet_template_name:
+        if self.request.user_agent.is_tablet and self.tablet_template_name:
             return [self.tablet_template_name] + tmp
-        if self.request.user_agent.is_mobile and mobile_template_name:
+        if self.request.user_agent.is_mobile and self.mobile_template_name:
             return [self.mobile_template_name] + tmp
         return tmp
 

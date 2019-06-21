@@ -57,6 +57,7 @@ setup(
     version='0.0.dev3',
     description='Django Extension library',
     long_description=read('README.md'),
+    long_description_content_type="text/markdown",
     url='https://github.com/ChanTsune/Django-Boost',
     author='ChanTsune',
     author_email='yshegou@gmail.com',
