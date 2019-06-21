@@ -359,6 +359,28 @@ urlpatterns = [
     path('views/',include(views.CustomerViews().urls)),
 ]
 ```
+The above is equivalent to the following code.  
+
+```py
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path('views/',include(views.CustomerViews().urls)),
+]
+```
+
+###### Case of Namespaced  
+```py
+from django.urls import path, include
+from . import views
+
+
+urlpatterns = [
+    path('views/',include(views.CustomerViews(app_name="").urls)),
+]
+
+```
 
 ### Template Tags  
 
