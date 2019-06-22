@@ -11,9 +11,10 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.http import is_safe_url
 from django.utils.timezone import now
-from user_agents import parse
 
 from django_boost.http import HttpResponseUnsupportedMediaType
+
+from user_agents import parse
 
 
 class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
@@ -187,6 +188,7 @@ class ViewUserKwargsMixin:
         kwargs['user'] = self.request.user
         return kwargs
 
+
 if LooseVersion(django_version) >= LooseVersion("2.2"):
 
     class UserAgentMixin:
@@ -208,4 +210,3 @@ if LooseVersion(django_version) >= LooseVersion("2.2"):
             if self.request.user_agent.is_mobile and self.mobile_template_name:
                 return [self.mobile_template_name] + tmp
             return tmp
-

@@ -43,9 +43,10 @@ def validate_json(value):
 def validate_uuid4(value):
     try:
         uuid_value = uuid.UUID(value)
-    except ValueError:
-        return False
-    return uuid_value.hex == value.replace("-", "")
+    except ValueError as e:
+        raise ValidationError(e.message)
+    if not uuid_value.hex == value.replace("-", ""):
+        raise ValidationError("badly formed hexadecimal UUID string")
 
 
 def validate_color_code(value):
