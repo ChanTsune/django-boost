@@ -1,6 +1,8 @@
 import json
 from datetime import timedelta
+from distutils.version import LooseVersion
 
+from django import __version__ as django_version
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
@@ -185,24 +187,25 @@ class ViewUserKwargsMixin:
         kwargs['user'] = self.request.user
         return kwargs
 
+if LooseVersion(django_version) >= LooseVersion("2.2"):
 
-class UserAgentMixin:
+    class UserAgentMixin:
 
-    pc_template_name = None
-    tablet_template_name = None
-    mobile_template_name = None
+        pc_template_name = None
+        tablet_template_name = None
+        mobile_template_name = None
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
+        def setup(self, request, *args, **kwargs):
+            super().setup(request, *args, **kwargs)
+            self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
 
-    def get_template_names(self):
-        tmp = super().get_template_names()
-        if self.request.user_agent.is_pc and self.pc_template_name:
-            return [self.pc_template_name] + tmp
-        if self.request.user_agent.is_tablet and self.tablet_template_name:
-            return [self.tablet_template_name] + tmp
-        if self.request.user_agent.is_mobile and self.mobile_template_name:
-            return [self.mobile_template_name] + tmp
-        return tmp
+        def get_template_names(self):
+            tmp = super().get_template_names()
+            if self.request.user_agent.is_pc and self.pc_template_name:
+                return [self.pc_template_name] + tmp
+            if self.request.user_agent.is_tablet and self.tablet_template_name:
+                return [self.tablet_template_name] + tmp
+            if self.request.user_agent.is_mobile and self.mobile_template_name:
+                return [self.mobile_template_name] + tmp
+            return tmp
 

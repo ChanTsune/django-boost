@@ -293,6 +293,7 @@ You can change the query string parameter name by changing `redirect_field_name`
 ### Adittional Attribute Mixins  
 
 #### UserAgentMixin  
+*Available only with Django 2.2 and higher*
 ```py
 from django.views.generic import TemplateView
 from django_boost.views.mixins import UserAgentMixin
@@ -446,7 +447,7 @@ Replace the query string of the current page URL with the argument.
 {# case of current page's query string is `?id=2`#}
 {% replace_parameters request 'id' 1 'age' 20 %}
 
-{# The result of replacing is `?id=2&age=20` #}
+{# The result of replacing is `?id=1&age=20` #}
 
 ```
 Useful for pagination.
