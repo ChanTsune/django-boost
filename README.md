@@ -345,6 +345,8 @@ class CustomerSearchView(FormView):
 #### ModelCRUDViews  
 
 Provides easy creation of CRUDViews linked to model.  
+
+`views.py`  
 ```py
 from django_boost.views.generic import ModelCRUDViews
 
@@ -352,6 +354,7 @@ class CustomerViews(ModelCRUDViews):
     model = Customer
 ```
 
+`urls.py`  
 ```py
 from django.urls import path, include
 from . import views
@@ -360,27 +363,37 @@ urlpatterns = [
     path('views/',include(views.CustomerViews().urls)),
 ]
 ```
-The above is equivalent to the following code.  
+In the template you can use as follows.  
 
-```py
-from django.urls import path, include
-from . import views
-
-urlpatterns = [
-    path('views/',include(views.CustomerViews().urls)),
-]
+```html+django
+{% url 'customer:list' %}
+{% url 'customer:create' %}
+{% url 'customer:detail' %}
+{% url 'customer:update' %}
+{% url 'customer:delete' %}
 ```
+The name of the URL is defined under the namespace of the lower-cased model class name.  
 
 ###### Case of Namespaced  
+`urls.py`  
 ```py
 from django.urls import path, include
 from . import views
 
-
+app_name = "myapp"
 urlpatterns = [
-    path('views/',include(views.CustomerViews(app_name="").urls)),
+    path('views/',include(views.CustomerViews(app_name="myapp:customer").urls)),
 ]
 
+```
+
+In the template you can use as follows.  
+```html+django
+{% url 'myapp:customer:list' %}
+{% url 'myapp:customer:create' %}
+{% url 'myapp:customer:detail' %}
+{% url 'myapp:customer:update' %}
+{% url 'myapp:customer:delete' %}
 ```
 
 ### Template Tags  
