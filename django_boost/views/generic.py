@@ -1,8 +1,16 @@
 from django.urls import path, reverse
-from django.views.generic import (
-    CreateView, DeleteView, DetailView, ListView, UpdateView, View)
 
+from django_boost.views.base import (
+    CreateView, DeleteView, DetailView, FormView,
+    ListView, TemplateView, UpdateView, View)
 from django_boost.views.mixins import JsonRequestMixin, JsonResponseMixin
+
+__all__ = ["CreateView", "DeleteView", "DetailView",
+           "FormView", "JsonView", "ListView", "TemplateView",
+           "UpdateView", "View"]
+__views__ = ["BaseModelCLUDViews", "ModelCRUDViews"]
+
+__all__ += __views__
 
 
 class JsonView(JsonRequestMixin, JsonResponseMixin, View):
