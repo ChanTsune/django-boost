@@ -488,4 +488,65 @@ Replace the query string of the current page URL with the argument.
 {# The result of replacing is `?id=1&age=20` #}
 
 ```
-Useful for pagination.
+Useful for pagination.  
+
+## utilty functions  
+
+### loop utils  
+
+#### loopfirst  
+
+Yield True when the first element of the given iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import loopfirst
+
+
+for is_first, v in loopfirst(range(5)):
+    print(is_first, v)
+
+# True 0
+# False 1
+# False 2
+# False 3
+# False 4
+```
+
+
+#### looplast  
+
+Yield True when the last element of the given iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import looplast
+
+
+for is_last, v in looplast(range(5)):
+    print(is_last, v)
+
+# False 0
+# False 1
+# False 2
+# False 3
+# True 4
+```
+
+#### loopfirstlast  
+
+A function combining `firstloop` and` lastloop`.  
+
+Yield True if the first and last element of the iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import loopfirstlast
+
+
+for first_or_last, v in loopfirstlast(range(5)):
+    print(first_or_last, v)
+
+# True 0
+# False 1
+# False 2
+# False 3
+# True 4
+```
