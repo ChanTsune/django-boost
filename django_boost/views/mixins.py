@@ -1,6 +1,8 @@
 import json
 from datetime import timedelta
+from distutils.version import LooseVersion
 
+from django import __version__ as django_version
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
@@ -9,9 +11,10 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.http import is_safe_url
 from django.utils.timezone import now
-from user_agents import parse
 
 from django_boost.http import HttpResponseUnsupportedMediaType
+
+from user_agents import parse
 
 
 class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
@@ -186,23 +189,24 @@ class ViewUserKwargsMixin:
         return kwargs
 
 
-class UserAgentMixin:
+if LooseVersion(django_version) >= LooseVersion("2.2"):
 
-    pc_template_name = None
-    tablet_template_name = None
-    mobile_template_name = None
+    class UserAgentMixin:
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
+        pc_template_name = None
+        tablet_template_name = None
+        mobile_template_name = None
 
-    def get_template_names(self):
-        tmp = super().get_template_names()
-        if self.request.user_agent.is_pc and self.pc_template_name:
-            return [self.pc_template_name] + tmp
-        if self.request.user_agent.is_tablet and self.tablet_template_name:
-            return [self.tablet_template_name] + tmp
-        if self.request.user_agent.is_mobile and self.mobile_template_name:
-            return [self.mobile_template_name] + tmp
-        return tmp
+        def setup(self, request, *args, **kwargs):
+            super().setup(request, *args, **kwargs)
+            self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
 
+        def get_template_names(self):
+            tmp = super().get_template_names()
+            if self.request.user_agent.is_pc and self.pc_template_name:
+                return [self.pc_template_name] + tmp
+            if self.request.user_agent.is_tablet and self.tablet_template_name:
+                return [self.tablet_template_name] + tmp
+            if self.request.user_agent.is_mobile and self.mobile_template_name:
+                return [self.mobile_template_name] + tmp
+            return tmp

@@ -293,6 +293,7 @@ You can change the query string parameter name by changing `redirect_field_name`
 ### Adittional Attribute Mixins  
 
 #### UserAgentMixin  
+*Available only with Django 2.2 and higher*
 ```py
 from django.views.generic import TemplateView
 from django_boost.views.mixins import UserAgentMixin
@@ -341,9 +342,36 @@ class CustomerSearchView(FormView):
 
 ### GenericView  
 
+#### Extended Views  
+
+```py
+from django_boost.views.generic import View
+
+class YourView(View):
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        ## some process before view process
+
+        ## For example, add attribute to view class
+
+    def after_view_process(self, request, response, *args, **kwargs):
+        super().after_view_process(request, response, *args, **kwargs)
+        ## some process after view process
+
+        ## For example, add http headers to the response
+
+        return response
+
+```
+django_boost generic view (
+`CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
+
 #### ModelCRUDViews  
 
 Provides easy creation of CRUDViews linked to model.  
+
+`views.py`  
 ```py
 from django_boost.views.generic import ModelCRUDViews
 
@@ -351,6 +379,7 @@ class CustomerViews(ModelCRUDViews):
     model = Customer
 ```
 
+`urls.py`  
 ```py
 from django.urls import path, include
 from . import views
@@ -358,6 +387,38 @@ from . import views
 urlpatterns = [
     path('views/',include(views.CustomerViews().urls)),
 ]
+```
+In the template you can use as follows.  
+
+```html+django
+{% url 'customer:list' %}
+{% url 'customer:create' %}
+{% url 'customer:detail' %}
+{% url 'customer:update' %}
+{% url 'customer:delete' %}
+```
+The name of the URL is defined under the namespace of the lower-cased model class name.  
+
+###### Case of Namespaced  
+`urls.py`  
+```py
+from django.urls import path, include
+from . import views
+
+app_name = "myapp"
+urlpatterns = [
+    path('views/',include(views.CustomerViews(app_name="myapp:customer").urls)),
+]
+
+```
+
+In the template you can use as follows.  
+```html+django
+{% url 'myapp:customer:list' %}
+{% url 'myapp:customer:create' %}
+{% url 'myapp:customer:detail' %}
+{% url 'myapp:customer:update' %}
+{% url 'myapp:customer:delete' %}
 ```
 
 ### Template Tags  
@@ -424,7 +485,68 @@ Replace the query string of the current page URL with the argument.
 {# case of current page's query string is `?id=2`#}
 {% replace_parameters request 'id' 1 'age' 20 %}
 
-{# The result of replacing is `?id=2&age=20` #}
+{# The result of replacing is `?id=1&age=20` #}
 
 ```
-Useful for pagination.
+Useful for pagination.  
+
+## utilty functions  
+
+### loop utils  
+
+#### loopfirst  
+
+Yield True when the first element of the given iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import loopfirst
+
+
+for is_first, v in loopfirst(range(5)):
+    print(is_first, v)
+
+# True 0
+# False 1
+# False 2
+# False 3
+# False 4
+```
+
+
+#### looplast  
+
+Yield True when the last element of the given iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import looplast
+
+
+for is_last, v in looplast(range(5)):
+    print(is_last, v)
+
+# False 0
+# False 1
+# False 2
+# False 3
+# True 4
+```
+
+#### loopfirstlast  
+
+A function combining `firstloop` and` lastloop`.  
+
+Yield True if the first and last element of the iterator object, False otherwise.  
+
+```py
+from django_boost.utils.functions import loopfirstlast
+
+
+for first_or_last, v in loopfirstlast(range(5)):
+    print(first_or_last, v)
+
+# True 0
+# False 1
+# False 2
+# False 3
+# True 4
+```
