@@ -312,19 +312,18 @@ You can change the query string parameter name by changing `redirect_field_name`
 ### Adittional Attribute Mixins  
 
 #### UserAgentMixin  
-*Available only with Django 2.2 and higher*
 ```py
-from django.views.generic import TemplateView
+from django_boost.views.generic import TemplateView
 from django_boost.views.mixins import UserAgentMixin
 
-class SameView(UserAgentMixin,TemplateView):
+class SameView(UserAgentMixin, TemplateView):
     template_name = "default_template"
     pc_template_name = "pc_template.html"
     tablet_template_name = "tablet_template.html"
     mobile_template_name = "mobile_template.html"
 ```
 
-Assign `useragent` attribute to` self.request` and 
+Assign `user_agent` attribute to` self.request` and 
 switch the template file to be displayed by user agent.  
 
 If the user agent can not be determined, the template specified in `template_name` will be used.  
