@@ -222,13 +222,32 @@ These information is obtained using [user-agents](https://github.com/selwin/pyth
 
 ### Access Mixins  
 
+#### AllowContentTypeMixin  
+
+Restrict the content type of http request.  
+
+```py
+from django.views.generic import TemplateView
+from django_boost.views.mixins import AllowContentTypeMixin
+
+class PostView(AllowContentTypeMixin, TemplateView):
+    allowed_content_types = ["application/xml"]
+    template_name = "path/to/template"
+
+```
+Restrict request based on `Content-Type` of http header.  
+
+If the content type is not allowed, http415 response will be returned.  
+You can disable restrictions by specifying `strictly = False`  
+
+
 #### ReAuthenticationRequiredMixin  
 
 ```py
 from django.views.generic import TemplateView
 from django_boost.views.mixins import ReAuthenticationRequiredMixin
 
-class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
+class RecentLogin(ReAuthenticationRequiredMixin, TemplateView):
     template_name = "mypage.html"
     auth_unnecessary = 3600
 ```
@@ -299,13 +318,64 @@ from django.views.generic import TemplateView
 from django_boost.views.mixins import UserAgentMixin
 
 class SameView(UserAgentMixin,TemplateView):
+    template_name = "default_template"
     pc_template_name = "pc_template.html"
     tablet_template_name = "tablet_template.html"
     mobile_template_name = "mobile_template.html"
 ```
 
-Switch the template file to be displayed by user agent.  
+Assign `useragent` attribute to` self.request` and 
+switch the template file to be displayed by user agent.  
 
+If the user agent can not be determined, the template specified in `template_name` will be used.  
+`pc_template_name`,`tablet_template_name`,`mobile_template_name` has no arms, but` template_name` is required.  
+
+#### JsonRequestMixin  
+A specialized mixin for `AllowContentTypeMixin` for json.  
+
+```py
+from django.views.generic import TemplateView
+from django_boost.views.mixins import JsonRequestMixin
+
+class PostView(JsonRequestMixin, TemplateView):
+    template_name = "path/to/template"
+
+    def get_context_data(self,**kwargs):
+        posted_data = self.json
+        # {"send" : "from cliant"}
+        return posted_data
+```
+
+You can access the dictionary object parsed from the Json string sent by the client in `self.json`  
+
+If you use for the purpose of API `JsonView` below is recommended.  
+
+
+### ResponseMixin  
+
+#### JsonResponseMixin  
+Returns the response in Json format  
+
+```py
+from django.views.generic import TemplateView
+from django_boost.views.mixins import JsonResponseMixin
+
+class JsonResponseView(JsonResponseMixin, TemplateView):
+    extra_context = {"context" : "..."}
+
+    def get_context_data(self,**kwargs):
+        context = {}
+        context.update(super().get_context_data(**kwargs))
+        return context
+
+```
+The usage of `extra_context` and` get_context_data` is basically the same as `TemplateView`.
+The difference is that `TemplateView` is passed directly to the template context, whereas` JsonResponseMixin` is a direct response.  
+
+
+Specify `strictly = True` if you want to limit the Content-Type to Json only.  
+
+If you use for the purpose of API `JsonView` below is recommended.  
 
 ### Form Mixin  
 
@@ -366,6 +436,20 @@ class YourView(View):
 ```
 django_boost generic view (
 `CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
+
+#### JsonView  
+`JsonResponseMixin`と`JsonRequestMixin`を継承したgeneric view class です。  
+```py
+from django_boost.views.generic import JsonView
+
+class SameAPIView(JsonView):
+
+    def get_context_data(self,**kwargs):
+        return self.json
+```
+
+In the above example, we just return the sent Json string as it is.  
+
 
 #### ModelCRUDViews  
 
