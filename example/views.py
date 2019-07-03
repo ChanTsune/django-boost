@@ -4,13 +4,14 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy as _
-from django_boost.views.generic import JsonView
 from django.utils.timezone import now
 from django_boost.views.generic import JsonView, ModelCRUDViews
 from django_boost.views.mixins import ReAuthenticationRequiredMixin
 from django_boost.views.mixins import RedirectToDetailMixin
 from django_boost.views.mixins import LimitedTermMixin
+from django_boost.views.mixins import UserAgentMixin
 from django_boost.http.response import Http409
+
 from .models import Customer
 from .forms import CustomerForm
 
@@ -68,3 +69,16 @@ class SELimitView(LimitedTermMixin, TemplateView):
 
 class CustomerViews(ModelCRUDViews):
     model = Customer
+
+
+class JsonSampleView(JsonView):
+
+    def get_context_data(self, **kwargs):
+        context = self.json
+        return context
+
+
+class SwichView(UserAgentMixin, TemplateView):
+    template_name = "mobile/index.html"
+    pc_template_name = "desktop/index.html"
+    mobile_template_name = "mobile/index.html"

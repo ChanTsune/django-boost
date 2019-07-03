@@ -8,13 +8,21 @@ from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
 from django.http import Http404, JsonResponse
 from django.urls import reverse
-from django.utils.functional import cached_property
+from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 
 from django_boost.http import HttpResponseUnsupportedMediaType
 
 from user_agents import parse
+
+
+class CSRFExemptMixin:
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
@@ -101,32 +109,51 @@ class LimitedTermMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
+@method_decorator(csrf_exempt, name="dispatch")
 class JsonRequestMixin(AllowContentTypeMixin):
     """Only allow json request mixin."""
 
     allowed_content_types = ["application/json"]
     strictly = False
+    encoding = 'utf-8'
 
-    @cached_property
-    def json(self):
+    def get_encoding(self):
+        return self.encoding
+
+    def __json(self):
         try:
-            return json.loads(self.request.body.encode('utf-8'))
+            encoding = self.get_encoding()
+            return json.loads(self.request.body.decode(encoding))
         except json.JSONDecodeError:
             return {}
+
+    @property
+    def json(self):
+        if hasattr(self, "_json"):
+            return self._json
+        setattr(self, "_json", self.__json())
+        return self._json
+
+    @json.setter
+    def json(self, value):
+        self._json = value
 
 
 class JsonResponseMixin:
 
-    extra_response_data = {}
+    response_class = JsonResponse
+    extra_context = None
 
-    def get_response_data(self, **kwargs):
-        response_data = {}
-        response_data.update(self.extra_response_data)
-        response_data.update(kwargs)
-        return response_data
+    def get_context_data(self, **kwargs):
+        context = self.extra_context or {}
+        context.update(kwargs)
+        return context
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse(self.get_response_data())
+        return JsonResponse(self.get_context_data())
+
+    post = get
+    put = post
 
 
 class ReAuthenticationRequiredMixin(LoginRequiredMixin):
