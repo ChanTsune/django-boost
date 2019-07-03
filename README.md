@@ -373,6 +373,8 @@ The usage of `extra_context` and` get_context_data` is basically the same as `Te
 The difference is that `TemplateView` is passed directly to the template context, whereas` JsonResponseMixin` is a direct response.  
 
 
+Specify `strictly = True` if you want to limit the Content-Type to Json only.  
+
 If you use for the purpose of API `JsonView` below is recommended.  
 
 ### Form Mixin  
@@ -434,6 +436,20 @@ class YourView(View):
 ```
 django_boost generic view (
 `CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
+
+#### JsonView  
+`JsonResponseMixin`と`JsonRequestMixin`を継承したgeneric view class です。  
+```py
+from django_boost.views.generic import JsonView
+
+class SameAPIView(JsonView):
+
+    def get_context_data(self,**kwargs):
+        return self.json
+```
+
+In the above example, we just return the sent Json string as it is.  
+
 
 #### ModelCRUDViews  
 
