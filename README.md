@@ -6,13 +6,13 @@ Extension library to boost development with django
 
 ## Installation  
 
-```
+```bash
 pip install django-boost
 ```
 
 or
 
-```
+```bash
 git clone https://github.com/ChanTsune/Django-Boost.git
 
 python setup.py install
@@ -20,7 +20,8 @@ python setup.py install
 
 ## Add an application  
 
-settings.py
+`settings.py`
+
 ```py
 INSTALLED_APPS = [
     ...
@@ -34,7 +35,8 @@ INSTALLED_APPS = [
 
 #### EmailUser  
 
-settings.py
+`settings.py`
+
 ```py
 ...
 
@@ -42,6 +44,7 @@ AUTH_USER_MODEL = 'django_boost.EmailUser'
 
 ...
 ```
+
 Replace Django default user model  
 Use email address instead of username when logging in  
 
@@ -56,8 +59,8 @@ class CustomUser(AbstractEmailUser):
     homepage = models.URLField()
 
 ```
-Available when you want to add a field to EmailUser  
 
+Available when you want to add a field to EmailUser  
 
 ### ModelMixins  
 
@@ -72,7 +75,7 @@ class Stock(UUIDModelMixin):
     count = models.IntegerField()
 ```
 
-Mixins that replace `id` from` AutoField` to `UUIDField`  
+Mixins that replace `id` from `AutoField` to `UUIDField`  
 
 #### TimeStampModelMixin  
 
@@ -86,12 +89,14 @@ class Stock(TimeStampModelMixin):
 ```
 
 The fields `posted_at` and `updated_at` are added.  
+
 ```py
 posted_at = models.DateTimeField(auto_now_add=True)
 updated_at = models.DateTimeField(auto_now=True)
 ```
 
 #### Combine  
+
 ```py
 from django.db import models
 from django_boost.models.mixins import UUIDMixin, TimeStampMixin
@@ -100,12 +105,13 @@ class Stock(UUIDModelMixin,TimeStampModelMixin):
     name = models.CharField(max_length=128)
     count = models.IntegerField()
 ```
-Model mixins can also be combined in this way.  
 
+Model mixins can also be combined in this way.  
 
 ### Fields  
 
 #### ColorCodeField  
+
 ```py
 from django.db import models
 from django_boost.models.filed import ColorCodeField()
@@ -114,6 +120,7 @@ class Model(models.Model):
     color = ColorCodeField()
 
 ```
+
 Save hexadecimal color code string including #.  
 If you specify `upper=True`, the saved text will be capitalized.  
 On the other hand, specifying `lower=True` will make the saved string lower case.  
@@ -125,7 +132,8 @@ Default is `upper=False`,`lower=Flase`.
 
 #### RedirectCorrectHostnameMiddleware
 
-settings.py
+`settings.py`
+
 ```py
 
 MIDDLEWARE = [
@@ -149,10 +157,10 @@ This is useful when migrating domains
 
 Originally it should be done with server software such as nginx and apache, but it is useful when the setting is troublesome or when using services such as heroku  
 
-
 #### HttpStatusCodeExceptionMiddleware  
 
-settings.py
+`settings.py`
+
 ```py
 MIDDLEWARE = [
     'django_boost.middleware.HttpStatusCodeExceptionMiddleware',  # django_boost
@@ -161,9 +169,11 @@ MIDDLEWARE = [
     ...
 ]
 ```
+
 It is necessary to use the `HttpStatusCode exceptions` described later.
 
 ### HttpStatusCode Exceptions  
+
 Provides exceptions for other status codes as well as Django's standard `Http404` exception  
 
 ```py
@@ -179,10 +189,10 @@ def view(request):
 
 It is necessary to set `HttpStatusCodeExceptionMiddleware` to use
 
-
 ### Template context  
 
-#### User Agent
+#### User Agent  
+
 ```py
 TEMPLATES = [
     {
@@ -219,7 +229,6 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)  
 
-
 ### Access Mixins  
 
 #### AllowContentTypeMixin  
@@ -235,11 +244,11 @@ class PostView(AllowContentTypeMixin, TemplateView):
     template_name = "path/to/template"
 
 ```
+
 Restrict request based on `Content-Type` of http header.  
 
 If the content type is not allowed, http415 response will be returned.  
 You can disable restrictions by specifying `strictly = False`  
-
 
 #### ReAuthenticationRequiredMixin  
 
@@ -262,7 +271,6 @@ class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
     auth_unnecessary = timedelta(hours=1)
 ```
 
-
 `auth_unnecessary` is the grace period until recertification.  
 Can specify `int` and `timedelta` ,`None`.  
 `None` is same as `0`.  
@@ -271,6 +279,7 @@ Can specify `int` and `timedelta` ,`None`.
 `logout=False`, Do not logout Even if the specified time limit has passed  
 
 #### LimitedTermMixin  
+
 ```py
 from datetime import datetime
 from django.views.generic import TemplateView
@@ -284,9 +293,9 @@ class LimitedTermMixin(LimitedTermMixin, TemplateView):
 ```
 
 Restrict the period of access.  
-`start_datetime` specifies the date and time when access will be available, and` end_datetime` with the last date and time when access is available.  
+`start_datetime` specifies the date and time when access will be available, and `end_datetime` with the last date and time when access is available.  
 
-You can change the date and time that can be accessed dynamically by overriding the `get_start_datetime` and` get_end_datetime` methods, respectively.  
+You can change the date and time that can be accessed dynamically by overriding the `get_start_datetime` and `get_end_datetime` methods, respectively.  
 
 You can specify the exception class to be thrown when the condition accessible to `exception_class` is not met.  
 The default is the `Http404` exception.  
@@ -308,10 +317,10 @@ class MyFormView(DynamicRedirectMixin, FormView):
 
 You can change the query string parameter name by changing `redirect_field_name`.  
 
-
 ### Adittional Attribute Mixins  
 
 #### UserAgentMixin  
+
 ```py
 from django_boost.views.generic import TemplateView
 from django_boost.views.mixins import UserAgentMixin
@@ -323,13 +332,13 @@ class SameView(UserAgentMixin, TemplateView):
     mobile_template_name = "mobile_template.html"
 ```
 
-Assign `user_agent` attribute to` self.request` and 
-switch the template file to be displayed by user agent.  
+Assign `user_agent` attribute to `self.request` and switch the template file to be displayed by user agent.  
 
 If the user agent can not be determined, the template specified in `template_name` will be used.  
-`pc_template_name`,`tablet_template_name`,`mobile_template_name` has no arms, but` template_name` is required.  
+`pc_template_name`,`tablet_template_name`,`mobile_template_name` has no arms, but `template_name` is required.  
 
 #### JsonRequestMixin  
+
 A specialized mixin for `AllowContentTypeMixin` for json.  
 
 ```py
@@ -349,10 +358,10 @@ You can access the dictionary object parsed from the Json string sent by the cli
 
 If you use for the purpose of API `JsonView` below is recommended.  
 
-
 ### ResponseMixin  
 
 #### JsonResponseMixin  
+
 Returns the response in Json format  
 
 ```py
@@ -368,9 +377,9 @@ class JsonResponseView(JsonResponseMixin, TemplateView):
         return context
 
 ```
-The usage of `extra_context` and` get_context_data` is basically the same as `TemplateView`.
-The difference is that `TemplateView` is passed directly to the template context, whereas` JsonResponseMixin` is a direct response.  
 
+The usage of `extra_context` and `get_context_data` is basically the same as `TemplateView`.
+The difference is that `TemplateView` is passed directly to the template context, whereas `JsonResponseMixin` is a direct response.  
 
 Specify `strictly = True` if you want to limit the Content-Type to Json only.  
 
@@ -379,6 +388,7 @@ If you use for the purpose of API `JsonView` below is recommended.
 ### Form Mixin  
 
 #### MuchedObjectGetMixin  
+
 Object of the condition that matches the form input content.
 Or mixin to add a method to get the query set.
 
@@ -433,11 +443,14 @@ class YourView(View):
         return response
 
 ```
+
 django_boost generic view (
 `CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
 
 #### JsonView  
+
 `JsonResponseMixin`と`JsonRequestMixin`を継承したgeneric view class です。  
+
 ```py
 from django_boost.views.generic import JsonView
 
@@ -449,12 +462,12 @@ class SameAPIView(JsonView):
 
 In the above example, we just return the sent Json string as it is.  
 
-
 #### ModelCRUDViews  
 
 Provides easy creation of CRUDViews linked to model.  
 
 `views.py`  
+
 ```py
 from django_boost.views.generic import ModelCRUDViews
 
@@ -463,6 +476,7 @@ class CustomerViews(ModelCRUDViews):
 ```
 
 `urls.py`  
+
 ```py
 from django.urls import path, include
 from . import views
@@ -471,6 +485,7 @@ urlpatterns = [
     path('views/',include(views.CustomerViews().urls)),
 ]
 ```
+
 In the template you can use as follows.  
 
 ```html+django
@@ -480,10 +495,13 @@ In the template you can use as follows.
 {% url 'customer:update' %}
 {% url 'customer:delete' %}
 ```
+
 The name of the URL is defined under the namespace of the lower-cased model class name.  
 
-###### Case of Namespaced  
+##### Case of Namespaced  
+
 `urls.py`  
+
 ```py
 from django.urls import path, include
 from . import views
@@ -496,6 +514,7 @@ urlpatterns = [
 ```
 
 In the template you can use as follows.  
+
 ```html+django
 {% url 'myapp:customer:list' %}
 {% url 'myapp:customer:create' %}
@@ -508,12 +527,15 @@ In the template you can use as follows.
 
 Make Python built-in functions available in DjangoTemplate.  
 Some non-built-in functions are also provided as filters. An example is `isiterable` filter.  
+
 #### boost Filters  
+
 ```html+django
 {% load boost %}
 ```
 
 ##### isiterable  
+
 isiterable filter returns True if it filters repeatable objects, and False otherwise.  
 
 ```html+django
@@ -529,7 +551,8 @@ isiterable filter returns True if it filters repeatable objects, and False other
 
 ```
 
-#### boost_url Filters
+#### boost_url Filters  
+
 ```html+django
 {% load boost_url %}
 ```
@@ -549,6 +572,7 @@ You can specify non-conversion characters in the argument.
 ```
 
 ##### urldecode  
+
 The reverse of `urlencode`.  
 
 ```html+django
@@ -560,6 +584,7 @@ The reverse of `urlencode`.
 #### boost_url Tags  
 
 ##### replace_parameters  
+
 Replace the query string of the current page URL with the argument.  
 
 ```html+django
@@ -571,6 +596,7 @@ Replace the query string of the current page URL with the argument.
 {# The result of replacing is `?id=1&age=20` #}
 
 ```
+
 Useful for pagination.  
 
 ## utilty functions  
@@ -595,7 +621,6 @@ for is_first, v in loopfirst(range(5)):
 # False 4
 ```
 
-
 #### looplast  
 
 Yield True when the last element of the given iterator object, False otherwise.  
@@ -616,7 +641,7 @@ for is_last, v in looplast(range(5)):
 
 #### loopfirstlast  
 
-A function combining `firstloop` and` lastloop`.  
+A function combining `firstloop` and `lastloop`.  
 
 Yield True if the first and last element of the iterator object, False otherwise.  
 
