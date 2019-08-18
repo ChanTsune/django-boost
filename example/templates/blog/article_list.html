@@ -1,0 +1,15 @@
+{% extends 'base/html.html' %}
+
+
+
+{% block body %}
+
+<div>
+
+    {% for object in object_list %}
+        <a href="{% url 'article_detail' object.pk %}">{{ object.title }}</a>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}
