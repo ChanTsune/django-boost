@@ -1,5 +1,6 @@
-from django.core.management import BaseCommand
 from django.contrib.admin.models import LogEntry
+from django.core.management import BaseCommand
+from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
 
 from django_boost.core import get_version
@@ -13,6 +14,9 @@ class Command(BaseCommand):
                             "<": "lt",
                             ">": "gt", }
 
+    def get_sortable_fields(self, model):
+        return sorted(get_field_names_from_opts(model._meta))
+
     def _parse_filter(self, condition):
         for op in self.COMPARISON_OPERATION.keys():
             field, op, value = condition.partition(op)
@@ -21,7 +25,7 @@ class Command(BaseCommand):
                 return {"%s__%s" % (field, op): value}
         raise Exception("""
         Unsupported operation '%s'
-        --filter and --exclude supported 
+        --filter and --exclude supported %s
         """ % (field, ",".join(self.COMPARISON_OPERATION.keys())))
 
     def parse_filter(self, conditions):
@@ -49,11 +53,27 @@ class Command(BaseCommand):
         self.stdout.write(fmt.format_map(fmap))
 
     def add_arguments(self, parser):
-        parser.add_argument('-d', '--delete', action='store_true')
-        parser.add_argument('--filter', nargs="+", type=str, default=[])
-        parser.add_argument('--exclude', nargs="+", type=str, default=[])
-        parser.add_argument('--order_by', nargs="+",
-                            type=str, default=["action_time"])
+        supported_fields = self.get_sortable_fields(LogEntry)
+        supported_fields_str = ", ".join(supported_fields)
+        parser.add_argument('-d', '--delete',
+                            action='store_true', help='Delete displayed logs.')
+        parser.add_argument('--filter', nargs='+',
+                            type=str, default=[],
+                            help="""Filter the Log to be displayed.
+                                    Supported filed is %s.
+                                    e.g. "action_time>=2019-8-22" """
+                            % supported_fields_str)
+        parser.add_argument('--exclude', nargs='+',
+                            type=str, default=[],
+                            help="""Exclude the Log to be displayed.
+                                    Supported filed is same as --filter.
+                                    e.g. "user__username=admin" """)
+        parser.add_argument('--order_by', nargs='+',
+                            type=str, default=['action_time'],
+                            help="""Order of Log to be displayed.
+                                    Supported filed is %s.
+                                    e.g. "-action_flag" """
+                            % supported_fields_str)
 
     def handle(self, *args, **options):
         queryset = LogEntry.objects.all()
