@@ -86,6 +86,7 @@ class Command(BaseCommand):
         if queryset.count() == 0:
             self.stderr.write('No logs')
             return
+        self.stdout.write("id | action | detail | user | time")
         for log in queryset:
             self.print_log(log)
         if options['delete']:
