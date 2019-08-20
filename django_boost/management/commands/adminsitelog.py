@@ -8,7 +8,7 @@ from django_boost.core import get_version
 class Command(BaseCommand):
 
     def print_log(self, log):
-        fmt = "{action} | {object} by {user} | {time}"
+        fmt = "{id} | {action} | {object} | {user} | {time}"
         fmap = {}
         if log.is_addition():
             fmap["action"] = self.style.SUCCESS("Added")
@@ -22,6 +22,7 @@ class Command(BaseCommand):
             fmap["object"] = log.object_repr
         fmap["user"] = log.user.username
         fmap["time"] = log.action_time
+        fmap["id"] = log.id
         self.stdout.write(fmt.format_map(fmap))
 
     def add_arguments(self, parser):
@@ -35,6 +36,7 @@ class Command(BaseCommand):
         self.stdout.write(str(args))
         self.stdout.write(str(options))
         queryset = LogEntry.objects.all()
+        queryset = queryset.order_by(*options['order_by'])
         if queryset.count() == 0:
             self.stderr.write('No logs')
             return
