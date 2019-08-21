@@ -82,3 +82,13 @@ class SwichView(UserAgentMixin, TemplateView):
     template_name = "mobile/index.html"
     pc_template_name = "desktop/index.html"
     mobile_template_name = "mobile/index.html"
+
+
+class Http301View(TemplateView):
+    template_name = "example/index.html"
+
+    def get_context_data(self, **kwargs):
+        from django_boost.http.response import Http301
+        context = super().get_context_data(**kwargs)
+        raise Http301('http://google.com')
+        return context

@@ -5,7 +5,8 @@ from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.utils.deprecation import MiddlewareMixin
 
-from django_boost.http.response import HttpExceptionBase
+from django_boost.http.response import (HttpExceptionBase,
+                                        HttpRedirectExceptionBase)
 
 
 class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
@@ -46,7 +47,9 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
             return "%s" % status_code
 
     def process_exception(self, request, e):
-        if isinstance(e, HttpExceptionBase):
+        if isinstance(e, HttpRedirectExceptionBase):
+            return e.response_class(e.url)
+        elif isinstance(e, HttpExceptionBase):
             response_text = self.get_template_from_status_code(e.status_code)
             return e.response_class(response_text)
         return None

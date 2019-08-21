@@ -17,4 +17,5 @@ urlpatterns = [
     path('se/', views.SELimitView.as_view()),
     path('views/', include(views.CustomerViews().urls)),
     path('swich/', views.SwichView.as_view(), name=""),
+    path('google/', views.Http301View.as_view(), name='redirect_to_google'),
 ]
