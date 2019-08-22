@@ -12,8 +12,8 @@ from django_boost.views.mixins import LimitedTermMixin
 from django_boost.views.mixins import UserAgentMixin
 from django_boost.http.response import Http409
 
-from .models import Customer
-from .forms import CustomerForm
+from example.models import Customer
+from example.forms import CustomerForm
 
 # Create your views here.
 

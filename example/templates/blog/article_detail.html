@@ -1,0 +1,16 @@
+{% extends 'base/html.html' %}
+
+
+
+{% block body %}
+    <div>
+        <div>
+            {{ object.title }}
+        </div>
+        <div>
+            {{ object.text }}
+        </div>
+    </div>
+    <a href="{% url 'article_update' object.pk %}">update</a>
+    <a href="{% url 'article_delete' object.pk %}">delete</a>
+{% endblock body %}
