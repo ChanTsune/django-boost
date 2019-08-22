@@ -1,6 +1,16 @@
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseForbidden, HttpResponseGone,
-                         HttpResponseNotAllowed, HttpResponseServerError)
+                         HttpResponseNotAllowed, HttpResponsePermanentRedirect,
+                         HttpResponseRedirect, HttpResponseServerError)
+from django.http.response import HttpResponseRedirectBase
+
+
+class HttpResponseTemporaryRedirect(HttpResponseRedirectBase):
+    status_code = 307
+
+
+class HttpResponsePermanentRedirect308(HttpResponseRedirectBase):
+    status_code = 308
 
 
 class HttpResponseUnauthorized(HttpResponse):
@@ -149,6 +159,29 @@ class HttpExceptionBase(Exception):
     @property
     def status_code(self):
         return self.response_class.status_code
+
+
+class HttpRedirectExceptionBase(HttpExceptionBase):
+
+    def __init__(self, redirect_to, *args):
+        self.url = redirect_to
+        super(HttpRedirectExceptionBase, self).__init__(*args)
+
+
+class Http301(HttpRedirectExceptionBase):
+    response_class = HttpResponsePermanentRedirect
+
+
+class Http302(HttpRedirectExceptionBase):
+    response_class = HttpResponseRedirect
+
+
+class Http307(HttpRedirectExceptionBase):
+    response_class = HttpResponseTemporaryRedirect
+
+
+class Http308(HttpRedirectExceptionBase):
+    response_class = HttpResponsePermanentRedirect308
 
 
 class Http400(HttpExceptionBase):
