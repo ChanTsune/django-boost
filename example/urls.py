@@ -14,6 +14,7 @@ class JsonSampleUrlSet(UrlSet):
         path('post/', views.JsonSampleView.as_view()),
     ]
 
+
 urlpatterns = [
     path('', views.IndexView.as_view(), name="index"),
     path('reauth/', views.ReloginView.as_view(), name="reauth"),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('end/', views.EndLimitView.as_view()),
     path('se/', views.SELimitView.as_view()),
     path('views/', include(views.CustomerViews().urls)),
+    path('google/', views.Http301View.as_view(), name='redirect_to_google'),
+
     path('swich/', views.SwichView.as_view(), name="swich_by_user_agent"),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
     path('blog/article/create/',
