@@ -523,7 +523,7 @@ In the template you can use as follows.
 {% url 'myapp:customer:delete' %}
 ```
 
-### Routing Utility  
+### Routing Utilitys  
 
 #### UrlSet  
 
@@ -588,6 +588,29 @@ urlpatterns = [
 ```
 
 URLs are grouped for easy reading.  
+
+### Admin Site Utilitys  
+
+Easily register Models to Django admin site.  
+
+```py
+from yourapp import models
+from django_boost.admin.site import register_all
+
+register_all(models)
+```
+
+Register all models defined in `models.py` in Django admin site.  
+
+Custom admin classes are also available.  
+
+```py
+from your_app import models
+from your_app import admin
+from django_boost.admin.site import register_all
+
+register_all(models, admin_class=admin.CustomAdmin)
+```
 
 ### Template Tags  
 
