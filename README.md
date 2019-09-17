@@ -99,7 +99,7 @@ updated_at = models.DateTimeField(auto_now=True)
 
 ```py
 from django.db import models
-from django_boost.models.mixins import UUIDMixin, TimeStampMixin
+from django_boost.models.mixins import UUIDModelMixin, TimeStampModelMixin
 
 class Stock(UUIDModelMixin,TimeStampModelMixin):
     name = models.CharField(max_length=128)
@@ -114,7 +114,7 @@ Model mixins can also be combined in this way.
 
 ```py
 from django.db import models
-from django_boost.models.filed import ColorCodeField()
+from django_boost.models.filed import ColorCodeField
 
 class Model(models.Model):
     color = ColorCodeField()
