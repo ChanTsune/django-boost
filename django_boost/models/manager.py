@@ -20,4 +20,3 @@ class LogicalDeletionManager(Manager):
 
     def dead(self):
         return self.get_queryset().dead()
-        
