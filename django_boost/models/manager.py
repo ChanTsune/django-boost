@@ -13,4 +13,10 @@ class LogicalDeletionManager(Manager):
         return LogicalDeletionQuerySet(self.model)
 
     def delete(self, hard=False):
-        return self.get_queryset.delete(hard=hard)
+        return self.get_queryset().delete(hard=hard)
+
+    def alive(self):
+        return self.get_queryset().alive()
+
+    def dead(self):
+        return self.get_queryset().dead()
