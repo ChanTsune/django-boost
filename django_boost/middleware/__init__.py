@@ -41,8 +41,8 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
         try:
             file_name = "%s.html" % status_code
             t = get_template(file_name)
-            context = Context()
             return t.render(context)
+            context = {}
         except TemplateDoesNotExist:
             return "%s" % status_code
 
