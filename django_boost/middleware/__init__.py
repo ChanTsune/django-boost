@@ -37,12 +37,15 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
     similar to the `Http404` exception.
     """
 
-    def get_template_from_status_code(self, status_code):
+    def get_template_from_status_code(self, status_code, request=None):
         try:
-            file_name = "%s.html" % status_code
+            if settings.DEBUG:
+                file_name = "boost/tecnical/base.html"
+            else:
+                file_name = "%s.html" % status_code
             t = get_template(file_name)
-            return t.render(context)
-            context = {}
+            context = {'status_code': status_code}
+            return t.render(context, request)
         except TemplateDoesNotExist:
             return "%s" % status_code
 
@@ -50,6 +53,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
         if isinstance(e, HttpRedirectExceptionBase):
             return e.response_class(e.url)
         elif isinstance(e, HttpExceptionBase):
-            response_text = self.get_template_from_status_code(e.status_code)
+            response_text = self.get_template_from_status_code(
+                e.status_code, request)
             return e.response_class(response_text)
         return None
