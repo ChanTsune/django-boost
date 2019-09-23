@@ -2,6 +2,16 @@
 
 ## Versions  
 
+### 1.1.1  
+
+#### Add  
+
+- new template filter `filter`,`exclude`,`order_by` in `templatetags/boost_query`
+
+#### Fix  
+
+- `zip` filter doesn't work
+
 ### 1.1  
 
 #### Add  
