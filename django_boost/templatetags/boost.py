@@ -218,5 +218,5 @@ def _vars(obj):
 
 
 @register.filter(name="zip")
-def _zip(*objs):
-    return zip(*objs)
+def _zip(arg1, arg2):
+    return zip(arg1, arg2)
