@@ -617,7 +617,7 @@ register_all(models, admin_class=admin.CustomAdmin)
 Make Python built-in functions available in DjangoTemplate.  
 Some non-built-in functions are also provided as filters. An example is `isiterable` filter.  
 
-#### boost Filters  
+#### Load filters  
 
 ```html+django
 {% load boost %}
@@ -640,7 +640,7 @@ isiterable filter returns True if it filters repeatable objects, and False other
 
 ```
 
-#### boost_url Filters  
+#### URL Utility  
 
 ```html+django
 {% load boost_url %}
@@ -670,8 +670,6 @@ The reverse of `urlencode`.
 {{ url | urldecode }}
 ```
 
-#### boost_url Tags  
-
 ##### replace_parameters  
 
 Replace the query string of the current page URL with the argument.  
@@ -687,6 +685,33 @@ Replace the query string of the current page URL with the argument.
 ```
 
 Useful for pagination.  
+
+#### Queryset Utility  
+
+```html+django
+{% load boost_query %}
+```
+
+Make the query set methods available in the template.
+
+`filter`, `exclude`, `order_by` are available.
+
+If you use the LogicalDeletionMixin, you can also use `alive` and `dead`  
+
+```html+django
+{% qureyset|filter:"field=value"%}
+
+{% qureyset|exclude:"field=value"%}
+
+{% qureyset|order_by:"field"%}
+
+{# If it inherits LogicalDeletionMixin. #}
+
+{% qureyset|alive %}
+
+{% qureyset|dead %}
+
+```
 
 ## utilty functions  
 
