@@ -4,6 +4,7 @@ from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.utils.deprecation import MiddlewareMixin
 
+from django_boost.http import STATUS_MESSAGES
 from django_boost.http.response import (HttpExceptionBase,
                                         HttpRedirectExceptionBase)
 
@@ -43,7 +44,8 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
             else:
                 file_name = "%s.html" % status_code
             t = get_template(file_name)
-            context = {'status_code': status_code}
+            context = {'status_code': status_code,
+                       'status_message': STATUS_MESSAGES[status_code]}
             return t.render(context, request)
         except TemplateDoesNotExist:
             return "%s" % status_code
