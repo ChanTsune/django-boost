@@ -38,6 +38,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
     """
 
     def get_template_from_status_code(self, status_code, request=None):
+        message = STATUS_MESSAGES[status_code]
         try:
             if settings.DEBUG:
                 file_name = "boost/tecnical/base.html"
@@ -45,10 +46,10 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
                 file_name = "%s.html" % status_code
             t = get_template(file_name)
             context = {'status_code': status_code,
-                       'status_message': STATUS_MESSAGES[status_code]}
+                       'status_message': message}
             return t.render(context, request)
         except TemplateDoesNotExist:
-            return "%s" % status_code
+            return "%s %s" % (status_code, message)
 
     def process_exception(self, request, e):
         if isinstance(e, HttpRedirectExceptionBase):
