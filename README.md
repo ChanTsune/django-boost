@@ -390,7 +390,7 @@ If you use for the purpose of API `JsonView` below is recommended.
 #### MuchedObjectGetMixin  
 
 Object of the condition that matches the form input content.
-Or mixin to add a method to get the query set.
+Or mixin to add a method to get the queryset.
 
 ```py
 from django import forms
@@ -417,7 +417,7 @@ class CustomerSearchView(FormView):
 
 ```
 
-`MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `query set` that matches the form input content.  
+`MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
 ### GenericView  
 
@@ -449,7 +449,7 @@ django_boost generic view (
 
 #### JsonView  
 
-`JsonResponseMixin`と`JsonRequestMixin`を継承したgeneric view class です。  
+A generic view class that inherits `JsonResponseMixin` and `JsonRequestMixin`.  
 
 ```py
 from django_boost.views.generic import JsonView
