@@ -1,3 +1,5 @@
+from ast import literal_eval
+
 from django.template import Library
 
 from django_boost.utils import isiterable
@@ -216,3 +218,4 @@ def _zip(arg1, arg2):
 
 
 register.filter(isiterable)
+register.simple_tag(literal_eval, name="literal")
