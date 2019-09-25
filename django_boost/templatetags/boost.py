@@ -1,5 +1,7 @@
 from django.template import Library
 
+from django_boost.utils import isiterable
+
 register = Library()
 
 
@@ -112,15 +114,6 @@ def _id(obj):
     return id(obj)
 
 
-@register.filter(name="isiterable")
-def isiterable(obj):
-    try:
-        iter(obj)
-    except TypeError:
-        return False
-    return True
-
-
 @register.filter(name="int")
 def _int(value, base=10):
     return int(value, base)
@@ -220,3 +213,6 @@ def _vars(obj):
 @register.filter(name="zip")
 def _zip(arg1, arg2):
     return zip(arg1, arg2)
+
+
+register.filter(isiterable)
