@@ -2,6 +2,7 @@
 
 Extension library to boost development with django
 
+[![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
 ## Installation  
