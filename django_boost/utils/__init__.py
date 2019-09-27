@@ -23,6 +23,7 @@ class Loop:
 def loop(iterable):
     return Loop(iterable)
 
+
 def isiterable(obj):
     try:
         iter(obj)
