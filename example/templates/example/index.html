@@ -21,4 +21,23 @@
 {% endfor %}
 
 
+
+{% with "[1]"|literal as list %}
+    
+    {% if list|isiterable %}
+        True
+    {% endif %}
+        
+{% endwith %}
+
+
+{% literal "[1,2,4]" as l %}
+
+
+
+{% for i in l %}
+    <p>{{ i }}</p>
+{% endfor %}
+
+
 {% endblock body %}
