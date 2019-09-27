@@ -3,6 +3,7 @@ from django_boost.urls import UrlSet
 
 from . import views
 from .views import blog as view_blog
+from .views import exception as view_e
 
 
 class JsonSampleUrlSet(UrlSet):
@@ -13,6 +14,13 @@ class JsonSampleUrlSet(UrlSet):
              views.JsonView.as_view(extra_context={"json": True}, strictly=True)),
         path('post/', views.JsonSampleView.as_view()),
     ]
+
+
+class ExceptionUrlSet(UrlSet):
+     app_name = 'exc'
+     urlpatterns = [
+         path('415/', view_e.E415View.as_view(), name="415"),
+     ]
 
 
 urlpatterns = [
@@ -30,6 +38,7 @@ urlpatterns = [
     path('google/', views.Http301View.as_view(), name='redirect_to_google'),
 
     path('swich/', views.SwichView.as_view(), name="swich_by_user_agent"),
+    path('exception/', include(ExceptionUrlSet)),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
     path('blog/article/create/',
          view_blog.ArticleCreate.as_view(), name="article_create"),

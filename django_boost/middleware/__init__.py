@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
-from django.template import Context
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.utils.deprecation import MiddlewareMixin
 
+from django_boost.http import STATUS_MESSAGES
 from django_boost.http.response import (HttpExceptionBase,
                                         HttpRedirectExceptionBase)
 
@@ -37,19 +37,25 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
     similar to the `Http404` exception.
     """
 
-    def get_template_from_status_code(self, status_code):
+    def get_template_from_status_code(self, status_code, request=None):
+        message = STATUS_MESSAGES[status_code]
         try:
-            file_name = "%s.html" % status_code
+            if settings.DEBUG:
+                file_name = "boost/tecnical/base.html"
+            else:
+                file_name = "%s.html" % status_code
             t = get_template(file_name)
-            context = Context()
-            return t.render(context)
+            context = {'status_code': status_code,
+                       'status_message': message}
+            return t.render(context, request)
         except TemplateDoesNotExist:
-            return "%s" % status_code
+            return "%s %s" % (status_code, message)
 
     def process_exception(self, request, e):
         if isinstance(e, HttpRedirectExceptionBase):
             return e.response_class(e.url)
         elif isinstance(e, HttpExceptionBase):
-            response_text = self.get_template_from_status_code(e.status_code)
+            response_text = self.get_template_from_status_code(
+                e.status_code, request)
             return e.response_class(response_text)
         return None

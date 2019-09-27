@@ -391,7 +391,7 @@ If you use for the purpose of API `JsonView` below is recommended.
 #### MuchedObjectGetMixin  
 
 Object of the condition that matches the form input content.
-Or mixin to add a method to get the query set.
+Or mixin to add a method to get the queryset.
 
 ```py
 from django import forms
@@ -418,7 +418,7 @@ class CustomerSearchView(FormView):
 
 ```
 
-`MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `query set` that matches the form input content.  
+`MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
 ### GenericView  
 
@@ -450,7 +450,7 @@ django_boost generic view (
 
 #### JsonView  
 
-`JsonResponseMixin`と`JsonRequestMixin`を継承したgeneric view class です。  
+A generic view class that inherits `JsonResponseMixin` and `JsonRequestMixin`.  
 
 ```py
 from django_boost.views.generic import JsonView
@@ -641,6 +641,21 @@ isiterable filter returns True if it filters repeatable objects, and False other
 
 ```
 
+#### literal  
+
+Python literal from string.  
+Using backend `ast.literal_eval`.  
+
+```html+django
+{% load boost %}
+
+{% literal "[1, 2, 3]" as list %}
+
+{% for i in list %}
+    <p>{{ i }}</p>
+{% endfor %}
+```
+
 #### URL Utility  
 
 ```html+django
@@ -717,6 +732,22 @@ If you use the LogicalDeletionMixin, you can also use `alive` and `dead`
 ## utilty functions  
 
 ### loop utils  
+
+#### Django Template like forloop  
+
+```py
+from django_boost.utils import loop
+
+for forloop, item in loop([1, 2, 3, 4, 5]):
+    forloop.counter0
+    forloop.counter
+    forloop.revcounter0
+    forloop.revcounter
+    forloop.first
+    forloop.last
+```
+
+Provides Django Template loops to Python programs.  
 
 #### loopfirst  
 
