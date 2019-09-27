@@ -640,6 +640,21 @@ isiterable filter returns True if it filters repeatable objects, and False other
 
 ```
 
+#### literal  
+
+Python literal from string.  
+Using backend `ast.literal_eval`.  
+
+```html+django
+{% load boost %}
+
+{% literal "[1, 2, 3]" as list %}
+
+{% for i in list %}
+    <p>{{ i }}</p>
+{% endfor %}
+```
+
 #### URL Utility  
 
 ```html+django
