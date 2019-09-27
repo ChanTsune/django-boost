@@ -732,6 +732,22 @@ If you use the LogicalDeletionMixin, you can also use `alive` and `dead`
 
 ### loop utils  
 
+#### Django Template like forloop  
+
+```py
+from django_boost.utils import loop
+
+for forloop, item in loop([1, 2, 3, 4, 5]):
+    forloop.counter0
+    forloop.counter
+    forloop.revcounter0
+    forloop.revcounter
+    forloop.first
+    forloop.last
+```
+
+Provides Django Template loops to Python programs.  
+
 #### loopfirst  
 
 Yield True when the first element of the given iterator object, False otherwise.  
