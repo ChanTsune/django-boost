@@ -40,5 +40,5 @@ msgid "A user with that email address already exists."
 msgstr ""
 
 #: django_boost/validators.py:14
-msgid "Enter valid JSON string"
+msgid "Enter valid JSON string."
 msgstr ""

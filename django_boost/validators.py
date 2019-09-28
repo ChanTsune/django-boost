@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 @deconstructible
 class JsonValidator(BaseValidator):
 
-    message = _('Enter valid JSON string')
+    message = _('Enter valid JSON string.')
     code = 'json value'
 
     def __init__(self, message=None):
