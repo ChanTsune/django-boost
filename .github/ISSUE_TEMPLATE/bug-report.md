@@ -1,3 +1,5 @@
+# Bug Report  
+
 ### What did you do?  
 
 Please replace this with what you did.  
@@ -21,3 +23,5 @@ List the software versions you're using:
 ### Project that demonstrates the issue  
 
 Please link to a project we can download that reproduces the issue. Feel free to delete this section if it's not relevant to the issue (eg - feature request).  
+
+Thank you for your report!  
