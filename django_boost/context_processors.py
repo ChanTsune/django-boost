@@ -2,7 +2,7 @@ from user_agents import parse
 
 
 def user_agent(request):
-    agent = request.META['HTTP_USER_AGENT']
+    agent = request.META.get('HTTP_USER_AGENT', '')
     user_agent = parse(agent)
     context = {'user_agent': agent,
                'browser': user_agent.browser.family,

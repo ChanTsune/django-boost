@@ -2,7 +2,6 @@ from django.test import TestCase
 
 from django_boost.utils import Loop, isiterable, loop
 from django_boost.utils.functions import loopfirst, loopfirstlast, looplast
-# Create your tests here.
 
 
 class TestUtilFunction(TestCase):
