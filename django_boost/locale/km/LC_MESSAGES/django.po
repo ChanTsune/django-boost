@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-28 04:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: django_boost/management/commands/adminsitelog.py:93
+msgid "Do you want to delete these logs [y/n]?"
+msgstr ""
+
+#: django_boost/models/__init__.py:11
+msgid "username"
+msgstr ""
+
+#: django_boost/models/__init__.py:14
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: django_boost/models/__init__.py:19
+msgid "email address"
+msgstr ""
+
+#: django_boost/models/__init__.py:22
+msgid "A user with that email address already exists."
+msgstr ""
+
+#: django_boost/validators.py:14
+msgid "Enter valid JSON string."
+msgstr ""
