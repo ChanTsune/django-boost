@@ -25,6 +25,7 @@ class JsonValidator(BaseValidator):
         try:
             if isinstance(value, str):
                 json.loads(value)
+                return
             raise TypeError
         except JSONDecodeError:
             raise ValidationError(self.message, code=self.code)
