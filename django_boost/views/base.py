@@ -11,6 +11,10 @@ from django.views.generic import TemplateView as _TemplateView
 from django.views.generic import UpdateView as _UpdateView
 
 
+__all__ = ["View", "TemplateView", "FormView", "CreateView",
+           "ListView", "DetailView", "UpdateView", "DeleteView"]
+
+
 class View(_View):
     """extends View of Django 2.2."""
 

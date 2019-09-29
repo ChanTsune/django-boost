@@ -44,7 +44,7 @@ TEST_DATA = [
     ROOT_URLCONF='django_boost.tests.context_processors.urls',
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(ROOT_PATH, 'context_processors', 'templates')],
+        'DIRS': [os.path.join(ROOT_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
