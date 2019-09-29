@@ -10,12 +10,11 @@ from django_boost.views.mixins import ReAuthenticationRequiredMixin
 from django_boost.views.mixins import RedirectToDetailMixin
 from django_boost.views.mixins import LimitedTermMixin
 from django_boost.views.mixins import UserAgentMixin
+from django_boost.views.mixins import AllowContentTypeMixin
 from django_boost.http.response import Http409
 
 from example.models import Customer
 from example.forms import CustomerForm
-
-# Create your views here.
 
 
 class IndexView(CreateView):
@@ -92,3 +91,8 @@ class Http301View(TemplateView):
         context = super().get_context_data(**kwargs)
         raise Http301('http://google.com')
         return context
+
+
+class ContentTypeView(AllowContentTypeMixin, TemplateView):
+    template_name = "example/index.html"
+    allowed_content_types = []
