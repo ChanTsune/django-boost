@@ -3,26 +3,25 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy as _
+from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django_boost.views.generic import JsonView, ModelCRUDViews
 from django_boost.views.mixins import ReAuthenticationRequiredMixin
 from django_boost.views.mixins import RedirectToDetailMixin
 from django_boost.views.mixins import LimitedTermMixin
 from django_boost.views.mixins import UserAgentMixin
+from django_boost.views.mixins import AllowContentTypeMixin
 from django_boost.http.response import Http409
 
 from example.models import Customer
 from example.forms import CustomerForm
-
-# Create your views here.
 
 
 class IndexView(CreateView):
     template_name = "example/index.html"
     extra_context = {"number": -10}
     form_class = CustomerForm
-    success_url = _('index')
+    success_url = reverse_lazy('index')
 
 
 class CustomerUpdateView(RedirectToDetailMixin, UpdateView):
@@ -92,3 +91,8 @@ class Http301View(TemplateView):
         context = super().get_context_data(**kwargs)
         raise Http301('http://google.com')
         return context
+
+
+class ContentTypeView(AllowContentTypeMixin, TemplateView):
+    template_name = "example/index.html"
+    allowed_content_types = []

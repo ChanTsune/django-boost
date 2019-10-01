@@ -8,10 +8,13 @@ from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 
 
+__all__ = ["validate_json", "validate_uuid4", "validate_color_code"]
+
+
 @deconstructible
 class JsonValidator(BaseValidator):
 
-    message = _('Enter valid JSON string')
+    message = _('Enter valid JSON string.')
     code = 'json value'
 
     def __init__(self, message=None):
@@ -22,6 +25,7 @@ class JsonValidator(BaseValidator):
         try:
             if isinstance(value, str):
                 json.loads(value)
+                return
             raise TypeError
         except JSONDecodeError:
             raise ValidationError(self.message, code=self.code)
@@ -44,7 +48,10 @@ def validate_uuid4(value):
     try:
         uuid_value = uuid.UUID(value)
     except ValueError as e:
-        raise ValidationError(e.message)
+        if hasattr(e, 'message'):
+            raise ValidationError(e.message)
+        else:
+            raise ValidationError(str(e))
     if not uuid_value.hex == value.replace("-", ""):
         raise ValidationError("badly formed hexadecimal UUID string")
 

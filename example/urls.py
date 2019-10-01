@@ -39,6 +39,7 @@ urlpatterns = [
 
     path('swich/', views.SwichView.as_view(), name="swich_by_user_agent"),
     path('exception/', include(ExceptionUrlSet)),
+    path('allow/', views.ContentTypeView.as_view(), name='content_type'),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
     path('blog/article/create/',
          view_blog.ArticleCreate.as_view(), name="article_create"),
