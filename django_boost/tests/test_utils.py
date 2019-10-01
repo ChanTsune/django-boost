@@ -2,10 +2,9 @@ from django.test import TestCase
 
 from django_boost.utils import Loop, isiterable, loop
 from django_boost.utils.functions import loopfirst, loopfirstlast, looplast
-# Create your tests here.
 
 
-class UtilFunctionTest(TestCase):
+class TestUtilFunction(TestCase):
 
     test_list0 = []
     test_list1 = [0]
@@ -48,7 +47,7 @@ class UtilFunctionTest(TestCase):
         self.assertFalse(isiterable(1))
 
 
-class LoopTest(TestCase):
+class TestLoop(TestCase):
     items = [0, 1, 2, 3]
 
     def test_loop_class(self):
