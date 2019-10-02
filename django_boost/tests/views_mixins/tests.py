@@ -133,12 +133,12 @@ class TestViewMixins(TestCase):
 
         self.client.force_login(self.user)
         response = self.client.get(url)
-        self.assertStatusCode(response, [302, 403])
+        self.assertStatusCodeIn(response, [302, 403])
         self.client.logout()
 
         self.client.force_login(self.staff_user)
         response = self.client.get(url)
-        self.assertStatusCode(response, 200)
+        self.assertStatusCodeIn(response, 200)
         self.client.logout()
 
     def test_superuser_required(self):
