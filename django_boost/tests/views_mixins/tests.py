@@ -129,7 +129,7 @@ class TestViewMixins(TestCase):
     def test_staff_member_required(self):
         url = '/staff_only/'
         response = self.client.get(url)
-        self.assertStatusCode(response, [302, 403])
+        self.assertStatusCodeIn(response, [302, 403])
 
         self.client.force_login(self.user)
         response = self.client.get(url)
@@ -138,7 +138,7 @@ class TestViewMixins(TestCase):
 
         self.client.force_login(self.staff_user)
         response = self.client.get(url)
-        self.assertStatusCodeIn(response, 200)
+        self.assertStatusCode(response, 200)
         self.client.logout()
 
     def test_superuser_required(self):
