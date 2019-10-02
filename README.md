@@ -1,6 +1,6 @@
 # Django-Boost  
 
-Extension library to boost development with django
+Extension library to boost django development  
 
 [![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
