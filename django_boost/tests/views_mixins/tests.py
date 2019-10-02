@@ -42,6 +42,9 @@ class TestViewMixins(TestCase):
     def assertStatusCode(self, response, code):
         self.assertEqual(response.status_code, code)
 
+    def assertStatusCodeIn(self, response, codes):
+        self.assertIn(response.status_code, codes)
+
     def test_allow_content_type(self):
         url = '/content_type_none/'
         response = self.client.get(url)
@@ -126,11 +129,11 @@ class TestViewMixins(TestCase):
     def test_staff_member_required(self):
         url = '/staff_only/'
         response = self.client.get(url)
-        self.assertStatusCode(response, 302)
+        self.assertStatusCode(response, [302, 403])
 
         self.client.force_login(self.user)
         response = self.client.get(url)
-        self.assertStatusCode(response, 302)
+        self.assertStatusCode(response, [302, 403])
         self.client.logout()
 
         self.client.force_login(self.staff_user)
