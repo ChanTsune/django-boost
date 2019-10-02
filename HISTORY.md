@@ -2,29 +2,35 @@
 
 ## Versions  
 
+### 1.1.2  
+
+- Add  
+  - new template tag `literal`  
+  - `util.loop` function  
+  - `util.isiterable` function  
+- Update  
+  - `HttpStatusCodeExceptions` DEBUG mode page design  
+- Fix  
+  - `validators.validate_uuid4`,`validators.validate_json` error  
+  - `context_processors.user_agent`,`views.mixins.UserAgentMixin` issue that could cause `KeyError`  
+
 ### 1.1.1  
 
-#### Add  
-
-- new template filter `filter`,`exclude`,`order_by` in `templatetags/boost_query`
-
-#### Fix  
-
-- `zip` filter doesn't work
+- Add  
+  - new template filter `filter`,`exclude`,`order_by` in `templatetags/boost_query`
+- Fix  
+  - `zip` filter doesn't work
 
 ### 1.1  
 
-#### Add  
-
-- UrlSet class  
-- Http30X class  
-- register_all function  
-- adminsitelog Command  
-
-#### Change  
-
-- UUIDModelMixin class `editable=False`  
+- Add  
+  - UrlSet class  
+  - Http30X class  
+  - register_all function  
+  - adminsitelog Command  
+- Change  
+  - UUIDModelMixin class `editable=False`  
 
 ### 1.0  
 
-First release  
+- First release  
