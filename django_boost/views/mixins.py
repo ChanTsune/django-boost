@@ -229,7 +229,8 @@ class UserAgentMixin:
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.request.user_agent = parse(request.META['HTTP_USER_AGENT'])
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
+        self.request.user_agent = parse(user_agent)
 
     def get_template_names(self):
         tmp = super().get_template_names()
