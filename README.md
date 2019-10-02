@@ -2,7 +2,10 @@
 
 Extension library to boost development with django
 
+[![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
+[![PyPI](https://img.shields.io/pypi/v/django_boost)](https://pypi.org/project/django-boost/)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/django_boost)](https://pypi.org/project/django-boost/)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
 ## Installation  
