@@ -1,8 +1,11 @@
 # Django-Boost  
 
-Extension library to boost development with django
+Extension library to boost django development  
 
+[![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
+[![PyPI](https://img.shields.io/pypi/v/django_boost)](https://pypi.org/project/django-boost/)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/django_boost)](https://pypi.org/project/django-boost/)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
 ## Installation  
@@ -402,7 +405,10 @@ class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
     class Meta:
         models = Customer
         fields = ('name', )
+        field_lookup = {'name' : 'name__startswith'} # filter lookup kwargs
 ```
+
+Set `field_lookup` to set detailed search conditions.  
 
 ```py
 from django.views.generic import FormView
