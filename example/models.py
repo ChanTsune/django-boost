@@ -11,6 +11,7 @@ class Article(UUIDModelMixin, TimeStampModelMixin, LogicalDeletionMixin):
     title = models.CharField(max_length=128)
     text = models.TextField()
     tags = models.ManyToManyField(to="Tag", related_name="articles")
+    image = models.ImageField(upload_to='img')
 
 
 class Tag(models.Model):
