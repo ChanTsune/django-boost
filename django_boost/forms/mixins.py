@@ -11,7 +11,7 @@ class FormUserKwargsMixin:
         super().__init__(*args, **kwargs)
 
 
-class MuchedObjectGetMixin:
+class MatchedObjectGetMixin:
     """
     Object of the condition that matches the form input content.
 
