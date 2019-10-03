@@ -62,3 +62,12 @@ class MatchedObjectGetMixin:
             if self.raise_exception:
                 raise e
             return None
+
+
+class MuchedObjectGetMixin(MatchedObjectGetMixin):
+
+    def __init__(self, *args, **kwargs):
+        from warnings import warn
+        super().__init__(*args, **kwargs)
+        warn("MuchedObjectGetMixin is renamed to MatchedObjectGetMixin.",
+             DeprecationWarning)
