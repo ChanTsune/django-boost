@@ -13,20 +13,22 @@ class FormUserKwargsMixin:
 
 class MuchedObjectGetMixin:
     """
-    Object of the condition that matches the form input content.
+    MatchedObjectGetMixin.
 
-    Or mixin to add a method to get the query set.
+    This class adds methods that
+    returns model object or queryset that matches the conditions.
     """
 
     model = None
     queryset = None
     raise_exception = False
+    field_conditions = {}
 
     def get_queryset(self):
         if self.queryset is None:
             if self.model:
                 return self.model._default_manager.all()
-            elif self._meta.model:
+            elif hasattr(self, '_meta') and self._meta.model:
                 return self._meta.model._default_manager.all()
             else:
                 raise ImproperlyConfigured(
@@ -39,13 +41,18 @@ class MuchedObjectGetMixin:
         self.model_class = self.queryset.model
         return self.queryset.all()
 
+    def _replace_fields(self, form_data):
+        filter_data = {}
+        for k, v in form_data.items():
+            filter_data[self.field_conditions.get(k, k)] = v
+        return filter_data
+
     def get_list(self, queryset=None):
         """Return matched object queryset."""
         if queryset is None:
-            query = self.get_queryset()
-        else:
-            query = queryset
-        return query.filter(**self.cleaned_data)
+            queryset = self.get_queryset()
+        filter_data = self._replace_fields(self.cleaned_data)
+        return queryset.filter(**filter_data)
 
     def get_object(self, queryset=None):
         """Return matched object."""
