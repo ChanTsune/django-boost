@@ -22,7 +22,7 @@ class MuchedObjectGetMixin:
     model = None
     queryset = None
     raise_exception = False
-    field_conditions = {}
+    field_lookup = {}
 
     def get_queryset(self):
         if self.queryset is None:
@@ -44,7 +44,7 @@ class MuchedObjectGetMixin:
     def _replace_fields(self, form_data):
         filter_data = {}
         for k, v in form_data.items():
-            filter_data[self.field_conditions.get(k, k)] = v
+            filter_data[self.field_lookup.get(k, k)] = v
         return filter_data
 
     def get_list(self, queryset=None):
