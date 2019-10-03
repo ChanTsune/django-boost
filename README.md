@@ -388,17 +388,17 @@ If you use for the purpose of API `JsonView` below is recommended.
 
 ### Form Mixin  
 
-#### MuchedObjectGetMixin  
+#### MatchedObjectGetMixin  
 
 Object of the condition that matches the form input content.
 Or mixin to add a method to get the queryset.
 
 ```py
 from django import forms
-from django_boost.forms.mixins import MuchedObjectGetMixin
+from django_boost.forms.mixins import MatchedObjectGetMixin
 from .models import Customer
 
-class CustomerForm(MuchedObjectGetMixin, forms.ModelForm):
+class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
     class Meta:
         models = Customer
         fields = ('name', )
@@ -413,12 +413,12 @@ class CustomerSearchView(FormView):
     form_class = CustomerForm
 
     def form_valid(self,form):
-        object = form.get_object()  # get muched model object
-        object_list = form.get_list()  # get muched models objects queryset
+        object = form.get_object()  # get matched model object
+        object_list = form.get_list()  # get matched models objects queryset
 
 ```
 
-`MuchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
+`MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
 ### GenericView  
 
