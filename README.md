@@ -405,7 +405,10 @@ class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
     class Meta:
         models = Customer
         fields = ('name', )
+        field_lookup = {'name' : 'name__startswith'} # filter lookup kwargs
 ```
+
+Set `field_lookup` to set detailed search conditions.  
 
 ```py
 from django.views.generic import FormView
