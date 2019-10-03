@@ -1,4 +1,8 @@
-# Bug Report  
+---
+name: Bug Report
+about: If you find a bug, please report using this template.
+
+---
 
 ### What did you do?  
 
