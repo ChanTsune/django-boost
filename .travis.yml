@@ -12,7 +12,7 @@ install:
   - "python setup.py install"
   - "pip install -U pip"
   - "pip install django==$DJANGO_VERSION"
-  - "pip install tox-travis"
+  - "pip install tox-travis pillow"
 script:
   - tox
   - python manage.py test
