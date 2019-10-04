@@ -10,7 +10,8 @@ except ImportError:
         from pip.operations import freeze
 
 from django.conf import settings
-from django.core.management.base import BaseCommand
+
+from django_boost.core.management import BaseCommand
 
 
 def _make_all(runtime, prockfile, requirments, **_):
@@ -18,7 +19,10 @@ def _make_all(runtime, prockfile, requirments, **_):
 
 
 class Command(BaseCommand):
-    help = "Create a configuration file for heroku"
+    """Create a configuration file for heroku."""
+
+    help = "Create a configuration file for heroku" + \
+        "\n`Procfile`,`runtime.txt` and `requirements.txt`\n"
     PROCFILE = "Procfile"
     PROCFILE_FORMAT = "web: gunicorn %s\n"
     RUNTIME = "runtime.txt"
@@ -28,12 +32,22 @@ class Command(BaseCommand):
     GUNICORN = 'gunicorn'
 
     def add_arguments(self, parser):
-        parser.add_argument('--overwrite', action='store_true')
-        parser.add_argument('--no-gunicorn', action='store_true')
-        parser.add_argument('--runtime', action='store_true')
-        parser.add_argument('--prockfile', action='store_true')
-        parser.add_argument('--requirments', action='store_true')
-        parser.add_argument('-q', '--quit', action='store_true')
+        parser.add_argument('--overwrite', action='store_true',
+                            help='Overwrite even if file exists.')
+        parser.add_argument('--no-gunicorn', action='store_true',
+                            help="Don't automatically add `gunicorn` "
+                            "to `requirements.txt`.")
+        parser.add_argument('--runtime', action='store_true',
+                            help='Create only `runtime.txt`'
+                            ', By default all files are created.')
+        parser.add_argument('--prockfile', action='store_true',
+                            help='Create  only `prockfile`'
+                            ', By default all files are created.')
+        parser.add_argument('--requirments', action='store_true',
+                            help='Create  only `requirments.txt`'
+                            ', By default all files are created.')
+        parser.add_argument('-q', '--quit', action='store_true',
+                            help="Don't output to standard output.")
 
     def handle(self, *args, **options):
         EXEC_PATH = sys.argv[0]
