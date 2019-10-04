@@ -7,7 +7,7 @@ from django_boost.core import get_version
 
 
 class Command(BaseCommand):
-
+    help = "Django admin site log"
     COMPARISON_OPERATION = {"<=": "lte",
                             ">=": "gte",
                             "=": "exact",
