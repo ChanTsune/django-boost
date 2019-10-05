@@ -853,3 +853,18 @@ python manage.py adminsitelog --delete
 ```
 
 It is also possible to delete only the logs narrowed down by `--filter` and `--exclude`.  
+
+#### support_heroku  
+
+```bash
+python manage.py support_heroku
+```
+
+Create heroku config files.  
+`Procfile`,`runtime.txt`,`requirements.txt`  
+
+For more details.  
+
+```bash
+python manage.py support_heroku -h
+```
