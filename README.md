@@ -118,9 +118,9 @@ Model mixins can also be combined in this way.
 
 ```py
 from django.db import models
-from django_boost.models.filed import ColorCodeField
+from django_boost.models.fields import ColorCodeField
 
-class Model(models.Model):
+class MyModel(models.Model):
     color = ColorCodeField()
 
 ```
@@ -131,6 +131,34 @@ On the other hand, specifying `lower=True` will make the saved string lower case
 You can not specify both at the same time.  
 If neither is set, the string is saved without any changes.  
 Default is `upper=False`,`lower=Flase`.  
+
+#### SplitDateTimeField  
+
+```py
+from django.db import models
+from django_boost.models.fields import SplitDateTimeField
+
+class MyModel(models.Model):
+    color = SplitDateTimeField()
+
+```
+
+A little convenient DateTimeField.
+
+form_class in django.models.db.DateTimeField is replaced with
+django.forms.SplitDateTimeField.
+The effect on DB is the same as django.models.db.DateTimeField.
+
+#### AutoOneToOneField  
+
+```py
+from django.db import models
+from django_boost.models.fields import AutoOneToOneField
+
+class UserProfile(models.Model):
+    user = AutoOneToOneField(User, primary_key=True, related_name='profile')
+    home_page = models.URLField(max_length=255, blank=True)
+```
 
 ### Middleware  
 
