@@ -1,6 +1,9 @@
 ---
 name: Feture Request
 about: New function addition or improvement request.
+title: "[REQUEST] "
+labels: request
+assignees: ''
 
 ---
 
@@ -10,4 +13,4 @@ about: New function addition or improvement request.
 
 
 
-Thank you for your request!  
+Thank you for your request!

@@ -1,6 +1,9 @@
 ---
 name: Bug Report
 about: If you find a bug, please report using this template.
+title: "[BUG] "
+labels: bug
+assignees: ''
 
 ---
 
@@ -28,4 +31,4 @@ List the software versions you're using:
 
 Please link to a project we can download that reproduces the issue. Feel free to delete this section if it's not relevant to the issue (eg - feature request).  
 
-Thank you for your report!  
+Thank you for your report!
