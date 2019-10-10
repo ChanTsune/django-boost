@@ -33,7 +33,7 @@ class JsonValidator(BaseValidator):
 
 class ColorCodeValidator(RegexValidator):
     regex = '#[0-9a-fA-F]{6}'
-    message = ()
+    message = _('Enter 6-digit hexadecimal number including #.')
 
 
 json_validator = JsonValidator()
