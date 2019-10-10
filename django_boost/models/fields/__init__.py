@@ -5,7 +5,7 @@ from django.db.models.fields import CharField, TextField
 from django_boost.forms import fields
 from django_boost.models.fields.related_descriptors import (
     AutoReverseOneToOneDescriptor)
-from django_boost.validators import validate_json
+from django_boost.validators import validate_color_code, validate_json
 
 
 class JsonField(TextField):
@@ -16,7 +16,7 @@ class JsonField(TextField):
 class ColorCodeFiled(CharField):
     """Field for storing hexadecimal color code like `FFEEDD`."""
 
-    default_validators = []
+    default_validators = [validate_color_code]
 
     def __init__(self, *args, upper=False, lower=False, **kwargs):
         kwargs.update({"max_length": 7})
