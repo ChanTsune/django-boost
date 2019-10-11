@@ -1,6 +1,7 @@
 import os
 from time import sleep
 from json.decoder import JSONDecodeError
+from urllib import parse
 
 from django.core.management import call_command
 from django_boost.core.management import AppCommand
@@ -21,6 +22,7 @@ class Command(AppCommand):
         super().add_arguments(parser)
         parser.add_argument('--make', '-m', action='store_true',
                             help='Execute makemessages command')
+        parser.add_argument('-t', action='store_false')
         parser.add_argument('--source', default='en')
         parser.add_argument('--exclude-locale', default=[], action='append')
         parser.add_argument('--exclude-id', default=[], action='append')
@@ -45,25 +47,27 @@ class Command(AppCommand):
 
         if options['make']:
             call_command('makemessages', locale=existing_locales)
-
-        for lng in existing_locales:
-            lng = self.convert_lng_code(lng)
+        if not options['t']:
+            return
+        for lng in locales:
             po_file_path = os.path.join(app_path, 'locale',
                                         lng, 'LC_MESSAGES', 'django.po')
+
+            lng = self.convert_lng_code(lng)
             po = polib.pofile(po_file_path)
             for i, entry in enumerate(po):
                 if entry.msgid in exclude_id:
                     continue
+                text = parse.quote(entry.msgid)
                 request_url = self.BASE_URL + '?text={}&source={}&target={}'.format(
-                    entry.msgid, options['source'], lng)
+                    text, options['source'], lng)
                 response = requests.get(request_url)
                 try:
                     if response.status_code == 200:
                         result = response.json()
-                        self.stdout.write(entry.msgid)
-                        self.stdout.write(' -> ')
+                        self.stdout.write(entry.msgid, ending='')
+                        self.stdout.write(' -> ', ending='')
                         self.stdout.write(result['text'])
-                        self.stdout.write('\n')
                         entry.msgstr = result['text']
                         po[i] = entry
                     else:

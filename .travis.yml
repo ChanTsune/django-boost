@@ -32,4 +32,4 @@ matrix:
       - python manage.py test
     after_success:
       - "pip install polib requests"
-      - "python manage.py auto_transrate django_boost --exclude-locale ja --exclude-id username --exclude-id 'email address' --exclude-id 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'"
+      - "python manage.py auto_transrate django_boost -m --exclude-locale ja --exclude-id username --exclude-id 'email address' --exclude-id 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'"
