@@ -91,7 +91,7 @@ class Command(BaseCommand):
         for log in queryset:
             self.print_log(log)
         if options['delete']:
-            answer = input(_("Do you want to delete these logs [y/n]?"))
+            answer = input(_("Do you want to delete these logs") + "[y/n]?")
             if answer.lower() in ["y", "yes"]:
                 queryset.delete()
                 self.stdout.write('delete complete')
