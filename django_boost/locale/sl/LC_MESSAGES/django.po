@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 16:18+0000\n"
+"POT-Creation-Date: 2019-10-11 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #: django_boost/management/commands/adminsitelog.py:94
-msgid "Do you want to delete these logs [y/n]?"
+msgid "Do you want to delete these logs"
 msgstr ""
 
 #: django_boost/models/__init__.py:11
