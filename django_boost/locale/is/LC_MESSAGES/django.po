@@ -20,7 +20,7 @@ msgstr ""
 
 #: django_boost/management/commands/adminsitelog.py:94
 msgid "Do you want to delete these logs"
-msgstr ""
+msgstr "Viltu eyða þessum annálum"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -36,12 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "Notandi með það netfang er þegar til."
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "Sláðu inn gildan JSON streng."
 
 #: django_boost/validators.py:36
 msgid "Enter 6-digit hexadecimal number including #."
-msgstr ""
+msgstr "Sláðu inn 6 stafa sextánskur tala meðtalinn #."

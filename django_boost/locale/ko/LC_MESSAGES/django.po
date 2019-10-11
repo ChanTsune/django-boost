@@ -20,7 +20,7 @@ msgstr ""
 
 #: django_boost/management/commands/adminsitelog.py:94
 msgid "Do you want to delete these logs"
-msgstr ""
+msgstr "이 로그를 삭제 하시겠습니까"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -36,12 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "해당 이메일 주소를 가진 사용자가 이미 존재합니다."
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "유효한 JSON 문자열을 입력하십시오."
 
 #: django_boost/validators.py:36
 msgid "Enter 6-digit hexadecimal number including #."
-msgstr ""
+msgstr "#을 포함하여 6 자리 16 진수를 입력하십시오."

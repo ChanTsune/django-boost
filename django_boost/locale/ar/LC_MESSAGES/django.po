@@ -16,12 +16,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: django_boost/management/commands/adminsitelog.py:94
 msgid "Do you want to delete these logs"
-msgstr ""
+msgstr "هل تريد حذف هذه السجلات"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -37,12 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "يوجد مستخدم يحمل عنوان البريد الإلكتروني هذا بالفعل."
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "أدخل سلسلة JSON صالحة."
 
 #: django_boost/validators.py:36
 msgid "Enter 6-digit hexadecimal number including #."
-msgstr ""
+msgstr "أدخل الرقم السداسي عشري المكون من 6 أرقام بما في ذلك الرقم."

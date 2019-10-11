@@ -20,7 +20,7 @@ msgstr ""
 
 #: django_boost/management/commands/adminsitelog.py:94
 msgid "Do you want to delete these logs"
-msgstr ""
+msgstr "Törölni szeretné ezeket a naplókat"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -36,12 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "Az ilyen e-mail címmel rendelkező felhasználó már létezik."
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "Írja be az érvényes JSON karakterláncot."
 
 #: django_boost/validators.py:36
 msgid "Enter 6-digit hexadecimal number including #."
-msgstr ""
+msgstr "Írja be a 6 jegyű hexadecimális számot, beleértve a #-t."

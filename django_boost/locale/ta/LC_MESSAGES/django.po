@@ -20,7 +20,7 @@ msgstr ""
 
 #: django_boost/management/commands/adminsitelog.py:94
 msgid "Do you want to delete these logs"
-msgstr ""
+msgstr "இந்த பதிவுகளை நீக்க விரும்புகிறீர்களா?"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -36,12 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "அந்த மின்னஞ்சல் முகவரியுடன் ஒரு பயனர் ஏற்கனவே இருக்கிறார்."
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "செல்லுபடியாகும் JSON சரத்தை உள்ளிடவும்."
 
 #: django_boost/validators.py:36
 msgid "Enter 6-digit hexadecimal number including #."
-msgstr ""
+msgstr "# உட்பட 6 இலக்க ஹெக்ஸாடெசிமல் எண்ணை உள்ளிடவும்."
