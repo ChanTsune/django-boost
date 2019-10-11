@@ -1,12 +1,9 @@
 import os
 from time import sleep
 from json.decoder import JSONDecodeError
-from pprint import pprint
 
 from django.core.management import call_command
 from django_boost.core.management import AppCommand
-
-import requests
 
 
 class Command(AppCommand):
@@ -32,9 +29,10 @@ class Command(AppCommand):
     def handle_app_config(self, app_config, **options):
         try:
             import polib
+            import requests
         except ImportError:
             self.stderr.write(
-                'auto_transrate command required `polib`.\nPlease `pip install polib`.')
+                'auto_transrate command required `polib` and `requests`.\nPlease `pip install polib requests`.')
             return
         app_path = app_config.path
         existing_locales = os.listdir(os.path.join(app_path, 'locale'))
