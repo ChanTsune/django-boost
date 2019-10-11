@@ -12,24 +12,8 @@ env:
 install:
   - "python setup.py install"
   - "pip install -U pip"
-  - "pip install django==$DJANGO_VERSION"
+  - "pip install django~=$DJANGO_VERSION"
   - "pip install tox-travis pillow"
 script:
   - tox
   - python manage.py test
-
-matrix:
-  include:
-    python: "3.7"
-    env: DJANGO_VERSION=2.2
-    install:
-      - "python setup.py install"
-      - "pip install -U pip"
-      - "pip install django~=$DJANGO_VERSION"
-      - "pip install tox-travis pillow"
-    script:
-      - tox
-      - python manage.py test
-    after_success:
-      - "pip install polib requests"
-      - "python manage.py auto_transrate django_boost -m --exclude-locale ja --exclude-id username --exclude-id 'email address' --exclude-id 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'"

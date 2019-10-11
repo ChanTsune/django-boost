@@ -23,6 +23,7 @@ class Command(AppCommand):
         parser.add_argument('--make', '-m', action='store_true',
                             help='Execute makemessages command')
         parser.add_argument('-t', action='store_false')
+        parser.add_argument('--overwrite', action='store_true')
         parser.add_argument('--source', default='en')
         parser.add_argument('--exclude-locale', default=[], action='append')
         parser.add_argument('--exclude-id', default=[], action='append')
@@ -57,6 +58,8 @@ class Command(AppCommand):
             po = polib.pofile(po_file_path)
             for i, entry in enumerate(po):
                 if entry.msgid in exclude_id:
+                    continue
+                if entry.msgstr != "" and not options['overwrite']:
                     continue
                 text = parse.quote(entry.msgid)
                 request_url = self.BASE_URL + '?text={}&source={}&target={}'.format(
