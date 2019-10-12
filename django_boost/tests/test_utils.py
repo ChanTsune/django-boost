@@ -1,7 +1,8 @@
 from django.test import TestCase
 
 from django_boost.utils import Loop, isiterable, loop
-from django_boost.utils.attribute import getattr_chain, getattrs, hasattr_chain, hasattrs
+from django_boost.utils.attribute import (getattr_chain, getattrs,
+                                          hasattr_chain, hasattrs)
 from django_boost.utils.functions import loopfirst, loopfirstlast, looplast
 
 
