@@ -8,7 +8,9 @@ def get_version():
 class Empty:
     """A class that does nothing to indicate an invalid value."""
 
+
 EMPTY = Empty()
 
+
 def is_empty(obj):
-    return isinstance(obj,Empty)
+    return isinstance(obj, Empty)
