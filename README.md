@@ -558,6 +558,34 @@ In the template you can use as follows.
 {% url 'myapp:customer:delete' %}
 ```
 
+### Path Converters  
+
+```py
+from django_boost.urls import register_boost_converters
+
+register_boost_converters()
+```
+
+Add `hex`, `oct`, `bin`, `hex_str`,`oct_str`and `bin_str` to path converter keyword.  
+
+```py
+from django.urls import path
+from django_boost.urls import register_boost_converters
+
+register_boost_converters()
+
+urlpatterns = [
+    path('bin/<bin:id>', ~~),
+    path('oct/<bin:id>', ~~),
+    path('hex/<bin:id>', ~~),
+]
+```
+
+`bin` match `[01]+`,`oct` match `[0-7]+`, `hex` match `[0-9a-fA-F]`
+These are passed as `int` type to the python program.
+
+Keywords that end with `_str` are passed as `str` type to python program.
+
 ### Routing Utilitys  
 
 #### UrlSet  
