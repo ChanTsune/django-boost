@@ -581,10 +581,26 @@ urlpatterns = [
 ]
 ```
 
-`bin` match `[01]+`,`oct` match `[0-7]+`, `hex` match `[0-9a-fA-F]`
-These are passed as `int` type to the python program.
+`bin` match `[01]+`,`oct` match `[0-7]+`, `hex` match `[0-9a-fA-F]`  
+These are passed as `int` type to the python program.  
 
-Keywords that end with `_str` are passed as `str` type to python program.
+Keywords that end with `_str` are passed as `str` type to python program.  
+
+### Short Cut Functions  
+
+```py
+from django_boost.shortcuts import (
+    get_list_or_default, get_list_or_exception,
+    get_object_or_default, get_object_or_exception)
+
+my_model = MyModel.objects.get(id=1)
+get_object_or_default(MyModel, default=my_model, id=2)
+
+get_object_or_exception(MyModel, exception=Exception, id=2)
+
+```
+
+These behave like `get_object_or_404`  
 
 ### Routing Utilitys  
 
