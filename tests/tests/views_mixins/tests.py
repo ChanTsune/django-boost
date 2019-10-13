@@ -8,7 +8,7 @@ ROOT_PATH = os.path.dirname(__file__)
 
 
 @override_settings(
-    ROOT_URLCONF='django_boost.tests.views_mixins.urls',
+    ROOT_URLCONF='tests.tests.views_mixins.urls',
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(ROOT_PATH, 'templates')],

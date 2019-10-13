@@ -41,7 +41,7 @@ TEST_DATA = [
 
 
 @override_settings(
-    ROOT_URLCONF='django_boost.tests.context_processors.urls',
+    ROOT_URLCONF='tests.tests.context_processors.urls',
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(ROOT_PATH, 'templates')],
