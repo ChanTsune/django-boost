@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 
 from django_boost.shortcuts import (
     get_list_or_default, get_list_or_exception,
     get_object_or_default, get_object_or_exception)
-
+from django_boost.test import TestCase
 
 User = get_user_model()
 

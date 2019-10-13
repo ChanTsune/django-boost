@@ -1,7 +1,8 @@
 import os
 
-from django.test import TestCase, override_settings
+from django.test import override_settings
 
+from django_boost.test import TestCase
 
 ROOT_PATH = os.path.dirname(__file__)
 

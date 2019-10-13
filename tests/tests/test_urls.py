@@ -1,5 +1,4 @@
-from django.test import TestCase
-
+from django_boost.test import TestCase
 from django_boost.urls import UrlSet
 
 

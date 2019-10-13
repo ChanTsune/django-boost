@@ -1,7 +1,9 @@
 import os
 
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.urls import reverse
+
+from django_boost.test import TestCase
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -34,4 +36,4 @@ class TestConverter(TestCase):
         for name, value in case:
             url = reverse(name, kwargs={name: value})
             response = self.client.get(url)
-            self.assertEqual(response.status_code, 200)
+            self.assertStatusCodeEqual(response, 200)
