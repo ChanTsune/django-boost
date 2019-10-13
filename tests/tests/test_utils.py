@@ -1,5 +1,4 @@
-from django.test import TestCase
-
+from django_boost.test import TestCase
 from django_boost.utils import Loop, isiterable, loop
 from django_boost.utils.attribute import (getattr_chain, getattrs,
                                           hasattr_chain, hasattrs)
@@ -90,7 +89,7 @@ class TestAttribute(TestCase):
         self.assertEqual(getattrs(i, '__class__', 'class',
                                   default=None), (i.__class__, None))
         with self.assertRaises(AttributeError):
-            print(getattrs(i, '__class__', 'class'))
+            getattrs(i, '__class__', 'class')
 
     def test_getattr_chain(self):
         i = 1
