@@ -23,7 +23,7 @@ def getattr_chain(obj, name, default=EMPTY):
         return obj
     except AttributeError as e:
         if is_empty:
-            raise AttributeError from e
+            raise AttributeError('%s has no Attribute %s' % (obj, name)) from e
         return default
 
 
