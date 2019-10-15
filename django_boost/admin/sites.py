@@ -9,4 +9,7 @@ def register_all(models, admin_class=admin.ModelAdmin):
         attr = getattr(models, attr, None)
         if isinstance(attr, type):
             if issubclass(attr, Model) and not attr._meta.abstract:
-                admin.site.register(attr, admin_class)
+                try:
+                    admin.site.register(attr, admin_class)
+                except admin.sites.AlreadyRegistered:
+                    pass

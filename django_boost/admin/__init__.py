@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
+from django_boost.admin.sites import register_all
 from django_boost.forms import UserCreationForm
 from django_boost.models import EmailUser
+
+__all__ = ["EmailUserAdmin", "register_all"]
 
 
 @admin.register(EmailUser)
