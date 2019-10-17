@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-28 04:56+0000\n"
+"POT-Creation-Date: 2019-10-11 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1));\n"
-#: django_boost/management/commands/adminsitelog.py:93
-msgid "Do you want to delete these logs [y/n]?"
-msgstr ""
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: django_boost/management/commands/adminsitelog.py:94
+msgid "Do you want to delete these logs"
+msgstr "Doriți să ștergeți aceste jurnalele"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -36,8 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "Un utilizator cu acea adresă de e-mail există deja."
 
-#: django_boost/validators.py:14
+#: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "Introduceți șirul JSON valid."
+
+#: django_boost/validators.py:36
+msgid "Enter 6-digit hexadecimal number including #."
+msgstr "Introduceți un număr hexadecimal cu 6 cifre, inclusiv #."

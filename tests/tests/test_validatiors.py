@@ -2,8 +2,8 @@ from types import FunctionType
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
-from django.test import TestCase
 
+from django_boost.test import TestCase
 from django_boost.validators import (
     validate_color_code, validate_json, validate_uuid4)
 

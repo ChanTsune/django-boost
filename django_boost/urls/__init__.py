@@ -1,4 +1,15 @@
-class UrlSet(object):
+from django_boost.urls.converters import (
+    BinIntConverter, BinStrConverter, HexIntConverter,
+    HexStrConverter, OctIntConverter, OctStrConverter,
+    register_boost_converters)
+
+
+__all__ = ['UrlSet', 'HexIntConverter', 'HexStrConverter',
+           'OctIntConverter', 'OctStrConverter', 'BinIntConverter',
+           'BinStrConverter', 'register_boost_converters']
+
+
+class UrlSet:
     """
     Add a namespace to the URL.
 

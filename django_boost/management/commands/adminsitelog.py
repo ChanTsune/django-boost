@@ -1,13 +1,14 @@
 from django.contrib.admin.models import LogEntry
-from django.core.management import BaseCommand
 from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
 
-from django_boost.core import get_version
+from django_boost.core.management import BaseCommand
 
 
 class Command(BaseCommand):
+    """Django admin site log cli."""
 
+    help = "Django admin site log"
     COMPARISON_OPERATION = {"<=": "lte",
                             ">=": "gte",
                             "=": "exact",
@@ -90,13 +91,10 @@ class Command(BaseCommand):
         for log in queryset:
             self.print_log(log)
         if options['delete']:
-            answer = input(_("Do you want to delete these logs [y/n]?"))
+            answer = input(_("Do you want to delete these logs") + "[y/n]?")
             if answer.lower() in ["y", "yes"]:
                 queryset.delete()
                 self.stdout.write('delete complete')
             else:
                 self.stderr.write('operation canceled')
             return
-
-    def get_version(self):
-        return get_version()

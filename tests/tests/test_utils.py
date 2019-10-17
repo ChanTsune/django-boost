@@ -1,6 +1,7 @@
-from django.test import TestCase
-
+from django_boost.test import TestCase
 from django_boost.utils import Loop, isiterable, loop
+from django_boost.utils.attribute import (getattr_chain, getattrs,
+                                          hasattr_chain, hasattrs)
 from django_boost.utils.functions import loopfirst, loopfirstlast, looplast
 
 
@@ -76,3 +77,34 @@ class TestLoop(TestCase):
             self.assertEqual(forloop1.counter0, forloop2.counter0)
             self.assertEqual(forloop1.revcounter, forloop2.revcounter)
             self.assertEqual(forloop1.revcounter0, forloop2.revcounter0)
+
+
+class TestAttribute(TestCase):
+
+    def test_getattrs(self):
+        i = 1
+
+        self.assertEqual(getattrs(i, '__class__', '__doc__'),
+                         (i.__class__, i.__doc__))
+        self.assertEqual(getattrs(i, '__class__', 'class',
+                                  default=None), (i.__class__, None))
+        with self.assertRaises(AttributeError):
+            getattrs(i, '__class__', 'class')
+
+    def test_getattr_chain(self):
+        i = 1
+        self.assertEqual(getattr_chain(
+            i, '__class__.__name__'), i.__class__.__name__)
+
+        with self.assertRaises(AttributeError):
+            getattr(i, '__class__.name')
+
+    def test_hasatttrs(self):
+        i = 1
+        self.assertTrue(hasattrs(i, '__class__', '__doc__'))
+        self.assertFalse(hasattrs(i, '__class__', 'doc'))
+
+    def test_hasatttr_chain(self):
+        i = 1
+        self.assertTrue(hasattr_chain(i, '__class__.__name__'))
+        self.assertFalse(hasattr_chain(i, '__class__.doc'))

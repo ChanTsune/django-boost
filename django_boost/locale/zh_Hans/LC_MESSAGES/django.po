@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-28 04:57+0000\n"
+"POT-Creation-Date: 2019-10-11 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-#: django_boost/management/commands/adminsitelog.py:93
-msgid "Do you want to delete these logs [y/n]?"
-msgstr ""
+
+#: django_boost/management/commands/adminsitelog.py:94
+msgid "Do you want to delete these logs"
+msgstr "您是否要删除这些日志"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -35,8 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "具有该电子邮件地址的用户已经存在。"
 
-#: django_boost/validators.py:14
+#: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "输入有效的JSON字符串。"
+
+#: django_boost/validators.py:36
+msgid "Enter 6-digit hexadecimal number including #."
+msgstr "输入6位十六进制数字，包括＃。"

@@ -42,11 +42,7 @@ INSTALLED_APPS = [
 `settings.py`
 
 ```py
-...
-
 AUTH_USER_MODEL = 'django_boost.EmailUser'
-
-...
 ```
 
 Replace Django default user model  
@@ -118,9 +114,9 @@ Model mixins can also be combined in this way.
 
 ```py
 from django.db import models
-from django_boost.models.filed import ColorCodeField
+from django_boost.models.fields import ColorCodeField
 
-class Model(models.Model):
+class MyModel(models.Model):
     color = ColorCodeField()
 
 ```
@@ -131,6 +127,34 @@ On the other hand, specifying `lower=True` will make the saved string lower case
 You can not specify both at the same time.  
 If neither is set, the string is saved without any changes.  
 Default is `upper=False`,`lower=Flase`.  
+
+#### SplitDateTimeField  
+
+```py
+from django.db import models
+from django_boost.models.fields import SplitDateTimeField
+
+class MyModel(models.Model):
+    color = SplitDateTimeField()
+
+```
+
+A little convenient DateTimeField.
+
+form_class in django.models.db.DateTimeField is replaced with
+django.forms.SplitDateTimeField.
+The effect on DB is the same as django.models.db.DateTimeField.
+
+#### AutoOneToOneField  
+
+```py
+from django.db import models
+from django_boost.models.fields import AutoOneToOneField
+
+class UserProfile(models.Model):
+    user = AutoOneToOneField(User, primary_key=True, related_name='profile')
+    home_page = models.URLField(max_length=255, blank=True)
+```
 
 ### Middleware  
 
@@ -426,6 +450,29 @@ class CustomerSearchView(FormView):
 
 `MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
+#### RelatedModelInlineMixin  
+
+Mixin that treat two related `Model`'s as a single `Model`.
+
+```py
+class ModelA(models.Model):
+    text = models.TextField(...)
+
+
+class ModelB(models.Model):
+    name = models.CharField(...)
+    model_a = models.OneToOneField(to=ModelA, ...)
+```
+
+```py
+class ModelBForm(RelatedModelInlineMixin, forms.ModelForm):
+    inline_fields = {'model_a': ('text',)}
+
+    class Meta:
+        model = ModelB
+        fields = ('name', )
+```
+
 ### GenericView  
 
 #### Extended Views  
@@ -529,6 +576,50 @@ In the template you can use as follows.
 {% url 'myapp:customer:update' %}
 {% url 'myapp:customer:delete' %}
 ```
+
+### Path Converters  
+
+```py
+from django_boost.urls import register_boost_converters
+
+register_boost_converters()
+```
+
+Add `hex`, `oct`, `bin`, `hex_str`,`oct_str`and `bin_str` to path converter keyword.  
+
+```py
+from django.urls import path
+from django_boost.urls import register_boost_converters
+
+register_boost_converters()
+
+urlpatterns = [
+    path('bin/<bin:id>', ~~),
+    path('oct/<bin:id>', ~~),
+    path('hex/<bin:id>', ~~),
+]
+```
+
+`bin` match `[01]+`,`oct` match `[0-7]+`, `hex` match `[0-9a-fA-F]`  
+These are passed as `int` type to the python program.  
+
+Keywords that end with `_str` are passed as `str` type to python program.  
+
+### Short Cut Functions  
+
+```py
+from django_boost.shortcuts import (
+    get_list_or_default, get_list_or_exception,
+    get_object_or_default, get_object_or_exception)
+
+my_model = MyModel.objects.get(id=1)
+get_object_or_default(MyModel, default=my_model, id=2)
+
+get_object_or_exception(MyModel, exception=Exception, id=2)
+
+```
+
+These behave like `get_object_or_404`  
 
 ### Routing Utilitys  
 
@@ -853,3 +944,18 @@ python manage.py adminsitelog --delete
 ```
 
 It is also possible to delete only the logs narrowed down by `--filter` and `--exclude`.  
+
+#### support_heroku  
+
+```bash
+python manage.py support_heroku
+```
+
+Create heroku config files.  
+`Procfile`,`runtime.txt`,`requirements.txt`  
+
+For more details.  
+
+```bash
+python manage.py support_heroku -h
+```

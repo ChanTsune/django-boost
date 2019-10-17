@@ -1,7 +1,8 @@
 import os
 
-from django.test import TestCase, override_settings
+from django.test import override_settings
 
+from django_boost.test import TestCase
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -41,7 +42,7 @@ TEST_DATA = [
 
 
 @override_settings(
-    ROOT_URLCONF='django_boost.tests.context_processors.urls',
+    ROOT_URLCONF='tests.tests.context_processors.urls',
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(ROOT_PATH, 'templates')],

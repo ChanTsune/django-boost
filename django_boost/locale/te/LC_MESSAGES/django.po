@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-28 04:57+0000\n"
+"POT-Creation-Date: 2019-10-11 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: django_boost/management/commands/adminsitelog.py:93
-msgid "Do you want to delete these logs [y/n]?"
-msgstr ""
+
+#: django_boost/management/commands/adminsitelog.py:94
+msgid "Do you want to delete these logs"
+msgstr "మీరు ఈ లాగ్లను తొలగించాలనుకుంటున్నారా"
 
 #: django_boost/models/__init__.py:11
 msgid "username"
@@ -35,8 +36,12 @@ msgstr ""
 
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
-msgstr ""
+msgstr "ఆ ఇమెయిల్ చిరునామా ఉన్న వినియోగదారు ఇప్పటికే ఉన్నారు."
 
-#: django_boost/validators.py:14
+#: django_boost/validators.py:17
 msgid "Enter valid JSON string."
-msgstr ""
+msgstr "చెల్లుబాటు అయ్యే JSON స్ట్రింగ్‌ను నమోదు చేయండి."
+
+#: django_boost/validators.py:36
+msgid "Enter 6-digit hexadecimal number including #."
+msgstr "# తో సహా 6-అంకెల హెక్సాడెసిమల్ సంఖ్యను నమోదు చేయండి."
