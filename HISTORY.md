@@ -7,6 +7,7 @@
 - Add  
   - `support_heroku` command, Create a configuration file for heroku  
   - `AutoOneToOneField`  
+  - `RelatedModelInlineMixin`  
   - new Path Converters `hex`,`oct`,`bin`,`hex_str`,`oct_str` and `bin_str`  
   - new utility functions `getattrs`,`getattr_chain`,`hasattrs` and `hasattr_chain` in `utils.attribute`  
   - new shortcut functions `get_object_or_default`,`get_object_or_exception`, `get_list_or_default`,`get_list_or_exception` in `shortcuts`  
