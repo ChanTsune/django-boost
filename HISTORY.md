@@ -2,6 +2,20 @@
 
 ## Versions  
 
+### 1.2  
+
+- Add  
+  - `support_heroku` command, Create a configuration file for heroku  
+  - `AutoOneToOneField`  
+  - new Path Converters `hex`,`oct`,`bin`,`hex_str`,`oct_str` and `bin_str`  
+  - new utility functions `getattrs`,`getattr_chain`,`hasattrs` and `hasattr_chain` in `utils.attribute`  
+  - new shortcut functions `get_object_or_default`,`get_object_or_exception`, `get_list_or_default`,`get_list_or_exception` in `shortcuts`  
+- Change  
+  - rename `MuchedObjectGetMixin` to `MatchedObjectGetMixin`  
+- Update  
+  - `MatchedObjectGetMixin` Add `field_lookup` class variable to specify detailed search conditions  
+  - Multilingual support with automatic translation  
+
 ### 1.1.2  
 
 - Add  
