@@ -42,11 +42,7 @@ INSTALLED_APPS = [
 `settings.py`
 
 ```py
-...
-
 AUTH_USER_MODEL = 'django_boost.EmailUser'
-
-...
 ```
 
 Replace Django default user model  
@@ -453,6 +449,29 @@ class CustomerSearchView(FormView):
 ```
 
 `MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
+
+#### RelatedModelInlineMixin  
+
+Mixin that treat two related `Model`'s as a single `Model`.
+
+```py
+class ModelA(models.Model):
+    text = models.TextField(...)
+
+
+class ModelB(models.Model):
+    name = models.CharField(...)
+    model_a = models.OneToOneField(to=ModelA, ...)
+```
+
+```py
+class ModelBForm(RelatedModelInlineMixin, forms.ModelForm):
+    inline_fields = {'model_a': ('text',)}
+
+    class Meta:
+        model = ModelB
+        fields = ('name', )
+```
 
 ### GenericView  
 
