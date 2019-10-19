@@ -41,6 +41,8 @@ class TestConverter(TestCase):
 
 class TestRegex(TestCase):
 
+    DATE_FORMAT = "%d/%d"
+
     def test_year_regex(self):
         import re
         from calendar import isleap
@@ -53,3 +55,67 @@ class TestRegex(TestCase):
             with self.subTest(value, value=value):
                 result = bool(regex_leap_year.fullmatch(value))
                 self.assertEqual(isleap(i), result)
+
+    def test_date_31_regex(self):
+        import re
+        from django_boost.urls.converters.date import REGEX_DATE_31
+
+        regex_date_31 = re.compile(REGEX_DATE_31)
+
+        for m in range(21):
+            for d in range(50):
+                value = self.DATE_FORMAT % (m, d)
+                with self.subTest(value, value=value):
+                    result = bool(regex_date_31.fullmatch(value))
+                    if m in [1, 3, 5, 7, 8, 10, 12] and d in range(1, 32):
+                        self.assertTrue(result)
+                    else:
+                        self.assertFalse(result)
+
+    def test_date_30_regex(self):
+        import re
+        from django_boost.urls.converters.date import REGEX_DATE_30
+
+        regex_date_30 = re.compile(REGEX_DATE_30)
+
+        for m in range(21):
+            for d in range(50):
+                value = self.DATE_FORMAT % (m, d)
+                with self.subTest(value, value=value):
+                    result = bool(regex_date_30.fullmatch(value))
+                    if m in [4, 6, 9, 11] and d in range(1, 31):
+                        self.assertTrue(result)
+                    else:
+                        self.assertFalse(result)
+
+    def test_date_29_regex(self):
+        import re
+        from django_boost.urls.converters.date import REGEX_DATE_29
+
+        regex_date_29 = re.compile(REGEX_DATE_29)
+
+        for m in range(21):
+            for d in range(50):
+                value = self.DATE_FORMAT % (m, d)
+                with self.subTest(value, value=value):
+                    result = bool(regex_date_29.fullmatch(value))
+                    if m == 2 and d in range(1, 30):
+                        self.assertTrue(result)
+                    else:
+                        self.assertFalse(result)
+
+    def test_date_28_regex(self):
+        import re
+        from django_boost.urls.converters.date import REGEX_DATE_28
+
+        regex_date_28 = re.compile(REGEX_DATE_28)
+
+        for m in range(21):
+            for d in range(50):
+                value = self.DATE_FORMAT % (m, d)
+                with self.subTest(value, value=value):
+                    result = bool(regex_date_28.fullmatch(value))
+                    if m == 2 and d in range(1, 29):
+                        self.assertTrue(result)
+                    else:
+                        self.assertFalse(result)
