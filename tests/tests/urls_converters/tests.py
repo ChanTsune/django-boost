@@ -37,3 +37,19 @@ class TestConverter(TestCase):
             url = reverse(name, kwargs={name: value})
             response = self.client.get(url)
             self.assertStatusCodeEqual(response, 200)
+
+
+class TestRegex(TestCase):
+
+    def test_year_regex(self):
+        import re
+        from calendar import isleap
+        from django_boost.urls.converters.date import REGEX_LEAP_YEAR
+
+        regex_leap_year = re.compile(REGEX_LEAP_YEAR)
+
+        for i in range(1, 10001):
+            value = str(i)
+            with self.subTest(value, value=value):
+                result = bool(regex_leap_year.fullmatch(value))
+                self.assertEqual(isleap(i), result)
