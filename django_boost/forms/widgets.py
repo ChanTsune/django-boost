@@ -1,4 +1,4 @@
-from django.forms.widgets import Input
+from django.forms.widgets import Input, RadioSelect
 
 
 class ColorInput(Input):
@@ -6,3 +6,8 @@ class ColorInput(Input):
 
     input_type = 'color'
     template_name = 'django/forms/widgets/input.html'
+
+
+class StarRateSelect(RadioSelect):
+    """Star styled radio select."""
+    template_name = "boost/forms/widgets/star_radio.html"
