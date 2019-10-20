@@ -8,6 +8,10 @@ Extension library to boost django development
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/django_boost)](https://pypi.org/project/django-boost/)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
+## Documentation  
+
+[https://django-boost.readthedocs.io/en/latest/](https://django-boost.readthedocs.io/en/latest/)
+
 ## Installation  
 
 ```bash
