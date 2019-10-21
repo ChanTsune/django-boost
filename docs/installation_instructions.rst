@@ -27,7 +27,9 @@ Configuration
 ^^^^^^^^^^^^^
 
 You will need to add the *django_boost* application to the INSTALLED_APPS
-setting of your Django project *settings.py* file.::
+setting of your Django project *settings.py* file.
+
+::
 
   INSTALLED_APPS = [
       ...

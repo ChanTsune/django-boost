@@ -48,6 +48,7 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    :caption: Contents:
 
    installation_instructions
+   custom_user
 
 
 Indices and tables
