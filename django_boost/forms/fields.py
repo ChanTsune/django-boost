@@ -1,6 +1,6 @@
-from django.forms import CharField, ChoiceField
+from django.forms import CharField
 
-from django_boost.forms.widgets import ColorInput, StarRateSelect
+from django_boost.forms.widgets import ColorInput
 from django_boost.validators import validate_color_code
 
 
@@ -9,8 +9,3 @@ class ColorCodeField(CharField):
 
     widget = ColorInput
     default_validators = [validate_color_code]
-
-
-class StarField(ChoiceField):
-    """Field for ranged integer"""
-    widget = StarRateSelect

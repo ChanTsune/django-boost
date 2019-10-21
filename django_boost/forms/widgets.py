@@ -10,4 +10,6 @@ class ColorInput(Input):
 
 class StarRateSelect(RadioSelect):
     """Star styled radio select."""
+
     template_name = "boost/forms/widgets/star_radio.html"
+    option_template_name = "boost/forms/widgets/star_radio_input.html"
