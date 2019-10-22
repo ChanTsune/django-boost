@@ -140,9 +140,7 @@ class UserProfile(models.Model):
     home_page = models.URLField(max_length=255, blank=True)
 ```
 
-### Middleware  
-
-#### RedirectCorrectHostnameMiddleware
+### RedirectCorrectHostnameMiddleware
 
 `settings.py`
 
@@ -169,7 +167,7 @@ This is useful when migrating domains
 
 Originally it should be done with server software such as nginx and apache, but it is useful when the setting is troublesome or when using services such as heroku  
 
-#### HttpStatusCodeExceptionMiddleware  
+### HttpStatusCodeExceptionMiddleware  
 
 `settings.py`
 
@@ -199,7 +197,7 @@ def view(request):
 
 ```
 
-It is necessary to set `HttpStatusCodeExceptionMiddleware` to use
+This Middleware is required when using `HttpStatusCodeExceptionMiddleware`  
 
 ### Template context  
 
