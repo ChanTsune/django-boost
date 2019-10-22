@@ -77,7 +77,7 @@ class Stock(UUIDModelMixin):
 
 Mixins that replace `id` from `AutoField` to `UUIDField`  
 
-#### TimeStampModelMixin  
+### TimeStampModelMixin  
 
 ```py
 from django.db import models
@@ -95,9 +95,7 @@ posted_at = models.DateTimeField(auto_now_add=True)
 updated_at = models.DateTimeField(auto_now=True)
 ```
 
-### Fields  
-
-#### ColorCodeField  
+### ColorCodeField  
 
 ```py
 from django.db import models
@@ -115,24 +113,23 @@ You can not specify both at the same time.
 If neither is set, the string is saved without any changes.  
 Default is `upper=False`,`lower=Flase`.  
 
-#### SplitDateTimeField  
+### SplitDateTimeField  
 
 ```py
 from django.db import models
 from django_boost.models.fields import SplitDateTimeField
 
 class MyModel(models.Model):
-    color = SplitDateTimeField()
-
+    date = SplitDateTimeField()
 ```
 
 A little convenient DateTimeField.
 
-form_class in django.models.db.DateTimeField is replaced with
-django.forms.SplitDateTimeField.
-The effect on DB is the same as django.models.db.DateTimeField.
+`SplitDateTimeField` is the form_class of `django.models.db.DateTimeField` replaced with `django.forms.SplitDateTimeField`.
 
-#### AutoOneToOneField  
+Internal DB field is the same as `django.models.db.DateTimeField`.
+
+### AutoOneToOneField  
 
 ```py
 from django.db import models

@@ -31,7 +31,7 @@ TimeStampModelMixin
       name = models.CharField(max_length=128)
       count = models.IntegerField()
 
-The fields `posted_at` and `updated_at` are added.
+The fields ``posted_at`` and ``updated_at`` are added.
 
 The following fields are automatically added to the above model.
 

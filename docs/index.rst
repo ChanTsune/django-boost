@@ -50,6 +50,7 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    installation_instructions
    custom_user
    model_mixins
+   model_fields
 
 
 Indices and tables
