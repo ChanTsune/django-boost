@@ -37,11 +37,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-## use case  
+## Brief introduction  
 
-### Custom User  
-
-#### EmailUser  
+### EmailUser  
 
 `settings.py`
 
@@ -52,7 +50,7 @@ AUTH_USER_MODEL = 'django_boost.EmailUser'
 Replace Django default user model  
 Use email address instead of username when logging in  
 
-#### AbstractEmailUser  
+### AbstractEmailUser  
 
 ```py
 from django.db import models
@@ -66,9 +64,7 @@ class CustomUser(AbstractEmailUser):
 
 Available when you want to add a field to EmailUser  
 
-### ModelMixins  
-
-#### UUIDModelMixin  
+### UUIDModelMixin  
 
 ```py
 from django.db import models
@@ -98,19 +94,6 @@ The fields `posted_at` and `updated_at` are added.
 posted_at = models.DateTimeField(auto_now_add=True)
 updated_at = models.DateTimeField(auto_now=True)
 ```
-
-#### Combine  
-
-```py
-from django.db import models
-from django_boost.models.mixins import UUIDModelMixin, TimeStampModelMixin
-
-class Stock(UUIDModelMixin,TimeStampModelMixin):
-    name = models.CharField(max_length=128)
-    count = models.IntegerField()
-```
-
-Model mixins can also be combined in this way.  
 
 ### Fields  
 
