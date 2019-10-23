@@ -54,6 +54,7 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    middleware
    http_status_code_exceptions
    template_context
+   view_mixins
 
 
 Indices and tables
