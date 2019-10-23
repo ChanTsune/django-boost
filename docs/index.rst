@@ -59,6 +59,9 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    form_mixins
    path_converters
    shortcut_functions
+   routing_utilitys
+   admin_site_utilitys
+   commands
 
 
 Indices and tables

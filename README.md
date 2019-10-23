@@ -566,9 +566,7 @@ get_object_or_exception(MyModel, exception=Exception, id=2)
 
 These behave like `get_object_or_404`  
 
-### Routing Utilitys  
-
-#### UrlSet  
+### UrlSet  
 
 If URLs corresponding to multiple models are described in one `urls.py`, it may be redundant.  
 As below.  
