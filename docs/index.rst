@@ -53,7 +53,6 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    model_fields
    middleware
    http_status_code_exceptions
-   template_context
    generic_views
    view_mixins
    form_mixins
@@ -61,6 +60,9 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    shortcut_functions
    routing_utilitys
    admin_site_utilitys
+   utility_functions
+   template_context
+   template_tags
    commands
 
 

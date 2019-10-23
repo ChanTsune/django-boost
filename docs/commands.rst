@@ -1,7 +1,7 @@
 Commands
 =========
 
-:synopsis: 
+:synopsis: Exist commands in django-boost
 
 adminsitelog
 -------------
