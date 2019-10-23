@@ -199,9 +199,7 @@ def view(request):
 
 This Middleware is required when using `HttpStatusCodeExceptionMiddleware`  
 
-### Template context  
-
-#### User Agent  
+### User Agent in Template context
 
 ```py
 TEMPLATES = [
@@ -239,9 +237,7 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)  
 
-### Access Mixins  
-
-#### AllowContentTypeMixin  
+### AllowContentTypeMixin  
 
 Restrict the content type of http request.  
 
@@ -260,7 +256,7 @@ Restrict request based on `Content-Type` of http header.
 If the content type is not allowed, http415 response will be returned.  
 You can disable restrictions by specifying `strictly = False`  
 
-#### ReAuthenticationRequiredMixin  
+### ReAuthenticationRequiredMixin  
 
 ```py
 from django.views.generic import TemplateView
@@ -288,7 +284,7 @@ Can specify `int` and `timedelta` ,`None`.
 `logout=True`, Logout if the specified time limit has passed  
 `logout=False`, Do not logout Even if the specified time limit has passed  
 
-#### LimitedTermMixin  
+### LimitedTermMixin  
 
 ```py
 from datetime import datetime
@@ -310,9 +306,7 @@ You can change the date and time that can be accessed dynamically by overriding 
 You can specify the exception class to be thrown when the condition accessible to `exception_class` is not met.  
 The default is the `Http404` exception.  
 
-### Redirect Control Mixins  
-
-#### DynamicRedirectMixin  
+### DynamicRedirectMixin  
 
 You can control the redirect destination with `next=~` in the URL query string like `LoginView`.  
 
@@ -327,9 +321,7 @@ class MyFormView(DynamicRedirectMixin, FormView):
 
 You can change the query string parameter name by changing `redirect_field_name`.  
 
-### Adittional Attribute Mixins  
-
-#### UserAgentMixin  
+### UserAgentMixin  
 
 ```py
 from django_boost.views.generic import TemplateView
@@ -347,7 +339,7 @@ Assign `user_agent` attribute to `self.request` and switch the template file to 
 If the user agent can not be determined, the template specified in `template_name` will be used.  
 `pc_template_name`,`tablet_template_name`,`mobile_template_name` has no arms, but `template_name` is required.  
 
-#### JsonRequestMixin  
+### JsonRequestMixin  
 
 A specialized mixin for `AllowContentTypeMixin` for json.  
 
@@ -368,9 +360,7 @@ You can access the dictionary object parsed from the Json string sent by the cli
 
 If you use for the purpose of API `JsonView` below is recommended.  
 
-### ResponseMixin  
-
-#### JsonResponseMixin  
+### JsonResponseMixin  
 
 Returns the response in Json format  
 
@@ -395,9 +385,7 @@ Specify `strictly = True` if you want to limit the Content-Type to Json only.
 
 If you use for the purpose of API `JsonView` below is recommended.  
 
-### Form Mixin  
-
-#### MatchedObjectGetMixin  
+### MatchedObjectGetMixin  
 
 Object of the condition that matches the form input content.
 Or mixin to add a method to get the queryset.
@@ -432,7 +420,7 @@ class CustomerSearchView(FormView):
 
 `MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
-#### RelatedModelInlineMixin  
+### RelatedModelInlineMixin  
 
 Mixin that treat two related `Model`'s as a single `Model`.
 
@@ -544,7 +532,7 @@ from . import views
 
 app_name = "myapp"
 urlpatterns = [
-    path('views/',include(views.CustomerViews(app_name="myapp:customer").urls)),
+    path('views/',include(views.CustomerViews(app_name="customer").urls)),
 ]
 
 ```
