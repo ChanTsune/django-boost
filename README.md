@@ -522,31 +522,6 @@ In the template you can use as follows.
 
 The name of the URL is defined under the namespace of the lower-cased model class name.  
 
-##### Case of Namespaced  
-
-`urls.py`  
-
-```py
-from django.urls import path, include
-from . import views
-
-app_name = "myapp"
-urlpatterns = [
-    path('views/',include(views.CustomerViews(app_name="customer").urls)),
-]
-
-```
-
-In the template you can use as follows.  
-
-```html+django
-{% url 'myapp:customer:list' %}
-{% url 'myapp:customer:create' %}
-{% url 'myapp:customer:detail' %}
-{% url 'myapp:customer:update' %}
-{% url 'myapp:customer:delete' %}
-```
-
 ### Path Converters  
 
 ```py
@@ -575,7 +550,7 @@ These are passed as `int` type to the python program.
 
 Keywords that end with `_str` are passed as `str` type to python program.  
 
-### Short Cut Functions  
+### Shortcut Functions  
 
 ```py
 from django_boost.shortcuts import (

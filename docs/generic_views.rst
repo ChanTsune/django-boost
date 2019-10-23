@@ -82,6 +82,7 @@ The name of the URL is defined under the namespace of the lower-cased model clas
 
 Case of Namespaced
 ~~~~~~~~~~~~~~~~~~~
+
 ::
 
   from django.urls import path, include
@@ -89,7 +90,7 @@ Case of Namespaced
 
   app_name = "myapp"
   urlpatterns = [
-      path('views/', include(views.CustomerViews(app_name="customer").urls)),
+      path('views/', include(views.CustomerViews(app_name="myapp:customer").urls)),
   ]
 
 In the template you can use as follows.
