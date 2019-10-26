@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.2.1
+
+- Update  
+  - new option `--name_field` in `adminsitelog` command.  
+
 ### 1.2  
 
 - Add  

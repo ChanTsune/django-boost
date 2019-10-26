@@ -3,6 +3,7 @@ from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
 
 from django_boost.core.management import BaseCommand
+from django_boost.utils.attribute import getattr_chain, hasattr_chain
 
 
 class Command(BaseCommand):
@@ -35,7 +36,7 @@ class Command(BaseCommand):
             parsed.update(self._parse_filter(condition))
         return parsed
 
-    def print_log(self, log):
+    def print_log(self, log, **options):
         fmt = "{id} | {action} | {object} | {user} | {time}"
         fmap = {}
         if log.is_addition():
@@ -48,10 +49,22 @@ class Command(BaseCommand):
         else:  # log.is_deletion
             fmap["action"] = self.style.ERROR("Deleted")
             fmap["object"] = log.object_repr
-        fmap["user"] = log.user.username
+        fmap["user"] = self._get_user_name(
+            log.user, options['name_field'])
         fmap["time"] = log.action_time
         fmap["id"] = log.id
         self.stdout.write(fmt.format_map(fmap))
+
+    def _get_user_name(self, user, name_field=None):
+        if name_field is not None:
+            if hasattr_chain(user, name_field):
+                return getattr_chain(user, name_field)
+            raise AttributeError("'%s' has no attribute '%s'" %
+                                 (user.__class__, name_field))
+        name_fields = ["username", "email"]
+        for field in name_fields:
+            if hasattr(user, field):
+                return user.username
 
     def add_arguments(self, parser):
         supported_fields = self.get_sortable_fields(LogEntry)
@@ -75,6 +88,11 @@ class Command(BaseCommand):
                                     Supported filed is %s.
                                     e.g. "-action_flag" """
                             % supported_fields_str)
+        parser.add_argument('--name_field', type=str,
+                            default=None,
+                            help="""user name field.
+                                    e.g. "--name_field email",
+                                    "--name_field profile.phone" """)
 
     def handle(self, *args, **options):
         queryset = LogEntry.objects.all()
@@ -89,7 +107,7 @@ class Command(BaseCommand):
             return
         self.stdout.write("id | action | detail | user | time")
         for log in queryset:
-            self.print_log(log)
+            self.print_log(log, **options)
         if options['delete']:
             answer = input(_("Do you want to delete these logs") + "[y/n]?")
             if answer.lower() in ["y", "yes"]:
