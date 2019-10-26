@@ -5,7 +5,7 @@
 ### 1.2.1
 
 - Update  
-  - new option `--name_field` in `adminsitelog` command.  
+  - new option `--name_field` to `adminsitelog` command.  
 
 ### 1.2  
 
