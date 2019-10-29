@@ -17,4 +17,4 @@ install:
   - "pip install tox-travis pillow"
 script:
   - tox
-  - python manage.py test
+  - "python manage.py auto_migrate_test --remove"
