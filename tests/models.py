@@ -17,6 +17,7 @@ class ReverseOneToOneModel(models.Model):
 
 
 class ForwardOneToOneHasManyToManyModel(models.Model):
+    name = models.CharField(max_length=128)
     forward = models.OneToOneField(
         to='ForwardOneToOneHasManyToManyRelatedModel', related_name='reverse', on_delete=models.CASCADE)
 
@@ -26,7 +27,7 @@ class ForwardOneToOneHasManyToManyRelatedModel(models.Model):
 
 
 class ReverseOneToOneHasManyToManyModel(models.Model):
-    pass
+    name = models.CharField(max_length=128)
 
 class ReverseOneToOneHasManyToManyRelatedModel(models.Model):
     forward = models.OneToOneField(
