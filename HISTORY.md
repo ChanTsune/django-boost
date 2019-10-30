@@ -2,6 +2,12 @@
 
 ## Versions  
 
+### 1.2.1
+
+- Update  
+  - new option `--name_field` to `adminsitelog` command.  
+  - Supports cases where model has `ManyToManyField`(`RelatedModelInlineMixin`).  
+
 ### 1.2  
 
 - Add  

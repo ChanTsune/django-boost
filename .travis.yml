@@ -4,6 +4,7 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
+  - "3.8"
   - "pypy3"
 env:
   - DJANGO_VERSION=2.0
@@ -16,4 +17,4 @@ install:
   - "pip install tox-travis pillow"
 script:
   - tox
-  - python manage.py test
+  - "python manage.py auto_migrate_test --remove"

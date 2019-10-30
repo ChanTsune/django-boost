@@ -8,6 +8,10 @@ Extension library to boost django development
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/django_boost)](https://pypi.org/project/django-boost/)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
 
+## Documentation  
+
+[https://django-boost.readthedocs.io/en/latest/](https://django-boost.readthedocs.io/en/latest/)
+
 ## Installation  
 
 ```bash
@@ -33,11 +37,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-## use case  
+## Brief introduction  
 
-### Custom User  
-
-#### EmailUser  
+### EmailUser  
 
 `settings.py`
 
@@ -48,7 +50,7 @@ AUTH_USER_MODEL = 'django_boost.EmailUser'
 Replace Django default user model  
 Use email address instead of username when logging in  
 
-#### AbstractEmailUser  
+### AbstractEmailUser  
 
 ```py
 from django.db import models
@@ -62,9 +64,7 @@ class CustomUser(AbstractEmailUser):
 
 Available when you want to add a field to EmailUser  
 
-### ModelMixins  
-
-#### UUIDModelMixin  
+### UUIDModelMixin  
 
 ```py
 from django.db import models
@@ -77,7 +77,7 @@ class Stock(UUIDModelMixin):
 
 Mixins that replace `id` from `AutoField` to `UUIDField`  
 
-#### TimeStampModelMixin  
+### TimeStampModelMixin  
 
 ```py
 from django.db import models
@@ -95,22 +95,7 @@ posted_at = models.DateTimeField(auto_now_add=True)
 updated_at = models.DateTimeField(auto_now=True)
 ```
 
-#### Combine  
-
-```py
-from django.db import models
-from django_boost.models.mixins import UUIDModelMixin, TimeStampModelMixin
-
-class Stock(UUIDModelMixin,TimeStampModelMixin):
-    name = models.CharField(max_length=128)
-    count = models.IntegerField()
-```
-
-Model mixins can also be combined in this way.  
-
-### Fields  
-
-#### ColorCodeField  
+### ColorCodeField  
 
 ```py
 from django.db import models
@@ -128,24 +113,23 @@ You can not specify both at the same time.
 If neither is set, the string is saved without any changes.  
 Default is `upper=False`,`lower=Flase`.  
 
-#### SplitDateTimeField  
+### SplitDateTimeField  
 
 ```py
 from django.db import models
 from django_boost.models.fields import SplitDateTimeField
 
 class MyModel(models.Model):
-    color = SplitDateTimeField()
-
+    date = SplitDateTimeField()
 ```
 
 A little convenient DateTimeField.
 
-form_class in django.models.db.DateTimeField is replaced with
-django.forms.SplitDateTimeField.
-The effect on DB is the same as django.models.db.DateTimeField.
+`SplitDateTimeField` is the form_class of `django.models.db.DateTimeField` replaced with `django.forms.SplitDateTimeField`.
 
-#### AutoOneToOneField  
+Internal DB field is the same as `django.models.db.DateTimeField`.
+
+### AutoOneToOneField  
 
 ```py
 from django.db import models
@@ -156,9 +140,7 @@ class UserProfile(models.Model):
     home_page = models.URLField(max_length=255, blank=True)
 ```
 
-### Middleware  
-
-#### RedirectCorrectHostnameMiddleware
+### RedirectCorrectHostnameMiddleware
 
 `settings.py`
 
@@ -185,7 +167,7 @@ This is useful when migrating domains
 
 Originally it should be done with server software such as nginx and apache, but it is useful when the setting is troublesome or when using services such as heroku  
 
-#### HttpStatusCodeExceptionMiddleware  
+### HttpStatusCodeExceptionMiddleware  
 
 `settings.py`
 
@@ -215,11 +197,9 @@ def view(request):
 
 ```
 
-It is necessary to set `HttpStatusCodeExceptionMiddleware` to use
+This Middleware is required when using `HttpStatusCodeExceptionMiddleware`  
 
-### Template context  
-
-#### User Agent  
+### User Agent in Template context
 
 ```py
 TEMPLATES = [
@@ -257,9 +237,7 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)  
 
-### Access Mixins  
-
-#### AllowContentTypeMixin  
+### AllowContentTypeMixin  
 
 Restrict the content type of http request.  
 
@@ -278,7 +256,7 @@ Restrict request based on `Content-Type` of http header.
 If the content type is not allowed, http415 response will be returned.  
 You can disable restrictions by specifying `strictly = False`  
 
-#### ReAuthenticationRequiredMixin  
+### ReAuthenticationRequiredMixin  
 
 ```py
 from django.views.generic import TemplateView
@@ -306,7 +284,7 @@ Can specify `int` and `timedelta` ,`None`.
 `logout=True`, Logout if the specified time limit has passed  
 `logout=False`, Do not logout Even if the specified time limit has passed  
 
-#### LimitedTermMixin  
+### LimitedTermMixin  
 
 ```py
 from datetime import datetime
@@ -328,9 +306,7 @@ You can change the date and time that can be accessed dynamically by overriding 
 You can specify the exception class to be thrown when the condition accessible to `exception_class` is not met.  
 The default is the `Http404` exception.  
 
-### Redirect Control Mixins  
-
-#### DynamicRedirectMixin  
+### DynamicRedirectMixin  
 
 You can control the redirect destination with `next=~` in the URL query string like `LoginView`.  
 
@@ -345,9 +321,7 @@ class MyFormView(DynamicRedirectMixin, FormView):
 
 You can change the query string parameter name by changing `redirect_field_name`.  
 
-### Adittional Attribute Mixins  
-
-#### UserAgentMixin  
+### UserAgentMixin  
 
 ```py
 from django_boost.views.generic import TemplateView
@@ -365,7 +339,7 @@ Assign `user_agent` attribute to `self.request` and switch the template file to 
 If the user agent can not be determined, the template specified in `template_name` will be used.  
 `pc_template_name`,`tablet_template_name`,`mobile_template_name` has no arms, but `template_name` is required.  
 
-#### JsonRequestMixin  
+### JsonRequestMixin  
 
 A specialized mixin for `AllowContentTypeMixin` for json.  
 
@@ -386,9 +360,7 @@ You can access the dictionary object parsed from the Json string sent by the cli
 
 If you use for the purpose of API `JsonView` below is recommended.  
 
-### ResponseMixin  
-
-#### JsonResponseMixin  
+### JsonResponseMixin  
 
 Returns the response in Json format  
 
@@ -413,9 +385,7 @@ Specify `strictly = True` if you want to limit the Content-Type to Json only.
 
 If you use for the purpose of API `JsonView` below is recommended.  
 
-### Form Mixin  
-
-#### MatchedObjectGetMixin  
+### MatchedObjectGetMixin  
 
 Object of the condition that matches the form input content.
 Or mixin to add a method to get the queryset.
@@ -450,7 +420,7 @@ class CustomerSearchView(FormView):
 
 `MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.  
 
-#### RelatedModelInlineMixin  
+### RelatedModelInlineMixin  
 
 Mixin that treat two related `Model`'s as a single `Model`.
 
@@ -552,31 +522,6 @@ In the template you can use as follows.
 
 The name of the URL is defined under the namespace of the lower-cased model class name.  
 
-##### Case of Namespaced  
-
-`urls.py`  
-
-```py
-from django.urls import path, include
-from . import views
-
-app_name = "myapp"
-urlpatterns = [
-    path('views/',include(views.CustomerViews(app_name="myapp:customer").urls)),
-]
-
-```
-
-In the template you can use as follows.  
-
-```html+django
-{% url 'myapp:customer:list' %}
-{% url 'myapp:customer:create' %}
-{% url 'myapp:customer:detail' %}
-{% url 'myapp:customer:update' %}
-{% url 'myapp:customer:delete' %}
-```
-
 ### Path Converters  
 
 ```py
@@ -605,7 +550,7 @@ These are passed as `int` type to the python program.
 
 Keywords that end with `_str` are passed as `str` type to python program.  
 
-### Short Cut Functions  
+### Shortcut Functions  
 
 ```py
 from django_boost.shortcuts import (
@@ -621,9 +566,7 @@ get_object_or_exception(MyModel, exception=Exception, id=2)
 
 These behave like `get_object_or_404`  
 
-### Routing Utilitys  
-
-#### UrlSet  
+### UrlSet  
 
 If URLs corresponding to multiple models are described in one `urls.py`, it may be redundant.  
 As below.  
