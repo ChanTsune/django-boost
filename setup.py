@@ -54,7 +54,7 @@ def read(fname):
 
 setup(
     name='django_boost',
-    version='1.2',
+    version='1.2.1',
     description='Django Extension library',
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
