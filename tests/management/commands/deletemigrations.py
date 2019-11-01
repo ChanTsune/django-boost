@@ -1,6 +1,7 @@
 import os
 
 from django.utils.translation import gettext as _
+
 from django_boost.core.management import AppCommand
 
 
@@ -30,7 +31,7 @@ class Command(AppCommand):
         migration_dir = os.path.join(app_path, 'migrations')
         file_list = []
         if os.path.exists(migration_dir):
-            for d, _, files in os.walk(migration_dir):
+            for d, dirs, files in os.walk(migration_dir):
                 for file in files:
                     if file == '__init__.py':
                         continue

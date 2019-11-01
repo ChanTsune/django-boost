@@ -1,4 +1,5 @@
 from django.core.management import call_command
+
 from django_boost.core.management import BaseCommand
 
 

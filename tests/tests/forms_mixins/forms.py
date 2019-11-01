@@ -1,4 +1,5 @@
 from django import forms
+
 from django_boost.forms.mixins import RelatedModelInlineMixin
 
 from tests import models
@@ -20,7 +21,8 @@ class ReverseOneToOneModelForm(RelatedModelInlineMixin, forms.ModelForm):
         fields = ('name',)
 
 
-class ForwardOneToOneHasManyToManyModelForm(RelatedModelInlineMixin, forms.ModelForm):
+class ForwardOneToOneHasManyToManyModelForm(RelatedModelInlineMixin,
+                                            forms.ModelForm):
     inline_fields = {'forward': ('items',)}
 
     class Meta:
@@ -28,7 +30,8 @@ class ForwardOneToOneHasManyToManyModelForm(RelatedModelInlineMixin, forms.Model
         fields = ('name',)
 
 
-class ReverseOneToOneHasManyToManyModelForm(RelatedModelInlineMixin, forms.ModelForm):
+class ReverseOneToOneHasManyToManyModelForm(RelatedModelInlineMixin,
+                                            forms.ModelForm):
     inline_fields = {'reverse': ('items',)}
 
     class Meta:

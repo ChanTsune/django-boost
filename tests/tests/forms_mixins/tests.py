@@ -1,5 +1,3 @@
-from django.db import connection
-from django.db.models.base import ModelBase
 from django_boost.test import TestCase
 
 
@@ -36,10 +34,10 @@ class TestRelatedModelInlineMixins(TestCase):
     def test_forward_one_to_one_update(self):
         from .forms import ForwardOneToOneModelForm
         r = self.ReverseOneToOneModel.objects.create(name='+++++')
-        f = self.ForwardOneToOneModel.objects.create(name='-----',forward=r)
+        f = self.ForwardOneToOneModel.objects.create(name='-----', forward=r)
 
         form = ForwardOneToOneModelForm(
-            {'name': 'sample', 'forward_name': 'forward_sample'},instance=f)
+            {'name': 'sample', 'forward_name': 'forward_sample'}, instance=f)
         self.assertTrue(form.is_valid())
         form.save()
 
@@ -54,7 +52,7 @@ class TestRelatedModelInlineMixins(TestCase):
     def test_reverse_one_to_one_update(self):
         from .forms import ReverseOneToOneModelForm
         r = self.ReverseOneToOneModel.objects.create(name='+++++')
-        f = self.ForwardOneToOneModel.objects.create(name='-----', forward=r)
+        _ = self.ForwardOneToOneModel.objects.create(name='-----', forward=r)
 
         form = ReverseOneToOneModelForm(
             {'name': 'sample', 'reverse_name': 'reverse_sample'}, instance=r)
@@ -76,9 +74,10 @@ class TestRelatedModelInlineMixins(TestCase):
         r = self.ForwardOneToOneHasManyToManyRelatedModel.objects.create()
         r.items.set([i])
         r.save()
-        f = self.ForwardOneToOneHasManyToManyModel.objects.create(name='-----',forward=r)
+        f = self.ForwardOneToOneHasManyToManyModel.objects.create(
+            name='-----', forward=r)
         form = ForwardOneToOneHasManyToManyModelForm(
-            {'name': 'sample', 'forward_items': [self.item1.pk]},instance=f)
+            {'name': 'sample', 'forward_items': [self.item1.pk]}, instance=f)
         self.assertTrue(form.is_valid())
         form.save()
 
@@ -95,12 +94,13 @@ class TestRelatedModelInlineMixins(TestCase):
 
         i = self.RelatedItemModel.objects.create(name='sample_item')
         r = self.ReverseOneToOneHasManyToManyModel.objects.create(name='=====')
-        f = self.ReverseOneToOneHasManyToManyRelatedModel.objects.create(forward=r)
+        f = self.ReverseOneToOneHasManyToManyRelatedModel.objects.create(
+            forward=r)
         f.items.set([i])
         f.save()
 
         form = ReverseOneToOneHasManyToManyModelForm(
-            {'name': 'sample', 'reverse_items': [self.item2.pk]},instance=r)
+            {'name': 'sample', 'reverse_items': [self.item2.pk]}, instance=r)
         self.assertTrue(form.is_valid())
         form.save()
 
