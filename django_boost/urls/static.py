@@ -33,5 +33,17 @@ def include_static_files(path):
     """
     Add to routing that static files under the directory
     specified by the absolute path.
+
+    example ::
+
+      import os
+      from django.urls import path
+      from django_boost.urls import include_static_files
+
+      DIR = os.path.dirname(__file__)
+
+      urlpatterns = [
+          path('static_files/', include_static_files(DIR)),
+      ]
     """
     return urls.include(load_static_files(path))
