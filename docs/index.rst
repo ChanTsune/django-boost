@@ -56,6 +56,7 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    generic_views
    view_mixins
    form_mixins
+   form_fields
    path_converters
    shortcut_functions
    routing_utilitys
