@@ -30,4 +30,8 @@ def load_static_files(path):
 
 
 def include_static_files(path):
+    """
+    Add to routing that static files under the directory
+    specified by the absolute path.
+    """
     return urls.include(load_static_files(path))

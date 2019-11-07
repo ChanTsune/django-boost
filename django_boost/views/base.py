@@ -1,8 +1,9 @@
-import os
 import mimetypes
+import os
 from functools import update_wrapper
 
 from django.core.exceptions import ImproperlyConfigured
+from django.http import FileResponse
 from django.utils.decorators import classonlymethod
 from django.views import View as _View
 from django.views.generic import CreateView as _CreateView
@@ -12,8 +13,6 @@ from django.views.generic import FormView as _FormView
 from django.views.generic import ListView as _ListView
 from django.views.generic import TemplateView as _TemplateView
 from django.views.generic import UpdateView as _UpdateView
-
-from django.http import FileResponse
 
 
 __all__ = ["View", "TemplateView", "FormView", "CreateView",
