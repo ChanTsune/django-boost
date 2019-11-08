@@ -13,7 +13,7 @@ Some non-built-in functions are also provided as filters.
 
 An example is ``isiterable`` filter.
 
-Load filters
+Usage
 ~~~~~~~~~~~~
 
 ::
@@ -58,7 +58,7 @@ Using backend ``ast.literal_eval``.
 URL Utility
 ------------
 
-Load filter
+Usage
 ~~~~~~~~~~~~
 
 ::
@@ -110,7 +110,7 @@ Useful for pagination.
 Queryset Utility
 -----------------
 
-Load filter
+Usage
 ~~~~~~~~~~~~
 
 ::
@@ -136,3 +136,29 @@ If you use the LogicalDeletionMixin, you can also use ``alive`` and ``dead``
   {% qureyset|alive %}
 
   {% qureyset|dead %}
+
+
+MimeType Utility
+-----------------
+
+Usage
+~~~~~~~~~~~~
+
+::
+
+  {% load mimetype %}
+
+mimetype
+~~~~~~~~~
+
+Guess mimetype from the extension at the end of the string.
+
+Python ``mimetypes.guess_type`` is used internally.
+
+::
+
+  {{ "json"|mimetype }} {# "application/json" #}
+
+  {{ ".json"|mimetype }} {# "application/json" #}
+
+  {{ "sample.json"|mimetype }} {# "application/json" #}
