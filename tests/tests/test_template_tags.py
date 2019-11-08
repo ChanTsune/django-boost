@@ -17,7 +17,7 @@ class TestMimeTypeTempleteTag(TestCase):
 
     def test_mimetype(self):
         from mimetypes import guess_type
-        from django_boost.templatetags.mime_type import mimetype
+        from django_boost.templatetags.mimetype import mimetype
 
         application_json = guess_type('a.json')[0]
         case = [
