@@ -18,6 +18,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('', include('example.urls')),
+    path('qr/',include('django_boost.contrib.qrcode.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
