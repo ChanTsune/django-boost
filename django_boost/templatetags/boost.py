@@ -74,11 +74,6 @@ def _enumerate(iterable, start=0):
     return enumerate(iterable, start)
 
 
-@register.filter(name="filter")
-def _filter(iterable):
-    return filter(None, iterable)
-
-
 @register.filter(name="float")
 def _float(x):
     return float(x)
