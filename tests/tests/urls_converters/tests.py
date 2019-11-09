@@ -23,7 +23,7 @@ ROOT_PATH = os.path.dirname(__file__)
 )
 class TestConverter(TestCase):
 
-    def test_a(self):
+    def test_path_converters(self):
         case = [('bin', '1010'),
                 ('bin', 12),
                 ('oct', '7'),
@@ -32,8 +32,19 @@ class TestConverter(TestCase):
                 ('hex', 12),
                 ('bin_str', '1010'),
                 ('oct_str', '236'),
-                ('hex_str', '234')]
+                ('hex_str', '234'),
+                ('float', 1.1),
+                ('float', '1.1'),
+                ('float', 1),
+                ('float', '1'),
+                ]
         for name, value in case:
             url = reverse(name, kwargs={name: value})
             response = self.client.get(url)
             self.assertStatusCodeEqual(response, 200)
+
+    def test_failed_case(self):
+        from django.urls.exceptions import NoReverseMatch
+
+        with self.assertRaises(NoReverseMatch):
+            reverse('float', kwargs={'float': '1.'})
