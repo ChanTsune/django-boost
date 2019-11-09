@@ -214,3 +214,7 @@ def _zip(arg1, arg2):
 
 register.filter(isiterable)
 register.simple_tag(literal_eval, name="literal")
+
+@register.simple_tag(name="var")
+def var(value):
+    return value
