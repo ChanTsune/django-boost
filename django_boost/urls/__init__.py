@@ -2,11 +2,13 @@ from django_boost.urls.converters import (
     BinIntConverter, BinStrConverter, HexIntConverter,
     HexStrConverter, OctIntConverter, OctStrConverter,
     register_boost_converters)
+from django_boost.urls.static import include_static_files
 
 
 __all__ = ['UrlSet', 'HexIntConverter', 'HexStrConverter',
            'OctIntConverter', 'OctStrConverter', 'BinIntConverter',
-           'BinStrConverter', 'register_boost_converters']
+           'BinStrConverter', 'register_boost_converters',
+           'include_static_files']
 
 
 class UrlSet:

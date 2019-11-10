@@ -26,6 +26,7 @@ Example
       path('bin/<bin:id>', ~~),
       path('oct/<bin:id>', ~~),
       path('hex/<bin:id>', ~~),
+      path('float/<float:id>', ~~),
   ]
 
 Keywords
@@ -69,3 +70,10 @@ hex_str
 
 Basically the same as ``hex``.
 The difference is that it is passed to the Python program as ``str``
+
+float
+~~~~~~~
+
+``float`` match ``'[0-9]+([.][0-9]+)?'``
+
+This is passed as `float` type to the python program.

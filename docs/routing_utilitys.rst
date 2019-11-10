@@ -66,3 +66,6 @@ When the above code is rewritten using ``UrlSet``, it becomes as follows.
   ]
 
 URLs are grouped for easy reading.
+
+
+.. autofunction:: django_boost.urls.include_static_files

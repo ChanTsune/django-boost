@@ -130,7 +130,8 @@ class RelatedModelInlineMixin:
             rel_opts = related_model._meta
             pk_field_name = rel_opts.pk.attname
             rel_pk_field_name = '%s_%s' % (field, pk_field_name)
-            if not hasattr(object, rel_pk_field_name): # case of reverse access
+            if not hasattr(object, rel_pk_field_name):
+                # case of reverse access
                 if hasattr(object, field):
                     target_field = getattr(object, field)
                 else:
@@ -138,8 +139,8 @@ class RelatedModelInlineMixin:
                     for f in rel_opts.fields:
                         if f.related_model == type(object):
                             name = f.name
-                            object.save() ##
-                    target_field = related_model(**{name:object})
+                            object.save()
+                    target_field = related_model(**{name: object})
             elif getattr(object, rel_pk_field_name) is None:
                 target_field = related_model()
             else:
@@ -147,7 +148,7 @@ class RelatedModelInlineMixin:
             for related_field in related_fields:
                 value = self.cleaned_data['%s_%s' % (field, related_field)]
                 if self._is_many_to_many(rel_opts, related_field):
-                    target_field.save() ##
+                    target_field.save()
                     getattr(target_field, related_field).set(value)
                 else:
                     setattr(target_field, related_field, value)
@@ -158,7 +159,6 @@ class RelatedModelInlineMixin:
         if commit:
             object.save()
         return object
-
 
     def _is_many_to_many(self, rel_opts, field_name):
         for f in rel_opts.many_to_many:
