@@ -14,6 +14,38 @@ class FormUserKwargsMixin:
         super().__init__(*args, **kwargs)
 
 
+class FieldRenameMixin:
+    """
+    ``FieldRenameMixin`` that changes form field names.
+
+    Due to Python syntax, ``-`` cannot be included in form field names.
+
+    Use it when the value of ``name`` attribute of
+    HTML input element includes ``-`` due to restrictions of external library.
+
+    ::
+
+      from django import form
+      from django_boost.forms.mixins import FieldRenameMixin
+
+      class MyForm(FieldRenameMixin,forms.Form):
+          token_id = forms.CharField()
+
+          rename_field = {"token_id": "token-id"}
+
+      MyForm().cleaned_data["token-id"]
+    """
+
+    rename_fields = {}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, value in self.rename_fields.items():
+            if key != value:
+                self.fields[value] = self.fields[key]
+                del self.fields[key]
+
+
 class MatchedObjectGetMixin:
     """
     MatchedObjectGetMixin.
