@@ -107,3 +107,19 @@ class TestRelatedModelInlineMixins(TestCase):
     @classmethod
     def tearDownClass(cls):
         pass
+
+
+class TestFieldRenameMixin(TestCase):
+
+    def test_field(self):
+        from django import forms
+        from django_boost.forms.mixins import FieldRenameMixin
+
+        class MyForm(FieldRenameMixin, forms.Form):
+            token_id = forms.CharField()
+            rename_fields = {"token_id": "token-id"}
+
+        form = MyForm()
+
+        self.assertIn("token-id", form.fields.keys())
+        self.assertNotIn("token_id", form.fields.keys())
