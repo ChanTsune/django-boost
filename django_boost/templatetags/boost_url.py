@@ -26,3 +26,8 @@ def replace_parameters(request, *args):
     for i in range(0, arg_len, 2):
         url_dict[args[i]] = str(args[i + 1])
     return url_dict.urlencode()
+
+
+@register.simple_tag
+def get_querystring(request, value):
+    return request.GET.get(value, None)
