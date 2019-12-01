@@ -80,3 +80,6 @@ Also can inline multiple relationships.
       class Meta:
           model = MyModel
           fields = ('name', )
+
+.. autoclass:: django_boost.forms.mixins.FieldRenameMixin
+
