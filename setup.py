@@ -64,6 +64,7 @@ setup(
     license='MIT',
     keywords='django extension',
     packages=packages,
+    package_data=package_data,
     platforms=['any'],
     install_requires=requires,
     classifiers=[
