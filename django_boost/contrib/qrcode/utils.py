@@ -4,9 +4,9 @@ from io import BytesIO
 from qrcode import QRCode
 
 
-def bytes_qrcode(data):
-    qr = QRCode()
-    qr.add_data(data)
+def bytes_qrcode(text,**kwargs):
+    qr = QRCode(**kwargs)
+    qr.add_data(text)
     qr.make()
     image = qr.make_image()
     buffer = BytesIO()
@@ -14,10 +14,14 @@ def bytes_qrcode(data):
     return buffer.getvalue()
 
 
-def base64_bytes_qrcode(data, level=None):
-    byte_image = bytes_qrcode(data)
+def io_qrcode(text, **kwargs):
+    return BytesIO(bytes_qrcode(text, **kwargs))
+
+
+def base64_bytes_qrcode(text, **kwargs):
+    byte_image = bytes_qrcode(text, **kwargs)
     return b64encode(byte_image)
 
 
-def base64_string_qrcode(data):
-    return base64_bytes_qrcode(data).decode()
+def base64_string_qrcode(text, **kwargs):
+    return base64_bytes_qrcode(text, **kwargs).decode()
