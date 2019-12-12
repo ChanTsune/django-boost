@@ -175,20 +175,20 @@ class ReAuthenticationRequiredMixin(AccessMixin):
         return timedelta(seconds=self.auth_unnecessary)
 
     def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
 
-        if response.status_code == 200:
-            delta = self.get_auth_unnecessary()
-            if now() > (request.user.last_login + delta):
+        delta = self.get_auth_unnecessary()
+        if (request.user.last_login + delta) < now():
 
-                if self.logout:
-                    return logout_then_login(request, self.get_login_url())
+            if self.logout:
+                return logout_then_login(request, self.get_login_url())
 
-                return redirect_to_login(self.request.get_full_path(),
-                                         self.get_login_url(),
-                                         self.get_redirect_field_name())
+            return redirect_to_login(self.request.get_full_path(),
+                                     self.get_login_url(),
+                                     self.get_redirect_field_name())
 
-        return response
+        return super().dispatch(request, *args, **kwargs)
 
 
 class StaffMemberRequiredMixin(AccessMixin):
