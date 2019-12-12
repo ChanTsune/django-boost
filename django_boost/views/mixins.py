@@ -1,7 +1,7 @@
 import json
 from datetime import timedelta
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
 from django.http import Http404, JsonResponse
@@ -161,7 +161,7 @@ class JsonResponseMixin:
     put = post
 
 
-class ReAuthenticationRequiredMixin(LoginRequiredMixin):
+class ReAuthenticationRequiredMixin(AccessMixin):
     """Require authentication again on access."""
 
     auth_unnecessary = None
@@ -191,7 +191,7 @@ class ReAuthenticationRequiredMixin(LoginRequiredMixin):
         return response
 
 
-class StaffMemberRequiredMixin(LoginRequiredMixin):
+class StaffMemberRequiredMixin(AccessMixin):
     """Request staff authority."""
 
     permission_denied_message = 'Only staff members can access'
@@ -205,7 +205,7 @@ class StaffMemberRequiredMixin(LoginRequiredMixin):
         return self.handle_no_permission()
 
 
-class SuperuserRequiredMixin(LoginRequiredMixin):
+class SuperuserRequiredMixin(AccessMixin):
     """Request super user authority."""
 
     permission_denied_message = 'Only super user can access'
