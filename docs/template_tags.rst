@@ -107,6 +107,20 @@ Replace the query string of the current page URL with the argument.
 
 Useful for pagination.
 
+get_querystring
+~~~~~~~~~~~~~~~~
+
+return querystring value
+
+::
+
+  {% load boost_url %}
+
+  {% get_querystring request 'id' %}
+
+  {# return request.GET.get('id', None) #}
+
+
 Queryset Utility
 -----------------
 
