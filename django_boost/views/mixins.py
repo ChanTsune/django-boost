@@ -195,9 +195,12 @@ class StaffMemberRequiredMixin(LoginRequiredMixin):
     """Request staff authority."""
 
     permission_denied_message = 'Only staff members can access'
+    superuser = False
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff:
+            return super().dispatch(request, *args, **kwargs)
+        if self.superuser and request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
         return self.handle_no_permission()
 
