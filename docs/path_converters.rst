@@ -76,4 +76,11 @@ float
 
 ``float`` match ``'[0-9]+([.][0-9]+)?'``
 
-This is passed as `float` type to the python program.
+This is passed as ``float`` type to the python program.
+
+date
+~~~~~~
+
+``date`` matches dates that consider leap years like ``'Y/m/d'``
+
+This is passed as ``datetime.datetime`` type to python program.
