@@ -1,5 +1,9 @@
+import mimetypes
+import os
 from functools import update_wrapper
 
+from django.core.exceptions import ImproperlyConfigured
+from django.http import FileResponse
 from django.utils.decorators import classonlymethod
 from django.views import View as _View
 from django.views.generic import CreateView as _CreateView
@@ -12,7 +16,8 @@ from django.views.generic import UpdateView as _UpdateView
 
 
 __all__ = ["View", "TemplateView", "FormView", "CreateView",
-           "ListView", "DetailView", "UpdateView", "DeleteView"]
+           "ListView", "DetailView", "UpdateView", "DeleteView",
+           "StaticView"]
 
 
 class View(_View):
@@ -91,3 +96,36 @@ class UpdateView(View, _UpdateView):
 
 class DeleteView(View, _DeleteView):
     pass
+
+
+class StaticResponseMixin:
+    static_name = None
+    content_type = None
+
+    def get_static_names(self):
+        if self.static_name is None:
+            raise ImproperlyConfigured(
+                "StaticResponseMixin requires either a definition of "
+                "'static_name' or an implementation of 'get_static_names()'")
+        return [self.static_name]
+
+    def create_response(self):
+        for path in self.get_static_names():
+            if os.path.exists(path):
+                if self.content_type is None:
+                    content_type, encoding = mimetypes.guess_type(path)
+                    content_type = content_type or 'application/octet-stream'
+                else:
+                    content_type = self.content_type
+                response = FileResponse(
+                    open(path, 'rb'), content_type=content_type)
+                if encoding:
+                    response["Content-Encoding"] = encoding
+                return response
+        raise FileNotFoundError('%s Dose not exist.')
+
+
+class StaticView(StaticResponseMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        return self.create_response()

@@ -60,6 +60,16 @@ class BinStrConverter(BinConverter):
         return value
 
 
+class FloatingPointConverter:
+    regex = '[0-9]+([.][0-9]+)?'
+
+    def to_python(self, value):
+        return float(value)
+
+    def to_url(self, value):
+        return str(value)
+
+
 BOOST_CONVERTERS = {
     'bin': BinIntConverter,
     'oct': OctIntConverter,
@@ -67,6 +77,7 @@ BOOST_CONVERTERS = {
     'bin_str': BinStrConverter,
     'oct_str': OctStrConverter,
     'hex_str': HexStrConverter,
+    'float': FloatingPointConverter,
     'date': DateConverter,
 }
 

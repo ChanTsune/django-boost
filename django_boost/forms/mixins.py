@@ -14,6 +14,38 @@ class FormUserKwargsMixin:
         super().__init__(*args, **kwargs)
 
 
+class FieldRenameMixin:
+    """
+    ``FieldRenameMixin`` that changes form field names.
+
+    Due to Python syntax, ``-`` cannot be included in form field names.
+
+    Use it when the value of ``name`` attribute of
+    HTML input element includes ``-`` due to restrictions of external library.
+
+    ::
+
+      from django import form
+      from django_boost.forms.mixins import FieldRenameMixin
+
+      class MyForm(FieldRenameMixin,forms.Form):
+          token_id = forms.CharField()
+
+          rename_field = {"token_id": "token-id"}
+
+      MyForm().cleaned_data["token-id"]
+    """
+
+    rename_fields = {}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, value in self.rename_fields.items():
+            if key != value:
+                self.fields[value] = self.fields[key]
+                del self.fields[key]
+
+
 class MatchedObjectGetMixin:
     """
     MatchedObjectGetMixin.
@@ -130,13 +162,28 @@ class RelatedModelInlineMixin:
             rel_opts = related_model._meta
             pk_field_name = rel_opts.pk.attname
             rel_pk_field_name = '%s_%s' % (field, pk_field_name)
-            if getattr(object, rel_pk_field_name) is None:
+            if not hasattr(object, rel_pk_field_name):
+                # case of reverse access
+                if hasattr(object, field):
+                    target_field = getattr(object, field)
+                else:
+                    name = None
+                    for f in rel_opts.fields:
+                        if f.related_model == type(object):
+                            name = f.name
+                            object.save()
+                    target_field = related_model(**{name: object})
+            elif getattr(object, rel_pk_field_name) is None:
                 target_field = related_model()
             else:
                 target_field = getattr(object, field)
             for related_field in related_fields:
-                setattr(target_field, related_field,
-                        self.cleaned_data['%s_%s' % (field, related_field)])
+                value = self.cleaned_data['%s_%s' % (field, related_field)]
+                if self._is_many_to_many(rel_opts, related_field):
+                    target_field.save()
+                    getattr(target_field, related_field).set(value)
+                else:
+                    setattr(target_field, related_field, value)
             if commit:
                 target_field.save()
             setattr(object, rel_pk_field_name, target_field.pk)
@@ -144,3 +191,9 @@ class RelatedModelInlineMixin:
         if commit:
             object.save()
         return object
+
+    def _is_many_to_many(self, rel_opts, field_name):
+        for f in rel_opts.many_to_many:
+            if f.attname == field_name:
+                return True
+        return False

@@ -74,11 +74,6 @@ def _enumerate(iterable, start=0):
     return enumerate(iterable, start)
 
 
-@register.filter(name="filter")
-def _filter(iterable):
-    return filter(None, iterable)
-
-
 @register.filter(name="float")
 def _float(x):
     return float(x)
@@ -219,3 +214,7 @@ def _zip(arg1, arg2):
 
 register.filter(isiterable)
 register.simple_tag(literal_eval, name="literal")
+
+@register.simple_tag(name="var")
+def var(value):
+    return value

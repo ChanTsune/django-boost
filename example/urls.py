@@ -1,10 +1,14 @@
+import os
+
 from django.urls import path, include
-from django_boost.urls import UrlSet
+from django_boost.urls import UrlSet, include_static_files
 
 from . import views
 from .views import blog as view_blog
 from .views import exception as view_e
 
+
+BASE_DIR = os.path.dirname(__file__)
 
 class JsonSampleUrlSet(UrlSet):
     app_name = 'json'
@@ -49,4 +53,5 @@ urlpatterns = [
          view_blog.ArticleUpdate.as_view(), name="article_update"),
     path('blog/article/<uuid:pk>/delete/',
          view_blog.ArticleDelete.as_view(), name="article_delete"),
+    path('static_files/', include_static_files(BASE_DIR)),
 ]

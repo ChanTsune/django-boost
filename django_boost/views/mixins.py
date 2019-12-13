@@ -1,7 +1,7 @@
 import json
 from datetime import timedelta
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
 from django.http import Http404, JsonResponse
@@ -97,7 +97,7 @@ class LimitedTermMixin:
     def get_end_datetime(self):
         return self.end_datetime
 
-    def is_allowed_trem(self, access_datetime):
+    def is_allowed_term(self, access_datetime):
         start_datetime = self.get_start_datetime()
         end_datetime = self.get_end_datetime()
         if end_datetime is start_datetime is None:
@@ -109,7 +109,7 @@ class LimitedTermMixin:
         return start_datetime < access_datetime < end_datetime
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.is_allowed_trem(now()):
+        if not self.is_allowed_term(now()):
             raise self.exception_class
         return super().dispatch(request, *args, **kwargs)
 
@@ -161,7 +161,7 @@ class JsonResponseMixin:
     put = post
 
 
-class ReAuthenticationRequiredMixin(LoginRequiredMixin):
+class ReAuthenticationRequiredMixin(AccessMixin):
     """Require authentication again on access."""
 
     auth_unnecessary = None
@@ -175,34 +175,37 @@ class ReAuthenticationRequiredMixin(LoginRequiredMixin):
         return timedelta(seconds=self.auth_unnecessary)
 
     def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
 
-        if response.status_code == 200:
-            delta = self.get_auth_unnecessary()
-            if now() > (request.user.last_login + delta):
+        delta = self.get_auth_unnecessary()
+        if (request.user.last_login + delta) < now():
 
-                if self.logout:
-                    return logout_then_login(request, self.get_login_url())
+            if self.logout:
+                return logout_then_login(request, self.get_login_url())
 
-                return redirect_to_login(self.request.get_full_path(),
-                                         self.get_login_url(),
-                                         self.get_redirect_field_name())
+            return redirect_to_login(self.request.get_full_path(),
+                                     self.get_login_url(),
+                                     self.get_redirect_field_name())
 
-        return response
+        return super().dispatch(request, *args, **kwargs)
 
 
-class StaffMemberRequiredMixin(LoginRequiredMixin):
+class StaffMemberRequiredMixin(AccessMixin):
     """Request staff authority."""
 
     permission_denied_message = 'Only staff members can access'
+    superuser = False
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff:
             return super().dispatch(request, *args, **kwargs)
+        if self.superuser and request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
         return self.handle_no_permission()
 
 
-class SuperuserRequiredMixin(LoginRequiredMixin):
+class SuperuserRequiredMixin(AccessMixin):
     """Request super user authority."""
 
     permission_denied_message = 'Only super user can access'

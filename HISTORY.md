@@ -2,6 +2,30 @@
 
 ## Versions  
 
+### 1.2.3  
+
+- Add  
+  - `django_boost.forms.mixins.FieldRenameMixin`  
+- Fix  
+  - Fixed an issue where `*.html` and `*.mo` were not included in the distribution package
+
+### 1.2.2  
+
+- Add  
+  - `django_boost.urls.include_static_files`  
+  - `django_boost.forms.fields.InvertBooleanField`  
+  - Template tag `var` in boost  
+  - Template tag `mimetype` in mimetype  
+  - Path converter keyword `float`  
+- Delete  
+  - Template tag `filter` in boost
+
+### 1.2.1  
+
+- Update  
+  - new option `--name_field` to `adminsitelog` command.  
+  - Supports cases where model has `ManyToManyField`(`RelatedModelInlineMixin`).  
+
 ### 1.2  
 
 - Add  
