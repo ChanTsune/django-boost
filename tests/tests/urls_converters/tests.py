@@ -23,7 +23,7 @@ ROOT_PATH = os.path.dirname(__file__)
 )
 class TestConverter(TestCase):
 
-    def test_a(self):
+    def test_converters(self):
         case = [('bin', '1010'),
                 ('bin', 12),
                 ('oct', '7'),
@@ -32,7 +32,8 @@ class TestConverter(TestCase):
                 ('hex', 12),
                 ('bin_str', '1010'),
                 ('oct_str', '236'),
-                ('hex_str', '234')]
+                ('hex_str', '234'),
+                ('date', '2020/2/29')]
         for name, value in case:
             url = reverse(name, kwargs={name: value})
             response = self.client.get(url)
@@ -45,12 +46,15 @@ class TestRegex(TestCase):
 
     def test_year_regex(self):
         import re
-        from calendar import isleap
+        from calendar import isleap as _isleep
         from django_boost.urls.converters.date import REGEX_LEAP_YEAR
 
         regex_leap_year = re.compile(REGEX_LEAP_YEAR)
 
-        for i in range(1, 10001):
+        def isleap(value):
+            return value != 0 and _isleep(value)
+
+        for i in range(10000):
             value = str(i)
             with self.subTest(value, value=value):
                 result = bool(regex_leap_year.fullmatch(value))
@@ -62,8 +66,8 @@ class TestRegex(TestCase):
 
         regex_date_31 = re.compile(REGEX_DATE_31)
 
-        for m in range(21):
-            for d in range(50):
+        for m in range(20):
+            for d in range(40):
                 value = self.DATE_FORMAT % (m, d)
                 with self.subTest(value, value=value):
                     result = bool(regex_date_31.fullmatch(value))
@@ -78,8 +82,8 @@ class TestRegex(TestCase):
 
         regex_date_30 = re.compile(REGEX_DATE_30)
 
-        for m in range(21):
-            for d in range(50):
+        for m in range(20):
+            for d in range(40):
                 value = self.DATE_FORMAT % (m, d)
                 with self.subTest(value, value=value):
                     result = bool(regex_date_30.fullmatch(value))
@@ -94,8 +98,8 @@ class TestRegex(TestCase):
 
         regex_date_29 = re.compile(REGEX_DATE_29)
 
-        for m in range(21):
-            for d in range(50):
+        for m in range(20):
+            for d in range(40):
                 value = self.DATE_FORMAT % (m, d)
                 with self.subTest(value, value=value):
                     result = bool(regex_date_29.fullmatch(value))
@@ -110,8 +114,8 @@ class TestRegex(TestCase):
 
         regex_date_28 = re.compile(REGEX_DATE_28)
 
-        for m in range(21):
-            for d in range(50):
+        for m in range(20):
+            for d in range(40):
                 value = self.DATE_FORMAT % (m, d)
                 with self.subTest(value, value=value):
                     result = bool(regex_date_28.fullmatch(value))
@@ -119,3 +123,23 @@ class TestRegex(TestCase):
                         self.assertTrue(result)
                     else:
                         self.assertFalse(result)
+
+    def test_date_time_regex(self):
+        import re
+        from datetime import datetime
+        from django_boost.urls.converters.date import REGEX_DATE
+
+        regex = re.compile(REGEX_DATE)
+
+        def is_valid_date(y, m, d):
+            try:
+                datetime(year=y, month=m, day=d)
+                return True
+            except ValueError:
+                return False
+
+        for y in range(10000):
+            for m in range(14):
+                for d in range(40):
+                    self.assertEqual(is_valid_date(y, m, d), bool(
+                        regex.fullmatch("%s/%s/%s" % (y, m, d))))
