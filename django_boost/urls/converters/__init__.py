@@ -1,5 +1,7 @@
 from django.urls import register_converter
 
+from django_boost.urls.converters.date import DateConverter
+
 
 class HexConverter:
     regex = '[0-9a-fA-F]+'
@@ -76,6 +78,7 @@ BOOST_CONVERTERS = {
     'oct_str': OctStrConverter,
     'hex_str': HexStrConverter,
     'float': FloatingPointConverter,
+    'date': DateConverter,
 }
 
 
