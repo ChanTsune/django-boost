@@ -1,4 +1,6 @@
 from ast import literal_eval
+from itertools import chain, zip_longest
+from warnings import warn
 
 from django.template import Library
 
@@ -56,7 +58,8 @@ def _complex(real, imag=None):
 
 @register.simple_tag(name="delattr")
 def _delattr(obj, name):
-    return delattr(obj, name)
+    delattr(obj, name)
+    return obj
 
 
 @register.filter(name="dir")
@@ -179,7 +182,8 @@ def _round(number, ndigits=None):
 
 @register.simple_tag(name="setattr")
 def _setattr(obj, name, value):
-    return setattr(obj, name, value)
+    setattr(obj, name, value)
+    return obj
 
 
 @register.filter(name="sorted")
@@ -209,7 +213,23 @@ def _vars(obj):
 
 @register.filter(name="zip")
 def _zip(arg1, arg2):
+    warn("`zip filter` is deprecated. Use `zip tag` instead.")
     return zip(arg1, arg2)
+
+
+@register.simple_tag(name="zip")
+def _zip_tag(*args):
+    return zip(*args)
+
+
+@register.simple_tag(name="zip_longest")
+def _zip_longest(*args):
+    return zip_longest(*args)
+
+
+@register.simple_tag(name="chain")
+def _chain(*args):
+    return chain(*args)
 
 
 register.filter(isiterable)
