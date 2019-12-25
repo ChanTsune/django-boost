@@ -14,7 +14,7 @@ install:
   - "python setup.py install"
   - "pip install -U pip"
   - "pip install django~=$DJANGO_VERSION"
-  - "pip install tox-travis pillow"
+  - "pip install -r tests/requirements.txt"
 script:
   - tox
   - "python manage.py auto_migrate_test --remove"
