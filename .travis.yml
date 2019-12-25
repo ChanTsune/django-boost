@@ -10,6 +10,7 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
   - DJANGO_VERSION=2.2
+  - DJANGO_VERSION=3.0
 install:
   - "python setup.py install"
   - "pip install -U pip"
@@ -18,3 +19,8 @@ install:
 script:
   - tox
   - "python manage.py auto_migrate_test --remove"
+
+matrix:
+  - exclude:
+    - python: "3.5"
+    - env: DJANGO_VERSION=3.0
