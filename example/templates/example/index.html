@@ -22,13 +22,24 @@
 
 
 
-{% literal "[1,2,4]" as l %}
+{% literal "[1,2,4,5,6,7,8]" as l %}
 
 
 
 {% for i in l %}
     <p>{{ i }}</p>
 {% endfor %}
+
+
+
+{% for i in l|chunked:3 %}
+    <p>{{i}}</p>
+    {% for j in i %}
+        <p>{{j}}</p>
+    {% endfor %}
+        
+{% endfor %}
+    
 
 
 {% endblock body %}

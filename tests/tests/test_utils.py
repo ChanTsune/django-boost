@@ -108,3 +108,41 @@ class TestAttribute(TestCase):
         i = 1
         self.assertTrue(hasattr_chain(i, '__class__.__name__'))
         self.assertFalse(hasattr_chain(i, '__class__.doc'))
+
+
+class TestItertools(TestCase):
+
+    def test_chunked(self):
+        from django_boost.utils.itertools import chunked
+
+        iterable = range(5)
+
+        expect_cases = (
+            [0, 1, 2],
+            [3, 4]
+        )
+        for sub_iterable, expect in zip(chunked(iterable, 3), expect_cases):
+            self.assertEqual(list(sub_iterable), expect)
+
+    def test_chunked_just(self):
+        from django_boost.utils.itertools import chunked
+
+        iterable = range(6)
+
+        expect_cases = (
+            [0, 1, 2],
+            [3, 4, 5]
+        )
+        for sub_iterable, expect in zip(chunked(iterable, 3), expect_cases):
+            self.assertEqual(list(sub_iterable), expect)
+
+    def test_chunked_single(self):
+        from django_boost.utils.itertools import chunked
+
+        iterable = range(2)
+
+        expect_cases = (
+            [0, 1],
+        )
+        for sub_iterable, expect in zip(chunked(iterable, 3), expect_cases):
+            self.assertEqual(list(sub_iterable), expect)
