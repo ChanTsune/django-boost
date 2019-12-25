@@ -5,6 +5,7 @@ from warnings import warn
 from django.template import Library
 
 from django_boost.utils import isiterable
+from django_boost.utils.itertools import chunked
 
 register = Library()
 
@@ -233,7 +234,9 @@ def _chain(*args):
 
 
 register.filter(isiterable)
+register.filter(chunked)
 register.simple_tag(literal_eval, name="literal")
+
 
 @register.simple_tag(name="var")
 def var(value):
