@@ -21,6 +21,6 @@ script:
   - "python manage.py auto_migrate_test --remove"
 
 matrix:
-  - exclude:
+  exclude:
     - python: "3.5"
     - env: DJANGO_VERSION=3.0
