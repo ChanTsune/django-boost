@@ -8,11 +8,10 @@ from django_boost.forms.widgets import ColorInput
 __all__ = ("ColorCodeField", "ColorInput", "FormUserKwargsMixin",
            "UserCreationForm")
 
-User = get_user_model()
-
 
 class UserCreationForm(BaseUserCreationForm):
 
     class Meta:
+        User = get_user_model()
         model = User
         fields = (User.USERNAME_FIELD,)
