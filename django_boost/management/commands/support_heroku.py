@@ -24,12 +24,13 @@ class Command(BaseCommand):
     help = "Create a configuration file for heroku" + \
         "\n`Procfile`,`runtime.txt` and `requirements.txt`\n"
     PROCFILE = "Procfile"
-    PROCFILE_FORMAT = "web: gunicorn %s\n"
+    PROCFILE_WEB = "web: gunicorn %s\n"
+    PROCFILE_RELEASE = "release: %s\n"
     RUNTIME = "runtime.txt"
     RUNTIME_FORMAT = "python-%s\n"
     REQUIREMENTS = "requirements.txt"
 
-    GUNICORN = 'gunicorn'
+    GUNICORN = 'gunicorn\n'
 
     def add_arguments(self, parser):
         parser.add_argument('--overwrite', action='store_true',
@@ -41,8 +42,11 @@ class Command(BaseCommand):
                             help='Create only `runtime.txt`'
                             ', By default all files are created.')
         parser.add_argument('--prockfile', action='store_true',
-                            help='Create  only `prockfile`'
+                            help='Create  only `Prockfile`'
                             ', By default all files are created.')
+        parser.add_argument('--release', nargs='+', default=[],
+                            help='Add the command to be executed '
+                            'in the release phase to `Prockfile`')
         parser.add_argument('--requirments', action='store_true',
                             help='Create  only `requirments.txt`'
                             ', By default all files are created.')
@@ -77,7 +81,9 @@ class Command(BaseCommand):
         wsgi = ".".join(settings.WSGI_APPLICATION.split(".")[:-1])
         if not path.exists(fpath) or options['overwrite']:
             with open(fpath, "w") as f:
-                f.write(self.PROCFILE_FORMAT % wsgi)
+                for release in options['release']:
+                    f.write(self.PROCFILE_RELEASE % release)
+                f.write(self.PROCFILE_WEB % wsgi)
             self._print_generated_path(fpath, **options)
 
     def make_requirments(self, fpath, no_gunicorn, **options):
