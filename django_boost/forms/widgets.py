@@ -30,3 +30,8 @@ class InvertCheckboxInput(CheckboxInput):
 
     def value_from_datadict(self, data, files, name):
         return not super().value_from_datadict(data, files, name)
+
+
+class Toggleswitch(CheckboxInput):
+    """toggle switch styled input"""
+    template_name = "boost/forms/widgets/toggleswitch.html"

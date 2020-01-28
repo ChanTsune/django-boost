@@ -1,0 +1,65 @@
+<input class="boost-tgl boost-tgl-light" type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}/>
+<label class="boost-tgl-btn" for="{{ widget.id }}"></label>
+<style>
+    .boost-tgl {
+        display: none;
+    }
+    .boost-tgl,
+    .boost-tgl:after,
+    .boost-tgl:before,
+    .boost-tgl *,
+    .boost-tgl *:after,
+    .boost-tgl *:before,
+    .boost-tgl+.boost-tgl-btn {
+        box-sizing: border-box;
+    }
+    .boost-tgl::selection,
+    .boost-tgl:after::selection,
+    .boost-tgl:before::selection,
+    .boost-tgl *::selection,
+    .boost-tgl *:after::selection,
+    .boost-tgl *:before::selection,
+    .boost-tgl+.boost-tgl-btn::selection {
+        background: none;
+    }
+    .boost-tgl+.boost-tgl-btn {
+        outline: 0;
+        display: block;
+        width: 4em;
+        height: 2em;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+    }
+    .boost-tgl+.boost-tgl-btn:after,
+    .boost-tgl+.boost-tgl-btn:before {
+        position: relative;
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+    }
+    .boost-tgl+.boost-tgl-btn:after {
+        left: 0;
+    }
+    .boost-tgl+.boost-tgl-btn:before {
+        display: none;
+    }
+    .boost-tgl:checked+.boost-tgl-btn:after {
+        left: 50%;
+    }
+    .boost-tgl-light+.boost-tgl-btn {
+        background: #f0f0f0;
+        border-radius: 2em;
+        padding: 2px;
+        transition: all 0.4s ease;
+    }
+    .boost-tgl-light+.boost-tgl-btn:after {
+        border-radius: 50%;
+        background: #fff;
+        transition: all 0.2s ease;
+    }
+    .boost-tgl-light:checked+.boost-tgl-btn {
+        background: #9FD6AE;
+    }
+</style>
