@@ -192,7 +192,11 @@ class ReAuthenticationRequiredMixin(AccessMixin):
 
 
 class StaffMemberRequiredMixin(AccessMixin):
-    """Request staff authority."""
+    """
+    Request staff authority.
+
+    Set the class variable ``superuser`` to ``True`` to allow superuser.
+    """
 
     permission_denied_message = 'Only staff members can access'
     superuser = False

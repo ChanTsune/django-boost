@@ -635,8 +635,8 @@ URLs are grouped for easy reading.
 Easily register Models to Django admin site.  
 
 ```py
-from yourapp import models
-from django_boost.admin.site import register_all
+from your_app import models
+from django_boost.admin.sites import register_all
 
 register_all(models)
 ```
@@ -648,7 +648,7 @@ Custom admin classes are also available.
 ```py
 from your_app import models
 from your_app import admin
-from django_boost.admin.site import register_all
+from django_boost.admin.sites import register_all
 
 register_all(models, admin_class=admin.CustomAdmin)
 ```

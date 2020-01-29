@@ -54,6 +54,35 @@ Using backend ``ast.literal_eval``.
       <p>{{ i }}</p>
   {% endfor %}
 
+chain
+~~~~~~~~
+Concatenate iterable objects
+
+::
+
+  {% load boost %}
+
+  {% chain list1 list2 as concatenated_list %}
+
+  {% for i in concatenated_list %}
+    {{ i }}
+  {% endfor %}
+
+
+chunked
+~~~~~~~~
+Break *iterable* into lists of length *n*
+
+::
+
+  {% load boost %}
+
+  {% for i in list|chunked:3 %}
+    {% for j in i %}
+      {{ j }}
+    {% endfor %}
+  {% endfor %}
+
 
 URL Utility
 ------------
