@@ -54,6 +54,35 @@ Using backend ``ast.literal_eval``.
       <p>{{ i }}</p>
   {% endfor %}
 
+chain
+~~~~~~~~
+Concatenate iterable objects
+
+::
+
+  {% load boost %}
+
+  {% chain list1 list2 as concatenated_list %}
+
+  {% for i in concatenated_list %}
+    {{ i }}
+  {% endfor %}
+
+
+chunked
+~~~~~~~~
+Break *iterable* into lists of length *n*
+
+::
+
+  {% load boost %}
+
+  {% for i in list|chunked:3 %}
+    {% for j in i %}
+      {{ j }}
+    {% endfor %}
+  {% endfor %}
+
 
 URL Utility
 ------------
@@ -106,6 +135,20 @@ Replace the query string of the current page URL with the argument.
   {# The result of replacing is `?id=1&age=20` #}
 
 Useful for pagination.
+
+get_querystring
+~~~~~~~~~~~~~~~~
+
+return querystring value
+
+::
+
+  {% load boost_url %}
+
+  {% get_querystring request 'id' %}
+
+  {# return request.GET.get('id', None) #}
+
 
 Queryset Utility
 -----------------

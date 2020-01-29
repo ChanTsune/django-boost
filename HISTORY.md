@@ -1,6 +1,23 @@
-# HISTORYS  
+# HISTORY  
 
 ## Versions  
+
+### 1.3  
+
+- Add
+  - path converter `DateConverter` (`date`)
+  - `zip`, `zip_longest` and `chain` tags and `chunked` filter in `boost` template
+
+- Update  
+  - add `superuser` option in `StaffMemberRequiredMixin`  
+  - support Django3 and python3.8
+  - add option `--release` in `support_heroku` command
+
+- Change  
+  - `delattr` and `setattr` template tags return value `None` to argument value
+
+- Fix  
+  - A problem that some processes may be executed even when re-authentication is required
 
 ### 1.2.3  
 

@@ -181,3 +181,7 @@ Specify ``strictly = True`` if you want to limit the Content-Type to Json only.
 
 
 If you use for the purpose of API ``JsonView`` below is recommended.
+
+.. autoclass:: django_boost.views.mixins.SuperuserRequiredMixin
+
+.. autoclass:: django_boost.views.mixins.StaffMemberRequiredMixin

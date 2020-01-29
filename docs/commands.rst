@@ -109,17 +109,32 @@ Create heroku config files.
 
 ::
 
-  usage: manage.py support_heroku [-h] [--version] [-v {0,1,2,3}]
-                                  [--settings SETTINGS]
+  usage: manage.py support_heroku [-h] [--overwrite] [--no-gunicorn] [--runtime]
+                                  [--prockfile]
+                                  [--release RELEASE [RELEASE ...]]
+                                  [--requirments] [-q] [--version]
+                                  [-v {0,1,2,3}] [--settings SETTINGS]
                                   [--pythonpath PYTHONPATH] [--traceback]
-                                  [--no-color] [--overwrite] [--no-gunicorn]
-                                  [--runtime] [--prockfile] [--requirments] [-q]
+                                  [--no-color] [--force-color] [--skip-checks]
 
   Create a configuration file for heroku `Procfile`,`runtime.txt` and
   `requirements.txt`
 
   optional arguments:
     -h, --help            show this help message and exit
+    --overwrite           Overwrite even if file exists.
+    --no-gunicorn         Don't automatically add `gunicorn` to
+                          `requirements.txt`.
+    --runtime             Create only `runtime.txt`, By default all files are
+                          created.
+    --prockfile           Create only `Prockfile`, By default all files are
+                          created.
+    --release RELEASE [RELEASE ...]
+                          Add the command to be executed in the release phase to
+                          `Prockfile`
+    --requirments         Create only `requirments.txt`, By default all files
+                          are created.
+    -q, --quit            Don't output to standard output.
     --version             show program's version number and exit
     -v {0,1,2,3}, --verbosity {0,1,2,3}
                           Verbosity level; 0=minimal output, 1=normal output,
@@ -133,13 +148,5 @@ Create heroku config files.
                           "/home/djangoprojects/myproject".
     --traceback           Raise on CommandError exceptions
     --no-color            Don't colorize the command output.
-    --overwrite           Overwrite even if file exists.
-    --no-gunicorn         Don't automatically add `gunicorn` to
-                          `requirements.txt`.
-    --runtime             Create only `runtime.txt`, By default all files are
-                          created.
-    --prockfile           Create only `prockfile`, By default all files are
-                          created.
-    --requirments         Create only `requirments.txt`, By default all files
-                          are created.
-    -q, --quit            Don't output to standard output.
+    --force-color         Force colorization of the command output.
+    --skip-checks         Skip system checks.

@@ -14,12 +14,12 @@
 #
 import os
 import sys
+
 import django
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
-
 
 
 # -- Project information -----------------------------------------------------
@@ -29,9 +29,9 @@ copyright = '2019, ChanTsune'
 author = 'ChanTsune'
 
 # The short X.Y version
-version = '1.2'
+version = '1.3'
 # The full version, including alpha/beta/rc tags
-release = '1.2.3'
+release = '1.3'
 
 
 # -- General configuration ---------------------------------------------------

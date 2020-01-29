@@ -54,7 +54,7 @@ def read(fname):
 
 setup(
     name='django_boost',
-    version='1.2.3',
+    version='1.3',
     description='Django Extension library',
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
@@ -73,10 +73,12 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Framework :: Django',
         'Framework :: Django :: 2.0',
         'Framework :: Django :: 2.1',
         'Framework :: Django :: 2.2',
+        'Framework :: Django :: 3.0',
         'License :: OSI Approved :: MIT License',
     ],
 )
