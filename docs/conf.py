@@ -29,9 +29,9 @@ copyright = '2019, ChanTsune'
 author = 'ChanTsune'
 
 # The short X.Y version
-version = '1.2'
+version = '1.3'
 # The full version, including alpha/beta/rc tags
-release = '1.2.3'
+release = '1.3'
 
 
 # -- General configuration ---------------------------------------------------
