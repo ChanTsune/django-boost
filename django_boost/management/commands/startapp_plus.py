@@ -1,4 +1,4 @@
-from django.core.management.templates import TemplateCommand
+from django_boost.management.templates import TemplateCommand
 
 
 class Command(TemplateCommand):
