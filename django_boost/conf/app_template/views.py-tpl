@@ -1,0 +1,6 @@
+from django.views.generic import (
+    TemplateView, FormView,
+    CreateView, UpdateView, DetailView, ListView, DeleteView
+)
+
+# Create your views here.
