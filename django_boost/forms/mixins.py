@@ -99,15 +99,6 @@ class MatchedObjectGetMixin:
             return None
 
 
-class MuchedObjectGetMixin(MatchedObjectGetMixin):
-
-    def __init__(self, *args, **kwargs):
-        from warnings import warn
-        super().__init__(*args, **kwargs)
-        warn("MuchedObjectGetMixin is renamed to MatchedObjectGetMixin.",
-             DeprecationWarning)
-
-
 class RelatedModelInlineMixin:
     """
     Mixin that treat two related `Model`'s as a single `Model`.
