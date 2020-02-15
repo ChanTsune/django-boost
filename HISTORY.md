@@ -2,6 +2,17 @@
 
 ## Versions  
 
+### 1.4  
+
+- Add
+  - `deletemigrations` command
+  - `startapp_plus` command
+  - multiple database util `DatabaseRouter`
+- Update
+  - `ReAuthenticationRequiredMixin`
+- Delete
+  - `MuchedObjectGetMixin`
+
 ### 1.3  
 
 - Add
