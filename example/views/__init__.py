@@ -39,7 +39,7 @@ class CustomerDetailView(DetailView):
 class ReloginView(ReAuthenticationRequiredMixin, TemplateView):
     template_name = "example/index.html"
     extra_context = {"number": 1000}
-    auth_unnecessary = 30
+    interval = 30
 
 
 class StartLimitView(LimitedTermMixin, TemplateView):

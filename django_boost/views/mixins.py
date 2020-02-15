@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 
+from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
@@ -162,24 +163,63 @@ class JsonResponseMixin:
 
 
 class ReAuthenticationRequiredMixin(AccessMixin):
-    """Require authentication again on access."""
+    """
+    Require authentication again on access.
 
-    auth_unnecessary = None
+    ::
+
+      from django.views.generic import TemplateView
+      from django_boost.views.mixins import ReAuthenticationRequiredMixin
+
+      class RecentLoginView(ReAuthenticationRequiredMixin, TemplateView):
+          template_name = "my_page.html"
+          interval = 3600
+
+    ::
+
+      from datetime import timedelta
+      from django.views.generic import TemplateView
+      from django_boost.views.mixins import ReAuthenticationRequiredMixin
+
+      class RecentLoginView(ReAuthenticationRequiredMixin,TemplateView):
+          template_name = "my_page.html"
+          interval = timedelta(hours=1)
+
+    ``interval`` is the grace period until recertification.
+
+    Can specify ``int`` or ``datetime.timedelta``.
+
+
+    ``logout=True``, Logout if the specified time limit has passed.
+
+    ``logout=False``, Do not logout Even if the specified time limit has passed.
+    """
+
+    interval = None
     logout = False
 
-    def get_auth_unnecessary(self):
-        if self.auth_unnecessary is None:
-            return timedelta(seconds=0)
-        if isinstance(self.auth_unnecessary, timedelta):
-            return self.auth_unnecessary
-        return timedelta(seconds=self.auth_unnecessary)
+    def get_interval(self):
+        if self.interval is None:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing interval."
+                "Set `interval` class variable "
+                "or override `get_interval` method." % {
+                    "cls": self.__class__.__name__
+                }
+            )
+        if isinstance(self.interval, timedelta):
+            return self.interval
+        return timedelta(seconds=self.interval)
+
+    def need_reauthentication(self, user, delta):
+        return (user.last_login + delta) < now()
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        delta = self.get_auth_unnecessary()
-        if (request.user.last_login + delta) < now():
+        delta = self.get_interval()
+        if self.need_reauthentication(request.user, delta):
 
             if self.logout:
                 return logout_then_login(request, self.get_login_url())
