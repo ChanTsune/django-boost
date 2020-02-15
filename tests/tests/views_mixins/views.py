@@ -84,7 +84,7 @@ class LimitedTermBeforeStartView(LimitedTermMixin, TemplateView):
 class ReAuthenticationRequiredView(ReAuthenticationRequiredMixin,
                                    TemplateView):
     template_name = "boost/test/index.html"
-    auth_unnecessary = 100
+    interval = 100
 
 
 class StaffMemberRequiredView(StaffMemberRequiredMixin, TemplateView):

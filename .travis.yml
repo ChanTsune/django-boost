@@ -6,6 +6,7 @@ python:
   - "3.7"
   - "3.8"
   - "pypy3"
+  - "nightly"
 env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
@@ -18,9 +19,12 @@ install:
   - "pip install tox-travis pillow"
 script:
   - tox
-  - "python manage.py auto_migrate_test --remove"
+  - "python manage.py test"
 
 matrix:
   exclude:
+    # django3 does not support Python 3.5
     - python: "3.5"
       env: DJANGO_VERSION=3.0
+  allow_failures:
+    - python: "nightly"

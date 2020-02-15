@@ -33,7 +33,7 @@ class Command(AppCommand):
         if os.path.exists(migration_dir):
             for d, dirs, files in os.walk(migration_dir):
                 for file in files:
-                    if file == '__init__.py':
+                    if file == '__init__.py' or not file.endswith('.py'):
                         continue
                     self.stdout.write(file)
                     file_list.append(os.path.join(d, file))
@@ -44,3 +44,7 @@ class Command(AppCommand):
         if self.confirm():
             for file in file_list:
                 os.remove(file)
+            self.stdout.write(self.style.SUCCESS('file deleted.'))
+        else:
+            self.stderr.write('job canceled.')
+
