@@ -153,7 +153,7 @@ Create heroku config files.
 
 
 deletemigrations
----------------
+-----------------
 ::
 
   $ python manage.py deletemigrations appname

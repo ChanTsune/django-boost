@@ -256,34 +256,6 @@ Restrict request based on `Content-Type` of http header.
 If the content type is not allowed, http415 response will be returned.  
 You can disable restrictions by specifying `strictly = False`  
 
-### ReAuthenticationRequiredMixin  
-
-```py
-from django.views.generic import TemplateView
-from django_boost.views.mixins import ReAuthenticationRequiredMixin
-
-class RecentLogin(ReAuthenticationRequiredMixin, TemplateView):
-    template_name = "mypage.html"
-    auth_unnecessary = 3600
-```
-
-```py
-from datetime import timedelta
-from django.views.generic import TemplateView
-from django_boost.views.mixins import ReAuthenticationRequiredMixin
-
-class RecentLogin(ReAuthenticationRequiredMixin,TemplateView):
-    template_name = "mypage.html"
-    auth_unnecessary = timedelta(hours=1)
-```
-
-`auth_unnecessary` is the grace period until recertification.  
-Can specify `int` and `timedelta` ,`None`.  
-`None` is same as `0`.  
-
-`logout=True`, Logout if the specified time limit has passed  
-`logout=False`, Do not logout Even if the specified time limit has passed  
-
 ### LimitedTermMixin  
 
 ```py
