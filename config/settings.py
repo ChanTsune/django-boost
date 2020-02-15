@@ -86,6 +86,10 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['django_boost.db.router.DatabaseRouter']
+
+DATABASE_APPS_MAPPING = {}
+
 AUTH_USER_MODEL = 'django_boost.EmailUser'
 
 # Password validation
