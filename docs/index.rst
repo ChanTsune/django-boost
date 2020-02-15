@@ -51,6 +51,7 @@ At this time we test on and thrive to support valid combinations of Python 3.5, 
    custom_user
    model_mixins
    model_fields
+   multiple_database
    middleware
    http_status_code_exceptions
    generic_views
