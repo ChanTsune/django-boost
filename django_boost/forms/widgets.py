@@ -1,12 +1,19 @@
 from django.forms.widgets import Input, CheckboxInput, RadioSelect
 
-__all__ = ["ColorInput", "InvertCheckboxInput"]
+__all__ = ["ColorInput", "InvertCheckboxInput", "PhoneNumberInput"]
 
 
 class ColorInput(Input):
     """HTML <input type='color'>."""
 
     input_type = 'color'
+    template_name = 'django/forms/widgets/input.html'
+
+
+class PhoneNumberInput(Input):
+    """HTML <input type='tel'>."""
+
+    input_type = 'tel'
     template_name = 'django/forms/widgets/input.html'
 
 
