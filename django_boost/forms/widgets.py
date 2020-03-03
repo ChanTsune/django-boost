@@ -1,4 +1,4 @@
-from django.forms.widgets import Input, CheckboxInput, RadioSelect
+from django.forms.widgets import CheckboxInput, Input, RadioSelect
 
 __all__ = ["ColorInput", "InvertCheckboxInput", "PhoneNumberInput"]
 
@@ -41,4 +41,5 @@ class InvertCheckboxInput(CheckboxInput):
 
 class Toggleswitch(CheckboxInput):
     """toggle switch styled input"""
+
     template_name = "boost/forms/widgets/toggleswitch.html"
