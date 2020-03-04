@@ -1,6 +1,6 @@
 # Django-Boost  
 
-Extension library to boost django development  
+Django Boost is a collection of custom extensions for the Django Framework.  
 
 [![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
@@ -10,9 +10,13 @@ Extension library to boost django development
 
 ## Documentation  
 
+You can view documentation online at:
+
 [https://django-boost.readthedocs.io/en/latest/](https://django-boost.readthedocs.io/en/latest/)
 
-## Installation  
+Or you can look at the docs/ directory in the repository.
+
+## Getting It
 
 ```bash
 pip install django-boost
@@ -26,14 +30,15 @@ git clone https://github.com/ChanTsune/Django-Boost.git
 python setup.py install
 ```
 
-## Add an application  
+## Installing It
 
-`settings.py`
+To enable django_boost in your project you need to add it to INSTALLED_APPS in your projects settings.py file:
 
 ```py
 INSTALLED_APPS = [
     ...
     'django_boost',
+    ...
 ]
 ```
 
