@@ -2,6 +2,12 @@
 
 ## Versions  
 
+### 1.4.1  
+
+- Add
+  - `django_boost.forms.widgets.PhoneNumberInput`
+  - `django_boost.forms.widgets.PhoneNumberField`
+
 ### 1.4  
 
 - Add
