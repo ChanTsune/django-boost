@@ -1,10 +1,10 @@
 import json
 from datetime import timedelta
 
-from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
+from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator

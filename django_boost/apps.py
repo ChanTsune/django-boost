@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.core import checks
+
 from django_boost.checks import check_database_router
 
 

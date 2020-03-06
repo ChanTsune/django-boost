@@ -47,4 +47,3 @@ class Command(AppCommand):
             self.stdout.write(self.style.SUCCESS('file deleted.'))
         else:
             self.stderr.write('job canceled.')
-
