@@ -30,7 +30,7 @@ class Command(BaseCommand):
     RUNTIME_FORMAT = "python-%s\n"
     REQUIREMENTS = "requirements.txt"
 
-    GUNICORN = 'gunicorn\n'
+    GUNICORN = 'gunicorn'
 
     def add_arguments(self, parser):
         parser.add_argument('--overwrite', action='store_true',
@@ -97,4 +97,5 @@ class Command(BaseCommand):
                     f.write('\n')
                 if not gunicorn_exist and not no_gunicorn:
                     f.write(self.GUNICORN)
+                    f.write('\n')
             self._print_generated_path(fpath, **options)
