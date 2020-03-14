@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.4.2  
+
+- Fix
+  - on support_heroku command duplicated gunicorn
+
 ### 1.4.1  
 
 - Add
