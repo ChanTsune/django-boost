@@ -172,4 +172,3 @@ class TestHTMLSpaceLessCompressor(TestCase):
         from django_boost.utils.html import HTMLSpaceLessCompressor
         complesser = HTMLSpaceLessCompressor()
         self.assertEqual(complesser.compress(HTML_TEXT), COMPRESSED_HTML)
-

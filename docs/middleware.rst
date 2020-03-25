@@ -8,46 +8,16 @@ Middlewares
 RedirectCorrectHostnameMiddleware
 -----------------------------------
 
-Configuration
-^^^^^^^^^^^^^
-
-You will need to add the *RedirectCorrectHostnameMiddleware* to the MIDDLEWARE
-setting of your Django project *settings.py* file.
-
-::
-
-  MIDDLEWARE = [
-      'django_boost.middleware.RedirectCorrectHostnameMiddleware',  # add
-      'django.middleware.security.SecurityMiddleware',
-      'django.contrib.sessions.middleware.SessionMiddleware',
-      ...
-  ]
-
-  CORRECT_HOST = 'sample.com'
-
-
-Redirect all access to the domain specified in ``CORRECT_HOST``
-
-It is not redirected when ``DEBUG = True``
-
-This is useful when migrating domains
-
-Originally it should be done with server software such as nginx and apache, but it is useful when the setting is troublesome or when using services such as heroku
+.. autoclass:: django_boost.middleware.RedirectCorrectHostnameMiddleware
 
 
 HttpStatusCodeExceptionMiddleware
 ----------------------------------
 
-You will need to add the *HttpStatusCodeExceptionMiddleware* to the MIDDLEWARE
-setting of your Django project *settings.py* file.
+.. autoclass:: django_boost.middleware.HttpStatusCodeExceptionMiddleware
 
-::
 
-  MIDDLEWARE = [
-      'django_boost.middleware.HttpStatusCodeExceptionMiddleware',  # add
-      'django.middleware.security.SecurityMiddleware',
-      'django.contrib.sessions.middleware.SessionMiddleware',
-      ...
-  ]
+SpaceLessMiddleware
+----------------------
+.. autoclass:: django_boost.middleware.SpaceLessMiddleware
 
-This Middleware is required when using the :doc:`http_status_code_exceptions`.
