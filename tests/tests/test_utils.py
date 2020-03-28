@@ -146,3 +146,29 @@ class TestItertools(TestCase):
         )
         for sub_iterable, expect in zip(chunked(iterable, 3), expect_cases):
             self.assertEqual(list(sub_iterable), expect)
+
+
+HTML_TEXT = """
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<div class="content-container">
+    <span></content>
+</div>
+</body>
+
+</html>
+"""
+COMPRESSED_HTML = '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"></head><body><div class="content-container"><span></content></div></body></html>'
+class TestHTMLSpaceLessCompressor(TestCase):
+
+    def test_compress(self):
+        from django_boost.utils.html import HTMLSpaceLessCompressor
+        complesser = HTMLSpaceLessCompressor()
+        self.assertEqual(complesser.compress(HTML_TEXT), COMPRESSED_HTML)
