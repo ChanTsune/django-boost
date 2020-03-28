@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.5  
+
+- Add
+  - `django_boost.middleware.SpaceLessMiddleware`
+
 ### 1.4.2  
 
 - Fix
