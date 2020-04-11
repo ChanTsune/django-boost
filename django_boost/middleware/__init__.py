@@ -37,7 +37,9 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
 
     This is useful when migrating domains
 
-    Originally it should be done with server software such as nginx and apache, but it is useful when the setting is troublesome or when using services such as heroku
+    Originally it should be done with server software such as nginx and apache,
+
+    but it is useful when the setting is troublesome or when using services such as heroku.
     """
 
     conditions = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
@@ -73,7 +75,6 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
       ]
 
     This Middleware is required when using the :doc:`http_status_code_exceptions`.
-
 
     """
 
