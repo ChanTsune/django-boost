@@ -10,6 +10,7 @@ from .views import exception as view_e
 
 BASE_DIR = os.path.dirname(__file__)
 
+
 class JsonSampleUrlSet(UrlSet):
     app_name = 'json'
     urlpatterns = [
@@ -45,6 +46,8 @@ urlpatterns = [
     path('exception/', include(ExceptionUrlSet)),
     path('allow/', views.ContentTypeView.as_view(), name='content_type'),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
+    path('blog/article/deleted/',
+         view_blog.ArticleDeletedListView.as_view(), name="article_deleted_list"),
     path('blog/article/create/',
          view_blog.ArticleCreate.as_view(), name="article_create"),
     path('blog/article/<uuid:pk>/',
