@@ -7,7 +7,12 @@ from django.utils.deprecation import MiddlewareMixin
 from django_boost.http import STATUS_MESSAGES
 from django_boost.http.response import (HttpExceptionBase,
                                         HttpRedirectExceptionBase)
-from django_boost.middleware.html import SpaceLessMiddleware
+from .html import SpaceLessMiddleware
+
+
+__all__ = ['SpaceLessMiddleware',
+           'RedirectCorrectHostnameMiddleware',
+           'HttpStatusCodeExceptionMiddleware']
 
 
 class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
