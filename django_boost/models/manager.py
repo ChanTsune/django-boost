@@ -1,6 +1,6 @@
 from django.db.models.manager import Manager
 
-from django_boost.models.query import LogicalDeletionQuerySet
+from .query import LogicalDeletionQuerySet
 
 
 class LogicalDeletionManager(Manager):
