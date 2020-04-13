@@ -81,4 +81,8 @@ setup(
         'Framework :: Django :: 3.0',
         'License :: OSI Approved :: MIT License',
     ],
+    entry_points="""
+[console_scripts]
+dj-boost=django_boost:main
+""",
 )

@@ -10,3 +10,11 @@ def get_version(version=VERSION):
 __version__ = get_version()
 
 default_app_config = 'django_boost.apps.DjangoBoostConfig'
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
