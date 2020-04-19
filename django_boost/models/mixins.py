@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 
 from django_boost.models.manager import LogicalDeletionManager
 from django_boost.utils.functions import json_to_model, model_to_json
@@ -33,15 +34,15 @@ class TimeStampModelMixin(models.Model):
 
     class Meta:
         abstract = True
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(verbose_name=_("created date"), auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name=_("updated date"), auto_now=True)
 
 
 class LogicalDeletionMixin(models.Model):
     """Provide logical delete."""
 
     deleted_at = models.DateTimeField(
-        verbose_name="deleted_at", blank=True, null=True, default=None)
+        verbose_name=_("deleted date"), blank=True, null=True, default=None, editable=False)
 
     class Meta:
         abstract = True
