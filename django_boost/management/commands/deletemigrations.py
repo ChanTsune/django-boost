@@ -1,6 +1,7 @@
 import os
 
 from django.utils.translation import gettext as _
+from django.db.migrations.loader import MIGRATIONS_MODULE_NAME
 
 from django_boost.core.management import AppCommand
 
@@ -28,7 +29,7 @@ class Command(AppCommand):
     def handle_app_config(self, app_config, **options):
         self.yes = options['y']
         app_path = app_config.path
-        migration_dir = os.path.join(app_path, 'migrations')
+        migration_dir = os.path.join(app_path, MIGRATIONS_MODULE_NAME)
         file_list = []
         if os.path.exists(migration_dir):
             for d, dirs, files in os.walk(migration_dir):
