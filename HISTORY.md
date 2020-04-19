@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.5.1
+
+- Update
+  - some translation updates
+
 ### 1.5  
 
 - Add

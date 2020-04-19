@@ -1,4 +1,5 @@
 from django.utils.deprecation import MiddlewareMixin
+
 from django_boost.utils.html import strip_spaces_between_tags
 
 

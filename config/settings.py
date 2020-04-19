@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django_boost.middleware.RedirectCorrectHostnameMiddleware',  # django_boost
     'django_boost.middleware.HttpStatusCodeExceptionMiddleware',  # django_boost
+    'django_boost.middleware.SpaceLessMiddleware',  # django_boost
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
