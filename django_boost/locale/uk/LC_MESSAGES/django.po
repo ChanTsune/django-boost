@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 16:23+0000\n"
+"POT-Creation-Date: 2020-04-19 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: django_boost/management/commands/adminsitelog.py:94
+#: django_boost/management/commands/adminsitelog.py:112
 msgid "Do you want to delete these logs"
+msgstr "Ви хочете видалити ці журнали"
+
+#: django_boost/management/commands/deletemigrations.py:16
+#, fuzzy
+#| msgid "Do you want to delete these logs"
+msgid "Do you wish to delete?"
 msgstr "Ви хочете видалити ці журнали"
 
 #: django_boost/models/__init__.py:11
@@ -37,6 +43,18 @@ msgstr ""
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
 msgstr "Користувач з цією електронною адресою вже існує."
+
+#: django_boost/models/mixins.py:37
+msgid "created date"
+msgstr "створена дата"
+
+#: django_boost/models/mixins.py:38
+msgid "updated date"
+msgstr "оновлена ​​дата"
+
+#: django_boost/models/mixins.py:45
+msgid "deleted date"
+msgstr "видалена дата"
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
