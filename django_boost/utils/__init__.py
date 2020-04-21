@@ -30,3 +30,14 @@ def isiterable(obj):
     except TypeError:
         return False
     return True
+
+
+def contain_any(iterable, elements):
+    """
+    Return `True` if any of the `elements` are contained in the `iterable`,
+    `False` otherwise.
+    """
+    for e in elements:
+        if e in iterable:
+            return True
+    return False
