@@ -1,4 +1,5 @@
 class Loop:
+    """Django template like loop object."""
     def __init__(self, iterable):
         self.iterable = enumerate(iterable)
         self.length = len(iterable)
@@ -21,10 +22,12 @@ class Loop:
 
 
 def loop(iterable):
+    """Provides features such as Django template like loop."""
     return Loop(iterable)
 
 
 def isiterable(obj):
+    """Return `True` if `obj` is iterable object, `False` otherwise."""
     try:
         iter(obj)
     except TypeError:
