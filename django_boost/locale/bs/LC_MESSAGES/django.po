@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 16:23+0000\n"
+"POT-Creation-Date: 2020-04-19 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: django_boost/management/commands/adminsitelog.py:94
+#: django_boost/management/commands/adminsitelog.py:112
 msgid "Do you want to delete these logs"
+msgstr "Želite li izbrisati ove zapisnike"
+
+#: django_boost/management/commands/deletemigrations.py:16
+#, fuzzy
+#| msgid "Do you want to delete these logs"
+msgid "Do you wish to delete?"
 msgstr "Želite li izbrisati ove zapisnike"
 
 #: django_boost/models/__init__.py:11
@@ -37,6 +43,18 @@ msgstr ""
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
 msgstr "Korisnik s tom adresom e-pošte već postoji."
+
+#: django_boost/models/mixins.py:37
+msgid "created date"
+msgstr "stvoren datum"
+
+#: django_boost/models/mixins.py:38
+msgid "updated date"
+msgstr "ažurirani datum"
+
+#: django_boost/models/mixins.py:45
+msgid "deleted date"
+msgstr "izbrisan datum"
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."

@@ -13,7 +13,7 @@ class Command(AppCommand):
         if not self.yes:
             answer = None
             while not answer or answer not in "yn":
-                answer = input(_("Do you wish to delete? [y/N] "))
+                answer = input(_("Do you wish to delete?") + " [y/N] ")
                 if not answer:
                     answer = "n"
                     break
