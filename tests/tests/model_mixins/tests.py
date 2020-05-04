@@ -18,9 +18,9 @@ class TestLogicalDeletionMixin(TestCase):
         for item in args:
             self.model.objects.create(name=item)
 
-    def _heard_delete(self):
+    def _hard_delete(self):
         for i in self.model.all():
-            i.delete(heard=True)
+            i.delete(hard=True)
 
     def test_delete(self):
         self._register_items(*[str(i) for i in range(10)])
@@ -28,7 +28,7 @@ class TestLogicalDeletionMixin(TestCase):
         item.delete()
         self.assertNotEqual(item.deleted_at, None)
 
-    def test_heard_delete(self):
+    def test_hard_delete(self):
         self._register_items(*[str(i) for i in range(10)])
         item = self.model.objects.get(name="0")
         item.delete(hard=True)
