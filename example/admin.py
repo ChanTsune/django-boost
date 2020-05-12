@@ -1,6 +1,7 @@
 from django.contrib import admin
+from django_boost.admin import LogicalDeletionModelAdmin
+
 from .models import Customer, Article, Tag, Category
-# Register your models here.
 
 
 @admin.register(Customer)
@@ -9,7 +10,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 @admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
+class ArticleAdmin(LogicalDeletionModelAdmin):
     pass
 
 
