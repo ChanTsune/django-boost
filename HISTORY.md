@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.5.2
+- Update
+  - some translation updates
+  - `support_heroku` command messages
+
 ### 1.5.1
 
 - Update

@@ -1,4 +1,5 @@
 import sys
+from io import StringIO
 from os import path
 from platform import python_version
 try:
@@ -57,6 +58,9 @@ class Command(BaseCommand):
         EXEC_PATH = sys.argv[0]
         ROOT_DIR = path.dirname(path.abspath(EXEC_PATH))
         make_all = _make_all(**options)
+        self.already_exists = False
+        self.make_quit(**options)
+
         if make_all or options['prockfile']:
             PROCFILE_PATH = path.join(ROOT_DIR, self.PROCFILE)
             self.make_prockfile(PROCFILE_PATH, **options)
@@ -66,29 +70,44 @@ class Command(BaseCommand):
         if make_all or options['requirments']:
             REQUIREMENTS_PATH = path.join(ROOT_DIR, self.REQUIREMENTS)
             self.make_requirments(REQUIREMENTS_PATH, **options)
+        if self.already_exists:
+            self.stderr.write("If you want to overwrite it, please set '--overwrite' options.")
 
-    def _print_generated_path(self, path, quit, **options):
-        if not quit:
-            self.stdout.write("Generated : " + path)
+    def make_quit(self, quit, **options):
+        if quit:
+            self.stderr = self.stdout = StringIO()
+
+    def _print_result(self, path, exists, overwrite, quit, **options):
+        if exists and overwrite:
+            action = "Overwrited"
+        elif not exists:
+            action = "Generated"
+        else:
+            self.already_exists = True
+            action = "Already exists"
+        self.stdout.write("%s : %s" % (action, path))
 
     def make_runtime(self, fpath, **options):
-        if not path.exists(fpath) or options['overwrite']:
+        is_exist = path.exists(fpath)
+        if not is_exist or options['overwrite']:
             with open(fpath, "w") as f:
                 f.write(self.RUNTIME_FORMAT % python_version())
-            self._print_generated_path(fpath, **options)
+        self._print_result(fpath, is_exist, **options)
 
     def make_prockfile(self, fpath, **options):
         wsgi = ".".join(settings.WSGI_APPLICATION.split(".")[:-1])
-        if not path.exists(fpath) or options['overwrite']:
+        is_exist = path.exists(fpath)
+        if not is_exist or options['overwrite']:
             with open(fpath, "w") as f:
                 for release in options['release']:
                     f.write(self.PROCFILE_RELEASE % release)
                 f.write(self.PROCFILE_WEB % wsgi)
-            self._print_generated_path(fpath, **options)
+        self._print_result(fpath, is_exist, **options)
 
     def make_requirments(self, fpath, no_gunicorn, **options):
         gunicorn_exist = False
-        if not path.exists(fpath) or options['overwrite']:
+        is_exist = path.exists(fpath)
+        if not is_exist or options['overwrite']:
             with open(fpath, "w") as f:
                 for i in freeze.freeze():
                     if i.startswith(self.GUNICORN):
@@ -98,4 +117,4 @@ class Command(BaseCommand):
                 if not gunicorn_exist and not no_gunicorn:
                     f.write(self.GUNICORN)
                     f.write('\n')
-            self._print_generated_path(fpath, **options)
+        self._print_result(fpath, is_exist, **options)

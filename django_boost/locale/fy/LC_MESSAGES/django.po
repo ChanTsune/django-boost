@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 16:23+0000\n"
+"POT-Creation-Date: 2020-04-19 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: django_boost/management/commands/adminsitelog.py:94
+#: django_boost/management/commands/adminsitelog.py:112
 msgid "Do you want to delete these logs"
+msgstr "Wolle jo dizze logs ferwiderje?"
+
+#: django_boost/management/commands/deletemigrations.py:16
+#, fuzzy
+#| msgid "Do you want to delete these logs"
+msgid "Do you wish to delete?"
 msgstr "Wolle jo dizze logs ferwiderje?"
 
 #: django_boost/models/__init__.py:11
@@ -37,6 +43,18 @@ msgstr ""
 #: django_boost/models/__init__.py:22
 msgid "A user with that email address already exists."
 msgstr "In brûker mei dat e-postadres bestiet al."
+
+#: django_boost/models/mixins.py:37
+msgid "created date"
+msgstr "oanmakke datum"
+
+#: django_boost/models/mixins.py:38
+msgid "updated date"
+msgstr "bywurke datum"
+
+#: django_boost/models/mixins.py:45
+msgid "deleted date"
+msgstr "wiske datum"
 
 #: django_boost/validators.py:17
 msgid "Enter valid JSON string."
