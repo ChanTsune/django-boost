@@ -6,7 +6,7 @@ from django.db.models import Model
 __all__ = ["register_all"]
 
 
-def register_all(models, admin_class=admin.ModelAdmin):
+def register_all(models, admin_class=admin.ModelAdmin, **options):
     """
     Easily register Models to Django admin site.
 
@@ -32,6 +32,6 @@ def register_all(models, admin_class=admin.ModelAdmin):
     for _, klass in getmembers(models, isclass):
       if issubclass(klass, Model) and not klass._meta.abstract:
           try:
-              admin.site.register(klass, admin_class)
+              admin.site.register(klass, admin_class, **options)
           except admin.sites.AlreadyRegistered:
               pass
