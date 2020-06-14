@@ -1,10 +1,12 @@
+from inspect import getmembers, isclass
+
 from django.contrib import admin
-from django.db.models import Model
+from django.db.models.base import ModelBase
 
 __all__ = ["register_all"]
 
 
-def register_all(models, admin_class=admin.ModelAdmin):
+def register_all(models, admin_class=admin.ModelAdmin, **options):
     """
     Easily register Models to Django admin site.
 
@@ -27,11 +29,9 @@ def register_all(models, admin_class=admin.ModelAdmin):
 
       register_all(models, admin_class=admin.CustomAdmin)
     """
-    for attr in dir(models):
-        attr = getattr(models, attr, None)
-        if isinstance(attr, type):
-            if issubclass(attr, Model) and not attr._meta.abstract:
-                try:
-                    admin.site.register(attr, admin_class)
-                except admin.sites.AlreadyRegistered:
-                    pass
+    for _, klass in getmembers(models, isclass):
+      if issubclass(klass, ModelBase) and not klass._meta.abstract:
+          try:
+              admin.site.register(klass, admin_class, **options)
+          except admin.sites.AlreadyRegistered:
+              pass
