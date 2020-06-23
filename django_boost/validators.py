@@ -7,8 +7,11 @@ from django.core.validators import BaseValidator, RegexValidator
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 
+from .utils import contain_any
 
-__all__ = ["validate_json", "validate_uuid4", "validate_color_code"]
+
+__all__ = ["validate_json", "validate_uuid4", "validate_color_code",
+           "ContainAnyValidator"]
 
 
 @deconstructible
@@ -34,6 +37,21 @@ class JsonValidator(BaseValidator):
 class ColorCodeValidator(RegexValidator):
     regex = '#[0-9a-fA-F]{6}'
     message = _('Enter 6-digit hexadecimal number including #.')
+
+
+class ContainAnyValidator(BaseValidator):
+    """Validate contain any of elements in input."""
+
+    message = _('The input must contain one of "%s"\'s.')
+
+    def __init__(self, elements, message=None):
+        self.elements = elements
+        if message:
+            self.message = message
+
+    def __call__(self, value):
+        if not contain_any(value, self.elements):
+            raise ValidationError(self.message % self.elements)
 
 
 json_validator = JsonValidator()
