@@ -1,5 +1,4 @@
 from django.db.models.query import QuerySet
-from django.utils.timezone import now
 
 
 class LogicalDeletionQuerySet(QuerySet):
@@ -12,7 +11,8 @@ class LogicalDeletionQuerySet(QuerySet):
         if hard:
             return super().delete()
         field_name = self.get_delete_flag_field_name()
-        return super().update(**{field_name: now()})
+        deleted_value = self.model.get_deleted_value()
+        return super().update(**{field_name: deleted_value})
 
     def alive(self):
         field_name = self.get_delete_flag_field_name()

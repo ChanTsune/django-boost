@@ -12,6 +12,11 @@ class ArticleListView(ListView):
     model = Article
 
 
+class ArticleDeletedListView(ListView):
+    template_name = "blog/article_list.html"
+    queryset = Article.objects.dead()
+
+
 class ArticleDetail(DetailView):
     template_name = "blog/article_detail.html"
     model = Article
