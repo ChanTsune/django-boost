@@ -172,3 +172,15 @@ class TestHTMLSpaceLessCompressor(TestCase):
         from django_boost.utils.html import HTMLSpaceLessCompressor
         complesser = HTMLSpaceLessCompressor()
         self.assertEqual(complesser.compress(HTML_TEXT), COMPRESSED_HTML)
+
+
+class TestContainAny(TestCase):
+
+    def test_contain_any(self):
+        from django_boost.utils import contain_any
+
+        sequence = range(10)
+
+        self.assertTrue(contain_any(sequence, [0]))
+        self.assertFalse(contain_any(sequence, [10]))
+        self.assertTrue(contain_any(sequence, [10, 7]))

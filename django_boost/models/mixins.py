@@ -49,7 +49,8 @@ class LogicalDeletionMixin(models.Model):
 
     objects = LogicalDeletionManager()
 
-    def get_deleted_value(self):
+    @classmethod
+    def get_deleted_value(cls):
         return now()
 
     def delete(self, using=None, keep_parents=False, hard=False):
