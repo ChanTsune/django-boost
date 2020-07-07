@@ -5,8 +5,11 @@ from django.template.loader import get_template
 from django.utils.deprecation import MiddlewareMixin
 
 from django_boost.http import STATUS_MESSAGES
-from django_boost.http.response import (HttpExceptionBase,
-                                        HttpRedirectExceptionBase)
+from django_boost.http.response import (
+    HttpExceptionBase,
+    HttpRedirectExceptionBase
+)
+
 from .html import SpaceLessMiddleware
 
 

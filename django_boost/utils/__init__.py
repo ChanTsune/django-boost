@@ -1,5 +1,6 @@
 class Loop:
     """Django template like loop object."""
+
     def __init__(self, iterable):
         self.iterable = enumerate(iterable)
         self.length = len(iterable)
