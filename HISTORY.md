@@ -2,6 +2,14 @@
 
 ## Versions  
 
+### 1.6
+- Add
+  - `django_boost.models.mixins.LogicalDeletionMixin`
+  - `django_boost.admin.LogicalDeletionModelAdmin`
+  - `django_boost.validators.ContainAnyValidator`
+- Update
+  - `django_boost.admin.sites.register_all` allow options argument.
+
 ### 1.5.2
 - Update
   - some translation updates

@@ -48,7 +48,7 @@ class Command(AppCommand):
         failed = {}
         exclude_locals = options['exclude_locale'] + [options['source']]
         exclude_id = options['exclude_id'] + [""]
-        locales = [l for l in existing_locales if l not in exclude_locals]
+        locales = [i for i in existing_locales if i not in exclude_locals]
 
         if options['make']:
             call_command('makemessages', locale=existing_locales)

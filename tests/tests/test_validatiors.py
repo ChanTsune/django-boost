@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 from django_boost.test import TestCase
 from django_boost.validators import (
+    ContainAnyValidator,
     validate_color_code, validate_json, validate_uuid4,
-    ContainAnyValidator
 )
 
 TEST_DATA = [

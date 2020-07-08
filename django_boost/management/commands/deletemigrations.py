@@ -1,7 +1,7 @@
 import os
 
-from django.utils.translation import gettext as _
 from django.db.migrations.loader import MIGRATIONS_MODULE_NAME
+from django.utils.translation import gettext as _
 
 from django_boost.core.management import AppCommand
 
