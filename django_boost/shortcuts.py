@@ -1,3 +1,12 @@
+"""
+This module collects helper functions and classes that "span" multiple levels
+of MVC. In other words, these functions/classes introduce controlled coupling
+for convenience's sake.
+"""
+
+__all__ = ['get_object_or_default', 'get_object_or_exception',
+           'get_list_or_default', 'get_list_or_exception']
+
 
 def _get_queryset(klass):
     """Return a QuerySet or a Manager."""
