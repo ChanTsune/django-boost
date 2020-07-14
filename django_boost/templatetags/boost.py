@@ -1,3 +1,5 @@
+"""This module provides python build-in functions for django template."""
+
 from ast import literal_eval
 from itertools import chain, zip_longest
 from warnings import warn
