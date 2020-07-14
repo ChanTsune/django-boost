@@ -1,3 +1,5 @@
+"""This module provides django_boost application configuration."""
+
 from django.apps import AppConfig
 from django.core import checks
 

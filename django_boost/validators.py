@@ -1,3 +1,5 @@
+"""This module collects validation functions and classes."""
+
 import json
 import uuid
 from json.decoder import JSONDecodeError

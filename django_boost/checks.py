@@ -1,3 +1,5 @@
+"""This module provides django_boost application check functions."""
+
 from django.conf import settings
 from django.core.checks import Warning
 

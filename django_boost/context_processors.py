@@ -1,3 +1,5 @@
+"""This module provides template context functions."""
+
 from user_agents import parse
 
 
