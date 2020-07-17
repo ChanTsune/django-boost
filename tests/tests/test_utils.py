@@ -192,3 +192,60 @@ class TestContainAny(TestCase):
         self.assertTrue(contain_any(sequence, [0]))
         self.assertFalse(contain_any(sequence, [10]))
         self.assertTrue(contain_any(sequence, [10, 7]))
+
+
+class TestVersion(TestCase):
+
+    def test_get_version(self):
+        from django_boost.utils.version import get_version
+
+        test_cases = [
+            ((1, 1, 1, 'final', 0), '1.1.1'),
+            ((1, 1, 1, 'alpha', 0), '1.1.1a0'),
+            ((1, 1, 1, 'beta', 0), '1.1.1b0'),
+            ((1, 1, 1, 'rc', 0), '1.1.1rc0'),
+            ((1, 1, 0, 'final', 0), '1.1'),
+            ((1, 1, 0, 'beta', 0), '1.1b0'),
+        ]
+        for t, s in test_cases:
+            self.assertEqual(get_version(t), s)
+
+    def test_get_main_version(self):
+        from django_boost.utils.version import get_main_version
+
+        test_cases = [
+            ((1, 1, 1, 'final', 0), '1.1.1'),
+            ((1, 1, 1, 'alpha', 0), '1.1.1'),
+            ((1, 1, 1, 'beta', 0), '1.1.1'),
+            ((1, 1, 1, 'rc', 0), '1.1.1'),
+            ((1, 1, 0, 'final', 0), '1.1'),
+            ((1, 1, 0, 'beta', 0), '1.1'),
+        ]
+        for t, s in test_cases:
+            self.assertEqual(get_main_version(t), s)
+
+    def test_get_complete_version(self):
+        from django_boost.utils.version import get_complete_version
+        test_cases = [
+            (1, 1, 1, 'final', 0),
+            (1, 1, 1, 'alpha', 0),
+            (1, 1, 1, 'beta', 0),
+            (1, 1, 1, 'rc', 0),
+            (1, 1, 0, 'final', 0),
+            (1, 1, 0, 'beta', 0),
+        ]
+        for t in test_cases:
+            self.assertEqual(get_complete_version(t), t)
+
+    def test_get_docs_version(self):
+        from django_boost.utils.version import get_docs_version
+        test_cases = [
+            ((1, 1, 1, 'final', 0), '1.1'),
+            ((1, 1, 1, 'alpha', 0), 'dev'),
+            ((1, 1, 1, 'beta', 0), 'dev'),
+            ((1, 1, 1, 'rc', 0), 'dev'),
+            ((1, 1, 0, 'final', 0), '1.1'),
+            ((1, 1, 0, 'beta', 0), 'dev'),
+        ]
+        for t, s in test_cases:
+            self.assertEqual(get_docs_version(t), s)
