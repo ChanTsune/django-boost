@@ -15,10 +15,12 @@
 import os
 import sys
 from datetime import datetime
+from importlib import import_module
 
 import django
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+version_module = import_module('.version', 'django_boost.utils')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
@@ -30,9 +32,9 @@ copyright = '2019-{:%Y}, ChanTsune'.format(datetime.now())
 author = 'ChanTsune'
 
 # The short X.Y version
-version = '1.6'
+version = version_module.get_docs_version()
 # The full version, including alpha/beta/rc tags
-release = '1.6'
+release = version_module.get_version()
 
 
 # -- General configuration ---------------------------------------------------
