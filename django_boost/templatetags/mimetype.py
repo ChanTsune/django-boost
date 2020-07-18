@@ -1,3 +1,5 @@
+"""This module provides mimetypes utility for django template."""
+
 from mimetypes import guess_type
 
 from django.template import Library
