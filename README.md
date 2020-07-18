@@ -4,6 +4,7 @@ Django Boost is a collection of custom extensions for the Django Framework.
 
 [![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![Build Status](https://travis-ci.org/ChanTsune/django-boost.svg?branch=master)](https://travis-ci.org/ChanTsune/django-boost)
+[![Documentation Status](https://readthedocs.org/projects/django-boost/badge/?version=latest)](https://django-boost.readthedocs.io/en/latest/?badge=latest)
 [![PyPI](https://img.shields.io/pypi/v/django_boost)](https://pypi.org/project/django-boost/)
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/django_boost)](https://pypi.org/project/django-boost/)
 [![Downloads](https://pepy.tech/badge/django-boost)](https://pepy.tech/project/django-boost)
