@@ -52,9 +52,13 @@ def read(fname):
         return f.read()
 
 
+# Dynamically calculate the version based on django.VERSION.
+version = __import__('django_boost').get_version()
+
+
 setup(
     name='django_boost',
-    version='1.6',
+    version=version,
     description='Django Extension library',
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
