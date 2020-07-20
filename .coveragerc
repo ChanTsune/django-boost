@@ -1,0 +1,7 @@
+[run]
+source = django_boost
+omit = django_boost/management/commands/*
+
+[report]
+show_missing = True
+skip_covered = True
