@@ -20,5 +20,4 @@ urlpatterns = [
     path('', include('example.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    path('coverage/', include('django_boost.coverage.urls')),
 ]
