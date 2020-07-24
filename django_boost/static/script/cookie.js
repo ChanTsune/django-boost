@@ -1,119 +1,52 @@
-var Cookies = function () { }
-Cookies.get = function (key) {
-    var cookies = document.cookie;
-    var cookiesArray = cookies.split('; ');
-    for (var c of cookiesArray) {
-        var cArray = c.split('=');
-        if (cArray[0] == key) {
-            return cArray[1];
-        }
-    }
-    return undefined;
+var Cookies = () => document.cookie;
+Cookies.get = (key) => {
+    const item = Cookies.entries().filter(i => i[0] === key);
+    return !!item.length ? item[0][1] : undefined;
 }
-Cookies.set = function (key, value, attributes) {
-    var attrArray = new Array;
-    if (attributes != undefined) {
-        Object.keys(attributes).forEach(function (k) {
-            attrArray.push(k + "=" + attributes[k]);
-        })
-    }
+Cookies.set = (key, value, attributes) => {
     var strKeyValue = key + '=' + value;
-    if (attrArray.length != 0) {
-        strKeyValue += "; " + attrArray.join("; ");
+    if (attributes !== undefined) {
+        strKeyValue += "; " + Object.entries(attributes).map(k => k[0] + "=" + k[1]).join("; ");
     }
     document.cookie = strKeyValue;
     return value;
 }
-Cookies.delete = function (key) {
-    var cookies = document.cookie;
-    var cookiesArray = cookies.split('; ');
-    for (var c of cookiesArray) {
-        var cArray = c.split('=');
-        if (cArray[0] == key) {
-            document.cookie = cArray[0] + '=;max-age=0'
-        }
+Cookies.delete = (key) => {
+    for (var k of Cookies.keys().filter(k => k=== key)) {
+        document.cookie = k + '=;max-age=0';
     }
     return undefined;
 }
-Cookies.reset = function (path) {
-    Cookies.keys().forEach(function (k) {
-        Cookies.delete(k);
-    })
-}
-Cookies.has = function (key) {
-    return (Cookies.get(key) != undefined);
-}
-Cookies.append = function (key, value, attributes) {
+Cookies.reset = (path) => { Cookies.keys().forEach(k => Cookies.delete(k)) };
+
+Cookies.has = (key) => !!Cookies.keys().filter(i => i === key).length
+
+Cookies.append = (key, value, attributes) => Cookies.set(key, [...Cookies.getList(key), value].join("&|&"), attributes)
+
+Cookies.remove = (key, value, attributes) => {
     if (Cookies.has(key)) {
-        return Cookies.set(key, Cookies.get(key) + "&|&" + value, attributes);
-    } else {
-        return Cookies.set(key, value, attributes);
-    }
-}
-Cookies.remove = function (key, value, attributes) {
-    if (Cookies.has(key)) {
-        var removed = new Array;
-        Cookies.getList(key).forEach(function (v) {
-            if (v != value) {
-                removed.push(v);
-            }
-        })
+        var removed = Cookies.getList(key).filter(v => v !== value);
         Cookies.set(key, removed.join("&|&"), attributes);
     }
 }
-Cookies.contain = function (key, value) {
-    if (Cookies.has(key)) {
-        var contained = false;
-        Cookies.getList(key).forEach(function (v) {
-            if (v == value) {
-                contained = true;
-            }
-        })
-        return contained;
-    }
-    return false;
-}
-Cookies.getList = function (key) {
-    if (Cookies.has(key)) {
-        return Cookies.get(key).split("&|&");
-    }
-    return [];
-}
-Cookies.fromJson = function (object, attributes) {
-    Object.keys(object).forEach(function (k) {
-        Cookies.set(k, object[k], attributes);
-    })
-}
-Cookies.fromJsonString = function (string, attributes) {
-    Cookies.fromJson(JSON.parse(string), attributes);
-}
-Cookies.asJsonString = function () {
-    return JSON.stringify(Cookies.asJson());
-}
-Cookies.asJson = function () {
-    var obj = {};
-    Cookies.keys().forEach(function (k) {
-        obj[k] = Cookies.get(k);
-    })
-    return obj;
-}
-Cookies.keys = function () {
-    var keys = new Array;
-    var cookies = document.cookie;
-    var cookiesArray = cookies.split('; ');
-    for (var c of cookiesArray) {
-        var cArray = c.split('=');
-        keys.push(cArray[0]);
-    }
-    return keys;
-}
-Cookies.values = function () {
-    var values = new Array;
-    var cookies = document.cookie;
-    var cookiesArray = cookies.split('; ');
-    for (var c of cookiesArray) {
-        var cArray = c.split('=');
-        values.push(cArray[1]);
-    }
-    return values;
-}
+Cookies.contain = (key, value) => !!Cookies.getList(key).filter(v => v !== value).length
+
+Cookies.getList = (key) => Cookies.has(key) ? Cookies.get(key).split("&|&") : [];
+
+Cookies.fromJson = (object, attributes) => Cookies.fromEntries(Object.entries(object).map(v => [...v, attributes]))
+
+Cookies.fromJsonString = (string, attributes) => Cookies.fromJson(JSON.parse(string), attributes);
+
+Cookies.asJsonString = () => JSON.stringify(Cookies.asJson());
+
+Cookies.asJson = () => Object.fromEntries(Cookies.entries());
+
+Cookies.items = () => Cookies().split('; ').filter(v => v !== "");
+
+Cookies.entries = () => Cookies.items().map(i => i.split("="));
+
+Cookies.fromEntries = (entries) => entries.forEach(entry => Cookies.set(entry[0], entry[1], entry[2]))
+
+Cookies.keys = () => Cookies.entries().map(i => i[0]);
+
+Cookies.values = () => Cookies.entries().map(i => i[1]);
