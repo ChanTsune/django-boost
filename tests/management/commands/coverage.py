@@ -15,8 +15,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from coverage.cmdline import main
         main(['run', "manage.py", "test"])
-        main(['report'])
-        main(['html'])
         if options['url']:
             self.stdout.write('')
         if options['runserver']:
