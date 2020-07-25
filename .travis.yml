@@ -19,8 +19,9 @@ install:
   - "pip install tox-travis pillow coveralls"
 script:
   - tox
-  - "python manage.py coverage"
+  - "coverage run manage.py test"
 after_success:
+  - "coverage report"
   - coveralls
 
 matrix:

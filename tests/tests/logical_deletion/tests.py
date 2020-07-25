@@ -18,10 +18,6 @@ class TestLogicalDeletionMixin(TestCase):
         for item in args:
             self.model.objects.create(name=item)
 
-    def _hard_delete(self):
-        for i in self.model.all():
-            i.delete(hard=True)
-
     def test_delete(self):
         self._register_items(*[str(i) for i in range(10)])
         item = self.model.objects.get(name="0")
@@ -57,7 +53,7 @@ class TestLogicalDeletionManager(TestCase):
             self.model.objects.create(name=item)
 
     def _hard_delete(self):
-        for i in self.model.all():
+        for i in self.model.objects.all():
             i.delete(hard=True)
 
     def test_delete(self):
