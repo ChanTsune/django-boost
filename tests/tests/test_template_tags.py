@@ -8,7 +8,7 @@ class TestBoostTemplateTag(TestCase):
 
 
 class TestBoostUrlTemplateTag(TestCase):
-    
+
     def test_urlencode(self):
         from django_boost.templatetags.boost_url import urlencode
         cases = [
@@ -32,15 +32,17 @@ class TestBoostUrlTemplateTag(TestCase):
         from django_boost.templatetags.boost_url import replace_parameters
 
         cases = [
-            ("", ('p', 'p'), "p=p"),
-            ("q=q", ('p', 'p'), "q=q&p=p"),
-            ("q=q", ('q', 'x', 'p', 'p'), "q=x&p=p"),
+            ("", ('p', 'p'), ("p=p",)),
+            ("q=q", ('p', 'p'), ("q=q", "p=p")),
+            ("q=q", ('q', 'x', 'p', 'p'), ("q=x", "p=p")),
         ]
         factory = RequestFactory()
         for qs, args, expected in cases:
             request = factory.request(**{'QUERY_STRING': qs})
-            self.assertEqual(replace_parameters(request, *args), expected)
-        
+            actual = replace_parameters(request, *args)
+            for e in expected:
+                self.assertIn(e, actual)
+
         with self.assertRaises(LookupError):
             request = factory.request()
             replace_parameters(request, 'q')
@@ -57,7 +59,6 @@ class TestBoostUrlTemplateTag(TestCase):
         for qs, key, value in cases:
             request = factory.request(**{'QUERY_STRING': qs})
             self.assertEqual(get_querystring(request, key), value)
-
 
 
 class TestBoostQueryTemplateTag(TestCase):
