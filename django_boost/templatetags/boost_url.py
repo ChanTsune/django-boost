@@ -4,6 +4,8 @@ from urllib import parse
 
 from django.template import Library
 
+from django_boost.utils.itertools import chunked
+
 
 register = Library()
 
@@ -25,8 +27,8 @@ def replace_parameters(request, *args):
         raise LookupError(
             "The number of arguments must be odd, but %s was given" % arg_len)
     url_dict = request.GET.copy()
-    for i in range(0, arg_len, 2):
-        url_dict[args[i]] = str(args[i + 1])
+    for k, v in chunked(args, 2):
+        url_dict[k] = str(v)
     return url_dict.urlencode()
 
 
