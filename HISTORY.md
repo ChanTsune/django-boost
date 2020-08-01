@@ -2,6 +2,11 @@
 
 ## Versions  
 
+### 1.6.2
+
+- Update
+  - some docstring updates
+
 ### 1.6.1
 
 - Fix
