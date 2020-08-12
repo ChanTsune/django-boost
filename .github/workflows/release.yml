@@ -1,0 +1,21 @@
+name: "Release with commit"
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ChanTsune/release-with-commit@v1.0.0
+        with:
+          regexp: "Release (\\d+([.]\\d+)*)\n*((\\s|\\S)+)"
+          regexp_options: "us"
+          release_name: "version $1"
+          tag_name: "v$1"
+          body: "$3"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
