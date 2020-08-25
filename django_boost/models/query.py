@@ -21,3 +21,8 @@ class LogicalDeletionQuerySet(QuerySet):
     def dead(self):
         field_name = self.get_delete_flag_field_name()
         return self.exclude(**{field_name: None})
+
+    def revive(self):
+        """Revive logical delete items."""
+        field_name = self.get_delete_flag_field_name()
+        return self.update(**{field_name: None})

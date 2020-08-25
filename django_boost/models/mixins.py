@@ -61,3 +61,8 @@ class LogicalDeletionMixin(models.Model):
             return super().delete(using=using, keep_parents=keep_parents)
         self.deleted_at = self.get_deleted_value()
         return self.save()
+
+    def revive(self, force_update=False, using=None):
+        """Revive logical deleted item."""
+        self.deleted_at = None
+        return self.save()
