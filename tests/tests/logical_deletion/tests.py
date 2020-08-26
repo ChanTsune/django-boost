@@ -43,6 +43,17 @@ class TestLogicalDeletionMixin(TestCase):
         item.delete()
         self.assertEqual(len(self.model.objects.dead()), 1)
 
+    def test_revive(self):
+        self._register_items(*[str(i) for i in range(10)])
+        item = self.model.objects.get(name="0")
+        item.delete()
+        self.assertEqual(len(self.model.objects.dead()), 1)
+        self.assertEqual(len(self.model.objects.alive()), 9)
+        item.revive()
+        self.assertEqual(len(self.model.objects.dead()), 0)
+        self.assertEqual(len(self.model.objects.alive()), 10)
+
+
 class TestLogicalDeletionManager(TestCase):
     from .models import LogicalDeletionModel
 
@@ -68,4 +79,17 @@ class TestLogicalDeletionManager(TestCase):
         self.assertEqual(len(self.model.objects.dead()), 0)
         self.assertEqual(len(self.model.objects.alive()), 0)
         self.assertEqual(len(self.model.objects.all()), 0)
+        self._hard_delete()
+
+    def test_revive(self):
+        self._register_items(*[str(i) for i in range(10)])
+        self.model.objects.delete()
+        self.assertEqual(len(self.model.objects.dead()), 10)
+        self.assertEqual(len(self.model.objects.alive()), 0)
+        self.assertEqual(len(self.model.objects.all()), 10)
+
+        self.model.objects.revive()
+        self.assertEqual(len(self.model.objects.dead()), 0)
+        self.assertEqual(len(self.model.objects.alive()), 10)
+        self.assertEqual(len(self.model.objects.all()), 10)
         self._hard_delete()
