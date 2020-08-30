@@ -30,5 +30,7 @@ matrix:
     # django3 does not support Python 3.5
     - python: "3.5"
       env: DJANGO_VERSION=3.0
+    - python: "3.5"
+      env: DJANGO_VERSION=3.1
   allow_failures:
     - python: "nightly"
