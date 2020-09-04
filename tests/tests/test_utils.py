@@ -91,13 +91,19 @@ class TestAttribute(TestCase):
         with self.assertRaises(AttributeError):
             getattrs(i, '__class__', 'class')
 
-    def test_getattr_chain(self):
+    def test_getattr_chain_with_default(self):
         i = 1
         self.assertEqual(getattr_chain(
             i, '__class__.__name__'), i.__class__.__name__)
 
+        self.assertEqual(getattr_chain(
+            i, '__class__.name', i.__class__.__name__), i.__class__.__name__)
+
+    def test_getattr_chain(self):
+        i = 1
         with self.assertRaises(AttributeError):
-            getattr(i, '__class__.name')
+            getattr_chain(i, '__class__.name')
+
 
     def test_hasatttrs(self):
         i = 1
