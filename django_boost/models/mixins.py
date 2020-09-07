@@ -66,3 +66,7 @@ class LogicalDeletionMixin(models.Model):
         """Revive logical deleted item."""
         self.deleted_at = None
         return self.save()
+
+    def is_dead(self):
+        """Return True if the item is dead."""
+        return self.deleted_at != None
