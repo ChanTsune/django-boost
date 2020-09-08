@@ -150,8 +150,9 @@ class TestRegex(TestCase):
             except ValueError:
                 return False
 
-        y_m_d = [(y, m, d) for y in range(10000) for m in range(14) for d in range(32)]
-
-        for y, m, d in y_m_d:
-            self.assertEqual(is_valid_date(y, m, d), bool(
-                regex_fullmatch("%s/%s/%s" % (y, m, d))))
+        for y in range(10000):
+            for m in range(14):
+                for d in range(32):
+                    with self.subTest("%s/%s/%s" % (y, m, d)):
+                        self.assertEqual(is_valid_date(y, m, d), bool(
+                            regex_fullmatch("%s/%s/%s" % (y, m, d))))

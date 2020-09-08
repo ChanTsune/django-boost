@@ -59,6 +59,12 @@ class TestLogicalDeletionMixin(TestCase):
         item.delete()
         self.assertTrue(item.is_dead())
 
+    def test_is_alive(self):
+        self._register_items(*[str(i) for i in range(10)])
+        item = self.model.objects.get(name="0")
+        self.assertTrue(item.is_alive())
+
+
 class TestLogicalDeletionManager(TestCase):
     from .models import LogicalDeletionModel
 
