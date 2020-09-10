@@ -64,9 +64,10 @@ It is expected that the branch name will be numbered at the end of the branch na
 
 ### Marge
 
-このプロジェクトではmasterに取り込まれる場合、原則Marge commitを作成します。
-原則、から外れるものには以下が挙げられます。
-最新コミット時点で利用していない大きなファイルがコミットされている場合。大きなファイルとは数MB程度の大きさを指します。
+In this project, branch will be rebase and add to base branch.  
+The following are some of the things that deviate from the principle.  
+
+- When a large file (several MB) that is not used at the time of the latest commit is committed
 
 ### Pull Request
 
