@@ -2,6 +2,15 @@
 
 ## Versions  
 
+### 1.7
+
+- Add
+  - `revive` method to `django_boost.models.mixins.LogicalDeletionMixin`
+  - `is_dead` method to `django_boost.models.mixins.LogicalDeletionMixin`
+  - `is_alive` method to `django_boost.models.mixins.LogicalDeletionMixin`
+- Fix
+  - `django_boost.utils.attribute.getattr_chain`
+
 ### 1.6.2
 
 - Update
