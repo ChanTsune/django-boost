@@ -3,10 +3,11 @@ from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
 
 from django_boost.core.management import BaseCommand
+from django_boost.management.mixins import ConfirmOptionMixin
 from django_boost.utils.attribute import getattr_chain, hasattr_chain
 
 
-class Command(BaseCommand):
+class Command(ConfirmOptionMixin, BaseCommand):
     """Django admin site log cli."""
 
     help = "Django admin site log"
@@ -93,6 +94,7 @@ class Command(BaseCommand):
                             help="""user name field.
                                     e.g. "--name_field email",
                                     "--name_field profile.phone" """)
+        self.add_confirm_option(parser)
 
     def handle(self, *args, **options):
         queryset = LogEntry.objects.all()
@@ -109,10 +111,8 @@ class Command(BaseCommand):
         for log in queryset:
             self.print_log(log, **options)
         if options['delete']:
-            answer = input(_("Do you want to delete these logs") + "[y/n]?")
-            if answer.lower() in ["y", "yes"]:
+            if self.confirm(message=_("Do you want to delete these logs"), **options):
                 queryset.delete()
                 self.stdout.write('delete complete')
             else:
                 self.stderr.write('operation canceled')
-            return
