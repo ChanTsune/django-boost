@@ -1,5 +1,4 @@
 import sys
-from io import StringIO
 from os import path
 from platform import python_version
 try:
@@ -13,13 +12,14 @@ except ImportError:
 from django.conf import settings
 
 from django_boost.core.management import BaseCommand
+from django_boost.management.quit import QuitOptionMixin
 
 
 def _make_all(runtime, prockfile, requirments, **_):
     return not any([runtime, prockfile, requirments])
 
 
-class Command(BaseCommand):
+class Command(QuitOptionMixin, BaseCommand):
     """Create a configuration file for heroku."""
 
     help = "Create a configuration file for heroku" + \
@@ -51,15 +51,14 @@ class Command(BaseCommand):
         parser.add_argument('--requirments', action='store_true',
                             help='Create  only `requirments.txt`'
                             ', By default all files are created.')
-        parser.add_argument('-q', '--quit', action='store_true',
-                            help="Don't output to standard output.")
+        self.add_quit_option(parser)
 
     def handle(self, *args, **options):
         EXEC_PATH = sys.argv[0]
         ROOT_DIR = path.dirname(path.abspath(EXEC_PATH))
         make_all = _make_all(**options)
         self.already_exists = False
-        self.make_quit(**options)
+        self.if_needed_make_quit(**options)
 
         if make_all or options['prockfile']:
             PROCFILE_PATH = path.join(ROOT_DIR, self.PROCFILE)
@@ -72,10 +71,6 @@ class Command(BaseCommand):
             self.make_requirments(REQUIREMENTS_PATH, **options)
         if self.already_exists:
             self.stderr.write("If you want to overwrite it, please set '--overwrite' options.")
-
-    def make_quit(self, quit, **options):
-        if quit:
-            self.stderr = self.stdout = StringIO()
 
     def _print_result(self, path, exists, overwrite, quit, **options):
         if exists and overwrite:

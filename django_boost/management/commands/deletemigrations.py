@@ -4,30 +4,20 @@ from django.db.migrations.loader import MIGRATIONS_MODULE_NAME
 from django.utils.translation import gettext as _
 
 from django_boost.core.management import AppCommand
+from django_boost.management.mixins import ConfirmOptionMixin, QuitOptionMixin
 
 
-class Command(AppCommand):
+class Command(ConfirmOptionMixin, QuitOptionMixin, AppCommand):
     help = "delete migration files."
-
-    def confirm(self):
-        if not self.yes:
-            answer = None
-            while not answer or answer not in "yn":
-                answer = input(_("Do you wish to delete?") + " [y/N] ")
-                if not answer:
-                    answer = "n"
-                    break
-                else:
-                    answer = answer[0].lower()
-            return answer == "y"
-        return True
 
     def add_arguments(self, parser):
         super().add_arguments(parser)
         parser.add_argument('-y', action='store_true')
+        self.add_quit_option(parser)
+        self.add_conform_option(parser)
 
     def handle_app_config(self, app_config, **options):
-        self.yes = options['y']
+        self.if_needed_make_quit(**options)
         app_path = app_config.path
         migration_dir = os.path.join(app_path, MIGRATIONS_MODULE_NAME)
         file_list = []
@@ -42,7 +32,7 @@ class Command(AppCommand):
             self.stderr.write(
                 'No migration files detected in %s' % app_config.name)
             return
-        if self.confirm():
+        if self.confirm(message=_("Do you wish to delete?"), **options):
             for file in file_list:
                 os.remove(file)
             self.stdout.write(self.style.SUCCESS('file deleted.'))
