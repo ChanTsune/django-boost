@@ -28,10 +28,7 @@ class JsonValidator(BaseValidator):
 
     def __call__(self, value):
         try:
-            if isinstance(value, str):
-                json.loads(value)
-                return
-            raise TypeError
+            json.loads(value)
         except JSONDecodeError:
             raise ValidationError(self.message, code=self.code)
 
@@ -68,10 +65,7 @@ def validate_uuid4(value):
     try:
         uuid_value = uuid.UUID(value)
     except ValueError as e:
-        if hasattr(e, 'message'):
-            raise ValidationError(e.message)
-        else:
-            raise ValidationError(str(e))
+        raise ValidationError(str(e))
     if not uuid_value.hex == value.replace("-", ""):
         raise ValidationError("badly formed hexadecimal UUID string")
 
