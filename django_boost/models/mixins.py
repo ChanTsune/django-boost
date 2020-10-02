@@ -69,8 +69,8 @@ class LogicalDeletionMixin(models.Model):
 
     def is_dead(self):
         """Return True if the item is dead."""
-        return self.deleted_at != None
+        return self.deleted_at is not None
 
     def is_alive(self):
         """Return True if record is alive, otherwise False."""
-        return self.deleted_at == None
+        return self.deleted_at is None
