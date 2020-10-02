@@ -47,6 +47,12 @@ A generic view class that inherits ``JsonResponseMixin`` and ``JsonRequestMixin`
 
 In the above example, we just return the sent Json string as it is.
 
+StringView
+-----------
+
+.. autoclass:: django_boost.views.simple.StringView
+
+
 ModelCRUDViews
 ---------------
 
