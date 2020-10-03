@@ -449,21 +449,6 @@ class YourView(View):
 django_boost generic view (
 `CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
 
-#### JsonView
-
-A generic view class that inherits `JsonResponseMixin` and `JsonRequestMixin`.
-
-```py
-from django_boost.views.generic import JsonView
-
-class SameAPIView(JsonView):
-
-    def get_context_data(self,**kwargs):
-        return self.json
-```
-
-In the above example, we just return the sent Json string as it is.
-
 #### ModelCRUDViews
 
 Provides easy creation of CRUDViews linked to model.
