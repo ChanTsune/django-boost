@@ -34,18 +34,7 @@ django_boost generic view (``CreateView``, ``DeleteView``, ``DetailView``, ``For
 JsonView
 ---------
 
-A generic view class that inherits ``JsonResponseMixin`` and ``JsonRequestMixin``.
-
-::
-
-  from django_boost.views.generic import JsonView
-
-  class SameAPIView(JsonView):
-
-      def get_context_data(self, **kwargs):
-          return self.json
-
-In the above example, we just return the sent Json string as it is.
+.. autoclass:: django_boost.views.generic.JsonView
 
 ModelCRUDViews
 ---------------
