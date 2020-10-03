@@ -10,6 +10,10 @@ __all__ = ("ColorCodeField", "ColorInput", "FormUserKwargsMixin",
 
 
 class UserCreationForm(BaseUserCreationForm):
+    """
+    A form that creates a user, with no privileges, from the given
+    ``User.USERNAME_FIELD`` and password.
+    """
 
     class Meta:
         User = get_user_model()
