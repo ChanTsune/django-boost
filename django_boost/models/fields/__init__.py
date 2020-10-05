@@ -9,6 +9,7 @@ from django_boost.validators import validate_color_code, validate_json
 
 
 class JsonField(TextField):
+    """TextField with json validation."""
     empty_strings_allowed = False
     default_validators = [validate_json]
 
