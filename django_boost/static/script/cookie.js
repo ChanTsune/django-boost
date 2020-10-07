@@ -29,7 +29,7 @@ Cookies.remove = (key, value, attributes) => {
         Cookies.set(key, removed.join("&|&"), attributes);
     }
 }
-Cookies.contain = (key, value) => !!Cookies.getList(key).filter(v => v !== value).length
+Cookies.contain = (key, value) => !!Cookies.getList(key).filter(v => v === value).length
 
 Cookies.getList = (key) => Cookies.has(key) ? Cookies.get(key).split("&|&") : [];
 
