@@ -3,11 +3,11 @@ from datetime import datetime
 REGEX_LEAP_YEAR = r"(?!0)([0-9]*((0[48]|[2468][048]|[13579][26])(00)?|0000)|[048]?(00)?)"
 NON_ZERO_YEAR = r"(?!0)([0-9])+"
 
-REGEX_MONTH_31 = r"(1|3|5|7|8|10|12)"
+REGEX_MONTH_31 = r"([13578]|10|12)"
 REGEX_DAY_31 = r"([1-9]|[12][0-9]|3[01])"
 REGEX_DATE_31 = REGEX_MONTH_31 + "/" + REGEX_DAY_31
 
-REGEX_MONTH_30 = r"(4|6|9|11)"
+REGEX_MONTH_30 = r"([469]|11)"
 REGEX_DAY_30 = r"([1-9]|[12][0-9]|30)"
 REGEX_DATE_30 = REGEX_MONTH_30 + "/" + REGEX_DAY_30
 
