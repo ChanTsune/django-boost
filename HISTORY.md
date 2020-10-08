@@ -2,6 +2,13 @@
 
 ## Versions  
 
+### 1.7.1
+
+- Update
+  - some docstring updates
+- Fix
+  - internal js function doesn't work
+
 ### 1.7
 
 - Add
