@@ -83,7 +83,6 @@ setup(
     ],
     entry_points="""
 [console_scripts]
-dj-boost=django_boost:main
 django-boost=django_boost:main
 """,
 )
