@@ -83,6 +83,6 @@ setup(
     ],
     entry_points="""
 [console_scripts]
-django-boost=django_boost:main
+django-boost=django_boost.core.management:execute_from_command_line
 """,
 )
