@@ -2,6 +2,12 @@
 
 ## Versions  
 
+### 1.7.2
+
+- Update
+  - regex pattern
+  - support python 3.9
+
 ### 1.7.1
 
 - Update
