@@ -39,7 +39,7 @@ See more at `Django Supported Versions <https://docs.djangoproject.com/en/dev/in
 
 This might mean the django-boost may work with older or unsupported versions but we do not guarantee it and most likely will not fix bugs related to incompatibilities with older versions.
 
-At this time we test on and thrive to support valid combinations of Python 3.5, 3.6, 3.7, 3.8 and pypy3 with Django versions 2.0 to 2.2 and 3.0.
+At this time we test on and thrive to support valid combinations of Python 3.6, 3.7, 3.8, 3.9 and pypy3 with Django versions 2.0 to 2.2 and 3.0 to 3.2.
 
 
 
