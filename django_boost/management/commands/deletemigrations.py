@@ -12,7 +12,6 @@ class Command(ConfirmOptionMixin, QuitOptionMixin, AppCommand):
 
     def add_arguments(self, parser):
         super().add_arguments(parser)
-        parser.add_argument('-y', action='store_true')
         self.add_quit_option(parser)
         self.add_confirm_option(parser)
 
