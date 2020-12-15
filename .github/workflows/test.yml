@@ -24,7 +24,7 @@ jobs:
         - '3.1'
     runs-on: ubuntu-latest
     env:
-     - DJANGO_VERSION: ${{ matrix.django-version }}
+      DJANGO_VERSION: ${{ matrix.django-version }}
     steps:
     - uses: actions/checkout@v2
     - name: 'Set up Python ${{ matrix.python-version }}'
