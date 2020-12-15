@@ -12,7 +12,7 @@ except ImportError:
 from django.conf import settings
 
 from django_boost.core.management import BaseCommand
-from django_boost.management.quit import QuitOptionMixin
+from django_boost.management.mixins import QuitOptionMixin
 
 
 def _make_all(runtime, prockfile, requirments, **_):
