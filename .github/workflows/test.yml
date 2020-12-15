@@ -1,0 +1,53 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        python-version:
+        - '3.6.x'
+        - '3.7.x'
+        - '3.8.x'
+        - '3.9.x'
+        - '3.10.0-alpha - 3.10.x'
+        django-version:
+        - '2.0'
+        - '2.1'
+        - '2.2'
+        - '3.0'
+        - '3.1'
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_VERSION: ${{ matrix.django-version }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: 'Set up Python ${{ matrix.python-version }}'
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python setup.py install
+        pip install -U pip
+        pip install django~=$DJANGO_VERSION
+        pip install tox-travis pillow coveralls
+    - name: Tox
+      run: |
+        tox
+    - name: Test
+      run: |
+        coverage run manage.py test
+    - name: Report
+      run: |
+        coverage report
+    - name: Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        coveralls
