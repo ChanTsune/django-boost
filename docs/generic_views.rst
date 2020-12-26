@@ -36,6 +36,12 @@ JsonView
 
 .. autoclass:: django_boost.views.generic.JsonView
 
+StringView
+-----------
+
+.. autoclass:: django_boost.views.simple.StringView
+
+
 ModelCRUDViews
 ---------------
 
