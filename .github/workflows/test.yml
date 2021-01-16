@@ -47,6 +47,9 @@ jobs:
       run: |
         coverage report
     - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      run: |
+        echo "repo_token: ${COVERALLS_TOKEN}" > .coveralls.yml
+        coveralls
