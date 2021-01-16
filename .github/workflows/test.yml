@@ -35,11 +35,8 @@ jobs:
       run: |
         python setup.py install
         pip install -U pip
-        pip install wheel
         pip install django~=$DJANGO_VERSION
-        pip install pillow
-        pip install tox-travis
-        pip install coveralls pyyaml
+        pip install tox-travis pillow coveralls
     - name: Tox
       run: |
         tox
