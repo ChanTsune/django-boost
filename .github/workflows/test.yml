@@ -52,7 +52,6 @@ jobs:
     - name: Coveralls
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
       run: |
-        echo "repo_token: ${COVERALLS_TOKEN}" > .coveralls.yml
+        echo "repo_token: ${GITHUB_TOKEN}" > .coveralls.yml
         coveralls
