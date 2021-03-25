@@ -50,8 +50,4 @@ jobs:
       run: |
         coverage report
     - name: Coveralls
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "repo_token: ${GITHUB_TOKEN}" > .coveralls.yml
-        coveralls
+      uses: AndreMiras/coveralls-python-action@develop
