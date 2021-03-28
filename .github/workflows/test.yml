@@ -39,7 +39,7 @@ jobs:
         pip install django~=$DJANGO_VERSION
         pip install pillow
         pip install tox-travis
-        pip install coveralls pyyaml
+        pip install codecov
     - name: Tox
       run: |
         tox
@@ -49,10 +49,5 @@ jobs:
     - name: Report
       run: |
         coverage report
-    - name: Coveralls
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-      run: |
-        echo "repo_token: ${COVERALLS_TOKEN}" > .coveralls.yml
-        coveralls
+    - name: codecov
+        codecov run
