@@ -51,4 +51,4 @@ jobs:
         coverage report
     - name: codecov
       run: |
-        codecov run
+        codecov
