@@ -1,0 +1,40 @@
+language: python
+
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "pypy3"
+  - "nightly"
+env:
+  - DJANGO_VERSION=2.0
+  - DJANGO_VERSION=2.1
+  - DJANGO_VERSION=2.2
+  - DJANGO_VERSION=3.0
+  - DJANGO_VERSION=3.1
+  - DJANGO_VERSION=3.2
+install:
+  - "python setup.py install"
+  - "pip install -U pip"
+  - "pip install django~=$DJANGO_VERSION"
+  - "pip install tox-travis pillow coveralls"
+script:
+  - tox
+  - "coverage run manage.py test"
+after_success:
+  - "coverage report"
+  - coveralls
+
+matrix:
+  exclude:
+    # django3 does not support Python 3.5
+    - python: "3.5"
+      env: DJANGO_VERSION=3.0
+    - python: "3.5"
+      env: DJANGO_VERSION=3.1
+    - python: "3.5"
+      env: DJANGO_VERSION=3.2
+  allow_failures:
+    - python: "nightly"
