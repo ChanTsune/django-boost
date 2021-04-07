@@ -9,5 +9,5 @@ try:
     import django
     if django.VERSION < (3, 2):
         default_app_config = 'django_boost.apps.DjangoBoostConfig'
-except ImportError:
-    pass
+except ImportError: # noqa
+    pass  # noqa
