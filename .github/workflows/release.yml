@@ -24,7 +24,7 @@ jobs:
         if: ${{ steps.create_release.outputs.created == 'true' }}
       - name: Set up Python
         if: ${{ steps.create_release.outputs.created == 'true' }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: '3.x'
       - name: Install dependencies
