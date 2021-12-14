@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 
+import django
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
@@ -8,7 +9,10 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.utils.http import is_safe_url
+if django.VERSION[0] <= 3:
+    from django.utils.http import is_safe_url as url_has_allowed_host_and_scheme
+else:
+    from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
@@ -45,7 +49,7 @@ class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
             self.redirect_field_name,
             self.request.GET.get(self.redirect_field_name, '')
         )
-        url_is_safe = is_safe_url(
+        url_is_safe = url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),
             require_https=self.request.is_secure(),
