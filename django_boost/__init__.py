@@ -1,6 +1,6 @@
 from django_boost.utils.version import get_version
 
-VERSION = (1, 8, 0, 'alpha', 0)
+VERSION = (2, 0, 0, 'final', 0)
 
 
 __version__ = get_version()

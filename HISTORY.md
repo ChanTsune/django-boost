@@ -2,6 +2,21 @@
 
 ## Versions  
 
+### 2.0.0
+
+- Update
+  - support python 3.10
+  - support django 4.0 
+
+- Add
+  - `django_boost.views.simple.StringView`
+  - `django_boost.admin_tools` sub app module
+  - `listsuperuser` in `django_boost.admin_tools`
+
+- Drop
+  - support python 3.6, 3.7
+  - support django 2.x
+
 ### 1.7.2
 
 - Update
