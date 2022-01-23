@@ -44,7 +44,7 @@ for dirpath, dirnames, filenames in os.walk(extensions_dir):
         package_files.extend([os.path.join(path, f) for f in filenames])
 
 
-requires = ["Django>=2.0", "user-agents>=2.0"]
+requires = ["Django>=3.0", "user-agents>=2.0"]
 
 
 def read(fname):
