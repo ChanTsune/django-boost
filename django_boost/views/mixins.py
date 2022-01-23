@@ -1,7 +1,6 @@
 import json
 from datetime import timedelta
 
-import django
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (SuccessURLAllowedHostsMixin,
                                        logout_then_login, redirect_to_login)
