@@ -44,7 +44,7 @@ for dirpath, dirnames, filenames in os.walk(extensions_dir):
         package_files.extend([os.path.join(path, f) for f in filenames])
 
 
-requires = ["Django>=2.0", "user-agents>=2.0"]
+requires = ["Django>=3.0", "user-agents>=2.0"]
 
 
 def read(fname):
@@ -79,12 +79,10 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Framework :: Django',
-        'Framework :: Django :: 2.0',
-        'Framework :: Django :: 2.1',
-        'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
         'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.0',
         'License :: OSI Approved :: MIT License',
     ],
 )
