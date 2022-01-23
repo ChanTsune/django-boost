@@ -9,10 +9,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-if django.VERSION[0] <= 3:
-    from django.utils.http import is_safe_url as url_has_allowed_host_and_scheme
-else:
-    from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
