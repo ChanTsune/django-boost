@@ -11,6 +11,7 @@ class DjangoBoostConfig(AppConfig):
 
     name = 'django_boost'
     verbose_name = 'Django Boost'
+    default_auto_field = 'django.db.models.BigAutoField'
 
     def ready(self):
         checks.register(check_database_router, self.name)
