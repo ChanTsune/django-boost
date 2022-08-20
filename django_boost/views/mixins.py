@@ -32,7 +32,16 @@ class CSRFExemptMixin:
 
 
 if django.VERSION >= (4, 1):
-    from django.contrib.auth.views import RedirectURLMixin as DynamicRedirectMixin
+    from django.contrib.auth.views import RedirectURLMixin
+
+    class DynamicRedirectMixin(RedirectURLMixin):
+        success_url = None
+
+        def get_success_url(self):
+            url = self.get_redirect_url()
+            return url or self.success_url or super().get_success_url()
+
+
 else:
     from django.contrib.auth.views import SuccessURLAllowedHostsMixin
 
