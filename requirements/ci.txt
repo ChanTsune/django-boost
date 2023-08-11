@@ -1,3 +1,5 @@
+wheel
+setuptools
 pillow
 tox-travis
 codecov
