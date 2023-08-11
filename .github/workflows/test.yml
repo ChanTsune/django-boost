@@ -22,6 +22,7 @@ jobs:
         - '3.2.*'
         - '4.0.*'
         - '4.1.*'
+        - '4.2.*'
     runs-on: ubuntu-latest
     env:
       DJANGO_VERSION: ${{ matrix.django-version }}
