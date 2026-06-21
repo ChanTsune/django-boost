@@ -83,6 +83,23 @@ Break *iterable* into lists of length *n*
     {% endfor %}
   {% endfor %}
 
+zip
+~~~~
+Combine iterable objects.
+
+The ``zip`` template filter is deprecated and will be removed in django-boost
+3.0. Use the ``zip`` template tag instead.
+
+::
+
+  {% load boost %}
+
+  {% zip list1 list2 as zipped_list %}
+
+  {% for value1, value2 in zipped_list %}
+    {{ value1 }} {{ value2 }}
+  {% endfor %}
+
 
 URL Utility
 ------------

@@ -216,7 +216,9 @@ def _vars(obj):
 
 @register.filter(name="zip")
 def _zip(arg1, arg2):
-    warn("`zip filter` is deprecated. Use `zip tag` instead.")
+    warn("The `zip` template filter is deprecated and will be removed in "
+         "django-boost 3.0. Use the `zip` template tag instead.",
+         DeprecationWarning, stacklevel=2)
     return zip(arg1, arg2)
 
 

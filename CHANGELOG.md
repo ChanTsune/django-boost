@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Deprecated
+
+- `zip` template filter. Use the `zip` template tag instead.
+
 ## [2.1.2] - 2026-06-21
 
 ### Fixed
