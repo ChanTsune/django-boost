@@ -2,6 +2,13 @@
 
 ## Versions  
 
+## 2.1.1
+- Fix
+  - restore compatibility with Python 3.8 and 3.9 by constraining the `ua-parser` dependency
+- Update
+  - declare support for Python 3.11 and 3.12
+  - declare support for Django 4.1 and 4.2
+
 ## 2.1.0
 - Update
   - support django 4.1
