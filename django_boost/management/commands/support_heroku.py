@@ -1,6 +1,8 @@
 import sys
 from os import path
 from platform import python_version
+from warnings import warn
+
 try:
     from pip._internal.commands import freeze
 except ImportError:
@@ -54,6 +56,8 @@ class Command(QuitOptionMixin, BaseCommand):
         self.add_quit_option(parser)
 
     def handle(self, *args, **options):
+        warn("The `support_heroku` management command is deprecated and will "
+             "be removed in django-boost 3.0.", DeprecationWarning, stacklevel=2)
         EXEC_PATH = sys.argv[0]
         ROOT_DIR = path.dirname(path.abspath(EXEC_PATH))
         make_all = _make_all(**options)

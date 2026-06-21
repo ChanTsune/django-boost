@@ -99,6 +99,10 @@ It is also possible to delete only the logs narrowed down by ``--filter`` and ``
 support_heroku
 ---------------
 
+.. warning::
+
+  ``support_heroku`` is deprecated and will be removed in django-boost 3.0.
+
 ::
 
   $ python manage.py support_heroku
