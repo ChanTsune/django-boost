@@ -105,6 +105,40 @@ posted_at = models.DateTimeField(auto_now_add=True)
 updated_at = models.DateTimeField(auto_now=True)
 ```
 
+### LogicalDeletionMixin
+
+```py
+from django.db import models
+from django_boost.models.mixins import LogicalDeletionMixin
+
+class Store(LogicalDeletionMixin):
+    name = models.CharField(max_length=128)
+```
+
+The field `deleted_at` is added to hold the date of the logical deletion.
+
+By default, the deletion process for models that inherit from this class is a logical deletion.
+If you want to do physical deletion, please pass `hard=True` as a `delete` method argument.
+
+```py
+Store.objects.delete()  # logical deletion.
+
+Store.objects.delete(hard=True)  # physical deletion.
+```
+
+If you want to specify when the object was logically deleted, pass `deleted_at`.
+This is available on model instances, querysets, and managers.
+
+```py
+from django.utils.timezone import now
+
+deleted_at = now()
+
+store.delete(deleted_at=deleted_at)
+Store.objects.filter(name="Store 1").delete(deleted_at=deleted_at)
+Store.objects.delete(deleted_at=deleted_at)
+```
+
 ### ColorCodeField
 
 ```py

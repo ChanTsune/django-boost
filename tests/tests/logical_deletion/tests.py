@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.test import TestCase, override_settings
+from django.utils.timezone import now
 
 
 @override_settings(
@@ -23,6 +26,14 @@ class TestLogicalDeletionMixin(TestCase):
         item = self.model.objects.get(name="0")
         item.delete()
         self.assertNotEqual(item.deleted_at, None)
+
+    def test_delete_with_deleted_at(self):
+        self._register_items(*[str(i) for i in range(10)])
+        deleted_at = now() - timedelta(days=1)
+        item = self.model.objects.get(name="0")
+        item.delete(deleted_at=deleted_at)
+        item.refresh_from_db()
+        self.assertEqual(item.deleted_at, deleted_at)
 
     def test_hard_delete(self):
         self._register_items(*[str(i) for i in range(10)])
@@ -82,6 +93,23 @@ class TestLogicalDeletionManager(TestCase):
         self._register_items(*[str(i) for i in range(10)])
         self.model.objects.delete()
         self.assertEqual(len(self.model.objects.dead()), 10)
+        self._hard_delete()
+
+    def test_delete_with_deleted_at(self):
+        self._register_items(*[str(i) for i in range(10)])
+        deleted_at = now() - timedelta(days=1)
+        self.model.objects.delete(deleted_at=deleted_at)
+        for item in self.model.objects.dead():
+            self.assertEqual(item.deleted_at, deleted_at)
+        self._hard_delete()
+
+    def test_queryset_delete_with_deleted_at(self):
+        self._register_items(*[str(i) for i in range(10)])
+        deleted_at = now() - timedelta(days=1)
+        self.model.objects.filter(name__in=["0", "1"]).delete(deleted_at=deleted_at)
+        self.assertEqual(len(self.model.objects.dead()), 2)
+        for item in self.model.objects.dead():
+            self.assertEqual(item.deleted_at, deleted_at)
         self._hard_delete()
 
     def test_hard_delete(self):

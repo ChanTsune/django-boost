@@ -56,10 +56,10 @@ class LogicalDeletionMixin(models.Model):
     def get_deleted_value(cls):
         return now()
 
-    def delete(self, using=None, keep_parents=False, hard=False):
+    def delete(self, using=None, keep_parents=False, hard=False, deleted_at=None):
         if hard:
             return super().delete(using=using, keep_parents=keep_parents)
-        self.deleted_at = self.get_deleted_value()
+        self.deleted_at = deleted_at if deleted_at is not None else self.get_deleted_value()
         return self.save()
 
     def revive(self, force_update=False, using=None):

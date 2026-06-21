@@ -12,8 +12,8 @@ class LogicalDeletionManager(Manager):
     def get_queryset(self):
         return LogicalDeletionQuerySet(self.model)
 
-    def delete(self, hard=False):
-        return self.get_queryset().delete(hard=hard)
+    def delete(self, hard=False, deleted_at=None):
+        return self.get_queryset().delete(hard=hard, deleted_at=deleted_at)
 
     def alive(self):
         """Return not logically deleted items qureyset."""

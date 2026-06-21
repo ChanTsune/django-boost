@@ -7,11 +7,11 @@ class LogicalDeletionQuerySet(QuerySet):
     def get_delete_flag_field_name(self):
         return self.delete_flag_field
 
-    def delete(self, hard=False):
+    def delete(self, hard=False, deleted_at=None):
         if hard:
             return super().delete()
         field_name = self.get_delete_flag_field_name()
-        deleted_value = self.model.get_deleted_value()
+        deleted_value = deleted_at if deleted_at is not None else self.model.get_deleted_value()
         return super().update(**{field_name: deleted_value})
 
     def alive(self):
