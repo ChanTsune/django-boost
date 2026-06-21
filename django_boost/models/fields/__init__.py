@@ -1,3 +1,5 @@
+from warnings import warn
+
 from django import forms
 from django.db import models
 from django.db.models.fields import CharField, TextField
@@ -13,6 +15,13 @@ class JsonField(TextField):
 
     empty_strings_allowed = False
     default_validators = [validate_json]
+
+    def __init__(self, *args, **kwargs):
+        warn("django_boost JsonField is deprecated and will be removed in "
+             "django-boost 3.0. Use django.db.models.JSONField instead "
+             "(available since Django 3.1).",
+             DeprecationWarning, stacklevel=2)
+        super().__init__(*args, **kwargs)
 
 
 class ColorCodeFiled(CharField):
