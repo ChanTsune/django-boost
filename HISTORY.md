@@ -3,6 +3,8 @@
 ## Versions  
 
 ## Unreleased
+
+## 2.1.2
 - Fix
   - HTTP 510 reason phrase and add 511 in `STATUS_MESSAGES`
 
