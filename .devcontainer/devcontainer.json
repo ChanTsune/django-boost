@@ -4,7 +4,8 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "python -m pip install --upgrade pip && python -m pip install -e . -r requirements/develop.txt -r requirements/ci.txt -r requirements/docs.txt",
+  "onCreateCommand": "python -m pip install --upgrade pip && python -m pip install -e . -r requirements/develop.txt -r requirements/ci.txt",
+  "postCreateCommand": "python -m pip install -r requirements/docs.txt && pip install \"django==${DJANGO_VERSION:-4.2.*}\"",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -26,6 +27,7 @@
     }
   },
   "remoteEnv": {
-    "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    "DJANGO_VERSION": "${localEnv:DJANGO_VERSION}"
   }
 }
