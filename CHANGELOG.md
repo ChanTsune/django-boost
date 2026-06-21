@@ -10,6 +10,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Deprecated
 
 - `zip` template filter. Use the `zip` template tag instead.
+- `django_boost.models.fields.JsonField`. Use `django.db.models.JSONField`
+  instead, available since Django 3.1.
 
 ## [2.1.2] - 2026-06-21
 
