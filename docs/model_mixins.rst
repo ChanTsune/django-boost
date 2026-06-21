@@ -79,6 +79,19 @@ If you want to do physical deletion, please pass ``hard=True`` as a ``delete`` m
 
   Store.objects.delete(hard=True) # physical deletion.
 
+If you want to specify when the object was logically deleted, pass ``deleted_at``.
+This is available on model instances, querysets, and managers.
+
+::
+
+  from django.utils.timezone import now
+
+  deleted_at = now()
+
+  store.delete(deleted_at=deleted_at)
+  Store.objects.filter(name="Store 1").delete(deleted_at=deleted_at)
+  Store.objects.delete(deleted_at=deleted_at)
+
 
 ``all`` method will get all the data as usual, including the logically deleted items.
 
