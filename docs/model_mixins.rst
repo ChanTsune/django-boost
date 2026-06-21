@@ -73,6 +73,12 @@ By default, the deletion process for models that inherit from this class is a lo
 
 If you want to do physical deletion, please pass ``hard=True`` as a ``delete`` method argument.
 
+Logical deletion follows Django's deletion collector for normal ``delete`` behavior:
+``CASCADE``, ``PROTECT``, ``SET_NULL``, delete signals, queryset restrictions, and
+the ``(count, details)`` return value are preserved. Related models that do not inherit
+``LogicalDeletionMixin`` are physically deleted when Django's cascade handling deletes them,
+because they have no ``deleted_at`` field to update.
+
 ::
 
   Store.objects.delete() # logical deletion.

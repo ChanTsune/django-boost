@@ -10,7 +10,7 @@ class LogicalDeletionManager(Manager):
         return self.delete_flag_field
 
     def get_queryset(self):
-        return LogicalDeletionQuerySet(self.model)
+        return LogicalDeletionQuerySet(self.model, using=self._db, hints=self._hints)
 
     def delete(self, hard=False, deleted_at=None):
         return self.get_queryset().delete(hard=hard, deleted_at=deleted_at)

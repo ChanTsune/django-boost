@@ -36,6 +36,9 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   the extra `forms.py` and `urls.py` on top, so generated apps inherit Django's
   defaults (such as `default_auto_field`). The previously bundled `apps.py`
   `ready()` stub and `views.py` generic-view imports are no longer added.
+- Make logical deletion follow Django's deletion collector so `CASCADE`,
+  `PROTECT`, `SET_NULL`, delete signals, queryset restrictions, and
+  `(count, details)` delete return values are preserved.
 
 ### Removed
 
