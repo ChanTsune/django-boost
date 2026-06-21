@@ -7,6 +7,11 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Changed
+
+- Document the planned django-boost 3.0 Python/Django baseline and
+  `useragent` extra.
+
 ### Deprecated
 
 - `zip` template filter. Use the `zip` template tag instead.

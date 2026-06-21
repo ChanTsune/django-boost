@@ -35,6 +35,13 @@ git clone https://github.com/ChanTsune/Django-Boost.git
 python setup.py install
 ```
 
+## Compatibility
+
+The 2.x line is tested on Python 3.8-3.12 and Django 3.0-4.2. The next major
+release, django-boost 3.0, is planned to require Python 3.11+ and Django 5.2+.
+User-agent detection is also planned to move behind an optional extra:
+`pip install django-boost[useragent]`.
+
 ## Installing It
 
 To enable django_boost in your project you need to add it to INSTALLED_APPS in your projects settings.py file:
@@ -280,6 +287,9 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 ```
 
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)
+
+In django-boost 3.0, user-agent detection is planned to move behind the
+optional `useragent` extra: `pip install django-boost[useragent]`.
 
 ### AllowContentTypeMixin
 

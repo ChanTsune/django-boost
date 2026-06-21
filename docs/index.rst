@@ -39,7 +39,11 @@ See more at `Django Supported Versions <https://docs.djangoproject.com/en/dev/in
 
 This might mean the django-boost may work with older or unsupported versions but we do not guarantee it and most likely will not fix bugs related to incompatibilities with older versions.
 
-At this time we test on and thrive to support valid combinations of Python 3.8, 3.9, 3.10 and pypy3 with Django versions 3.0 to 3.2 and 4.0 to 4.1.
+The django-boost 2.x line is tested on Python 3.8-3.12 and Django 3.0-4.2.
+
+The next major release, django-boost 3.0, is planned to require Python 3.11+
+and Django 5.2+. User-agent detection is also planned to move behind an
+optional extra: ``pip install django-boost[useragent]``.
 
 
 
