@@ -1,0 +1,289 @@
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
+
+## [Unreleased]
+
+## [2.1.2] - 2026-06-21
+
+### Fixed
+
+- HTTP 510 reason phrase and add 511 in `STATUS_MESSAGES`.
+
+## [2.1.1] - 2026-06-21
+
+### Changed
+
+- Declare support for Python 3.11 and 3.12.
+- Declare support for Django 4.1 and 4.2.
+
+### Fixed
+
+- Restore compatibility with Python 3.8 and 3.9 by constraining the `ua-parser` dependency.
+
+## [2.1.0] - 2022-09-08
+
+### Changed
+
+- Support Django 4.1.
+
+## [2.0.0] - 2022-01-23
+
+### Added
+
+- `django_boost.views.simple.StringView`.
+- `django_boost.admin_tools` sub app module.
+- `listsuperuser` in `django_boost.admin_tools`.
+
+### Changed
+
+- Support Python 3.10.
+- Support Django 4.0.
+
+### Removed
+
+- Support for Python 3.6 and 3.7.
+- Support for Django 2.x.
+
+## [1.7.2] - 2020-12-13
+
+### Changed
+
+- Regex pattern.
+- Support Python 3.9.
+
+## [1.7.1] - 2020-10-09
+
+### Changed
+
+- Some docstring updates.
+
+### Fixed
+
+- Internal JavaScript function does not work.
+
+## [1.7] - 2020-09-24
+
+### Added
+
+- `revive` method to `django_boost.models.mixins.LogicalDeletionMixin`.
+- `is_dead` method to `django_boost.models.mixins.LogicalDeletionMixin`.
+- `is_alive` method to `django_boost.models.mixins.LogicalDeletionMixin`.
+
+### Fixed
+
+- `django_boost.utils.attribute.getattr_chain`.
+
+## [1.6.2] - 2020-08-01
+
+### Changed
+
+- Some docstring updates.
+
+## [1.6.1] - 2020-07-18
+
+### Fixed
+
+- Error in template `alive` filter.
+
+## [1.6] - 2020-07-08
+
+### Added
+
+- `django_boost.models.mixins.LogicalDeletionMixin`.
+- `django_boost.admin.LogicalDeletionModelAdmin`.
+- `django_boost.validators.ContainAnyValidator`.
+
+### Changed
+
+- `django_boost.admin.sites.register_all` allows an options argument.
+
+## [1.5.2] - 2020-05-23
+
+### Changed
+
+- Some translation updates.
+- `support_heroku` command messages.
+
+## [1.5.1] - 2020-04-19
+
+### Changed
+
+- Some translation updates.
+
+## [1.5] - 2020-03-28
+
+### Added
+
+- `django_boost.middleware.SpaceLessMiddleware`.
+
+## [1.4.2] - 2020-03-15
+
+### Fixed
+
+- Duplicated gunicorn entry in the `support_heroku` command.
+
+## [1.4.1] - 2020-03-04
+
+### Added
+
+- `django_boost.forms.widgets.PhoneNumberInput`.
+- `django_boost.forms.widgets.PhoneNumberField`.
+
+## [1.4] - 2020-02-15
+
+### Added
+
+- `deletemigrations` command.
+- `startapp_plus` command.
+- Multiple database utility `DatabaseRouter`.
+
+### Changed
+
+- `ReAuthenticationRequiredMixin`.
+
+### Removed
+
+- `MuchedObjectGetMixin`.
+
+## [1.3] - 2020-01-29
+
+### Added
+
+- Path converter `DateConverter` (`date`).
+- `zip`, `zip_longest` and `chain` tags and `chunked` filter in `boost` template.
+- `superuser` option in `StaffMemberRequiredMixin`.
+- `--release` option in `support_heroku` command.
+
+### Changed
+
+- Support Django 3 and Python 3.8.
+- `delattr` and `setattr` template tags return the argument value instead of `None`.
+
+### Fixed
+
+- A problem that some processes may be executed even when re-authentication is required.
+
+## [1.2.3] - 2019-12-02
+
+### Added
+
+- `django_boost.forms.mixins.FieldRenameMixin`.
+
+### Fixed
+
+- Fixed an issue where `*.html` and `*.mo` were not included in the distribution package.
+
+## [1.2.2] - 2019-11-10
+
+### Added
+
+- `django_boost.urls.include_static_files`.
+- `django_boost.forms.fields.InvertBooleanField`.
+- Template tag `var` in `boost`.
+- Template tag `mimetype` in `mimetype`.
+- Path converter keyword `float`.
+
+### Removed
+
+- Template tag `filter` in `boost`.
+
+## [1.2.1] - 2019-10-30
+
+### Changed
+
+- New option `--name_field` to `adminsitelog` command.
+- Supports cases where model has `ManyToManyField` (`RelatedModelInlineMixin`).
+
+## [1.2] - 2019-10-17
+
+### Added
+
+- `support_heroku` command, which creates configuration files for Heroku.
+- `AutoOneToOneField`.
+- `RelatedModelInlineMixin`.
+- New path converters `hex`, `oct`, `bin`, `hex_str`, `oct_str` and `bin_str`.
+- New utility functions `getattrs`, `getattr_chain`, `hasattrs` and `hasattr_chain` in `utils.attribute`.
+- New shortcut functions `get_object_or_default`, `get_object_or_exception`, `get_list_or_default` and `get_list_or_exception` in `shortcuts`.
+
+### Changed
+
+- Rename `MuchedObjectGetMixin` to `MatchedObjectGetMixin`.
+- `MatchedObjectGetMixin` adds the `field_lookup` class variable to specify detailed search conditions.
+- Multilingual support with automatic translation.
+
+## [1.1.2] - 2019-10-02
+
+### Added
+
+- New template tag `literal`.
+- `util.loop` function.
+- `util.isiterable` function.
+
+### Changed
+
+- `HttpStatusCodeExceptions` DEBUG mode page design.
+
+### Fixed
+
+- `validators.validate_uuid4` and `validators.validate_json` errors.
+- `context_processors.user_agent` and `views.mixins.UserAgentMixin` issue that could cause `KeyError`.
+
+## [1.1.1] - 2019-09-23
+
+### Added
+
+- New template filter `filter`, `exclude` and `order_by` in `templatetags/boost_query`.
+
+### Fixed
+
+- `zip` filter does not work.
+
+## [1.1] - 2019-09-10
+
+### Added
+
+- `UrlSet` class.
+- `Http30X` class.
+- `register_all` function.
+- `adminsitelog` command.
+
+### Changed
+
+- `UUIDModelMixin` class `editable=False`.
+
+## [1.0] - 2019-07-03
+
+### Added
+
+- First release.
+
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/ChanTsune/django-boost/compare/v2.1.1...v2.1.2
+[2.1.1]: https://github.com/ChanTsune/django-boost/compare/v2.1.0...v2.1.1
+[2.1.0]: https://github.com/ChanTsune/django-boost/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/ChanTsune/django-boost/compare/v1.7.2...v2.0.0
+[1.7.2]: https://github.com/ChanTsune/django-boost/compare/v1.7.1...v1.7.2
+[1.7.1]: https://github.com/ChanTsune/django-boost/compare/v1.7...v1.7.1
+[1.7]: https://github.com/ChanTsune/django-boost/compare/v1.6.2...v1.7
+[1.6.2]: https://github.com/ChanTsune/django-boost/compare/v1.6.1...v1.6.2
+[1.6.1]: https://github.com/ChanTsune/django-boost/compare/v1.6...v1.6.1
+[1.6]: https://github.com/ChanTsune/django-boost/compare/v1.5.2...v1.6
+[1.5.2]: https://github.com/ChanTsune/django-boost/compare/v1.5.1...v1.5.2
+[1.5.1]: https://github.com/ChanTsune/django-boost/compare/v1.5...v1.5.1
+[1.5]: https://github.com/ChanTsune/django-boost/compare/v1.4.2...v1.5
+[1.4.2]: https://github.com/ChanTsune/django-boost/compare/v1.4.1...v1.4.2
+[1.4.1]: https://github.com/ChanTsune/django-boost/compare/v1.4...v1.4.1
+[1.4]: https://github.com/ChanTsune/django-boost/compare/v1.3...v1.4
+[1.3]: https://github.com/ChanTsune/django-boost/compare/v1.2.3...v1.3
+[1.2.3]: https://github.com/ChanTsune/django-boost/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/ChanTsune/django-boost/compare/v1.2.1...v1.2.2
+[1.2.1]: https://github.com/ChanTsune/django-boost/compare/v1.2...v1.2.1
+[1.2]: https://github.com/ChanTsune/django-boost/compare/v1.1.2...v1.2
+[1.1.2]: https://github.com/ChanTsune/django-boost/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/ChanTsune/django-boost/compare/v1.1...v1.1.1
+[1.1]: https://github.com/ChanTsune/django-boost/compare/v1.0...v1.1
+[1.0]: https://github.com/ChanTsune/django-boost/releases/tag/v1.0
