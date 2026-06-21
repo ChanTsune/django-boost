@@ -6,6 +6,23 @@ View Mixins
 Access Mixins
 ---------------
 
+CSRFExemptMixin
+~~~~~~~~~~~~~~~~
+
+``CSRFExemptMixin`` remains available. For projects that do not need the
+django-boost mixin API, Django's native decorator form is the recommended
+idiom:
+
+::
+
+  from django.utils.decorators import method_decorator
+  from django.views.decorators.csrf import csrf_exempt
+  from django.views.generic import TemplateView
+
+  @method_decorator(csrf_exempt, name='dispatch')
+  class MyView(TemplateView):
+      template_name = 'path/to/template'
+
 AllowContentTypeMixin
 ~~~~~~~~~~~~~~~~~~~~~~~
 

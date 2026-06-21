@@ -43,4 +43,9 @@ When given a user agent like ``Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) A
   'is_touch_capable': False,
   'os': 'Mac OS X'}
 
-These information is obtained using `user-agents <https://github.com/selwin/python-user-agents>`_
+These information is obtained using `user-agents <https://github.com/selwin/python-user-agents>`_.
+
+In django-boost 3.0, user-agent detection is planned to move behind the
+optional ``useragent`` extra::
+
+ $ pip install django-boost[useragent]
