@@ -1,12 +1,21 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Delete article | django-boost sample{% endblock title %}
 
 {% block body %}
+<section class="page-title">
+    <h1>Delete article</h1>
+    <p>DeleteView demonstrates logical deletion; the deleted archive still has a dedicated list view.</p>
+</section>
 
-
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="post">
-</form>
+<section class="section panel">
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Delete <strong>{{ object.title }}</strong>?</p>
+        <div class="actions">
+            <input type="submit" value="Delete article">
+            <a class="button" href="{% url 'article_detail' object.pk %}">Cancel</a>
+        </div>
+    </form>
+</section>
 {% endblock body %}

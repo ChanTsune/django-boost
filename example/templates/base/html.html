@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{% block title %}django-boost sample{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'example/sample.css' %}">
     {% block meta %}
     {% endblock meta %}
     {% block css %}
@@ -13,8 +15,30 @@
     {% endblock pre_load_js %}
 </head>
 <body>
-{% block body %}
-{% endblock body %}
+<header class="site-header">
+    <a class="brand" href="{% url 'index' %}">
+        <span class="brand-mark">db</span>
+        <span>
+            <strong>django-boost</strong>
+            <small>sample application</small>
+        </span>
+    </a>
+    <nav class="site-nav" aria-label="Sample navigation">
+        <a href="{% url 'index' %}">Overview</a>
+        <a href="{% url 'article_list' %}">Articles</a>
+        <a href="{% url 'article_create' %}">Create article</a>
+        <a href="/views/">Customer CRUD</a>
+        <a href="/json/?sample=1">JSON view</a>
+    </nav>
+</header>
+<main class="page-shell">
+    {% block body %}
+    {% endblock body %}
+</main>
+<footer class="site-footer">
+    <span>Living documentation for django-boost utilities.</span>
+    <a href="https://github.com/ChanTsune/django-boost">GitHub</a>
+</footer>
 </body>
 {% block js %}
 {% endblock js %}

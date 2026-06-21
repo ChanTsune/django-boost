@@ -1,11 +1,22 @@
 {% extends 'base/html.html' %}
 
-{% block body %}
+{% block title %}Delete customer | django-boost sample{% endblock title %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    <p>{{ object }}</p>
-    <input type="submit" value="submit">
-</form>
+{% block body %}
+<section class="page-title">
+    <h1>Delete customer</h1>
+    <p>Generated delete route from <code>ModelCRUDViews</code>.</p>
+</section>
+
+<section class="section panel">
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Delete <strong>{{ object.name }}</strong>?</p>
+        <div class="actions">
+            <input type="submit" value="Delete customer">
+            <a class="button" href="/views/{{ object.pk }}/">Cancel</a>
+        </div>
+    </form>
+</section>
 
 {% endblock body %}

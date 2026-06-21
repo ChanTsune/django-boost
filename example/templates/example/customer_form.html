@@ -1,11 +1,34 @@
 {% extends 'base/html.html' %}
 
-{% block body %}
+{% block title %}Customer form | django-boost sample{% endblock title %}
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="submit">
-</form>
+{% block body %}
+<section class="page-title">
+    <h1>Customer form</h1>
+    <p>Generated create/update route for a model using <code>ColorCodeFiled</code>.</p>
+    <div class="actions">
+        <a class="button" href="/views/">Back to Customer CRUD</a>
+    </div>
+</section>
+
+<section class="section demo-grid">
+    <div class="panel">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save customer">
+        </form>
+    </div>
+    <aside class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>Generated view</h2>
+                <p>The route is not handwritten per action; it comes from <code>CustomerViews(ModelCRUDViews)</code>.</p>
+            </div>
+        </div>
+<pre><code>class CustomerViews(ModelCRUDViews):
+    model = Customer</code></pre>
+    </aside>
+</section>
 
 {% endblock body %}

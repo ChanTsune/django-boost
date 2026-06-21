@@ -1,7 +1,37 @@
 {% extends 'base/html.html' %}
 
-{% block body %}
+{% block title %}{{ object.name }} | django-boost sample{% endblock title %}
 
-{{ object }}
+{% block body %}
+<section class="page-title">
+    <h1>{{ object.name }}</h1>
+    <p>Detail page generated through <code>ModelCRUDViews</code>.</p>
+    <div class="actions">
+        <a class="button" href="/views/">Back to Customer CRUD</a>
+        <a class="button" href="/views/{{ object.pk }}/update/">Edit</a>
+        <a class="button danger" href="/views/{{ object.pk }}/delete/">Delete</a>
+    </div>
+</section>
+
+<section class="section panel">
+    <dl class="object-detail">
+        <div class="detail-row">
+            <dt>Name</dt>
+            <dd>{{ object.name }}</dd>
+        </div>
+        <div class="detail-row">
+            <dt>Color</dt>
+            <dd><span class="color-swatch" style="background: {{ object.color }};"></span> <code>{{ object.color }}</code></dd>
+        </div>
+        <div class="detail-row">
+            <dt>Registered</dt>
+            <dd>{{ object.registered_at|date:"Y-m-d" }}</dd>
+        </div>
+        <div class="detail-row">
+            <dt>JSON mixin</dt>
+            <dd>This model inherits <code>JsonMixin</code> for JSON-oriented model helpers.</dd>
+        </div>
+    </dl>
+</section>
 
 {% endblock body %}

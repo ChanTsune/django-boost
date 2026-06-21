@@ -12,11 +12,25 @@ class CustomerForm(forms.ModelForm):
         (5,5),
     )
 
-    radio = forms.ChoiceField(widget=StarRateSelect, choices=SELECT)
+    radio = forms.ChoiceField(
+        label="Rating",
+        widget=StarRateSelect,
+        choices=SELECT,
+        initial=4,
+    )
 
     class Meta:
         model = Customer
         fields = '__all__'
+        labels = {
+            'name': 'Customer name',
+            'color': 'Favorite color',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.is_bound and not self.instance.pk:
+            self.fields['color'].initial = '#0F9F7D'
 
 
 class ArticleForm(forms.ModelForm):

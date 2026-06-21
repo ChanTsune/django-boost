@@ -1,9 +1,42 @@
 {% extends 'base/html.html' %}
 
-{% block body %}
+{% block title %}Customer CRUD | django-boost sample{% endblock title %}
 
-{% for obj in object_list %}
-<p>{{ obj }}</p>
-{% endfor %}
+{% block body %}
+<section class="page-title">
+    <h1>Generated Customer CRUD</h1>
+    <p>
+        This section is mounted through <code>ModelCRUDViews</code>. The URL set generates list,
+        create, detail, update, and delete routes from the <code>Customer</code> model.
+    </p>
+    <div class="actions">
+        <a class="button primary" href="/views/create/">Create customer</a>
+        <a class="button" href="{% url 'index' %}">Back to overview</a>
+    </div>
+</section>
+
+<section class="section">
+    {% if object_list %}
+        <div class="resource-grid">
+            {% for obj in object_list %}
+                <article class="resource-card">
+                    <span class="color-swatch" style="background: {{ obj.color }};"></span>
+                    <h3><a href="/views/{{ obj.pk }}/">{{ obj.name }}</a></h3>
+                    <p>Registered at {{ obj.registered_at|date:"Y-m-d" }}</p>
+                    <div class="actions">
+                        <a class="button" href="/views/{{ obj.pk }}/">Detail</a>
+                        <a class="button" href="/views/{{ obj.pk }}/update/">Edit</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <h2>No customers yet</h2>
+            <p>Create a customer to exercise the generated create route and color field validation.</p>
+            <a class="button primary" href="/views/create/">Create customer</a>
+        </div>
+    {% endif %}
+</section>
 
 {% endblock body %}

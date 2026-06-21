@@ -1,12 +1,33 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Create article | django-boost sample{% endblock title %}
 
 {% block body %}
+<section class="page-title">
+    <h1>Create article</h1>
+    <p>Exercises django-boost <code>CreateView</code>, UUID model mixin, many-to-many tags, and file upload handling.</p>
+</section>
 
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="post">
-</form>
+<section class="section demo-grid">
+    <div class="panel">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create article">
+        </form>
+    </div>
+    <aside class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>What to look at</h2>
+                <p>The model inherits <code>UUIDModelMixin</code>, <code>TimeStampModelMixin</code>, and <code>LogicalDeletionMixin</code>.</p>
+            </div>
+        </div>
+<pre><code>class Article(UUIDModelMixin, TimeStampModelMixin, LogicalDeletionMixin):
+    title = models.CharField(max_length=128)
+    text = models.TextField()
+    tags = models.ManyToManyField(to="Tag")
+    image = models.ImageField(upload_to='img')</code></pre>
+    </aside>
+</section>
 {% endblock body %}

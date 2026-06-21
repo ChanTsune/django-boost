@@ -1,13 +1,19 @@
-{% extends 'base/html.html' %}    
+{% extends 'base/html.html' %}
 
-{% block title %}Document{% endblock title %}
+{% block title %}Edit customer | django-boost sample{% endblock title %}
 
 {% block body %}
+<section class="page-title">
+    <h1>Edit customer</h1>
+    <p>This route uses <code>RedirectToDetailMixin</code> after a successful update.</p>
+</section>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="POST">
-</form>
+<section class="section panel">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save customer">
+    </form>
+</section>
 
 {% endblock body %}
