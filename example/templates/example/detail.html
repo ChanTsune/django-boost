@@ -1,9 +1,32 @@
 {% extends 'base/html.html' %}
 
-{% block title %}example{% endblock title %}
+{% block title %}Customer detail | django-boost sample{% endblock title %}
 
 {% block body %}
+<section class="page-title">
+    <h1>{{ object.name }}</h1>
+    <p>Detail page reached after <code>RedirectToDetailMixin</code>.</p>
+    <div class="actions">
+        <a class="button" href="{% url 'customer_update' object.pk %}">Edit customer</a>
+        <a class="button" href="{% url 'index' %}">Back to overview</a>
+    </div>
+</section>
 
-{{ object }}
+<section class="section panel">
+    <dl class="object-detail">
+        <div class="detail-row">
+            <dt>Name</dt>
+            <dd>{{ object.name }}</dd>
+        </div>
+        <div class="detail-row">
+            <dt>Color</dt>
+            <dd><span class="color-swatch" style="background: {{ object.color }};"></span> <code>{{ object.color }}</code></dd>
+        </div>
+        <div class="detail-row">
+            <dt>Registered</dt>
+            <dd>{{ object.registered_at|date:"Y-m-d" }}</dd>
+        </div>
+    </dl>
+</section>
 
 {% endblock body %}

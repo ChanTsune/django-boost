@@ -1,12 +1,21 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Edit article | django-boost sample{% endblock title %}
 
 {% block body %}
+<section class="page-title">
+    <h1>Edit article</h1>
+    <p>UpdateView keeps the sample close to normal Django while using django-boost view imports.</p>
+    <div class="actions">
+        <a class="button" href="{% url 'article_detail' object.pk %}">Back to detail</a>
+    </div>
+</section>
 
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="post">
-</form>
+<section class="section panel">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save changes">
+    </form>
+</section>
 {% endblock body %}

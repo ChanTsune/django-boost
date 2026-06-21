@@ -1,6 +1,10 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Mobile template | django-boost sample{% endblock title %}
 
 {% block body %}
-<p>mobile mode</p>
+<section class="page-title">
+    <h1>Mobile template selected</h1>
+    <p><code>UserAgentMixin</code> selected the mobile template for this request.</p>
+</section>
 {% endblock body %}

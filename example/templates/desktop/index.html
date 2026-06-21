@@ -1,6 +1,10 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Desktop template | django-boost sample{% endblock title %}
 
 {% block body %}
-<p>desktop mode</p>
+<section class="page-title">
+    <h1>Desktop template selected</h1>
+    <p><code>UserAgentMixin</code> selected the desktop template for this request.</p>
+</section>
 {% endblock body %}

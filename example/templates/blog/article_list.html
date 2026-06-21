@@ -1,15 +1,58 @@
 {% extends 'base/html.html' %}
 
+{% block title %}Articles | django-boost sample{% endblock title %}
 
 
 {% block body %}
+<section class="page-title">
+    <h1>Article workflow</h1>
+    <p>
+        This CRUD sample uses django-boost generic views with UUID primary keys,
+        timestamps, uploaded images, tags, and logical deletion.
+    </p>
+    <div class="actions">
+        <a class="button primary" href="{% url 'article_create' %}">Create article</a>
+        <a class="button" href="{% url 'article_deleted_list' %}">Deleted archive</a>
+    </div>
+</section>
 
-<div>
-
-    {% for object in object_list %}
-        <a href="{% url 'article_detail' object.pk %}">{{ object.title }}</a>
-    {% endfor %}
-
-</div>
+<section class="section">
+    {% if object_list %}
+        <div class="article-grid">
+            {% for object in object_list %}
+                <article class="article-card">
+                    {% if object.image %}
+                        <a class="media-frame" href="{% url 'article_detail' object.pk %}">
+                            <img src="{{ object.image.url }}" alt="">
+                        </a>
+                    {% endif %}
+                    <div class="article-meta">
+                        <span>{{ object.created_at|date:"Y-m-d H:i" }}</span>
+                        <span>{{ object.pk }}</span>
+                    </div>
+                    <h2><a href="{% url 'article_detail' object.pk %}">{{ object.title }}</a></h2>
+                    <p>{{ object.text|truncatewords:28 }}</p>
+                    <ul class="tag-list">
+                        {% for tag in object.tags.all %}
+                            <li>{{ tag.name }}</li>
+                        {% empty %}
+                            <li>No tags</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="actions">
+                        <a class="button" href="{% url 'article_detail' object.pk %}">Read</a>
+                        <a class="button" href="{% url 'article_update' object.pk %}">Edit</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <h2>No articles yet</h2>
+            <p>Create the first article to exercise the generic create view and model mixins.</p>
+            <a class="button primary" href="{% url 'article_create' %}">Create article</a>
+        </div>
+    {% endif %}
+</section>
 
 {% endblock body %}
