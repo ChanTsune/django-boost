@@ -59,8 +59,16 @@ Deviations from the principles include
 All branches are derived from the master.
 Each implementation is done in a `feature/[working name]` branch.
 For urgent fixes, a hotfix branch is created and used to do the work there. This brand will be merged into master as soon as we are sure the problem is solved.
-In preparation for the release, a release/version branch will be created and the work required for the release, including updating the version number, will be done.
+In preparation for the release, a release/version branch will be created and the work required for the release, including updating the version number and `CHANGELOG.md`, will be done.
 It is expected that the branch name will be numbered at the end of the branch name to indicate which issue it relates to.
+
+### Changelog
+
+This project keeps release notes in [`CHANGELOG.md`](./CHANGELOG.md), using the Keep a Changelog section names:
+`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
+
+When making a user-facing change, add an entry under `Unreleased`.
+During release preparation, move those entries under the new version heading, add the release date, and update the comparison links at the bottom of the file.
 
 ### Marge
 

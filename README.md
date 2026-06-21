@@ -17,6 +17,8 @@ You can view documentation online at:
 
 Or you can look at the docs/ directory in the repository.
 
+Release notes are maintained in [CHANGELOG.md](./CHANGELOG.md).
+
 ## Getting It
 
 ```bash
