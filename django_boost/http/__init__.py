@@ -65,4 +65,5 @@ STATUS_MESSAGES.update({
     506: 'Variant Also Negotiates',
     507: 'Insufficient Storage',
     508: 'Loop Detected',
-    510: 'Not Extended510 Nottwork Authentication Required'})
+    510: 'Not Extended',
+    511: 'Network Authentication Required'})
