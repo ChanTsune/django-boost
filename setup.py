@@ -44,7 +44,13 @@ for dirpath, dirnames, filenames in os.walk(extensions_dir):
         package_files.extend([os.path.join(path, f) for f in filenames])
 
 
-requires = ["Django>=3.0", "user-agents>=2.0"]
+requires = [
+    "Django>=3.0",
+    "user-agents>=2.0",
+    # ua-parser 1.0 (a user-agents dependency) requires Python 3.10+
+    # (it uses dataclass(slots=...)); keep older Pythons on the 0.x line.
+    'ua-parser<1.0; python_version < "3.10"',
+]
 
 
 def read(fname):
@@ -77,11 +83,15 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Framework :: Django',
         'Framework :: Django :: 3.0',
         'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
         'Framework :: Django :: 4.0',
+        'Framework :: Django :: 4.1',
+        'Framework :: Django :: 4.2',
         'License :: OSI Approved :: MIT License',
     ],
 )

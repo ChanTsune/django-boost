@@ -40,7 +40,7 @@ jobs:
         pip install -U pip
         pip install -r requirements/ci.txt
         pip install django==$DJANGO_VERSION
-        python setup.py install
+        pip install .
     - name: Tox
       run: |
         tox
