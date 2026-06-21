@@ -7,6 +7,11 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- Support passing `deleted_at` to logical deletion APIs so callers can set a
+  custom deletion timestamp.
+
 ### Changed
 
 - Document the planned django-boost 3.0 Python/Django baseline and
