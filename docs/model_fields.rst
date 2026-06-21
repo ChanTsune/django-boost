@@ -3,6 +3,19 @@ Model fields
 
 :synopsis: Model fields in django-boost
 
+JsonField
+----------
+
+.. warning::
+
+  ``django_boost.models.fields.JsonField`` is deprecated and will be removed in
+  django-boost 3.0. Use Django's native ``django.db.models.JSONField`` instead,
+  available since Django 3.1.
+
+Existing projects that store JSON through the legacy text-based field should
+plan a schema and data migration to Django's native ``JSONField`` before
+upgrading to django-boost 3.0.
+
 AutoOneToOneField
 ------------------
 
