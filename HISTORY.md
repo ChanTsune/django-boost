@@ -2,6 +2,10 @@
 
 ## Versions  
 
+## Unreleased
+- Fix
+  - HTTP 510 reason phrase and add 511 in `STATUS_MESSAGES`
+
 ## 2.1.1
 - Fix
   - restore compatibility with Python 3.8 and 3.9 by constraining the `ua-parser` dependency
