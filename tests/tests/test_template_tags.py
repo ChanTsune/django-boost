@@ -99,6 +99,18 @@ class TestBoostQueryTemplateTag(TestCase):
 
         self.assertEqual(_bool(1), True)
 
+    def test_zip_filter(self):
+        import warnings
+
+        from django_boost.templatetags.boost import _zip
+
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            result = _zip([1, 2], [3, 4])
+
+        self.assertEqual(caught, [])
+        self.assertEqual(list(result), [(1, 3), (2, 4)])
+
 
 class TestMimeTypeTempleteTag(TestCase):
 

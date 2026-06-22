@@ -87,12 +87,16 @@ zip
 ~~~~
 Combine iterable objects.
 
-The ``zip`` template filter is deprecated and will be removed in django-boost
-3.0. Use the ``zip`` template tag instead.
+The ``zip`` helper is available both as a template filter for two iterables and
+as a template tag for two or more iterables.
 
 ::
 
   {% load boost %}
+
+  {% for value1, value2 in list1|zip:list2 %}
+    {{ value1 }} {{ value2 }}
+  {% endfor %}
 
   {% zip list1 list2 as zipped_list %}
 
