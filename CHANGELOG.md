@@ -7,6 +7,12 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Changed
+
+- Start the django-boost 3.0 development line by requiring Python 3.10+,
+  dropping Django 3.x, and declaring support for Django 4.2 and 5.x on
+  officially supported Django/Python combinations.
+
 ## [2.2.0] - 2026-06-22
 
 ### Added
