@@ -14,6 +14,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   officially supported Django/Python combinations.
 - Use Django's native view setup and redirect mixin implementations now that
   django-boost requires Django 4.2+.
+- Move user-agent detection behind the optional `useragent` extra. Core
+  installs no longer include `user-agents`; install `django-boost[useragent]`
+  before using `django_boost.context_processors.user_agent` or
+  `UserAgentMixin`.
 
 ### Removed
 

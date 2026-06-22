@@ -44,8 +44,7 @@ When given a user agent like ``Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) A
   'os': 'Mac OS X'}
 
 These information is obtained using `user-agents <https://github.com/selwin/python-user-agents>`_.
-
-In django-boost 3.0, user-agent detection is planned to move behind the
-optional ``useragent`` extra::
+Install django-boost with the optional ``useragent`` extra before using this
+context processor::
 
  $ pip install django-boost[useragent]

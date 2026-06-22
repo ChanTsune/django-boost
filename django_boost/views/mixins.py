@@ -12,8 +12,7 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from django_boost.http import HttpResponseUnsupportedMediaType
-
-from user_agents import parse
+from django_boost.user_agents import parse_user_agent
 
 
 __all__ = ["CSRFExemptMixin", "DynamicRedirectMixin", "RedirectToDetailMixin",
@@ -262,7 +261,7 @@ class UserAgentMixin:
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
-        self.request.user_agent = parse(user_agent)
+        self.request.user_agent = parse_user_agent(user_agent)
 
     def get_template_names(self):
         tmp = super().get_template_names()

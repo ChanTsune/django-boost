@@ -1,3 +1,4 @@
 -r base.txt
 tox
 autopep8
+user-agents>=2.0
