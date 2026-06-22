@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORRECT_HOST = 'testserver'
+
 
 # Application definition
 

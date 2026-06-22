@@ -52,6 +52,7 @@ User-agent detection requires the optional ``useragent`` extra:
    :caption: Contents:
 
    installation_instructions
+   checks
    custom_user
    model_mixins
    model_fields
