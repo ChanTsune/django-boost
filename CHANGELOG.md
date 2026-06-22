@@ -7,6 +7,11 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- Add `django_boost.template.StrictInvalidTemplateVariable` for raising an
+  exception when Django renders invalid or missing template variables.
+
 ### Changed
 
 - Start the django-boost 3.0 development line by requiring Python 3.10+,

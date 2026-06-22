@@ -291,6 +291,30 @@ These information is obtained using [user-agents](https://github.com/selwin/pyth
 In django-boost 3.0, user-agent detection is planned to move behind the
 optional `useragent` extra: `pip install django-boost[useragent]`.
 
+### Strict invalid template variables
+
+`StrictInvalidTemplateVariable` provides Jinja2 `StrictUndefined`-like behavior
+for Django templates. Use it when you want missing template variables to raise
+an exception instead of rendering as empty strings.
+
+```py
+from django_boost.template import StrictInvalidTemplateVariable
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "string_if_invalid": StrictInvalidTemplateVariable(),
+        },
+    },
+]
+```
+
+It only raises on Django's `string_if_invalid` resolution path, so it is not
+strict everywhere -- `{% if %}` / `{% for %}` and `alters_data` methods are not
+covered. See the docs for details.
+
 ### AllowContentTypeMixin
 
 Restrict the content type of http request.

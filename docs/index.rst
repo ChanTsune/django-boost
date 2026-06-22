@@ -68,6 +68,7 @@ User-agent detection is planned to move behind an optional extra:
    routing_utilitys
    admin_site_utilitys
    utility_functions
+   template
    template_context
    template_tags
    commands
