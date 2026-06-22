@@ -30,6 +30,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - Remove Django < 3.2 `default_app_config` shims and obsolete localization
   settings that are unnecessary for the Django 4.2+ baseline.
+- Remove the deprecated `support_heroku` management command.
 
 ## [2.2.0] - 2026-06-22
 
