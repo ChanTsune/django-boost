@@ -87,8 +87,9 @@ zip
 ~~~~
 Combine iterable objects.
 
-The ``zip`` helper is available both as a template filter for two iterables and
-as a template tag for two or more iterables.
+Use the ``zip`` template filter when combining two iterables inline. If you
+need to combine three or more iterables at the same time, use the ``zip``
+template tag instead.
 
 ::
 
@@ -98,10 +99,10 @@ as a template tag for two or more iterables.
     {{ value1 }} {{ value2 }}
   {% endfor %}
 
-  {% zip list1 list2 as zipped_list %}
+  {% zip list1 list2 list3 as zipped_list %}
 
-  {% for value1, value2 in zipped_list %}
-    {{ value1 }} {{ value2 }}
+  {% for value1, value2, value3 in zipped_list %}
+    {{ value1 }} {{ value2 }} {{ value3 }}
   {% endfor %}
 
 
