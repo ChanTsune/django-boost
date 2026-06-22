@@ -20,7 +20,7 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: ${{ steps.create_release.outputs.created == 'true' }}
       - name: Set up Python
         if: ${{ steps.create_release.outputs.created == 'true' }}
