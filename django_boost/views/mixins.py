@@ -1,14 +1,13 @@
 import json
 from datetime import timedelta
 
-import django
 from django.contrib.auth.mixins import AccessMixin
-from django.contrib.auth.views import (logout_then_login, redirect_to_login)
+from django.contrib.auth.views import (RedirectURLMixin, logout_then_login,
+                                       redirect_to_login)
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
@@ -31,40 +30,12 @@ class CSRFExemptMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-if django.VERSION >= (4, 1):
-    from django.contrib.auth.views import RedirectURLMixin
+class DynamicRedirectMixin(RedirectURLMixin):
+    success_url = None
 
-    class DynamicRedirectMixin(RedirectURLMixin):
-        success_url = None
-
-        def get_success_url(self):
-            url = self.get_redirect_url()
-            return url or self.success_url or super().get_success_url()
-
-
-else:
-    from django.contrib.auth.views import SuccessURLAllowedHostsMixin
-
-    class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
-
-        redirect_field_name = 'next'
-
-        def get_success_url(self):
-            url = self.get_redirect_url()
-            return url or super().get_success_url()
-
-        def get_redirect_url(self):
-            """Return the user-originating redirect URL if it's safe."""
-            redirect_to = self.request.POST.get(
-                self.redirect_field_name,
-                self.request.GET.get(self.redirect_field_name, '')
-            )
-            url_is_safe = url_has_allowed_host_and_scheme(
-                url=redirect_to,
-                allowed_hosts=self.get_success_url_allowed_hosts(),
-                require_https=self.request.is_secure(),
-            )
-            return redirect_to if url_is_safe else ''
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        return url or self.success_url or super().get_success_url()
 
 
 class RedirectToDetailMixin:
