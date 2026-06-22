@@ -21,26 +21,23 @@ __all__ = ["View", "TemplateView", "FormView", "CreateView",
 
 
 class View(_View):
-    """extends View of Django 2.2."""
+    """View that runs ``after_view_process`` on every dispatched response.
+
+    The hook wraps the result of ``as_view``'s dispatch call rather than
+    ``dispatch`` itself, so it still fires when a mixin earlier in the MRO
+    short-circuits ``dispatch`` (e.g. a permission check that returns a 403
+    without calling ``super().dispatch()``).
+    """
 
     @classonlymethod
     def as_view(cls, **initkwargs):
-        """Main entry point for a request-response process."""
-        for key in initkwargs:
-            if key in cls.http_method_names:
-                raise TypeError("You tried to pass in the %s method name as a "
-                                "keyword argument to %s(). Don't do that."
-                                % (key, cls.__name__))
-            if not hasattr(cls, key):
-                raise TypeError("%s() received an invalid keyword %r. as_view "
-                                "only accepts arguments that are already "
-                                "attributes of the class."
-                                % (cls.__name__, key))
+        # Reuse Django's as_view for initkwargs validation and to capture the
+        # attributes it sets on the view callable (view_class, decorator
+        # markers such as csrf_exempt, ...); only the dispatch call is wrapped.
+        native = super().as_view(**initkwargs)
 
         def view(request, *args, **kwargs):
             self = cls(**initkwargs)
-            if hasattr(self, 'get') and not hasattr(self, 'head'):
-                self.head = self.get
             self.setup(request, *args, **kwargs)
             if not hasattr(self, 'request'):
                 raise AttributeError(
@@ -49,22 +46,9 @@ class View(_View):
                 )
             response = self.dispatch(request, *args, **kwargs)
             return self.after_view_process(request, response, *args, **kwargs)
-        view.view_class = cls
-        view.view_initkwargs = initkwargs
 
-        # take name and docstring from class
-        update_wrapper(view, cls, updated=())
-
-        # and possible attributes set by decorators
-        # like csrf_exempt from dispatch
-        update_wrapper(view, cls.dispatch, assigned=())
+        update_wrapper(view, native)
         return view
-
-    def setup(self, request, *args, **kwargs):
-        """Initialize attributes shared by all view methods."""
-        self.request = request
-        self.args = args
-        self.kwargs = kwargs
 
     def after_view_process(self, request, response, *args, **kwargs):
         return response
