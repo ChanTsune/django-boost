@@ -10,6 +10,9 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Added
 
 - Add `csv` and `tsv` output formats to the `adminsitelog` management command.
+- Add django-boost system checks for database router, redirect hostname
+  middleware, user-agent optional dependency configuration, and logical
+  deletion model configuration.
 - Add `django_boost.template.StrictInvalidTemplateVariable` for raising an
   exception when Django renders invalid or missing template variables.
 

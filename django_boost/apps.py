@@ -3,7 +3,7 @@
 from django.apps import AppConfig
 from django.core import checks
 
-from django_boost.checks import check_database_router
+from django_boost.checks import CHECKS
 
 
 class DjangoBoostConfig(AppConfig):
@@ -14,4 +14,5 @@ class DjangoBoostConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
 
     def ready(self):
-        checks.register(check_database_router, self.name)
+        for check in CHECKS:
+            checks.register(check, self.name)
