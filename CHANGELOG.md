@@ -12,6 +12,13 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Start the django-boost 3.0 development line by requiring Python 3.10+,
   dropping Django 3.x, and declaring support for Django 4.2-5.2 on
   officially supported Django/Python combinations.
+- Use Django's native view setup and redirect mixin implementations now that
+  django-boost requires Django 4.2+.
+
+### Removed
+
+- Remove Django < 3.2 `default_app_config` shims and obsolete localization
+  settings that are unnecessary for the Django 4.2+ baseline.
 
 ## [2.2.0] - 2026-06-22
 
