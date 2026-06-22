@@ -94,7 +94,8 @@ class StaticResponseMixin:
         return [self.static_name]
 
     def create_response(self):
-        for path in self.get_static_names():
+        names = self.get_static_names()
+        for path in names:
             if os.path.exists(path):
                 if self.content_type is None:
                     content_type, encoding = mimetypes.guess_type(path)
@@ -106,7 +107,7 @@ class StaticResponseMixin:
                 if encoding:
                     response["Content-Encoding"] = encoding
                 return response
-        raise FileNotFoundError('%s Dose not exist.')
+        raise FileNotFoundError('%s does not exist.' % ', '.join(names))
 
 
 class StaticView(StaticResponseMixin, View):
