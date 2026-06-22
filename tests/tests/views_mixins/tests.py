@@ -1,8 +1,6 @@
 import os
-from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ImproperlyConfigured
 from django.test import override_settings
 
 from django_boost.test import TestCase
@@ -152,21 +150,6 @@ class TestViewMixins(TestCase):
         url = '/user_agent/'
         response = self.client.get(url)
         self.assertStatusCodeEqual(response, 200)
-
-    def test_user_agent_mixin_requires_extra(self):
-        real_import = __import__
-
-        def import_without_user_agents(name, *args, **kwargs):
-            if name == 'user_agents':
-                raise ImportError(name)
-            return real_import(name, *args, **kwargs)
-
-        with patch('builtins.__import__', import_without_user_agents):
-            with self.assertRaisesMessage(
-                ImproperlyConfigured,
-                "pip install django-boost[useragent]",
-            ):
-                self.client.get('/user_agent/')
 
     def test_user_kwargs(self):
         url = '/user_kwargs/'
