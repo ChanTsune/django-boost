@@ -2,7 +2,6 @@
 
 from ast import literal_eval
 from itertools import chain, zip_longest
-from warnings import warn
 
 from django.template import Library
 
@@ -216,9 +215,6 @@ def _vars(obj):
 
 @register.filter(name="zip")
 def _zip(arg1, arg2):
-    warn("The `zip` template filter is deprecated and will be removed in "
-         "django-boost 3.0. Use the `zip` template tag instead.",
-         DeprecationWarning, stacklevel=2)
     return zip(arg1, arg2)
 
 
