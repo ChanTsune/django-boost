@@ -1,11 +1,11 @@
 """This module provides template context functions."""
 
-from user_agents import parse
+from django_boost.user_agents import parse_user_agent
 
 
 def user_agent(request):
     agent = request.META.get('HTTP_USER_AGENT', '')
-    user_agent = parse(agent)
+    user_agent = parse_user_agent(agent)
     context = {'user_agent': agent,
                'browser': user_agent.browser.family,
                'device': user_agent.device.family,

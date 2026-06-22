@@ -47,7 +47,6 @@ for dirpath, dirnames, filenames in os.walk(extensions_dir):
 requires = [
     'Django>=4.2,<6; python_version < "3.13"',
     'Django>=5.1,<6; python_version >= "3.13"',
-    "user-agents>=2.0",
 ]
 
 
@@ -75,6 +74,9 @@ setup(
     package_data=package_data,
     platforms=['any'],
     install_requires=requires,
+    extras_require={
+        'useragent': ['user-agents>=2.0'],
+    },
     python_requires='>=3.10',
     classifiers=[
         'Programming Language :: Python',

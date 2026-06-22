@@ -38,8 +38,8 @@ python setup.py install
 ## Compatibility
 
 The 3.x line supports Python 3.10-3.13 and Django 4.2-5.2 where the
-Django/Python combination is supported by Django. User-agent detection is
-planned to move behind an optional extra:
+Django/Python combination is supported by Django. User-agent detection requires
+the optional `useragent` extra:
 `pip install django-boost[useragent]`.
 
 ## Installing It
@@ -288,8 +288,8 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 
 These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)
 
-In django-boost 3.0, user-agent detection is planned to move behind the
-optional `useragent` extra: `pip install django-boost[useragent]`.
+Install django-boost with the optional `useragent` extra before using this
+context processor: `pip install django-boost[useragent]`.
 
 ### Strict invalid template variables
 

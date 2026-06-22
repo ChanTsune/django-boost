@@ -3,3 +3,4 @@ setuptools
 pillow
 tox-travis
 codecov
+user-agents>=2.0

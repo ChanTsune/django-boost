@@ -42,7 +42,7 @@ This might mean the django-boost may work with older or unsupported versions but
 The django-boost 3.x line supports Python 3.10-3.13 and Django 4.2-5.2 where
 the Django/Python combination is supported by Django.
 
-User-agent detection is planned to move behind an optional extra:
+User-agent detection requires the optional ``useragent`` extra:
 ``pip install django-boost[useragent]``.
 
 
