@@ -9,11 +9,15 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Added
 
+- Add `csv` and `tsv` output formats to the `adminsitelog` management command.
 - Add `django_boost.template.StrictInvalidTemplateVariable` for raising an
   exception when Django renders invalid or missing template variables.
 
 ### Changed
 
+- `adminsitelog` now writes the `delete complete` message to standard error
+  for every output format (previously standard output in the default text
+  format), so standard output carries only log data.
 - Start the django-boost 3.0 development line by requiring Python 3.10+,
   dropping Django 3.x, and declaring support for Django 4.2-5.2 on
   officially supported Django/Python combinations.

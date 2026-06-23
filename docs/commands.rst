@@ -21,6 +21,7 @@ View and delete Admin Site logs.
                                 [--exclude EXCLUDE [EXCLUDE ...]]
                                 [--order_by ORDER_BY [ORDER_BY ...]]
                                 [--name_field NAME_FIELD]
+                                [--format {text,csv,tsv}]
 
   Django admin site log
 
@@ -57,6 +58,8 @@ View and delete Admin Site logs.
     --name_field NAME_FIELD
                           user name field. e.g. "--name_field email", "--
                           name_field profile.phone"
+    --format {text,csv,tsv}
+                          Output format.
 
 view all logs
 ~~~~~~~~~~~~~~
@@ -84,6 +87,22 @@ filter logs
   id | action | detail | user | time
   7 | Added | Customer object (11) | admin | 2019-08-20 16:12:38.902129+00:00
   8 | Changed | Customer object (4) - Changed color. | admin | 2019-08-20 16:12:45.653693+00:00
+
+
+output csv/tsv
+~~~~~~~~~~~~~~
+
+::
+
+  $ python manage.py adminsitelog --format csv
+
+::
+
+  id,action,detail,user,time
+  7,Added,Customer object (11),admin,2019-08-20 16:12:38.902129+00:00
+  8,Changed,Customer object (4) - Changed color.,admin,2019-08-20 16:12:45.653693+00:00
+
+Use ``--format tsv`` to output tab-separated values.
 
 
 delete all logs
