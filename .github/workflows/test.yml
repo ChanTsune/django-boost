@@ -62,17 +62,41 @@ jobs:
         tox
     - name: Test
       run: |
-        coverage run manage.py test
-    - name: Report
+        coverage run --parallel-mode manage.py test
+    - name: Upload coverage data
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-data-${{ strategy.job-index }}
+        path: .coverage.*
+        include-hidden-files: true
+        if-no-files-found: error
+
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.12.x'
+    - name: Install coverage
       run: |
+        pip install -U pip
+        pip install coverage
+    - name: Download coverage data
+      uses: actions/download-artifact@v4
+      with:
+        pattern: coverage-data-*
+        merge-multiple: true
+    - name: Combine and report
+      run: |
+        coverage combine
         coverage report
-    - name: Coverage XML
-      run: |
         coverage xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: ./coverage.xml
-        name: py${{ matrix.python-version }}-dj${{ matrix.django-version }}
         fail_ci_if_error: false

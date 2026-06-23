@@ -5,3 +5,8 @@ omit = django_boost/management/commands/*
 [report]
 show_missing = True
 skip_covered = True
+
+[paths]
+source =
+    django_boost/
+    */site-packages/django_boost/
