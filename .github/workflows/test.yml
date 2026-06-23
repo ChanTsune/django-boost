@@ -85,7 +85,7 @@ jobs:
         pip install -U pip
         pip install coverage
     - name: Download coverage data
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         pattern: coverage-data-*
         merge-multiple: true
