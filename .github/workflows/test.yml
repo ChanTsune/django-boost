@@ -66,6 +66,13 @@ jobs:
     - name: Report
       run: |
         coverage report
-    - name: codecov
+    - name: Coverage XML
       run: |
-        codecov
+        coverage xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage.xml
+        name: py${{ matrix.python-version }}-dj${{ matrix.django-version }}
+        fail_ci_if_error: false
