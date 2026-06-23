@@ -32,6 +32,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   installs no longer include `user-agents`; install `django-boost[useragent]`
   before using `django_boost.context_processors.user_agent` or
   `UserAgentMixin`.
+- `startapp_plus` now builds on Django's current app template, layering only
+  the extra `forms.py` and `urls.py` on top, so generated apps inherit Django's
+  defaults (such as `default_auto_field`). The previously bundled `apps.py`
+  `ready()` stub and `views.py` generic-view imports are no longer added.
 
 ### Removed
 
