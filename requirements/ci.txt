@@ -2,5 +2,5 @@ wheel
 setuptools
 pillow
 tox-travis
-codecov
+coverage
 user-agents>=2.0
