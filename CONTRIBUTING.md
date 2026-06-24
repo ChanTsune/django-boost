@@ -40,6 +40,18 @@ $ python manage.py test
 This project uses PEP8 as the format for the code.
 It is recommended to use autopep8.
 
+## Type hints
+
+Type hints are being added incrementally (see issue #164).
+
+- Annotate using `from __future__ import annotations` (already in every shipped
+  module) with PEP 585/604 syntax — `list[str]`, `str | None`.
+- Don't add runtime typing dependencies (e.g. `typing_extensions`) to
+  `install_requires`; keep type-only imports under `if TYPE_CHECKING:`.
+- When a module is fully typed, register it in the TYPED-MODULE REGISTRY in
+  `mypy.ini` (a `[mypy-django_boost.<module>]` block with `disallow_untyped_defs`)
+  so it is checked and can't silently lose its annotations. Unregistered modules
+  are not checked.
 ## Development Flow
 
 This project uses a development flow based on GitHub flow.
