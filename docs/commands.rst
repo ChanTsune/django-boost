@@ -153,3 +153,32 @@ Delete migration files.
     --traceback           Raise on CommandError exceptions
     --no-color            Don't colorize the command output.
     --force-color         Force colorization of the command output.
+
+listsuperuser
+-------------
+::
+
+  $ python manage.py listsuperuser
+
+List the project's super users, one per line.
+
+::
+
+  $ python manage.py listsuperuser
+  admin@example.com
+  ops@example.com
+
+.. note::
+
+   ``listsuperuser`` ships in the optional ``django_boost.contrib.admin_tools``
+   application rather than in core ``django_boost``. Add it to ``INSTALLED_APPS``
+   to make the command available::
+
+     INSTALLED_APPS = [
+         ...
+         'django_boost',
+         'django_boost.contrib.admin_tools',
+     ]
+
+   The legacy ``'django_boost.admin_tools'`` entry still works but is deprecated
+   and will be removed in django-boost 4.0.

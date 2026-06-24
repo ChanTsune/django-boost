@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_boost',
-    'django_boost.admin_tools',
+    'django_boost.contrib.admin_tools',
     'example',
     'tests',
 ]
