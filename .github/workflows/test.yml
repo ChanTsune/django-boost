@@ -100,3 +100,34 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: ./coverage.xml
         fail_ci_if_error: false
+
+  typecheck:
+    # No continue-on-error: a broken setup or a typed-module regression should
+    # surface red here (the mypy.ini allowlist keeps the baseline green, so red
+    # is meaningful). A single django-stubs release can't span Django 4.2..5.2,
+    # so each cell pins its own (mypy, django-stubs) pair.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - django-version: '5.2.*'
+          mypy-version: '2.1.0'
+          stubs-version: '6.0.6'
+        - django-version: '4.2.*'
+          mypy-version: '1.15.0'
+          stubs-version: '5.1.3'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.12.x'
+    - name: Install dependencies
+      run: |
+        pip install -U pip
+        pip install "mypy==${{ matrix.mypy-version }}" "django-stubs[compatible-mypy]==${{ matrix.stubs-version }}" "django-stubs-ext==${{ matrix.stubs-version }}"
+        pip install "django==${{ matrix.django-version }}"
+        pip install -e .
+    - name: Mypy
+      run: mypy django_boost

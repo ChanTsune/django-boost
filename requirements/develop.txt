@@ -2,3 +2,8 @@
 tox
 autopep8
 user-agents>=2.0
+# Pinned to the primary type-check (Django 5.2); CI also runs a Django 4.2 cell
+# on its own stubs pin — see .github/workflows/test.yml.
+mypy==2.1.0
+django-stubs[compatible-mypy]==6.0.6
+django-stubs-ext==6.0.6
