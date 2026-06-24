@@ -9,9 +9,13 @@ from django.core.management.base import CommandError
 class OutputFormatMixin:
     """Add a ``--format`` option with shared text/csv/tsv rendering.
 
-    Subclasses set ``OUTPUT_FIELDS`` and implement ``get_row_data`` (a field
-    name to value mapping for one row) and ``print_text`` (the human-readable
-    layout). The delimited formats and the format dispatch are shared.
+    Mix into a ``BaseCommand`` subclass -- it writes through ``self.stdout``
+    provided by that base.
+    Subclasses set ``OUTPUT_FIELDS`` and implement ``get_row_data``, which must
+    return a mapping containing a key for every name in ``OUTPUT_FIELDS``.
+    ``print_text`` defaults to a ``field | field`` table; override it for a
+    custom layout (e.g. colored output). The delimited formats and the format
+    dispatch are shared.
     """
 
     TEXT_FORMAT = "text"
@@ -30,18 +34,32 @@ class OutputFormatMixin:
                             help="Output format.")
 
     def get_row_data(self, obj, **options):
-        raise NotImplementedError
+        raise NotImplementedError(
+            "%s must implement get_row_data() returning a mapping with keys %s"
+            % (type(self).__name__, tuple(self.OUTPUT_FIELDS)))
+
+    def _row_values(self, obj, **options):
+        data = self.get_row_data(obj, **options)
+        missing = [field for field in self.OUTPUT_FIELDS if field not in data]
+        if missing:
+            raise CommandError(
+                "%s.get_row_data() omitted OUTPUT_FIELDS: %s"
+                % (type(self).__name__, ", ".join(missing)))
+        return [data[field] for field in self.OUTPUT_FIELDS]
 
     def print_text(self, rows, **options):
-        raise NotImplementedError
+        self.stdout.write(" | ".join(self.OUTPUT_FIELDS))
+        for obj in rows:
+            self.stdout.write(
+                " | ".join(str(value)
+                           for value in self._row_values(obj, **options)))
 
     def print_delimited(self, rows, delimiter, **options):
         stream = StringIO()
         writer = csv.writer(stream, delimiter=delimiter)
         writer.writerow(self.OUTPUT_FIELDS)
         for obj in rows:
-            data = self.get_row_data(obj, **options)
-            writer.writerow([data[field] for field in self.OUTPUT_FIELDS])
+            writer.writerow(self._row_values(obj, **options))
         self.stdout.write(stream.getvalue(), ending="")
 
     def print_formatted(self, rows, **options):

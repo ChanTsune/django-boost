@@ -10,7 +10,7 @@ from django_boost.utils.attribute import getattr_chain, hasattr_chain
 
 
 class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
-    """Django admin site log cli."""
+    """View and delete Django admin site log entries."""
 
     help = "Django admin site log"
     COMPARISON_OPERATION = {"<=": "lte",
@@ -87,7 +87,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         self.stdout.write(fmt.format_map(fmap))
 
     def print_text(self, rows, **options):
-        self.stdout.write("id | action | detail | user | time")
+        self.stdout.write(" | ".join(self.OUTPUT_FIELDS))
         for log in rows:
             self.print_log(log, **options)
 

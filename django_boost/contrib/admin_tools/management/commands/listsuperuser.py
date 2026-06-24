@@ -29,12 +29,5 @@ class Command(OutputFormatMixin, BaseCommand):
             "last_login": str(user.last_login) if user.last_login else "(never)",
         }
 
-    def print_text(self, rows, **options):
-        self.stdout.write(" | ".join(self.OUTPUT_FIELDS))
-        for user in rows:
-            data = self.get_row_data(user, **options)
-            self.stdout.write(
-                " | ".join(str(data[field]) for field in self.OUTPUT_FIELDS))
-
     def handle(self, *args, **options):
         self.print_formatted(self.get_queryset(), **options)
