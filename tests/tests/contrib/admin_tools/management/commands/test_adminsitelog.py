@@ -1,5 +1,6 @@
 import csv
 from io import StringIO
+from unittest import mock
 
 from django.contrib.admin.models import ADDITION, CHANGE, LogEntry
 from django.contrib.auth import get_user_model
@@ -7,6 +8,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.management.base import CommandError
 
+from django_boost.contrib.admin_tools.management.commands.adminsitelog import (
+    Command,
+)
 from django_boost.test import TestCase
 from tests.models import RelatedItemModel
 
@@ -111,3 +115,15 @@ class TestAdminSiteLog(TestCase):
     def test_unsupported_format_raises_command_error(self):
         with self.assertRaises(CommandError):
             call_command('adminsitelog', format='xml')
+
+    def test_get_log_entry_model_without_admin_raises_command_error(self):
+        command = Command()
+        with mock.patch('django.apps.apps.is_installed', return_value=False):
+            with self.assertRaises(CommandError):
+                command.get_log_entry_model()
+
+    def test_sortable_fields_help_without_admin_returns_fallback(self):
+        command = Command()
+        with mock.patch('django.apps.apps.is_installed', return_value=False):
+            self.assertIn(
+                'django.contrib.admin', command.get_sortable_fields_help())
