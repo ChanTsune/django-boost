@@ -27,6 +27,12 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `listsuperuser` now reports audit fields (email, active, staff, last login)
   and supports `--format text|csv|tsv`, replacing its previous
   one-identifier-per-line output.
+- Move the `adminsitelog` command into `django_boost.contrib.admin_tools`.
+  Running it through `django_boost` alone still works but raises a
+  `DeprecationWarning`; the core alias will be removed in django-boost 4.0.
+- `adminsitelog` now exits with a clear error when `django.contrib.admin` is
+  not in `INSTALLED_APPS`, instead of failing with an unrelated
+  model-loading error.
 - Start the django-boost 3.0 development line by requiring Python 3.10+,
   dropping Django 3.x, and declaring support for Django 4.2-5.2 on
   officially supported Django/Python combinations.

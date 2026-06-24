@@ -54,6 +54,6 @@ Add the ones you need alongside ``django_boost``::
       'django_boost.contrib.admin_tools',
   ]
 
-``django_boost.contrib.admin_tools`` provides the ``listsuperuser`` command. The
-legacy ``'django_boost.admin_tools'`` path still works but is deprecated and will
-be removed in django-boost 4.0.
+``django_boost.contrib.admin_tools`` provides the ``listsuperuser`` and
+``adminsitelog`` commands. The legacy ``'django_boost.admin_tools'`` path still
+works but is deprecated and will be removed in django-boost 4.0.

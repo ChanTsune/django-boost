@@ -12,6 +12,14 @@ adminsitelog
 
 View and delete Admin Site logs.
 
+.. note::
+
+   ``adminsitelog`` ships in the optional ``django_boost.contrib.admin_tools``
+   application (see :doc:`installation_instructions`) and also requires
+   ``django.contrib.admin``; without it the command exits with an error.
+   Running ``adminsitelog`` through ``django_boost`` alone still works but is
+   deprecated and will be removed in django-boost 4.0.
+
 ::
 
   usage: manage.py adminsitelog [-h] [--version] [-v {0,1,2,3}]
@@ -182,14 +190,6 @@ Use ``--format csv`` or ``--format tsv`` for machine-readable output::
 .. note::
 
    ``listsuperuser`` ships in the optional ``django_boost.contrib.admin_tools``
-   application rather than in core ``django_boost``. Add it to ``INSTALLED_APPS``
-   to make the command available::
-
-     INSTALLED_APPS = [
-         ...
-         'django_boost',
-         'django_boost.contrib.admin_tools',
-     ]
-
-   The legacy ``'django_boost.admin_tools'`` entry still works but is deprecated
-   and will be removed in django-boost 4.0.
+   application (see :doc:`installation_instructions`). The legacy
+   ``'django_boost.admin_tools'`` entry still works but is deprecated and will
+   be removed in django-boost 4.0.

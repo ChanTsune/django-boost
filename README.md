@@ -896,6 +896,8 @@ python manage.py adminsitelog
 
 View and delete Admin Site logs.
 
+> `adminsitelog` ships in the opt-in `django_boost.contrib.admin_tools` app (add it to `INSTALLED_APPS`) and requires `django.contrib.admin`.
+
 ##### view all logs
 
 ```bash
