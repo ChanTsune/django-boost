@@ -65,6 +65,11 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Remove the deprecated `support_heroku` management command.
 - Remove the deprecated `django_boost.models.fields.JsonField`.
 
+### Fixed
+
+- Fix `adminsitelog` user-name fallback for custom user models without a
+  `username` attribute.
+
 ## [2.2.0] - 2026-06-22
 
 ### Added

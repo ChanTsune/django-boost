@@ -101,7 +101,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         name_fields = ["username", "email"]
         for field in name_fields:
             if hasattr(user, field):
-                return user.username
+                return getattr(user, field)
 
     def add_arguments(self, parser):
         supported_fields_str = self.get_sortable_fields_help()

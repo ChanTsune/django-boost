@@ -1,5 +1,6 @@
 import csv
 from io import StringIO
+from types import SimpleNamespace
 from unittest import mock
 
 from django.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
@@ -179,6 +180,11 @@ class TestAdminSiteLog(TestCase):
         with self.assertRaises(CommandError):
             call_command(
                 'adminsitelog', '--name_field', 'nope', stdout=StringIO())
+
+    def test_user_name_fallback_uses_email_without_username(self):
+        user = SimpleNamespace(email='audit@example.com')
+        self.assertEqual(
+            Command()._get_user_name(user), 'audit@example.com')
 
     def test_reports_when_no_logs(self):
         LogEntry.objects.all().delete()
