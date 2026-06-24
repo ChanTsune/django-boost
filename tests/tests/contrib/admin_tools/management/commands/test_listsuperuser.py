@@ -53,6 +53,19 @@ class TestListSuperUser(TestCase):
                if r.startswith('admin@example.com')][0]
         self.assertEqual(row.split(' | ')[3], '(never)')
 
+    def test_non_staff_superuser_is_flagged_no(self):
+        User = get_user_model()
+        user = User.objects.create_superuser(
+            email='nonstaff-root@example.com', username='nonstaffroot',
+            password='password')
+        user.is_staff = False
+        user.save()
+        stdout = StringIO()
+        call_command('listsuperuser', stdout=stdout)
+        row = [r for r in self._lines(stdout)
+               if r.startswith('nonstaff-root@example.com')][0]
+        self.assertEqual(row.split(' | ')[2], 'no')
+
     def test_csv_format_is_parseable(self):
         stdout = StringIO()
         call_command('listsuperuser', '--format', 'csv', stdout=stdout)
