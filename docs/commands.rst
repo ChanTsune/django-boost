@@ -160,13 +160,24 @@ listsuperuser
 
   $ python manage.py listsuperuser
 
-List the project's super users, one per line.
+List the project's super users together with audit-relevant fields: their
+email, whether the account is active, whether it is staff, and the last login
+time. Inactive super users are listed too, so stale privileged accounts stay
+visible.
 
 ::
 
   $ python manage.py listsuperuser
-  admin@example.com
-  ops@example.com
+  email | active | staff | last_login
+  admin@example.com | yes | yes | 2026-06-20 09:12:01+00:00
+  old-root@example.com | no | yes | (never)
+
+Use ``--format csv`` or ``--format tsv`` for machine-readable output::
+
+  $ python manage.py listsuperuser --format csv
+  email,active,staff,last_login
+  admin@example.com,yes,yes,2026-06-20 09:12:01+00:00
+  old-root@example.com,no,yes,(never)
 
 .. note::
 
