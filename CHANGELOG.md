@@ -37,6 +37,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `adminsitelog` now exits with a clear error when `django.contrib.admin` is
   not in `INSTALLED_APPS`, instead of failing with an unrelated
   model-loading error.
+- `adminsitelog` now reports an invalid `--filter`/`--exclude` operator or an
+  unknown `--name_field` as a command error, instead of an unhandled traceback.
 - Start the django-boost 3.0 development line by requiring Python 3.10+,
   dropping Django 3.x, and declaring support for Django 4.2-5.2 on
   officially supported Django/Python combinations.
