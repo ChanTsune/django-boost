@@ -1,17 +1,7 @@
 from __future__ import annotations
 
-from django.contrib.auth import get_user_model
+from django_boost.contrib.admin_tools.management.commands.listsuperuser import (
+    Command,
+)
 
-from django_boost.core.management import BaseCommand
-
-
-class Command(BaseCommand):
-    """List super users."""
-
-    help = "List super users."
-
-    def handle(self, *args, **options):
-        User = get_user_model()
-        qureyset = User.objects.filter(is_superuser=True)
-        for user in qureyset:
-            self.stdout.write(str(user))
+__all__ = ['Command']

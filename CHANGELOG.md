@@ -21,6 +21,9 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `adminsitelog` now writes the `delete complete` message to standard error
   for every output format (previously standard output in the default text
   format), so standard output carries only log data.
+- Move the `admin_tools` app to `django_boost.contrib.admin_tools`. The old
+  `django_boost.admin_tools` entry in `INSTALLED_APPS` still works but raises a
+  `DeprecationWarning` and will be removed in django-boost 4.0.
 - Start the django-boost 3.0 development line by requiring Python 3.10+,
   dropping Django 3.x, and declaring support for Django 4.2-5.2 on
   officially supported Django/Python combinations.

@@ -41,3 +41,19 @@ provided by *django-boost*.
 
 The next time you invoke *./manage.py help* you should be able to see all the
 newly available commands.
+
+Optional applications
+^^^^^^^^^^^^^^^^^^^^^^
+
+Some features ship as separate, opt-in applications under ``django_boost.contrib``.
+Add the ones you need alongside ``django_boost``::
+
+  INSTALLED_APPS = [
+      ...
+      'django_boost',
+      'django_boost.contrib.admin_tools',
+  ]
+
+``django_boost.contrib.admin_tools`` provides the ``listsuperuser`` command. The
+legacy ``'django_boost.admin_tools'`` path still works but is deprecated and will
+be removed in django-boost 4.0.
