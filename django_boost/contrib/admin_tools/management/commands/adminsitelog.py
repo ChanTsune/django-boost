@@ -44,10 +44,10 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
             op = self.COMPARISON_OPERATION.get(op, None)
             if op is not None:
                 return {"%s__%s" % (field, op): value}
-        raise Exception("""
-        Unsupported operation '%s'
-        --filter and --exclude supported %s
-        """ % (field, ",".join(self.COMPARISON_OPERATION.keys())))
+        raise CommandError(
+            "Unsupported filter operation in '%s'; "
+            "--filter and --exclude support: %s"
+            % (condition, ", ".join(self.COMPARISON_OPERATION)))
 
     def parse_filter(self, conditions):
         parsed = {}
@@ -95,8 +95,9 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         if name_field is not None:
             if hasattr_chain(user, name_field):
                 return getattr_chain(user, name_field)
-            raise AttributeError("'%s' has no attribute '%s'" %
-                                 (user.__class__, name_field))
+            raise CommandError(
+                "--name_field '%s' is not an attribute of %s."
+                % (name_field, type(user).__name__))
         name_fields = ["username", "email"]
         for field in name_fields:
             if hasattr(user, field):

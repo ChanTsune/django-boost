@@ -144,7 +144,7 @@ class TestAdminSiteLog(TestCase):
         self.assertNotIn(str(changed.id), ids)
 
     def test_invalid_filter_operator_raises(self):
-        with self.assertRaisesRegex(Exception, 'Unsupported operation'):
+        with self.assertRaisesRegex(CommandError, 'Unsupported filter operation'):
             call_command(
                 'adminsitelog', '--filter', 'nooperatorhere', stdout=StringIO())
 
@@ -175,8 +175,8 @@ class TestAdminSiteLog(TestCase):
         rows = list(csv.reader(StringIO(stdout.getvalue())))
         self.assertEqual(rows[1][3], 'admin@example.com')
 
-    def test_unknown_name_field_raises_attribute_error(self):
-        with self.assertRaises(AttributeError):
+    def test_unknown_name_field_raises_command_error(self):
+        with self.assertRaises(CommandError):
             call_command(
                 'adminsitelog', '--name_field', 'nope', stdout=StringIO())
 
