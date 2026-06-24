@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.forms.widgets import CheckboxInput, Input, RadioSelect
 
 __all__ = ["ColorInput", "InvertCheckboxInput", "PhoneNumberInput"]

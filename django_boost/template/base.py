@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class StrictInvalidTemplateVariable(str):
     """
     Raise an exception when Django renders an invalid template variable.

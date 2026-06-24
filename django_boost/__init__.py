@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django_boost.utils.version import get_version
 
 VERSION = (3, 0, 0, 'alpha', 0)

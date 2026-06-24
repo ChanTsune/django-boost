@@ -1,5 +1,7 @@
 """This module provides django_boost application check functions."""
 
+from __future__ import annotations
+
 from importlib.util import find_spec
 
 from django.apps import apps

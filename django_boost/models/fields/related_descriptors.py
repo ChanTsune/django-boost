@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.db.models.fields.related_descriptors import (
     ReverseOneToOneDescriptor)
 from django.db.transaction import atomic

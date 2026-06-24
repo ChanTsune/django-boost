@@ -1,5 +1,7 @@
 """This module provides django_boost application configuration."""
 
+from __future__ import annotations
+
 from django.apps import AppConfig
 from django.core import checks
 

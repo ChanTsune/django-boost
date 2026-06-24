@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django_boost import __version__ as VERSION
 
 

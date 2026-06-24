@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import defaultdict
 
 from django_boost.http.response import HttpResponseUnsupportedMediaType

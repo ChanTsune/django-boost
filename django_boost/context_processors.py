@@ -1,5 +1,7 @@
 """This module provides template context functions."""
 
+from __future__ import annotations
+
 from django_boost.user_agents import parse_user_agent
 
 

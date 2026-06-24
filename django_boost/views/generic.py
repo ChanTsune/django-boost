@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.urls import path, reverse
 
 from django_boost.views.base import (

@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class Loop:
     """Django template like loop object."""
 

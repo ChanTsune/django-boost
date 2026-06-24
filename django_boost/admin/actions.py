@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.contrib import messages
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import model_ngettext

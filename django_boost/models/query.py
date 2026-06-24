@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import django
 from django.db.models.query import QuerySet
 

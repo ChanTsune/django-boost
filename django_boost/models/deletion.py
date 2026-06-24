@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import Counter
 from functools import reduce
 from operator import attrgetter, or_

@@ -5,6 +5,8 @@ inside the function rather than at module load to keep core installs free of
 it.
 """
 
+from __future__ import annotations
+
 from django.core.exceptions import ImproperlyConfigured
 
 

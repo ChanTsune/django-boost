@@ -1,5 +1,7 @@
 """This module provides URL utility for django template."""
 
+from __future__ import annotations
+
 from urllib import parse
 
 from django.template import Library

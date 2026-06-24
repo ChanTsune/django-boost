@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .actions import hard_delete_selected
 from .filters import LogicalDeletedFilter
 
