@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import ClassVar
 
 REGEX_LEAP_YEAR = r"(([48](00)?)|(([2468][048]|[13579][26])(00)?)|([1-9][0-9]?(0[48]|[2468][048]|[13579][26])))"
 NON_ZERO_YEAR = r"[1-9]([0-9]){,3}"
@@ -31,14 +32,14 @@ REGEX_DATE = REGEX_DATE.format(
 
 
 class DateConverter:
-    regex = REGEX_DATE
+    regex: ClassVar[str] = REGEX_DATE
 
-    def to_url(self, value):
+    def to_url(self, value: datetime | str) -> str:
         if isinstance(value, datetime):
             return datetime.strftime(value, "%Y/%m/%d")
         return str(value)
 
-    def to_python(self, value):
+    def to_python(self, value: datetime | str) -> datetime:
         if isinstance(value, datetime):
             return value
         return datetime.strptime(value, "%Y/%m/%d")
