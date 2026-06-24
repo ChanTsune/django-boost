@@ -203,3 +203,49 @@ class TestAdminSiteLog(TestCase):
 
         self.assertIn('operation canceled', stderr.getvalue())
         self.assertEqual(LogEntry.objects.count(), 1)
+
+    def test_delete_confirmed_via_prompt_deletes_logs(self):
+        stderr = StringIO()
+
+        with mock.patch('builtins.input', return_value='y'):
+            call_command(
+                'adminsitelog', '--delete', stdout=StringIO(), stderr=stderr)
+
+        self.assertIn('delete complete', stderr.getvalue())
+        self.assertEqual(LogEntry.objects.count(), 0)
+
+    def _ids_with_filter(self, expr):
+        stdout = StringIO()
+        call_command(
+            'adminsitelog', '--format', 'csv', '--filter', expr, stdout=stdout)
+        return [row[0] for row in csv.reader(StringIO(stdout.getvalue()))][1:]
+
+    def test_filter_comparison_operators(self):
+        changed = LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='2',
+            object_repr='Changed', action_flag=CHANGE, change_message='x')
+        deleted = LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='3',
+            object_repr='Deleted', action_flag=DELETION, change_message='')
+
+        self.assertEqual(
+            set(self._ids_with_filter('action_flag>=2')),
+            {str(changed.id), str(deleted.id)})
+        self.assertEqual(
+            self._ids_with_filter('action_flag<2'), [str(self.log.id)])
+        self.assertEqual(
+            self._ids_with_filter('action_flag>2'), [str(deleted.id)])
+        self.assertEqual(
+            self._ids_with_filter('action_flag<=1'), [str(self.log.id)])
+
+    def test_order_by_orders_output(self):
+        second = LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='2',
+            object_repr='Second', action_flag=CHANGE, change_message='x')
+        stdout = StringIO()
+
+        call_command(
+            'adminsitelog', format='csv', order_by=['-id'], stdout=stdout)
+
+        ids = [row[0] for row in csv.reader(StringIO(stdout.getvalue()))][1:]
+        self.assertEqual(ids, [str(second.id), str(self.log.id)])
