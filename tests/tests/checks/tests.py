@@ -14,6 +14,7 @@ from django_boost.checks import (
     _check_logical_deletion_model,
     _correct_host_has_invalid_format,
     _correct_host_is_allowed,
+    check_admin_tools_requires_admin,
     check_database_router,
     check_logical_deletion_models,
     check_redirect_correct_hostname_middleware,
@@ -283,3 +284,45 @@ class LogicalDeletionCheckTests(TestCase):
             messages = _check_logical_deletion_model(MissingDeletedAtModel)
 
         self.assertEqual(check_ids(messages), ["django_boost.W030"])
+
+
+class AdminToolsCheckTests(TestCase):
+
+    def test_no_warning_when_admin_is_installed(self):
+        self.assertEqual(check_admin_tools_requires_admin(None), [])
+
+    def test_warns_when_contrib_admin_tools_without_django_admin(self):
+        with patch(
+            "django_boost.checks.apps.is_installed",
+            side_effect=lambda name: name == "django_boost.contrib.admin_tools",
+        ):
+            messages = check_admin_tools_requires_admin(None)
+        self.assertEqual(check_ids(messages), ["django_boost.W040"])
+
+    def test_warns_when_legacy_admin_tools_without_django_admin(self):
+        with patch(
+            "django_boost.checks.apps.is_installed",
+            side_effect=lambda name: name == "django_boost.admin_tools",
+        ):
+            messages = check_admin_tools_requires_admin(None)
+        self.assertEqual(check_ids(messages), ["django_boost.W040"])
+
+    def test_no_warning_when_contrib_admin_tools_with_django_admin(self):
+        with patch(
+            "django_boost.checks.apps.is_installed",
+            side_effect=lambda name: name in (
+                "django_boost.contrib.admin_tools", "django.contrib.admin"),
+        ):
+            self.assertEqual(check_admin_tools_requires_admin(None), [])
+
+    def test_no_warning_when_legacy_admin_tools_with_django_admin(self):
+        with patch(
+            "django_boost.checks.apps.is_installed",
+            side_effect=lambda name: name in (
+                "django_boost.admin_tools", "django.contrib.admin"),
+        ):
+            self.assertEqual(check_admin_tools_requires_admin(None), [])
+
+    def test_no_warning_when_admin_tools_absent(self):
+        with patch("django_boost.checks.apps.is_installed", return_value=False):
+            self.assertEqual(check_admin_tools_requires_admin(None), [])

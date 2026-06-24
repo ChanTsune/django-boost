@@ -14,6 +14,9 @@ DATABASE_ROUTER = "django_boost.db.router.DatabaseRouter"
 REDIRECT_CORRECT_HOSTNAME_MIDDLEWARE = "django_boost.middleware.RedirectCorrectHostnameMiddleware"
 USER_AGENT_CONTEXT_PROCESSOR = "django_boost.context_processors.user_agent"
 USER_AGENTS_PACKAGE = "user_agents"
+ADMIN_TOOLS_APP = "django_boost.contrib.admin_tools"
+LEGACY_ADMIN_TOOLS_APP = "django_boost.admin_tools"
+DJANGO_ADMIN_APP = "django.contrib.admin"
 
 
 def _matches_dotted_path(value, dotted_path):
@@ -252,9 +255,25 @@ def check_logical_deletion_models(app_configs, **kwargs):
     return errors
 
 
+def check_admin_tools_requires_admin(app_configs, **kwargs):
+    admin_tools_installed = apps.is_installed(ADMIN_TOOLS_APP) or apps.is_installed(LEGACY_ADMIN_TOOLS_APP)
+    if not admin_tools_installed or apps.is_installed(DJANGO_ADMIN_APP):
+        return []
+
+    return [
+        Warning(
+            "django_boost admin_tools is installed without 'django.contrib.admin'.",
+            hint="Add 'django.contrib.admin' to INSTALLED_APPS; the adminsitelog command requires it.",
+            obj=ADMIN_TOOLS_APP,
+            id="django_boost.W040",
+        )
+    ]
+
+
 CHECKS = (
     check_database_router,
     check_redirect_correct_hostname_middleware,
     check_user_agent_extra,
     check_logical_deletion_models,
+    check_admin_tools_requires_admin,
 )

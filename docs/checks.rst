@@ -70,3 +70,9 @@ Check IDs
   A model using ``LogicalDeletionMixin`` has a non-nullable ``deleted_at``
   field. Keep the inherited field or provide a replacement that allows
   ``NULL``.
+
+``django_boost.W040``
+  ``django_boost.contrib.admin_tools`` (or the deprecated
+  ``django_boost.admin_tools``) is in ``INSTALLED_APPS`` without
+  ``django.contrib.admin``. Add ``django.contrib.admin``; the ``adminsitelog``
+  command requires it.
