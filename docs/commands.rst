@@ -78,7 +78,7 @@ view all logs
 
 ::
 
-  id| action | detail | user | time
+  id | action | detail | user | time
   6 | Deleted | Customer object (8) | admin | 2019-08-19 14:56:29.609940+00:00
   7 | Added | Customer object (11) | admin | 2019-08-20 16:12:38.902129+00:00
   8 | Changed | Customer object (4) - Changed color. | admin | 2019-08-20 16:12:45.653693+00:00
@@ -190,6 +190,8 @@ Use ``--format csv`` or ``--format tsv`` for machine-readable output::
 .. note::
 
    ``listsuperuser`` ships in the optional ``django_boost.contrib.admin_tools``
-   application (see :doc:`installation_instructions`). The legacy
-   ``'django_boost.admin_tools'`` entry still works but is deprecated and will
-   be removed in django-boost 4.0.
+   application (see :doc:`installation_instructions`). Installing it under the
+   legacy ``'django_boost.admin_tools'`` ``INSTALLED_APPS`` entry still works
+   but warns on startup; switch the entry to
+   ``'django_boost.contrib.admin_tools'``. The legacy entry will be removed in
+   django-boost 4.0.
