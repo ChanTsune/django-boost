@@ -1,15 +1,11 @@
-import inspect
 from collections import Counter
 from functools import reduce
 from operator import attrgetter, or_
 
-from django.core.exceptions import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from django.db import models, transaction
 from django.db.models import signals, sql
 from django.db.models.deletion import Collector
-
-
-_COLLECTOR_ACCEPTS_ORIGIN = 'origin' in inspect.signature(Collector.__init__).parameters
 
 
 def get_logical_delete_field(model):
@@ -24,17 +20,17 @@ def get_logical_delete_field(model):
 
     try:
         return model._meta.get_field(field_name)
-    except FieldDoesNotExist:
-        return None
+    except FieldDoesNotExist as exc:
+        raise ImproperlyConfigured(
+            "%s uses logical deletion but its delete flag field '%s' does not "
+            "exist." % (model._meta.label, field_name)
+        ) from exc
 
 
 class LogicalDeletionCollector(Collector):
 
     def __init__(self, using, origin=None, deleted_at=None):
-        if _COLLECTOR_ACCEPTS_ORIGIN:
-            super().__init__(using=using, origin=origin)
-        else:
-            super().__init__(using=using)
+        super().__init__(using=using, origin=origin)
         self.origin = origin
         self.deleted_at = deleted_at
 
@@ -106,28 +102,13 @@ class LogicalDeletionCollector(Collector):
         return sum(deleted_counter.values()), dict(deleted_counter)
 
     def _send_delete_signal(self, signal, model, obj):
-        kwargs = {'sender': model, 'instance': obj, 'using': self.using}
-        if _COLLECTOR_ACCEPTS_ORIGIN:
-            kwargs['origin'] = self.origin
-        signal.send(**kwargs)
-
-    def _iter_field_updates(self):
-        for key, value in self.field_updates.items():
-            if isinstance(key, tuple):
-                field, field_value = key
-                if isinstance(value, (list, tuple)):
-                    instances_list = value
-                else:
-                    instances_list = [value]
-                yield field, field_value, instances_list
-                continue
-
-            field = key
-            for field_value, instances in value.items():
-                yield field, field_value, [instances]
+        signal.send(sender=model, instance=obj, using=self.using, origin=self.origin)
 
     def _apply_field_updates(self):
-        for field, value, instances_list in self._iter_field_updates():
+        # Mirror Django's Collector.delete() field-update block: field_updates is
+        # {(field, value): [objs, ...]}. The extra in-memory write-back below
+        # keeps already-loaded related instances consistent with the DB update.
+        for (field, value), instances_list in self.field_updates.items():
             updates = []
             objs = []
             for instances in instances_list:

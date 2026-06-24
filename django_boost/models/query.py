@@ -1,3 +1,4 @@
+import django
 from django.db.models.query import QuerySet
 
 from django_boost.models.deletion import LogicalDeletionCollector
@@ -16,7 +17,12 @@ class LogicalDeletionQuerySet(QuerySet):
             self._not_support_combined_queries('delete')
         if self.query.is_sliced:
             raise TypeError("Cannot use 'limit' or 'offset' with delete().")
-        if self.query.distinct or getattr(self.query, 'distinct_fields', ()):
+        # Match Django's per-version guard: <5.0 rejects any .distinct(); 5.0+
+        # rejects only .distinct(*fields).
+        if django.VERSION >= (5, 0):
+            if self.query.distinct_fields:
+                raise TypeError("Cannot call delete() after .distinct(*fields).")
+        elif self.query.distinct or self.query.distinct_fields:
             raise TypeError("Cannot call delete() after .distinct().")
         if getattr(self, '_fields', None) is not None:
             raise TypeError("Cannot call delete() after .values() or .values_list()")
@@ -25,10 +31,7 @@ class LogicalDeletionQuerySet(QuerySet):
         del_query._for_write = True
         del_query.query.select_for_update = False
         del_query.query.select_related = False
-        try:
-            del_query.query.clear_ordering(force=True)
-        except TypeError:
-            del_query.query.clear_ordering(force_empty=True)
+        del_query.query.clear_ordering(force=True)
 
         collector = LogicalDeletionCollector(
             using=del_query.db, origin=self, deleted_at=deleted_at)
