@@ -15,6 +15,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   deletion model configuration.
 - Add `django_boost.template.StrictInvalidTemplateVariable` for raising an
   exception when Django renders invalid or missing template variables.
+- Add a system check (`django_boost.W040`) that warns when the admin_tools app
+  (`django_boost.contrib.admin_tools` or the deprecated
+  `django_boost.admin_tools`) is in `INSTALLED_APPS` without
+  `django.contrib.admin`.
 
 ### Changed
 
