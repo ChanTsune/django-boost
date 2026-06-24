@@ -2,7 +2,7 @@ import csv
 from io import StringIO
 from unittest import mock
 
-from django.contrib.admin.models import ADDITION, CHANGE, LogEntry
+from django.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
@@ -127,3 +127,73 @@ class TestAdminSiteLog(TestCase):
         with mock.patch('django.apps.apps.is_installed', return_value=False):
             self.assertIn(
                 'django.contrib.admin', command.get_sortable_fields_help())
+
+    def test_filter_and_exclude_narrow_logs(self):
+        changed = LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='2',
+            object_repr='Other', action_flag=CHANGE, change_message='x')
+        stdout = StringIO()
+
+        call_command(
+            'adminsitelog', '--format', 'csv',
+            '--filter', 'action_flag=1', '--exclude', 'object_id=99',
+            stdout=stdout)
+
+        ids = [row[0] for row in csv.reader(StringIO(stdout.getvalue()))][1:]
+        self.assertIn(str(self.log.id), ids)
+        self.assertNotIn(str(changed.id), ids)
+
+    def test_invalid_filter_operator_raises(self):
+        with self.assertRaisesRegex(Exception, 'Unsupported operation'):
+            call_command(
+                'adminsitelog', '--filter', 'nooperatorhere', stdout=StringIO())
+
+    def test_text_format_styles_changed_and_deleted_actions(self):
+        LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='2',
+            object_repr='Changed object', action_flag=CHANGE,
+            change_message='Changed color.')
+        LogEntry.objects.create(
+            user=self.user, content_type=self.content_type, object_id='3',
+            object_repr='Deleted object', action_flag=DELETION,
+            change_message='')
+        stdout = StringIO()
+
+        call_command('adminsitelog', '--no-color', stdout=stdout)
+
+        output = stdout.getvalue()
+        self.assertIn('Changed', output)
+        self.assertIn('Deleted', output)
+
+    def test_name_field_option_uses_named_attribute(self):
+        stdout = StringIO()
+
+        call_command(
+            'adminsitelog', '--format', 'csv', '--name_field', 'email',
+            stdout=stdout)
+
+        rows = list(csv.reader(StringIO(stdout.getvalue())))
+        self.assertEqual(rows[1][3], 'admin@example.com')
+
+    def test_unknown_name_field_raises_attribute_error(self):
+        with self.assertRaises(AttributeError):
+            call_command(
+                'adminsitelog', '--name_field', 'nope', stdout=StringIO())
+
+    def test_reports_when_no_logs(self):
+        LogEntry.objects.all().delete()
+        stderr = StringIO()
+
+        call_command('adminsitelog', stderr=stderr)
+
+        self.assertIn('No logs', stderr.getvalue())
+
+    def test_delete_cancelled_keeps_logs(self):
+        stderr = StringIO()
+
+        with mock.patch('builtins.input', return_value='n'):
+            call_command(
+                'adminsitelog', '--delete', stdout=StringIO(), stderr=stderr)
+
+        self.assertIn('operation canceled', stderr.getvalue())
+        self.assertEqual(LogEntry.objects.count(), 1)

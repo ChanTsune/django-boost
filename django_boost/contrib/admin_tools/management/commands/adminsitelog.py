@@ -1,18 +1,15 @@
 from __future__ import annotations
 
-import csv
-from io import StringIO
-
 from django.core.management.base import CommandError
 from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
 
 from django_boost.core.management import BaseCommand
-from django_boost.management.mixins import ConfirmOptionMixin
+from django_boost.management.mixins import ConfirmOptionMixin, OutputFormatMixin
 from django_boost.utils.attribute import getattr_chain, hasattr_chain
 
 
-class Command(ConfirmOptionMixin, BaseCommand):
+class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
     """Django admin site log cli."""
 
     help = "Django admin site log"
@@ -21,12 +18,7 @@ class Command(ConfirmOptionMixin, BaseCommand):
                             "=": "exact",
                             "<": "lt",
                             ">": "gt", }
-    TEXT_FORMAT = "text"
     OUTPUT_FIELDS = ("id", "action", "detail", "user", "time")
-    DELIMITED_FORMATS = {
-        "csv": ",",
-        "tsv": "\t",
-    }
 
     def get_sortable_fields(self, model):
         return sorted(get_field_names_from_opts(model._meta))
@@ -63,7 +55,7 @@ class Command(ConfirmOptionMixin, BaseCommand):
             parsed.update(self._parse_filter(condition))
         return parsed
 
-    def get_log_data(self, log, **options):
+    def get_row_data(self, log, **options):
         if log.is_addition():
             action = "Added"
             detail = log.object_repr
@@ -84,7 +76,7 @@ class Command(ConfirmOptionMixin, BaseCommand):
 
     def print_log(self, log, **options):
         fmt = "{id} | {action} | {object} | {user} | {time}"
-        fmap = self.get_log_data(log, **options)
+        fmap = self.get_row_data(log, **options)
         if fmap["action"] == "Added":
             fmap["action"] = self.style.SUCCESS(fmap["action"])
         elif fmap["action"] == "Changed":
@@ -94,34 +86,10 @@ class Command(ConfirmOptionMixin, BaseCommand):
         fmap["object"] = fmap.pop("detail")
         self.stdout.write(fmt.format_map(fmap))
 
-    def print_text_logs(self, queryset, **options):
+    def print_text(self, rows, **options):
         self.stdout.write("id | action | detail | user | time")
-        for log in queryset:
+        for log in rows:
             self.print_log(log, **options)
-
-    def print_delimited_logs(self, queryset, delimiter, **options):
-        stream = StringIO()
-        writer = csv.writer(stream, delimiter=delimiter)
-        writer.writerow(self.OUTPUT_FIELDS)
-        for log in queryset:
-            data = self.get_log_data(log, **options)
-            writer.writerow([data[field] for field in self.OUTPUT_FIELDS])
-        self.stdout.write(stream.getvalue(), ending="")
-
-    def supported_formats(self):
-        return [self.TEXT_FORMAT, *self.DELIMITED_FORMATS]
-
-    def print_logs(self, queryset, **options):
-        output_format = options["format"]
-        if output_format == self.TEXT_FORMAT:
-            self.print_text_logs(queryset, **options)
-        elif output_format in self.DELIMITED_FORMATS:
-            self.print_delimited_logs(
-                queryset, self.DELIMITED_FORMATS[output_format], **options)
-        else:
-            raise CommandError(
-                "Unsupported format '%s'; choose from: %s"
-                % (output_format, ", ".join(self.supported_formats())))
 
     def _get_user_name(self, user, name_field=None):
         if name_field is not None:
@@ -160,9 +128,7 @@ class Command(ConfirmOptionMixin, BaseCommand):
                             help="""user name field.
                                     e.g. "--name_field email",
                                     "--name_field profile.phone" """)
-        parser.add_argument('--format', choices=self.supported_formats(),
-                            default=self.TEXT_FORMAT,
-                            help="Output format.")
+        self.add_format_option(parser)
         self.add_confirm_option(parser)
 
     def handle(self, *args, **options):
@@ -177,7 +143,7 @@ class Command(ConfirmOptionMixin, BaseCommand):
         if queryset.count() == 0:
             self.stderr.write('No logs')
             return
-        self.print_logs(queryset, **options)
+        self.print_formatted(queryset, **options)
         if options['delete']:
             if self.confirm(message=_("Do you want to delete these logs"), **options):
                 queryset.delete()
