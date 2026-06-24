@@ -1,5 +1,7 @@
 """This module provides queryset methods for django template."""
 
+from __future__ import annotations
+
 from django import template
 
 register = template.Library()

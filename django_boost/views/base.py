@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import mimetypes
 import os
 from functools import update_wrapper

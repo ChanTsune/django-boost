@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 
 REGEX_LEAP_YEAR = r"(([48](00)?)|(([2468][048]|[13579][26])(00)?)|([1-9][0-9]?(0[48]|[2468][048]|[13579][26])))"

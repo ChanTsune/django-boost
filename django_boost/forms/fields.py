@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.forms import BooleanField, CharField
 
 from django_boost.forms.widgets import (ColorInput, InvertCheckboxInput,

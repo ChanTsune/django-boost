@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 
 from django.db.migrations.loader import MIGRATIONS_MODULE_NAME

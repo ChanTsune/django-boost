@@ -4,6 +4,8 @@ of MVC. In other words, these functions/classes introduce controlled coupling
 for convenience's sake.
 """
 
+from __future__ import annotations
+
 __all__ = ['get_object_or_default', 'get_object_or_exception',
            'get_list_or_default', 'get_list_or_exception']
 

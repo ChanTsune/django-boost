@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.core.management import base
 
 from django_boost.core import get_version
