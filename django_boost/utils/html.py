@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from html import escape
 from html.parser import HTMLParser
 from io import StringIO
 
@@ -14,7 +15,8 @@ class HTMLSpaceLessCompressor(HTMLParser):
     def handle_data(self, data):
         if self.pre_count == 0:
             data = data.strip()
-        self.buffer.write(data)
+        # convert_charrefs already decoded entities here; re-escape them.
+        self.buffer.write(escape(data, quote=False))
 
     def handle_starttag(self, tag, attrs):
         self.buffer.write("<%s" % tag)
