@@ -69,7 +69,7 @@ class SplitDateTimeField(models.DateTimeField):
 
 class AutoOneToOneField(models.OneToOneField):
     """
-    OneToOneField creates related object on first call if it doesnt exist yet.
+    OneToOneField creates related object on first call if it doesn't exist yet.
 
     Use it instead of original OneToOne field.
     """

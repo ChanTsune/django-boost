@@ -32,7 +32,7 @@ def dead(queryset):
 
 
 @register.filter
-def alive(qureyset):
-    if hasattr(qureyset, 'alive') and callable(qureyset.alive):
-        return qureyset.alive()
-    return qureyset
+def alive(queryset):
+    if hasattr(queryset, 'alive') and callable(queryset.alive):
+        return queryset.alive()
+    return queryset
