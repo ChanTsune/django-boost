@@ -70,7 +70,7 @@ Deviations from the principles include
 
 All branches are derived from the master.
 Each implementation is done in a `feature/[working name]` branch.
-For urgent fixes, a hotfix branch is created and used to do the work there. This brand will be merged into master as soon as we are sure the problem is solved.
+For urgent fixes, a hotfix branch is created and used to do the work there. This branch will be merged into master as soon as we are sure the problem is solved.
 In preparation for the release, a release/version branch will be created and the work required for the release, including updating the version number and `CHANGELOG.md`, will be done.
 It is expected that the branch name will be numbered at the end of the branch name to indicate which issue it relates to.
 
@@ -82,7 +82,7 @@ This project keeps release notes in [`CHANGELOG.md`](./CHANGELOG.md), using the 
 When making a user-facing change, add an entry under `Unreleased`.
 During release preparation, move those entries under the new version heading, add the release date, and update the comparison links at the bottom of the file.
 
-### Marge
+### Merge
 
 In this project, branch will be rebase and add to base branch.  
 The following are some of the things that deviate from the principle.  
@@ -135,7 +135,7 @@ We'll check in as soon as possible and work to fix the problem.
 
 This project will be better with a report from you!
 This contribution guide is for anyone who doesn't know how to contribute to this project. We are not necessarily required to make contributions in the form of this guide.
-We are happy to accept any contributions that do not violate the Code of Contract.
+We are happy to accept any contributions that do not violate the Code of Conduct.
 
 ## License
 

@@ -91,7 +91,7 @@ You can control the redirect destination with ``next=~~`` in the URL query strin
 
 You can change the query string parameter name by changing ``redirect_field_name``.
 
-Adittional Attribute Mixins
+Additional Attribute Mixins
 ----------------------------
 
 UserAgentMixin

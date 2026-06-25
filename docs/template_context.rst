@@ -43,7 +43,7 @@ When given a user agent like ``Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) A
   'is_touch_capable': False,
   'os': 'Mac OS X'}
 
-These information is obtained using `user-agents <https://github.com/selwin/python-user-agents>`_.
+This information is obtained using `user-agents <https://github.com/selwin/python-user-agents>`_.
 Install django-boost with the optional ``useragent`` extra before using this
 context processor::
 

@@ -27,7 +27,7 @@ Extended Views
 
           return response
 
-django_boost generic view (``CreateView``, ``DeleteView``, ``DetailView``, ``FormView``, ``ListView``, ``TemplateView``, ``UpdateView``, ``View``) classes has ``setup`` and ``after_view_process`` method, These are called before and after processing of View respectively.
+django_boost generic view (``CreateView``, ``DeleteView``, ``DetailView``, ``FormView``, ``ListView``, ``TemplateView``, ``UpdateView``, ``View``) classes have ``setup`` and ``after_view_process`` methods, These are called before and after processing of View respectively.
 
 ``setup`` method is same as the method added in Django 2.2 .
 

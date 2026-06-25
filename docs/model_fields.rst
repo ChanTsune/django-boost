@@ -42,7 +42,7 @@ You can not specify both at the same time.
 
 If neither is set, the string is saved without any changes.
 
-Default is ``upper=False``, ``lower=Flase``.
+Default is ``upper=False``, ``lower=False``.
 
 
 SplitDateTimeField
