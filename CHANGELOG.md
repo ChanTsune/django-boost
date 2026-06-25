@@ -69,6 +69,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - Fix `adminsitelog` user-name fallback for custom user models without a
   `username` attribute.
+- Fix the `replace_parameters` template tag error message, which stated the
+  argument count must be "odd" when it must be even.
 
 ## [2.2.0] - 2026-06-22
 
