@@ -11,11 +11,11 @@ jobs:
       - uses: ChanTsune/release-with-commit@v4.0.0
         id: create_release
         with:
-          regexp: "Release (\\d+([.]\\d+)*)\n*((\\s|\\S)+)"
+          regexp: "^:bookmark:\\s+Release (\\d+(?:[.]\\d+)*)\n*((?:\\s|\\S)+)"
           regexp_options: "us"
           release_name: "version $1"
           tag_name: "v$1"
-          body: "$3"
+          body: "$2"
           draft: false
           prerelease: false
         env:
