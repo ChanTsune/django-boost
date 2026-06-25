@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from django.conf import settings
+from django.db import DEFAULT_DB_ALIAS
 
 
 class DatabaseRouter:
+    """Route Django apps to database aliases from DATABASE_APPS_MAPPING."""
 
     def __init__(self):
         self.db_map = getattr(settings, "DATABASE_APPS_MAPPING", {})
@@ -22,7 +24,8 @@ class DatabaseRouter:
         return None
 
     def allow_migrate(self, db, app_label, model=None, **hints):
-        if db in self.db_map.values():
-            return self.db_map.get(app_label) == db
-        elif app_label in self.db_map:
+        if app_label in self.db_map:
+            return self.db_map[app_label] == db
+        if db != DEFAULT_DB_ALIAS and db in self.db_map.values():
             return False
+        return None
