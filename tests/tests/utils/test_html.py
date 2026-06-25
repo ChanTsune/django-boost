@@ -14,3 +14,17 @@ class SpaceLessEntityEscapingTests(TestCase):
         self.assertEqual(
             strip_spaces_between_tags('<p>&lt;script&gt;</p>'),
             '<p>&lt;script&gt;</p>')
+
+
+class SpaceLessAttributeRenderingTests(TestCase):
+    """Attributes must round-trip without inventing values or breaking quotes."""
+
+    def test_valueless_attribute_renders_without_a_value(self):
+        self.assertEqual(
+            strip_spaces_between_tags('<input disabled>'),
+            '<input disabled>')
+
+    def test_attribute_value_is_escaped(self):
+        self.assertEqual(
+            strip_spaces_between_tags('<a title="x&quot;y">z</a>'),
+            '<a title="x&quot;y">z</a>')

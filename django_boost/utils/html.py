@@ -43,7 +43,9 @@ class HTMLSpaceLessCompressor(HTMLParser):
         self.buffer.write("<!%s>" % data)
 
     def _render_attrs(self, attrs):
-        return ' '.join('%s="%s"' % attr for attr in attrs)
+        return ' '.join(
+            name if value is None else '%s="%s"' % (name, escape(value))
+            for name, value in attrs)
 
     def compress(self, data):
         self.feed(data)
