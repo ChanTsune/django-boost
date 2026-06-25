@@ -28,3 +28,14 @@ class SpaceLessAttributeRenderingTests(TestCase):
         self.assertEqual(
             strip_spaces_between_tags('<a title="x&quot;y">z</a>'),
             '<a title="x&quot;y">z</a>')
+
+
+class SpaceLessTrailingDataTests(TestCase):
+    """Text the parser buffers at end-of-input must not be silently dropped."""
+
+    def test_trailing_text_ending_in_an_ampersand_is_kept(self):
+        # A trailing "&" looks like the start of an entity, so the parser
+        # holds the run until close(); without close() it is dropped.
+        self.assertEqual(
+            strip_spaces_between_tags('<p>x</p>price is 5 USD &'),
+            '<p>x</p>price is 5 USD &amp;')
