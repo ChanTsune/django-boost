@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `SpaceLessMiddleware` no longer un-escapes HTML entities in page text.
+
 ## [3.0.0] - 2026-06-25
 
 ### Added
