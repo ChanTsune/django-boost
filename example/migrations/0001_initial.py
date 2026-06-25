@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=64)),
                 ('registered_at', models.DateField(auto_now_add=True)),
-                ('color', django_boost.models.fields.ColorCodeFiled(max_length=7)),
+                ('color', django_boost.models.fields.ColorCodeField(max_length=7)),
             ],
             bases=(django_boost.models.mixins.JsonMixin, models.Model),
         ),
