@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from typing import TypeAlias
 
-def get_version(version=None):
+_Version: TypeAlias = tuple[int, int, int, str, int]
+
+
+def get_version(version: _Version | None = None) -> str:
     """Return a PEP 440-compliant version number from VERSION."""
     version = get_complete_version(version)
 
@@ -20,20 +24,21 @@ def get_version(version=None):
     return main + sub
 
 
-def get_main_version(version=None):
+def get_main_version(version: _Version | None = None) -> str:
     """Return main version (X.Y[.Z]) from VERSION."""
     version = get_complete_version(version)
     parts = 2 if version[2] == 0 else 3
     return '.'.join(str(x) for x in version[:parts])
 
 
-def get_complete_version(version=None):
+def get_complete_version(version: _Version | None = None) -> _Version:
     """
     Return a tuple of the django version. If version argument is non-empty,
     check for correctness of the tuple provided.
     """
     if version is None:
-        from django_boost import VERSION as version
+        from django_boost import VERSION
+        version = VERSION
     else:
         assert len(version) == 5
         assert version[3] in ('alpha', 'beta', 'rc', 'final')
@@ -41,7 +46,7 @@ def get_complete_version(version=None):
     return version
 
 
-def get_docs_version(version=None):
+def get_docs_version(version: _Version | None = None) -> str:
     version = get_complete_version(version)
     if version[3] != 'final':
         return 'dev'
