@@ -19,6 +19,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   (`django_boost.contrib.admin_tools` or the deprecated
   `django_boost.admin_tools`) is in `INSTALLED_APPS` without
   `django.contrib.admin`.
+- Add the correctly-spelled `django_boost.models.fields.ColorCodeField` model
+  field (the canonical name for the previously misspelled `ColorCodeFiled`).
 
 ### Changed
 
@@ -57,6 +59,12 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Make logical deletion follow Django's deletion collector so `CASCADE`,
   `PROTECT`, `SET_NULL`, delete signals, queryset restrictions, and
   `(count, details)` delete return values are preserved.
+
+### Deprecated
+
+- Deprecate the misspelled `django_boost.models.fields.ColorCodeFiled` model
+  field in favor of `ColorCodeField`; it now raises a `DeprecationWarning` and
+  will be removed in django-boost 4.0.
 
 ### Removed
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import warnings
+
 from django import forms
 from django.db import models
 from django.db.models.fields import CharField
@@ -10,7 +12,7 @@ from django_boost.models.fields.related_descriptors import (
 from django_boost.validators import validate_color_code
 
 
-class ColorCodeFiled(CharField):
+class ColorCodeField(CharField):
     """Field for storing hexadecimal color code like `FFEEDD`."""
 
     default_validators = [validate_color_code]
@@ -51,6 +53,24 @@ class ColorCodeFiled(CharField):
             'form_class': fields.ColorCodeField,
             **kwargs,
         })
+
+
+class ColorCodeFiled(ColorCodeField):
+    """Deprecated misspelled alias for :class:`ColorCodeField`.
+
+    Retained for backward compatibility; instantiating it raises a
+    ``DeprecationWarning`` and it will be removed in django-boost 4.0.
+    """
+
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "'ColorCodeFiled' is a deprecated misspelling of 'ColorCodeField'"
+            " and will be removed in django-boost 4.0; use 'ColorCodeField'"
+            " instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        super().__init__(*args, **kwargs)
 
 
 class SplitDateTimeField(models.DateTimeField):
