@@ -27,7 +27,7 @@ def replace_parameters(request, *args):
     arg_len = len(args)
     if arg_len % 2 != 0:
         raise LookupError(
-            "The number of arguments must be odd, but %s was given" % arg_len)
+            "The number of arguments must be even, but %s was given" % arg_len)
     url_dict = request.GET.copy()
     for k, v in chunked(args, 2):
         url_dict[k] = str(v)

@@ -39,7 +39,7 @@ class TestBoostUrlTemplateTag(TestCase):
             for e in expected:
                 self.assertIn(e, actual)
 
-        with self.assertRaises(LookupError):
+        with self.assertRaisesRegex(LookupError, "must be even"):
             request = factory.request()
             replace_parameters(request, 'q')
 
