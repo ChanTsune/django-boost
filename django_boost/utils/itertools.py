@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator
 from functools import partial
 from itertools import islice
+from typing import TypeVar
+
+_T = TypeVar("_T")
 
 
-def take(n, iterable):
+def take(n: int, iterable: Iterable[_T]) -> list[_T]:
     """Return first *n* items of the iterable as a list.
 
     example ::
@@ -20,7 +24,7 @@ def take(n, iterable):
     return list(islice(iterable, n))
 
 
-def chunked(iterable, n):
+def chunked(iterable: Iterable[_T], n: int) -> Iterator[list[_T]]:
     """Break *iterable* into lists of length *n*:
 
     example ::
