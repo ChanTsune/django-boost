@@ -110,18 +110,18 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         parser.add_argument('--filter', nargs='+',
                             type=str, default=[],
                             help="""Filter the Log to be displayed.
-                                    Supported filed is %s.
+                                    Supported field is %s.
                                     e.g. "action_time>=2019-8-22" """
                             % supported_fields_str)
         parser.add_argument('--exclude', nargs='+',
                             type=str, default=[],
                             help="""Exclude the Log to be displayed.
-                                    Supported filed is same as --filter.
+                                    Supported field is same as --filter.
                                     e.g. "user__username=admin" """)
         parser.add_argument('--order_by', nargs='+',
                             type=str, default=['action_time'],
                             help="""Order of Log to be displayed.
-                                    Supported filed is %s.
+                                    Supported field is %s.
                                     e.g. "-action_flag" """
                             % supported_fields_str)
         parser.add_argument('--name_field', type=str,
