@@ -11,6 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `SpaceLessMiddleware` no longer un-escapes HTML entities in page text.
 - `SpaceLessMiddleware` no longer crashes on streaming HTML responses.
+- `SpaceLessMiddleware` no longer mangles valueless or quoted HTML attributes.
 
 ## [3.0.0] - 2026-06-25
 
