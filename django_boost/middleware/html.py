@@ -31,8 +31,10 @@ class SpaceLessMiddleware(MiddlewareMixin):
         response = self.get_response(request)
         if 'text/html' in response.get('Content-Type', ''):
             if response.streaming:
-                response.streaming_content = strip_spaces_between_tags(
-                    response.streaming_content.decode())
+                content = b''.join(response.streaming_content).decode(
+                    response.charset)
+                response.streaming_content = [
+                    strip_spaces_between_tags(content).encode(response.charset)]
             else:
                 response.content = strip_spaces_between_tags(
                     response.content.decode())
