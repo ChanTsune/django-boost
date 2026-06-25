@@ -49,7 +49,8 @@ class HTMLSpaceLessCompressor(HTMLParser):
 
     def compress(self, data):
         self.feed(data)
-        self.reset()
+        # close() flushes trailing buffered text; reset() would drop it.
+        self.close()
         return self.buffer.getvalue()
 
 
