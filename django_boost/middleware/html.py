@@ -37,6 +37,6 @@ class SpaceLessMiddleware(MiddlewareMixin):
                     strip_spaces_between_tags(content).encode(response.charset)]
             else:
                 response.content = strip_spaces_between_tags(
-                    response.content.decode())
+                    response.content.decode(response.charset))
                 response['Content-Length'] = str(len(response.content))
         return response

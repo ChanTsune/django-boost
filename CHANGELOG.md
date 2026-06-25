@@ -13,6 +13,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `SpaceLessMiddleware` no longer crashes on streaming HTML responses.
 - `SpaceLessMiddleware` no longer mangles valueless or quoted HTML attributes.
 - `SpaceLessMiddleware` no longer drops text after the final tag.
+- `SpaceLessMiddleware` no longer corrupts non-UTF-8 HTML responses.
 
 ## [3.0.0] - 2026-06-25
 
