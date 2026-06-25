@@ -92,7 +92,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
         message = STATUS_MESSAGES[status_code]
         try:
             if settings.DEBUG:
-                file_name = "boost/tecnical/base.html"
+                file_name = "boost/technical/base.html"
             else:
                 file_name = "%s.html" % status_code
             t = get_template(file_name)
