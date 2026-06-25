@@ -54,7 +54,7 @@ TEST_DATA = [
         },
     }]
 )
-class TestConTextProcessors(TestCase):
+class TestContextProcessors(TestCase):
 
     url = ''
 

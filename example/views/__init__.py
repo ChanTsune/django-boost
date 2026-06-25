@@ -77,7 +77,7 @@ class JsonSampleView(JsonView):
         return context
 
 
-class SwichView(UserAgentMixin, TemplateView):
+class SwitchView(UserAgentMixin, TemplateView):
     template_name = "mobile/index.html"
     pc_template_name = "desktop/index.html"
     mobile_template_name = "mobile/index.html"

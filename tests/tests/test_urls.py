@@ -16,7 +16,7 @@ class TestUrlSet(TestCase):
         self.assertTrue(hasattr(SampleUrlSet, 'app_name'))
 
 
-class TestStaticFileBerow(TestCase):
+class TestStaticFileBelow(TestCase):
 
     def test_connect(self):
         import os
