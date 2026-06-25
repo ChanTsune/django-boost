@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-06-25
+
 ### Added
 
 - Add `csv` and `tsv` output formats to the `adminsitelog` management command.
@@ -353,7 +355,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/ChanTsune/django-boost/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/ChanTsune/django-boost/compare/v2.1.2...v2.2.0
 [2.1.2]: https://github.com/ChanTsune/django-boost/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/ChanTsune/django-boost/compare/v2.1.0...v2.1.1
