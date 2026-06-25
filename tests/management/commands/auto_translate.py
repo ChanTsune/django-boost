@@ -38,7 +38,7 @@ class Command(AppCommand):
             import requests
         except ImportError:
             self.stderr.write(
-                'auto_transrate command required `polib` and `requests`.'
+                'auto_translate command required `polib` and `requests`.'
                 '\nPlease `pip install polib requests`.')
             return
         app_path = app_config.path

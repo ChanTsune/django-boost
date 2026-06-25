@@ -105,12 +105,12 @@ class TestAttribute(TestCase):
             getattr_chain(i, '__class__.name')
 
 
-    def test_hasatttrs(self):
+    def test_hasattrs(self):
         i = 1
         self.assertTrue(hasattrs(i, '__class__', '__doc__'))
         self.assertFalse(hasattrs(i, '__class__', 'doc'))
 
-    def test_hasatttr_chain(self):
+    def test_hasattr_chain(self):
         i = 1
         self.assertTrue(hasattr_chain(i, '__class__.__name__'))
         self.assertFalse(hasattr_chain(i, '__class__.doc'))
@@ -184,8 +184,8 @@ class TestHTMLSpaceLessCompressor(TestCase):
 
     def test_compress(self):
         from django_boost.utils.html import HTMLSpaceLessCompressor
-        complesser = HTMLSpaceLessCompressor()
-        self.assertEqual(complesser.compress(HTML_TEXT), COMPRESSED_HTML)
+        compressor = HTMLSpaceLessCompressor()
+        self.assertEqual(compressor.compress(HTML_TEXT), COMPRESSED_HTML)
 
 
 class TestContainAny(TestCase):

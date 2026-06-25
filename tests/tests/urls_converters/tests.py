@@ -62,13 +62,13 @@ class TestRegex(TestCase):
 
     def test_year_regex(self):
         import re
-        from calendar import isleap as _isleep
+        from calendar import isleap as _isleap
         from django_boost.urls.converters.date import REGEX_LEAP_YEAR
 
         regex_is_leap = re.compile(REGEX_LEAP_YEAR).fullmatch
 
         def isleap(value):
-            return value != 0 and _isleep(value)
+            return value != 0 and _isleap(value)
 
         for i in range(10000):
             value = str(i)

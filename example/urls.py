@@ -42,7 +42,7 @@ urlpatterns = [
     path('views/', include(views.CustomerViews().urls)),
     path('google/', views.Http301View.as_view(), name='redirect_to_google'),
 
-    path('swich/', views.SwichView.as_view(), name="swich_by_user_agent"),
+    path('switch/', views.SwitchView.as_view(), name="switch_by_user_agent"),
     path('exception/', include(ExceptionUrlSet)),
     path('allow/', views.ContentTypeView.as_view(), name='content_type'),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
