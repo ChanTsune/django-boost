@@ -1,7 +1,7 @@
-Admin Site Utilitys
+Admin Site Utilities
 ====================
 
-:synopsis: Admin site utilitys in django-boost
+:synopsis: Admin site utilities in django-boost
 
 
 .. autofunction:: django_boost.admin.sites.register_all

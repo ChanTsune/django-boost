@@ -1,7 +1,7 @@
-Utilty Functions
+Utility Functions
 =================
 
-:synopsis: Utilty functions in django-boost
+:synopsis: Utility functions in django-boost
 
 
 loop utils

@@ -168,7 +168,7 @@ If you specify `upper=True`, the saved text will be capitalized.
 On the other hand, specifying `lower=True` will make the saved string lower case.
 You can not specify both at the same time.
 If neither is set, the string is saved without any changes.
-Default is `upper=False`,`lower=Flase`.
+Default is `upper=False`,`lower=False`.
 
 ### SplitDateTimeField
 
@@ -292,7 +292,7 @@ When given a user agent like `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) Ap
 'os': 'Mac OS X'}
 ```
 
-These information is obtained using [user-agents](https://github.com/selwin/python-user-agents)
+This information is obtained using [user-agents](https://github.com/selwin/python-user-agents)
 
 Install django-boost with the optional `useragent` extra before using this
 context processor: `pip install django-boost[useragent]`.
@@ -478,7 +478,7 @@ class CustomerSearchView(FormView):
 
 ### RelatedModelInlineMixin
 
-Mixin that treat two related `Model`'s as a single `Model`.
+Mixin that treats two related `Model`'s as a single `Model`.
 
 ```py
 class ModelA(models.Model):
@@ -525,7 +525,7 @@ class YourView(View):
 ```
 
 django_boost generic view (
-`CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes has `setup` and `after_view_process` method, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
+`CreateView`, `DeleteView`, `DetailView`, `FormView`, `ListView`, `TemplateView`, `UpdateView`, `View`) classes have `setup` and `after_view_process` methods, These are called before and after processing of View respectively. `setup` method is same as the method added in Django 2.2 .
 
 #### ModelCRUDViews
 

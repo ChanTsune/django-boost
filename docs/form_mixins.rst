@@ -43,7 +43,7 @@ Set ``field_lookup`` to set detailed search conditions.
 RelatedModelInlineMixin
 ------------------------
 
-Mixin that treat two related ``Model``'s as a single ``Model``.
+Mixin that treats two related ``Model``'s as a single ``Model``.
 
 ::
 
