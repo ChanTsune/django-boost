@@ -1,8 +1,10 @@
+from __future__ import annotations
+
+from typing import Any, cast
+
 from datetime import datetime, timedelta
 
-from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django_boost.views.generic import JsonView, ModelCRUDViews
@@ -11,7 +13,6 @@ from django_boost.views.mixins import RedirectToDetailMixin
 from django_boost.views.mixins import LimitedTermMixin
 from django_boost.views.mixins import UserAgentMixin
 from django_boost.views.mixins import AllowContentTypeMixin
-from django_boost.http.response import Http409
 
 from example.models import Customer
 from example.forms import CustomerForm
@@ -45,24 +46,24 @@ class ReloginView(ReAuthenticationRequiredMixin, TemplateView):
 class StartLimitView(LimitedTermMixin, TemplateView):
     template_name = "example/index.html"
 
-    def get_start_datetime(self):
+    def get_start_datetime(self) -> datetime:
         return now() + timedelta(hours=1)
 
 
 class EndLimitView(LimitedTermMixin, TemplateView):
     template_name = "example/index.html"
 
-    def get_end_datetime(self):
+    def get_end_datetime(self) -> datetime:
         return now() - timedelta(hours=1)
 
 
 class SELimitView(LimitedTermMixin, TemplateView):
     template_name = "example/index.html"
 
-    def get_start_datetime(self):
+    def get_start_datetime(self) -> datetime:
         return now() - timedelta(hours=1)
 
-    def get_end_datetime(self):
+    def get_end_datetime(self) -> datetime:
         return now() + timedelta(hours=1)
 
 
@@ -72,9 +73,8 @@ class CustomerViews(ModelCRUDViews):
 
 class JsonSampleView(JsonView):
 
-    def get_context_data(self, **kwargs):
-        context = self.json
-        return context
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        return cast(dict[str, Any], self.json)
 
 
 class SwitchView(UserAgentMixin, TemplateView):
@@ -86,11 +86,9 @@ class SwitchView(UserAgentMixin, TemplateView):
 class Http301View(TemplateView):
     template_name = "example/index.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         from django_boost.http.response import Http301
-        context = super().get_context_data(**kwargs)
         raise Http301('http://google.com')
-        return context
 
 
 class ContentTypeView(AllowContentTypeMixin, TemplateView):

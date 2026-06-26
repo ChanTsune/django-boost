@@ -1,4 +1,5 @@
 import os
+from typing import Any, cast
 
 from django.urls import path, include
 from django_boost.urls import UrlSet, include_static_files
@@ -35,7 +36,7 @@ urlpatterns = [
          views.CustomerDetailView.as_view(), name='customer_detail'),
     path('customer/<int:pk>/update/',
          views.CustomerUpdateView.as_view(), name='customer_update'),
-    path('json/', include(JsonSampleUrlSet)),
+    path('json/', include(cast(Any, JsonSampleUrlSet))),
     path('start/', views.StartLimitView.as_view()),
     path('end/', views.EndLimitView.as_view()),
     path('se/', views.SELimitView.as_view()),
@@ -43,7 +44,7 @@ urlpatterns = [
     path('google/', views.Http301View.as_view(), name='redirect_to_google'),
 
     path('switch/', views.SwitchView.as_view(), name="switch_by_user_agent"),
-    path('exception/', include(ExceptionUrlSet)),
+    path('exception/', include(cast(Any, ExceptionUrlSet))),
     path('allow/', views.ContentTypeView.as_view(), name='content_type'),
     path('blog/article/', view_blog.ArticleListView.as_view(), name="article_list"),
     path('blog/article/deleted/',

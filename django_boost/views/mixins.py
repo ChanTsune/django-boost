@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import timedelta
+from typing import Sequence
 
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (RedirectURLMixin, logout_then_login,
@@ -41,9 +42,9 @@ class DynamicRedirectMixin(RedirectURLMixin):
 
 class RedirectToDetailMixin:
 
-    success_url_name = None
-    url_kwarg = 'pk'
-    object_field_name = 'pk'
+    success_url_name: str | None = None
+    url_kwarg: str = 'pk'
+    object_field_name: str = 'pk'
 
     def get_success_url(self):
         field = getattr(self.object, self.object_field_name)
@@ -54,7 +55,7 @@ class RedirectToDetailMixin:
 class AllowContentTypeMixin:
     """Mixin to restrict content type at the time of access."""
 
-    allowed_content_types = None
+    allowed_content_types: Sequence[str] | None = None
     strictly = True
 
     def dispatch(self, request, *args, **kwargs):
@@ -181,7 +182,7 @@ class ReAuthenticationRequiredMixin(AccessMixin):
     ``logout=False``, Do not logout Even if the specified time limit has passed.
     """
 
-    interval = None
+    interval: int | timedelta | None = None
     logout = False
 
     def get_interval(self):
@@ -256,9 +257,9 @@ class ViewUserKwargsMixin:
 
 class UserAgentMixin:
 
-    pc_template_name = None
-    tablet_template_name = None
-    mobile_template_name = None
+    pc_template_name: str | None = None
+    tablet_template_name: str | None = None
+    mobile_template_name: str | None = None
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

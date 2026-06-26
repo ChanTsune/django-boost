@@ -130,4 +130,4 @@ jobs:
         pip install "django==${{ matrix.django-version }}"
         pip install -e .
     - name: Mypy
-      run: mypy django_boost
+      run: mypy django_boost example
