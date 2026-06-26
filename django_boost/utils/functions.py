@@ -9,8 +9,8 @@ def model_to_json(model, fields=(), exclude=()):
 
     Return value is a dictionary or a list for dictionary.
     """
-    opts = model._meta
     if isinstance(model, models.Model):
+        opts = model._meta
         json_data = {}
         for f in opts.fields:
             if fields and f.name not in fields:
