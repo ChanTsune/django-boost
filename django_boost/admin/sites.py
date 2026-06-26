@@ -32,7 +32,7 @@ def register_all(models, admin_class=admin.ModelAdmin, **options):
       register_all(models, admin_class=admin.CustomAdmin)
     """
     for _, klass in getmembers(models, isclass):
-        if issubclass(klass, ModelBase) and not klass._meta.abstract:
+        if isinstance(klass, ModelBase) and not klass._meta.abstract:
             try:
                 admin.site.register(klass, admin_class, **options)
             except admin.sites.AlreadyRegistered:
