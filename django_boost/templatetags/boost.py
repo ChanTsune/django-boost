@@ -141,7 +141,7 @@ def _min(iterable):
 @register.filter(name="next")
 def _next(iterable, default=None):
     if default is None:
-        return iterable(iterable)
+        return next(iterable)
     return next(iterable, default)
 
 

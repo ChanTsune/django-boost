@@ -39,6 +39,14 @@ class TestBoostTemplateTag(TestCase):
 
         self.assertEqual(_bool(1), True)
 
+    def test_next_filter(self):
+        from django_boost.templatetags.boost import _next
+
+        iterator = iter([10, 20, 30])
+
+        self.assertEqual(_next(iterator), 10)
+        self.assertEqual(_next(iterator), 20)
+
     def test_zip_filter(self):
         import warnings
 
