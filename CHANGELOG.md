@@ -11,6 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `django_boost.admin.sites.register_all` now registers Django model classes correctly when scanning a models module.
 - The `next` template filter now works for iterators without a supplied default value.
+- `django_boost.forms.UserCreationForm` now preserves Django's `UsernameField` behavior for the active user model identifier field.
 
 ## [3.0.1] - 2026-06-26
 
