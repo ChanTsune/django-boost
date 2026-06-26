@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.contrib.auth.forms import (
+    UserCreationForm as BaseUserCreationForm,
+    UsernameField,
+)
 
 from django_boost.forms.fields import ColorCodeField
 from django_boost.forms.mixins import FormUserKwargsMixin
@@ -13,11 +16,13 @@ __all__ = ("ColorCodeField", "ColorInput", "FormUserKwargsMixin",
 
 class UserCreationForm(BaseUserCreationForm):
     """
-    A form that creates a user, with no privileges, from the given
-    ``User.USERNAME_FIELD`` and password.
+    A form that creates a user, with no privileges, from the active user
+    model's ``USERNAME_FIELD`` and password.
     """
 
-    class Meta:
-        User = get_user_model()
-        model = User
-        fields = (User.USERNAME_FIELD,)
+    class Meta(BaseUserCreationForm.Meta):
+        model = get_user_model()
+        fields = (model.USERNAME_FIELD,)
+        field_classes = {
+            model.USERNAME_FIELD: UsernameField,
+        }
