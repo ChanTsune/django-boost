@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.db import models
 
 from django_boost.models.mixins import JsonMixin
@@ -10,7 +12,8 @@ from django_boost.models.mixins import (UUIDModelMixin, TimeStampModelMixin,
 class Article(UUIDModelMixin, TimeStampModelMixin, LogicalDeletionMixin):
     title = models.CharField(max_length=128)
     text = models.TextField()
-    tags = models.ManyToManyField(to="Tag", related_name="articles")
+    tags: models.ManyToManyField[Tag, Article] = models.ManyToManyField(
+        to="Tag", related_name="articles")
     image = models.ImageField(upload_to='img')
 
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.db import models
 from django.urls import path, reverse
 
 from django_boost.views.base import (
@@ -36,7 +37,7 @@ class JsonView(JsonRequestMixin, JsonResponseMixin, View):
 
 
 class BaseModelCLUDViews:
-    model = None
+    model: type[models.Model] | None = None
     success_url = None
     list_view = None
     create_view = None
