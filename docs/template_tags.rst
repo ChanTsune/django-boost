@@ -10,8 +10,9 @@ Python built-in functions
 Make Python built-in functions available in DjangoTemplate.
 
 Some non-built-in functions are also provided as filters.
+A live example of the most useful helpers is available in the sample app at the home page.
 
-An example is ``isiterable`` filter.
+The sample page demonstrates helpers such as ``abs``, ``len``, ``iter``, ``next``, ``chunked``, ``literal``, and ``zip`` so the available tags and filters are easy to discover from a running project.
 
 Usage
 ~~~~~~~~~~~~
