@@ -1,16 +1,18 @@
 from __future__ import annotations
 
+from typing import Any
+
 from django_boost.core import EMPTY, is_empty
 
 
-def getattrs(obj, *names, default=EMPTY):
+def getattrs(obj: object, *names: str, default: Any = EMPTY) -> tuple[Any, ...]:
     """Get multiple attributes."""
     if is_empty(default):
         return tuple(getattr(obj, name) for name in names)
     return tuple(getattr(obj, name, default) for name in names)
 
 
-def getattr_chain(obj, name, default=EMPTY):
+def getattr_chain(obj: object, name: str, default: Any = EMPTY) -> Any:
     """
     Get attribute.
 
@@ -29,7 +31,7 @@ def getattr_chain(obj, name, default=EMPTY):
         return default
 
 
-def hasattrs(obj, *names):
+def hasattrs(obj: object, *names: str) -> bool:
     """Check if obj has all attribute names given in the argument."""
     try:
         getattrs(obj, *names)
@@ -38,7 +40,7 @@ def hasattrs(obj, *names):
         return False
 
 
-def hasattr_chain(obj, name):
+def hasattr_chain(obj: object, name: str) -> bool:
     """
     Check if obj have an attribute named.
 
