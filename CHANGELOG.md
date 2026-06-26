@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `django_boost.admin.sites.register_all` now registers Django model classes correctly when scanning a models module.
+
 ## [3.0.1] - 2026-06-26
 
 ### Fixed

@@ -1,5 +1,7 @@
-from django_boost.test.testcase import TestCase
+from django.contrib.admin.sites import site
 
+
+from django_boost.test.testcase import TestCase
 
 class AdminTest(TestCase):
 
@@ -8,3 +10,5 @@ class AdminTest(TestCase):
         from . import models
 
         register_all(models)
+
+        self.assertTrue(site.is_registered(models.TestModel))
