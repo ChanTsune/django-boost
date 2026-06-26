@@ -342,6 +342,16 @@ class TestVars(TestCase):
         self.assertIn("value", _vars(example))
 
 
+class TestIter(TestCase):
+
+    def test_returns_iterator(self):
+        from django_boost.templatetags.boost import _iter
+
+        iterator = _iter([1, 2, 3])
+        self.assertEqual(next(iterator), 1)
+        self.assertEqual(next(iterator), 2)
+
+
 class TestNext(TestCase):
 
     def test_returns_next_item_without_default(self):
@@ -433,3 +443,43 @@ class TestVar(TestCase):
 
         value = object()
         self.assertIs(var(value), value)
+
+
+class TestList(TestCase):
+
+    def test_materializes_iterator(self):
+        from django_boost.templatetags.boost import _list
+
+        self.assertEqual(_list(iter([1, 2, 3])), [1, 2, 3])
+
+
+class TestTuple(TestCase):
+
+    def test_materializes_iterator(self):
+        from django_boost.templatetags.boost import _tuple
+
+        self.assertEqual(_tuple(iter([1, 2, 3])), (1, 2, 3))
+
+
+class TestSet(TestCase):
+
+    def test_deduplicates_iterable(self):
+        from django_boost.templatetags.boost import _set
+
+        self.assertEqual(_set([1, 2, 2, 3]), {1, 2, 3})
+
+
+class TestFrozenset(TestCase):
+
+    def test_deduplicates_iterable(self):
+        from django_boost.templatetags.boost import _frozenset
+
+        self.assertEqual(_frozenset([1, 2, 2, 3]), frozenset({1, 2, 3}))
+
+
+class TestDict(TestCase):
+
+    def test_builds_from_pairs(self):
+        from django_boost.templatetags.boost import _dict
+
+        self.assertEqual(_dict([("a", 1), ("b", 2)]), {"a": 1, "b": 2})

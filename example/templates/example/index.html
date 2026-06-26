@@ -81,8 +81,8 @@
     <div class="panel">
         <div class="panel-header">
             <div>
-                <h2>Template tag output</h2>
-                <p>Examples stay visible so the page doubles as executable documentation.</p>
+                <h2>Template helper playground</h2>
+                <p>These snippets surface the most useful template helpers as runnable examples.</p>
             </div>
         </div>
         {% literal "[1,2,4,5,6,7,8]" as l %}
@@ -94,6 +94,24 @@
                 </li>
             {% endfor %}
         </ul>
+        <div class="result-list">
+            <div class="result-row">
+                <span>abs</span>
+                <code>{{ number|abs }}</code>
+            </div>
+            <div class="result-row">
+                <span>len</span>
+                <code>{{ l|len }}</code>
+            </div>
+            <div class="result-row">
+                <span>next</span>
+                <code>{{ l|iter|next }}</code>
+            </div>
+            <div class="result-row">
+                <span>zip</span>
+                <code>{% for a, b in l|zip:l %}{{ a }}:{{ b }} {% endfor %}</code>
+            </div>
+        </div>
     </div>
     <div class="panel">
         <div class="panel-header">

@@ -66,6 +66,11 @@ def _delattr(obj, name):
     return obj
 
 
+@register.filter(name="dict")
+def _dict(value):
+    return dict(value)
+
+
 @register.filter(name="dir")
 def _dir(obj):
     return dir(obj)
@@ -91,6 +96,11 @@ def _format(value, format_spec=None):
     if format_spec is None:
         return format(value)
     return format(value, format_spec)
+
+
+@register.filter(name="frozenset")
+def _frozenset(iterable):
+    return frozenset(iterable)
 
 
 @register.filter(name="getattr")
@@ -123,9 +133,19 @@ def _int(value, base=10):
     return int(value, base)
 
 
+@register.filter(name="iter")
+def _iter(iterable):
+    return iter(iterable)
+
+
 @register.filter(name="len")
 def _len(s):
     return len(s)
+
+
+@register.filter(name="list")
+def _list(iterable):
+    return list(iterable)
 
 
 @register.filter(name="max")
@@ -184,6 +204,11 @@ def _round(number, ndigits=None):
     return round(number, ndigits)
 
 
+@register.filter(name="set")
+def _set(iterable):
+    return set(iterable)
+
+
 @register.simple_tag(name="setattr")
 def _setattr(obj, name, value):
     setattr(obj, name, value)
@@ -203,6 +228,11 @@ def _str(obj):
 @register.filter(name="sum")
 def _sum(iterable):
     return sum(iterable)
+
+
+@register.filter(name="tuple")
+def _tuple(iterable):
+    return tuple(iterable)
 
 
 @register.filter(name="type")

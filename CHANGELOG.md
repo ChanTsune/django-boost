@@ -7,6 +7,11 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- `iter`, `list`, `dict`, `set`, `tuple` and `frozenset` filters in the
+  `boost` template library, exposing the corresponding Python built-ins.
+
 ### Fixed
 
 - `django_boost.admin.sites.register_all` now registers Django model classes correctly when scanning a models module.
