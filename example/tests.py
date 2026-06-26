@@ -32,6 +32,7 @@ class TemporaryMediaRootMixin:
 
 
 class CustomerExampleFlowTests(TestCase):
+    databases = {"default", "example"}
 
     def test_customer_create_detail_and_update_flow(self):
         response = self.client.get(reverse("index"))
@@ -94,6 +95,7 @@ class JsonExampleFlowTests(TestCase):
 
 
 class ArticleExampleFlowTests(TemporaryMediaRootMixin, TestCase):
+    databases = {"default", "example"}
 
     def test_article_crud_and_deleted_archive_flow(self):
         category = Category.objects.create(name="News")

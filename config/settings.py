@@ -87,12 +87,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    'example': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'example.sqlite3'),
+    },
 }
 
 DATABASE_ROUTERS = ['django_boost.db.router.DatabaseRouter']
 
-DATABASE_APPS_MAPPING = {}
+DATABASE_APPS_MAPPING = {
+    'example': 'example',
+}
 
 AUTH_USER_MODEL = 'django_boost.EmailUser'
 

@@ -9,6 +9,7 @@ from django.db import connections
 from django.test import SimpleTestCase, override_settings
 
 from django_boost.db.router import DatabaseRouter
+from example.models import Customer
 
 
 def clear_router_test_connection(alias):
@@ -46,6 +47,17 @@ class DatabaseRouterAllowMigrateTests(SimpleTestCase):
         # business: defer so unmapped apps can still migrate onto it.
         router = DatabaseRouter()
         self.assertIsNone(router.allow_migrate('otherdb', 'auth'))
+
+
+class DatabaseRouterConfiguredExampleTests(SimpleTestCase):
+
+    def test_example_app_routes_to_configured_example_database(self):
+        router = DatabaseRouter()
+        self.assertEqual(router.db_for_read(Customer), 'example')
+        self.assertEqual(router.db_for_write(Customer), 'example')
+        self.assertTrue(router.allow_migrate('example', 'example'))
+        self.assertFalse(router.allow_migrate('default', 'example'))
+        self.assertFalse(router.allow_migrate('example', 'contenttypes'))
 
 
 class DatabaseRouterMigrationTests(UnitTestCase):
