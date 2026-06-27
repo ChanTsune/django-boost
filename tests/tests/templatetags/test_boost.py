@@ -138,6 +138,17 @@ class TestInt(TestCase):
 
         self.assertEqual(_int("10"), 10)
 
+    def test_converts_numeric_value(self):
+        from django_boost.templatetags.boost import _int
+
+        self.assertEqual(_int(5), 5)
+        self.assertEqual(_int(3.9), 3)
+
+    def test_uses_base_for_string(self):
+        from django_boost.templatetags.boost import _int
+
+        self.assertEqual(_int("ff", 16), 255)
+
 
 class TestLen(TestCase):
 

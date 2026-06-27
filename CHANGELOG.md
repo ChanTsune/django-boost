@@ -31,6 +31,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - The `upper`/`lower` option of `ColorCodeField` no longer raises `AttributeError` on a `None` value.
 - `django_boost.test.TestCase`'s `assertStatusCode*` failures now point at the calling test instead of the assertion helper.
 - `validate_color_code` (and `ColorCodeField`) now require the whole value to be a color code, rejecting strings that merely contain one (e.g. `"x#abcdef"`).
+- The `int` template filter now accepts numeric values (int/float).
 
 ## [3.0.1] - 2026-06-26
 
