@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import uuid
+import warnings
 from collections.abc import Iterable
 from json.decoder import JSONDecodeError
 from typing import Any
@@ -68,6 +69,17 @@ def validate_json(value: str) -> None:
 
 
 def validate_uuid4(value: str) -> None:
+    """Deprecated UUID validator.
+
+    Raises a ``DeprecationWarning`` and will be removed in django-boost 4.0;
+    validate UUIDs with Django's ``UUIDField`` or :func:`uuid.UUID` instead.
+    """
+    warnings.warn(
+        "'validate_uuid4' is deprecated and will be removed in django-boost"
+        " 4.0; validate UUIDs with Django's 'UUIDField' or 'uuid.UUID' instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     try:
         uuid_value = uuid.UUID(value)
     except ValueError as e:

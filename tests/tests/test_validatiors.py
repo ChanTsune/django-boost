@@ -22,10 +22,6 @@ TEST_DATA = [
     (validate_json, "{'a':'apple'}", ValidationError),
     (validate_json, 1, TypeError),
 
-    (validate_uuid4, str(uuid4()), None),
-    (validate_uuid4, "59cF05e3-fb29-4be8-af18-da9c94b1964d", ValidationError),
-    (validate_uuid4, "5de21727-8c45-4380-a44d-adc370-e6288", ValidationError),
-
     (ContainAnyValidator("1"), "123", None),
     (ContainAnyValidator("02"), "123", None),
     (ContainAnyValidator("4"), "123", ValidationError),
@@ -58,3 +54,18 @@ class TestValidator(TestCase):
             with self.subTest(name, value=value):
                 with self.assertRaisesMessage(ValidationError, message):
                     validator(value)
+
+
+class ValidateUuid4Deprecation(TestCase):
+    """`validate_uuid4` is deprecated; removal is planned for django-boost 4.0."""
+
+    def test_warns_on_call(self):
+        with self.assertWarns(DeprecationWarning):
+            validate_uuid4(str(uuid4()))
+
+    def test_still_validates_under_warning(self):
+        with self.assertWarns(DeprecationWarning):
+            self.assertIsNone(validate_uuid4(str(uuid4())))
+        with self.assertWarns(DeprecationWarning):
+            with self.assertRaises(ValidationError):
+                validate_uuid4("not-a-uuid")
