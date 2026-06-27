@@ -130,7 +130,9 @@ def _id(obj):
 
 @register.filter(name="int")
 def _int(value, base=10):
-    return int(value, base)
+    if isinstance(value, (str, bytes, bytearray)):
+        return int(value, base)
+    return int(value)
 
 
 @register.filter(name="iter")
