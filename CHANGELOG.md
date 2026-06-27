@@ -20,6 +20,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
   `ListView`, `DetailView`, `UpdateView`, `DeleteView`) are deprecated and will
   be removed in django-boost 4.0. Use `django.views.generic.*`, and a
   `dispatch()` override or middleware in place of `after_view_process`.
+- `validate_uuid4` is deprecated and will be removed in django-boost 4.0.
+  Validate UUIDs with Django's `UUIDField` or `uuid.UUID` instead.
 
 ### Fixed
 
