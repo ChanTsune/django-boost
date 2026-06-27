@@ -11,6 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `iter`, `list`, `dict`, `set`, `tuple` and `frozenset` filters in the
   `boost` template library, exposing the corresponding Python built-ins.
+- `django_boost.test.TestCase`'s `assertStatusCode*` assertions now accept an optional `msg` argument, forwarded to the underlying assertion.
 
 ### Deprecated
 
@@ -29,6 +30,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `django_boost.utils.functions.model_to_json` no longer raises `AttributeError` when given a `QuerySet`.
 - The `urldecode` template filter's output is now auto-escaped instead of being treated as safe HTML.
 - The `upper`/`lower` option of `ColorCodeField` no longer raises `AttributeError` on a `None` value.
+- `django_boost.test.TestCase`'s `assertStatusCode*` failures now point at the calling test instead of the assertion helper.
 
 ## [3.0.1] - 2026-06-26
 
