@@ -35,3 +35,31 @@ class FormTest(TestCase):
         self.assertEqual(user.email, 'created@sample.com')
         self.assertTrue(
             get_user_model().objects.filter(email='created@sample.com').exists())
+
+    def test_user_change_form_uses_usernamefield_for_identifier(self):
+        from django.contrib.auth import get_user_model
+        from django.contrib.auth.forms import UsernameField
+        from django_boost.forms import UserChangeForm
+
+        form = UserChangeForm()
+        identifier_field = get_user_model().USERNAME_FIELD
+
+        self.assertIn(identifier_field, form.fields)
+        self.assertIsInstance(form.fields[identifier_field], UsernameField)
+
+    def test_authentication_form_uses_usernamefield_for_identifier(self):
+        from django.contrib.auth.forms import UsernameField
+        from django_boost.forms import AuthenticationForm
+
+        form = AuthenticationForm()
+
+        self.assertIn('username', form.fields)
+        self.assertIsInstance(form.fields['username'], UsernameField)
+        self.assertEqual(
+            form.fields['username'].widget.attrs['autocapitalize'],
+            'none',
+        )
+        self.assertEqual(
+            form.fields['username'].widget.attrs['autocomplete'],
+            'username',
+        )

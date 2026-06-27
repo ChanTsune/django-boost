@@ -3,7 +3,7 @@ from __future__ import annotations
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from django_boost.forms import UserCreationForm
+from django_boost.forms import UserChangeForm, UserCreationForm
 from django_boost.models import EmailUser
 
 from .mixins import LogicalDeletionModelAdminMixin
@@ -17,6 +17,7 @@ __all__ = ["EmailUserAdmin",
 @admin.register(EmailUser)
 class EmailUserAdmin(UserAdmin):
     add_form = UserCreationForm
+    form = UserChangeForm
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
