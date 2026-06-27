@@ -34,10 +34,10 @@ class ColorCodeField(CharField):
         super().__init__(*args, **kwargs)
 
     def _upper_convert(self, value):
-        return value.upper()
+        return value.upper() if value is not None else value
 
     def _lower_convert(self, value):
-        return value.lower()
+        return value.lower() if value is not None else value
 
     def _no_convert(self, value):
         return value

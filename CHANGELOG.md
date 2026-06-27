@@ -19,6 +19,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `django_boost.forms.UserCreationForm` now preserves Django's `UsernameField` behavior for the active user model identifier field.
 - `django_boost.utils.functions.model_to_json` no longer raises `AttributeError` when given a `QuerySet`.
 - The `urldecode` template filter's output is now auto-escaped instead of being treated as safe HTML.
+- The `upper`/`lower` option of `ColorCodeField` no longer raises `AttributeError` on a `None` value.
 
 ## [3.0.1] - 2026-06-26
 

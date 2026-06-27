@@ -12,6 +12,12 @@ class ColorCodeFieldTests(SimpleTestCase):
         with self.assertRaises(AssertionError):
             ColorCodeField(upper=True, lower=True)
 
+    def test_upper_keeps_none(self):
+        self.assertIsNone(ColorCodeField(upper=True).to_python(None))
+
+    def test_lower_keeps_none(self):
+        self.assertIsNone(ColorCodeField(lower=True).to_python(None))
+
 
 class ColorCodeFiledDeprecationTests(SimpleTestCase):
     """`ColorCodeFiled` is the misspelled, deprecated alias of `ColorCodeField`."""
