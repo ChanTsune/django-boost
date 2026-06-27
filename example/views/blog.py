@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 
-from django_boost.views.generic import (
-    ListView, CreateView, DetailView, DeleteView, UpdateView)
+from django.views.generic import (
+    CreateView, DeleteView, DetailView, ListView, UpdateView)
 
 from example.models import Article
 from example.forms import ArticleForm
