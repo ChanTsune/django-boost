@@ -3,6 +3,7 @@ import os
 from django.test import override_settings
 from django.urls import reverse
 from django_boost.test import TestCase
+from django_boost.views.base import StaticView
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -85,3 +86,29 @@ class DeprecatedViewLayerTests(TestCase):
             generic.JsonView
             generic.StaticView
             generic.ModelCRUDViews
+
+
+class StaticViewContentTypeTests(TestCase):
+    """StaticView with an explicit content_type must serve, not crash."""
+
+    def test_explicit_content_type_does_not_crash(self):
+        class FileView(StaticView):
+            static_name = os.path.abspath(__file__)
+            content_type = 'text/plain'
+
+        response = FileView().create_response()
+        try:
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response['Content-Type'], 'text/plain')
+        finally:
+            response.close()
+
+    def test_guessed_content_type_still_works(self):
+        class FileView(StaticView):
+            static_name = os.path.abspath(__file__)
+
+        response = FileView().create_response()
+        try:
+            self.assertEqual(response.status_code, 200)
+        finally:
+            response.close()

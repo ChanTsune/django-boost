@@ -98,6 +98,7 @@ class StaticResponseMixin:
         names = self.get_static_names()
         for path in names:
             if os.path.exists(path):
+                encoding = None
                 if self.content_type is None:
                     content_type, encoding = mimetypes.guess_type(path)
                     content_type = content_type or 'application/octet-stream'
