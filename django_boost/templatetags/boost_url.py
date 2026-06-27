@@ -17,7 +17,7 @@ def urlencode(value, arg="/"):
     return parse.quote(value, safe=arg)
 
 
-@register.filter(name="urldecode", is_safe=True)
+@register.filter(name="urldecode")
 def urldecode(value):
     return parse.unquote(value)
 
