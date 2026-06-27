@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 import uuid
+from collections.abc import Iterable
 from json.decoder import JSONDecodeError
+from typing import Any
 
 from django.core.exceptions import ValidationError
 from django.core.validators import BaseValidator, RegexValidator
@@ -24,11 +26,11 @@ class JsonValidator(BaseValidator):
     message = _('Enter valid JSON string.')
     code = 'json value'
 
-    def __init__(self, message=None):
+    def __init__(self, message: Any = None) -> None:
         if message:
             self.message = message
 
-    def __call__(self, value):
+    def __call__(self, value: Any) -> None:
         try:
             json.loads(value)
         except JSONDecodeError:
@@ -45,12 +47,12 @@ class ContainAnyValidator(BaseValidator):
 
     message = _('The input must contain one of "%s"\'s.')
 
-    def __init__(self, elements, message=None):
+    def __init__(self, elements: Iterable[Any], message: Any = None) -> None:
         self.elements = elements
         if message:
             self.message = message
 
-    def __call__(self, value):
+    def __call__(self, value: Any) -> None:
         if not contain_any(value, self.elements):
             raise ValidationError(self.message % self.elements)
 
@@ -59,11 +61,11 @@ json_validator = JsonValidator()
 color_code_validator = ColorCodeValidator()
 
 
-def validate_json(value):
+def validate_json(value: str) -> None:
     return json_validator(value)
 
 
-def validate_uuid4(value):
+def validate_uuid4(value: str) -> None:
     try:
         uuid_value = uuid.UUID(value)
     except ValueError as e:
@@ -72,5 +74,5 @@ def validate_uuid4(value):
         raise ValidationError("badly formed hexadecimal UUID string")
 
 
-def validate_color_code(value):
+def validate_color_code(value: str) -> None:
     return color_code_validator(value)
