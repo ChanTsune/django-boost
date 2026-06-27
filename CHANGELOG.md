@@ -35,6 +35,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `validate_color_code` (and `ColorCodeField`) now require the whole value to be a color code, rejecting strings that merely contain one (e.g. `"x#abcdef"`).
 - The `int` template filter now accepts numeric values (int/float).
 - `ContainAnyValidator` now raises `ValidationError` for invalid input when given multiple elements as a tuple.
+- The `date` path converter now accepts zero-padded dates (e.g. `2020/02/29`).
 
 ## [3.0.1] - 2026-06-26
 

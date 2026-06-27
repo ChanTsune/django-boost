@@ -53,6 +53,17 @@ class TestConverter(TestCase):
         with self.assertRaises(NoReverseMatch):
             reverse('date', kwargs={'date': '2019/2/29'})
 
+    def test_date_accepts_zero_padded(self):
+        response = self.client.get('/date/2020/02/29')
+        self.assertStatusCodeEqual(response, 200)
+
+    def test_date_reverses_datetime(self):
+        from datetime import datetime
+
+        url = reverse('date', kwargs={'date': datetime(2020, 1, 5)})
+        self.assertEqual(url, '/date/2020/1/5')
+        self.assertStatusCodeEqual(self.client.get(url), 200)
+
 
 class TestRegex(TestCase):
 
