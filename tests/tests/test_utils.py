@@ -152,6 +152,9 @@ class TestHTMLSpaceLessCompressor(TestCase):
 
 
 class TestContainAny(TestCase):
+    # No generator case: a one-shot iterator would be consumed by the `in`
+    # membership loop and give wrong answers, so contain_any's Container
+    # annotation rejects it at type-check time instead.
 
     def test_contain_any(self):
         from django_boost.utils import contain_any
@@ -161,6 +164,21 @@ class TestContainAny(TestCase):
         self.assertTrue(contain_any(sequence, [0]))
         self.assertFalse(contain_any(sequence, [10]))
         self.assertTrue(contain_any(sequence, [10, 7]))
+
+    def test_contain_any_container_types(self):
+        from django_boost.utils import contain_any
+
+        self.assertTrue(contain_any([1, 2, 3], [3, 9]))
+        self.assertTrue(contain_any({1, 2, 3}, [9, 2]))
+        self.assertTrue(contain_any({"a": 1, "b": 2}, ["b"]))
+        self.assertTrue(contain_any("hello", ["x", "e"]))
+        self.assertFalse(contain_any((1, 2, 3), [4, 5]))
+
+    def test_contain_any_empty(self):
+        from django_boost.utils import contain_any
+
+        self.assertFalse(contain_any([1, 2, 3], []))
+        self.assertFalse(contain_any([], [1, 2]))
 
 
 class TestVersion(TestCase):

@@ -1,17 +1,30 @@
 from __future__ import annotations
 
+from collections.abc import Container, Iterable, Iterator, Sequence
+from typing import TypeGuard, TypeVar
 
-class Loop:
+_T = TypeVar("_T")
+
+
+class Loop(Iterator[tuple["Loop[_T]", _T]]):
     """Django template like loop object."""
 
-    def __init__(self, iterable):
+    # Per-iteration state; only valid after the first __next__ call.
+    counter0: int
+    counter: int
+    revcounter: int
+    revcounter0: int
+    first: bool
+    last: bool
+
+    def __init__(self, iterable: Sequence[_T]) -> None:
         self.iterable = enumerate(iterable)
         self.length = len(iterable)
 
-    def __iter__(self):
+    def __iter__(self) -> Loop[_T]:
         return self
 
-    def __next__(self):
+    def __next__(self) -> tuple[Loop[_T], _T]:
         i, item = next(self.iterable)
         # Shortcuts for current loop iteration number.
         self.counter0 = i
@@ -25,26 +38,23 @@ class Loop:
         return self, item
 
 
-def loop(iterable):
+def loop(iterable: Sequence[_T]) -> Loop[_T]:
     """Provides features such as Django template like loop."""
     return Loop(iterable)
 
 
-def isiterable(obj):
+def isiterable(obj: object) -> TypeGuard[Iterable[object]]:
     """Return `True` if `obj` is iterable object, `False` otherwise."""
     try:
-        iter(obj)
+        iter(obj)  # type: ignore[call-overload]  # probe iterability of an arbitrary object
     except TypeError:
         return False
     return True
 
 
-def contain_any(iterable, elements):
+def contain_any(container: Container[object], elements: Iterable[object]) -> bool:
     """
-    Return `True` if any of the `elements` are contained in the `iterable`,
+    Return `True` if any of the `elements` are contained in `container`,
     `False` otherwise.
     """
-    for e in elements:
-        if e in iterable:
-            return True
-    return False
+    return any(e in container for e in elements)
