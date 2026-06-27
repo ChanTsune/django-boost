@@ -3,6 +3,13 @@ from __future__ import annotations
 from django.db import models
 from django.urls import path, reverse
 
+from django.views import View as _View
+from django.views.generic import CreateView as _CreateView
+from django.views.generic import DeleteView as _DeleteView
+from django.views.generic import DetailView as _DetailView
+from django.views.generic import ListView as _ListView
+from django.views.generic import UpdateView as _UpdateView
+
 from django_boost.views.base import (
     CreateView, DeleteView, DetailView, FormView,
     ListView, StaticView, TemplateView, UpdateView, View)
@@ -16,7 +23,7 @@ __views__ = ["BaseModelCLUDViews", "ModelCRUDViews"]
 __all__ += __views__
 
 
-class JsonView(JsonRequestMixin, JsonResponseMixin, View):
+class JsonView(JsonRequestMixin, JsonResponseMixin, _View):
     """
     JsonResponse view.
 
@@ -119,8 +126,8 @@ class BaseModelCLUDViews:
 
 
 class ModelCRUDViews(BaseModelCLUDViews):
-    list_view = ListView
-    create_view = CreateView
-    detail_view = DetailView
-    update_view = UpdateView
-    delete_view = DeleteView
+    list_view = _ListView
+    create_view = _CreateView
+    detail_view = _DetailView
+    update_view = _UpdateView
+    delete_view = _DeleteView

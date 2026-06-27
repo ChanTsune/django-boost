@@ -112,7 +112,7 @@ class StaticResponseMixin:
         raise FileNotFoundError('%s does not exist.' % ', '.join(names))
 
 
-class StaticView(StaticResponseMixin, View):
+class StaticView(StaticResponseMixin, _View):
 
     def get(self, request, *args, **kwargs):
         return self.create_response()
