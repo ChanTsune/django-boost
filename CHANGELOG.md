@@ -36,6 +36,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - The `int` template filter now accepts numeric values (int/float).
 - `ContainAnyValidator` now raises `ValidationError` for invalid input when given multiple elements as a tuple.
 - The `date` path converter now accepts zero-padded dates (e.g. `2020/02/29`).
+- `SpaceLessMiddleware` now compresses streaming HTML responses lazily (async streams included) and works in ASGI middleware chains.
 
 ## [3.0.1] - 2026-06-26
 

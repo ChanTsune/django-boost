@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from django.utils.deprecation import MiddlewareMixin
 
-from django_boost.utils.html import strip_spaces_between_tags
+from django_boost.utils.html import (
+    acompress_stream, compress_stream, strip_spaces_between_tags)
 
 
 class SpaceLessMiddleware(MiddlewareMixin):
@@ -27,14 +28,18 @@ class SpaceLessMiddleware(MiddlewareMixin):
 
     """
 
-    def __call__(self, request):
-        response = self.get_response(request)
+    def process_response(self, request, response):
         if 'text/html' in response.get('Content-Type', ''):
             if response.streaming:
-                content = b''.join(response.streaming_content).decode(
-                    response.charset)
-                response.streaming_content = [
-                    strip_spaces_between_tags(content).encode(response.charset)]
+                if response.is_async:
+                    response.streaming_content = acompress_stream(
+                        response.streaming_content, response.charset)
+                else:
+                    response.streaming_content = compress_stream(
+                        response.streaming_content, response.charset)
+                # Length is unknown until the lazily-compressed stream is sent.
+                if response.has_header('Content-Length'):
+                    del response['Content-Length']
             else:
                 response.content = strip_spaces_between_tags(
                     response.content.decode(response.charset))
