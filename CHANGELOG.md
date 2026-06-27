@@ -11,7 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `iter`, `list`, `dict`, `set`, `tuple` and `frozenset` filters in the
   `boost` template library, exposing the corresponding Python built-ins.
-- `django_boost.test.TestCase`'s `assertStatusCode*` assertions now accept an optional `msg` argument, forwarded to the underlying assertion.
+- `django_boost.test.TestCase`'s `assertStatusCode*` assertions now accept an optional `msg` argument.
 
 ### Deprecated
 
@@ -23,10 +23,9 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
-- `django_boost.admin.sites.register_all` now registers Django model classes correctly when scanning a models module.
+- `django_boost.admin.sites.register_all` now registers the models it finds; previously it registered none.
 - The `next` template filter now works for iterators without a supplied default value.
-- `django_boost.forms.UserCreationForm` now preserves Django's `UsernameField` behavior for the active user model identifier field.
-- `django_boost.forms.UserChangeForm` and `django_boost.forms.AuthenticationForm` now expose Django-compatible `UsernameField` behavior for custom user models.
+- `django_boost.forms.UserCreationForm`, `UserChangeForm`, and `AuthenticationForm` now apply Django's `UsernameField` behavior.
 - `django_boost.utils.functions.model_to_json` no longer raises `AttributeError` when given a `QuerySet`.
 - The `urldecode` template filter's output is now auto-escaped instead of being treated as safe HTML.
 - The `upper`/`lower` option of `ColorCodeField` no longer raises `AttributeError` on a `None` value.
