@@ -3,7 +3,7 @@ from __future__ import annotations
 from django_boost import __version__ as VERSION
 
 
-def get_version():
+def get_version() -> str:
     return VERSION
 
 
@@ -14,5 +14,5 @@ class Empty:
 EMPTY = Empty()
 
 
-def is_empty(obj):
+def is_empty(obj: object) -> bool:
     return isinstance(obj, Empty)
