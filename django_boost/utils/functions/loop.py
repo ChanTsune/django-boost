@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator, Sequence
+from typing import TypeVar
 
-def loopfirst(iterable):
+_T = TypeVar("_T")
+
+
+def loopfirst(iterable: Iterable[_T]) -> Iterator[tuple[bool, _T]]:
     """
     Loop util.
 
@@ -13,7 +18,7 @@ def loopfirst(iterable):
         yield i == 0, val
 
 
-def looplast(iterable):
+def looplast(iterable: Sequence[_T]) -> Iterator[tuple[bool, _T]]:
     """
     Loop util.
 
@@ -26,7 +31,7 @@ def looplast(iterable):
         yield i == last_index, val
 
 
-def loopfirstlast(iterable):
+def loopfirstlast(iterable: Sequence[_T]) -> Iterator[tuple[bool, _T]]:
     """
     A function combining `firstloop` and` lastloop`.
 
