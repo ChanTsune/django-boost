@@ -29,6 +29,7 @@ TEST_DATA = [
     (ContainAnyValidator("1"), "123", None),
     (ContainAnyValidator("02"), "123", None),
     (ContainAnyValidator("4"), "123", ValidationError),
+    (ContainAnyValidator(("4", "5")), "123", ValidationError),
 ]
 
 
