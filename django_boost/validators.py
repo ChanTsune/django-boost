@@ -38,7 +38,9 @@ class JsonValidator(BaseValidator):
 
 
 class ColorCodeValidator(RegexValidator):
-    regex = '#[0-9a-fA-F]{6}'
+    # Anchored: RegexValidator matches with regex.search(), so without \A..\Z
+    # any string merely containing a color code (e.g. "x#abcdef") would pass.
+    regex = r'\A#[0-9a-fA-F]{6}\Z'
     message = _('Enter 6-digit hexadecimal number including #.')
 
 

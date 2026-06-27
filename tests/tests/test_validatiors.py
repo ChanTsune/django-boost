@@ -13,6 +13,8 @@ TEST_DATA = [
     (validate_color_code, "#001122", None),
     (validate_color_code, "00FF11", ValidationError),
     (validate_color_code, "#R00000", ValidationError),
+    (validate_color_code, "prefix#001122", ValidationError),
+    (validate_color_code, "#001122suffix", ValidationError),
 
     (validate_json, '{}', None),
     (validate_json, '{"a":"apple"}', None),
