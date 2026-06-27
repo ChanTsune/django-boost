@@ -12,6 +12,14 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `iter`, `list`, `dict`, `set`, `tuple` and `frozenset` filters in the
   `boost` template library, exposing the corresponding Python built-ins.
 
+### Deprecated
+
+- The `django_boost.views` base `View` class, its `after_view_process` hook,
+  and the generic-view aliases (`TemplateView`, `FormView`, `CreateView`,
+  `ListView`, `DetailView`, `UpdateView`, `DeleteView`) are deprecated and will
+  be removed in django-boost 4.0. Use `django.views.generic.*`, and a
+  `dispatch()` override or middleware in place of `after_view_process`.
+
 ### Fixed
 
 - `django_boost.admin.sites.register_all` now registers Django model classes correctly when scanning a models module.

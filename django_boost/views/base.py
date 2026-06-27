@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import mimetypes
 import os
+import warnings
 from functools import update_wrapper
 
 from django.core.exceptions import ImproperlyConfigured
@@ -17,18 +18,17 @@ from django.views.generic import TemplateView as _TemplateView
 from django.views.generic import UpdateView as _UpdateView
 
 
-__all__ = ["View", "TemplateView", "FormView", "CreateView",
-           "ListView", "DetailView", "UpdateView", "DeleteView",
-           "StaticView"]
+# View and the generic aliases stay importable via __getattr__ (with a
+# DeprecationWarning); keep them out of __all__ so `import *` skips them.
+__all__ = ["StaticView"]
 
 
-class View(_View):
-    """View that runs ``after_view_process`` on every dispatched response.
+class _DeprecatedView(_View):
+    """Deprecated base view that runs ``after_view_process`` on every response.
 
-    The hook wraps the result of ``as_view``'s dispatch call rather than
-    ``dispatch`` itself, so it still fires when a mixin earlier in the MRO
-    short-circuits ``dispatch`` (e.g. a permission check that returns a 403
-    without calling ``super().dispatch()``).
+    Superseded by Django's own views; kept working through django-boost 3.x and
+    removed in 4.0. It re-implements ``as_view`` and does not support async
+    handlers. Prefer a ``dispatch()`` override or middleware.
     """
 
     @classonlymethod
@@ -56,32 +56,31 @@ class View(_View):
         return response
 
 
-class TemplateView(View, _TemplateView):
-    pass
+_DEPRECATED = {
+    "View": _DeprecatedView,
+    "TemplateView": type("TemplateView", (_DeprecatedView, _TemplateView), {}),
+    "FormView": type("FormView", (_DeprecatedView, _FormView), {}),
+    "CreateView": type("CreateView", (_DeprecatedView, _CreateView), {}),
+    "ListView": type("ListView", (_DeprecatedView, _ListView), {}),
+    "DetailView": type("DetailView", (_DeprecatedView, _DetailView), {}),
+    "UpdateView": type("UpdateView", (_DeprecatedView, _UpdateView), {}),
+    "DeleteView": type("DeleteView", (_DeprecatedView, _DeleteView), {}),
+}
 
 
-class FormView(View, _FormView):
-    pass
-
-
-class CreateView(View, _CreateView):
-    pass
-
-
-class ListView(View, _ListView):
-    pass
-
-
-class DetailView(View, _DetailView):
-    pass
-
-
-class UpdateView(View, _UpdateView):
-    pass
-
-
-class DeleteView(View, _DeleteView):
-    pass
+def __getattr__(name):
+    if name in _DEPRECATED:
+        warnings.warn(
+            "django_boost.views.%s is deprecated and will be removed in "
+            "django-boost 4.0; use django.views.generic.%s instead. The "
+            "after_view_process hook is dropped; use a dispatch() override or "
+            "middleware. (This view does not support async handlers.)"
+            % (name, name),
+            DeprecationWarning, stacklevel=2,
+        )
+        return _DEPRECATED[name]
+    raise AttributeError(
+        "module %r has no attribute %r" % (__name__, name))
 
 
 class StaticResponseMixin:

@@ -4,32 +4,29 @@ Generic Views
 :synopsis: Generic view class in django-boost
 
 
-Extended Views
----------------
+Extended Views (deprecated)
+---------------------------
 
-::
+.. note::
 
-  from django_boost.views.generic import View
+   The base ``View`` class, its ``after_view_process`` hook, and the
+   generic-view aliases (``TemplateView``, ``FormView``, ``CreateView``,
+   ``ListView``, ``DetailView``, ``UpdateView``, ``DeleteView``) are
+   **deprecated** and will be removed in django-boost 4.0. They re-implement
+   ``as_view`` and do not support async views. Use Django's own
+   ``django.views.generic`` classes, and override ``dispatch()`` (or use
+   middleware) where you previously used ``after_view_process``:
 
-  class YourView(View):
+   ::
 
-      def setup(self, request, *args, **kwargs):
-          super().setup(request, *args, **kwargs)
-          ## some process before view process
+     from django.views.generic import TemplateView
 
-          ## For example, add attribute to view class
+     class YourView(TemplateView):
 
-      def after_view_process(self, request, response, *args, **kwargs):
-          super().after_view_process(request, response, *args, **kwargs)
-          ## some process after view process
-
-          ## For example, add http headers to the response
-
-          return response
-
-django_boost generic view (``CreateView``, ``DeleteView``, ``DetailView``, ``FormView``, ``ListView``, ``TemplateView``, ``UpdateView``, ``View``) classes have ``setup`` and ``after_view_process`` methods, These are called before and after processing of View respectively.
-
-``setup`` method is same as the method added in Django 2.2 .
+         def dispatch(self, request, *args, **kwargs):
+             response = super().dispatch(request, *args, **kwargs)
+             ## post-process the response here, e.g. add a header
+             return response
 
 JsonView
 ---------

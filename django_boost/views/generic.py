@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import warnings
+
 from django.db import models
 from django.urls import path, reverse
-
 from django.views import View as _View
 from django.views.generic import CreateView as _CreateView
 from django.views.generic import DeleteView as _DeleteView
@@ -10,17 +11,31 @@ from django.views.generic import DetailView as _DetailView
 from django.views.generic import ListView as _ListView
 from django.views.generic import UpdateView as _UpdateView
 
-from django_boost.views.base import (
-    CreateView, DeleteView, DetailView, FormView,
-    ListView, StaticView, TemplateView, UpdateView, View)
+from django_boost.views.base import StaticView
+from django_boost.views.base import _DEPRECATED as _DEPRECATED_VIEWS
 from django_boost.views.mixins import JsonRequestMixin, JsonResponseMixin
 
-__all__ = ["CreateView", "DeleteView", "DetailView",
-           "FormView", "JsonView", "ListView", "TemplateView",
-           "UpdateView", "View", "StaticView"]
+# View and the generic aliases stay importable via __getattr__ (with a
+# DeprecationWarning); keep them out of __all__ so `import *` skips them.
+__all__ = ["JsonView", "StaticView"]
 __views__ = ["BaseModelCLUDViews", "ModelCRUDViews"]
 
 __all__ += __views__
+
+
+def __getattr__(name):
+    if name in _DEPRECATED_VIEWS:
+        warnings.warn(
+            "django_boost.views.generic.%s is deprecated and will be removed "
+            "in django-boost 4.0; use django.views.generic.%s instead. The "
+            "after_view_process hook is dropped; use a dispatch() override or "
+            "middleware. (This view does not support async handlers.)"
+            % (name, name),
+            DeprecationWarning, stacklevel=2,
+        )
+        return _DEPRECATED_VIEWS[name]
+    raise AttributeError(
+        "module %r has no attribute %r" % (__name__, name))
 
 
 class JsonView(JsonRequestMixin, JsonResponseMixin, _View):

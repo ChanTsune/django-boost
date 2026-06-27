@@ -55,3 +55,33 @@ class TestStringView(TestCase):
         response = self.client.head(reverse('after'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get("X-After-View-Process"), "yes")
+
+
+class DeprecatedViewLayerTests(TestCase):
+
+    DEPRECATED_NAMES = [
+        "View", "TemplateView", "FormView", "CreateView",
+        "ListView", "DetailView", "UpdateView", "DeleteView",
+    ]
+
+    def test_base_module_access_warns(self):
+        import django_boost.views.base as base
+        for name in self.DEPRECATED_NAMES:
+            with self.assertWarns(DeprecationWarning):
+                getattr(base, name)
+
+    def test_generic_module_access_warns(self):
+        import django_boost.views.generic as generic
+        for name in self.DEPRECATED_NAMES:
+            with self.assertWarns(DeprecationWarning):
+                getattr(generic, name)
+
+    def test_kept_views_do_not_warn(self):
+        import warnings
+
+        import django_boost.views.generic as generic
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", DeprecationWarning)
+            generic.JsonView
+            generic.StaticView
+            generic.ModelCRUDViews
