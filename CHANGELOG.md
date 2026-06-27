@@ -37,6 +37,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `ContainAnyValidator` now raises `ValidationError` for invalid input when given multiple elements as a tuple.
 - The `date` path converter now accepts zero-padded dates (e.g. `2020/02/29`).
 - `SpaceLessMiddleware` now compresses streaming HTML responses lazily (async streams included) and works in ASGI middleware chains.
+- `StaticView` with an explicit `content_type` no longer crashes with `UnboundLocalError`.
 
 ## [3.0.1] - 2026-06-26
 
