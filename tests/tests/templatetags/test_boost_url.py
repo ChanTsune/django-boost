@@ -24,6 +24,14 @@ class TestBoostUrlTemplateTag(TestCase):
         for a, e in cases:
             self.assertEqual(urldecode(a), e)
 
+    def test_urldecode_output_is_escaped_in_autoescaped_template(self):
+        from django.template import Context, Template
+        from django.utils.safestring import mark_safe
+
+        template = Template("{% load boost_url %}{{ value|urldecode }}")
+        output = template.render(Context({"value": mark_safe("%3Cscript%3E")}))
+        self.assertEqual(output, "&lt;script&gt;")
+
     def test_replace_parameters(self):
         from django_boost.templatetags.boost_url import replace_parameters
 
