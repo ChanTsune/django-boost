@@ -10,6 +10,7 @@ from django.test.utils import isolate_apps
 from django.utils.timezone import now
 
 from django_boost.models.deletion import get_logical_delete_field
+from django_boost.models.manager import LogicalDeletionManager
 from django_boost.models.mixins import LogicalDeletionMixin
 
 
@@ -398,3 +399,24 @@ class GetLogicalDeleteFieldTests(TestCase):
 
             with self.assertRaises(ImproperlyConfigured):
                 get_logical_delete_field(MisconfiguredModel)
+
+
+class LogicalDeletionManagerCustomFieldTests(TestCase):
+    """A custom delete_flag_field on the manager must reach its queryset, so
+    alive()/dead()/revive() filter on the right column."""
+
+    def test_custom_delete_flag_field_propagates_to_queryset(self):
+        with isolate_apps("tests"):
+            class RemovedManager(LogicalDeletionManager):
+                delete_flag_field = "removed_at"
+
+            class CustomFieldModel(models.Model):
+                removed_at = models.DateTimeField(null=True, default=None)
+                objects = RemovedManager()
+
+                class Meta:
+                    app_label = "tests"
+
+            queryset = CustomFieldModel.objects.get_queryset()
+
+        self.assertEqual(queryset.get_delete_flag_field_name(), "removed_at")
