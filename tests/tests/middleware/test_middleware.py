@@ -52,27 +52,38 @@ class RedirectCorrectHostnameMiddlewareTests(SimpleTestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
+        self.downstream = []
 
-    @override_settings(CORRECT_HOST="correct.example.com", ALLOWED_HOSTS=["*"])
+    def _middleware(self):
+        def get_response(request):
+            self.downstream.append(request)
+            return HttpResponse()
+        return RedirectCorrectHostnameMiddleware(get_response)
+
+    @override_settings(DEBUG=False, CORRECT_HOST="correct.example.com",
+                       ALLOWED_HOSTS=["*"])
     def test_redirects_when_hostname_differs(self):
-        downstream = []
-        middleware = RedirectCorrectHostnameMiddleware(
-            get_response=lambda request: downstream.append(request))
-        # `conditions` is frozen at class-definition time (DEBUG was on then);
-        # simulate a deployment where the redirect is active.
-        middleware.conditions = True
-
-        response = middleware(self.factory.get("/page?x=1"))
+        response = self._middleware()(
+            self.factory.get("/page?x=1", HTTP_HOST="wrong.example.com"))
 
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["Location"],
                          "http://correct.example.com/page?x=1")
-        self.assertEqual(downstream, [])  # not forwarded to the view
+        self.assertEqual(self.downstream, [])  # not forwarded to the view
 
-    def test_passes_through_when_disabled(self):
-        sentinel = HttpResponse()
-        middleware = RedirectCorrectHostnameMiddleware(
-            get_response=lambda request: sentinel)
-        # Default `conditions` is False under the test settings (DEBUG on), so
-        # the request flows through untouched.
-        self.assertIs(middleware(self.factory.get("/")), sentinel)
+    @override_settings(DEBUG=False, CORRECT_HOST="correct.example.com",
+                       ALLOWED_HOSTS=["*"])
+    def test_no_redirect_when_hostname_matches(self):
+        response = self._middleware()(
+            self.factory.get("/", HTTP_HOST="correct.example.com"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(self.downstream), 1)
+
+    @override_settings(DEBUG=True, CORRECT_HOST="correct.example.com",
+                       ALLOWED_HOSTS=["*"])
+    def test_no_redirect_when_debug(self):
+        response = self._middleware()(
+            self.factory.get("/", HTTP_HOST="wrong.example.com"))
+
+        self.assertEqual(response.status_code, 200)
