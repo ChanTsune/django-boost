@@ -39,6 +39,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `SpaceLessMiddleware` now compresses streaming HTML responses lazily (async streams included) and works in ASGI middleware chains.
 - `StaticView` with an explicit `content_type` no longer crashes with `UnboundLocalError`.
 - `RedirectCorrectHostnameMiddleware` now reads `DEBUG` and `CORRECT_HOST` per request.
+- `LogicalDeletionMixin.revive()` now honors its `using` and `force_update` arguments.
 
 ## [3.0.1] - 2026-06-26
 

@@ -82,6 +82,17 @@ class TestLogicalDeletionMixin(TestCase):
         self.assertEqual(len(self.model.objects.dead()), 0)
         self.assertEqual(len(self.model.objects.alive()), 10)
 
+    def test_revive_forwards_save_arguments(self):
+        from unittest import mock
+
+        self._register_items("0")
+        item = self.model.objects.get(name="0")
+        item.delete()
+        with mock.patch.object(item, "save") as save:
+            item.revive(force_update=True, using="other")
+        save.assert_called_once_with(force_update=True, using="other")
+        self.assertIsNone(item.deleted_at)
+
     def test_is_dead(self):
         self._register_items(*[str(i) for i in range(10)])
         item = self.model.objects.get(name="0")
