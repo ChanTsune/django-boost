@@ -52,18 +52,14 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
     but it is useful when the setting is troublesome or when using services such as heroku.
     """
 
-    conditions = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
-
     def __call__(self, request):
-
-        if self.conditions and request.get_host() != settings.CORRECT_HOST:
+        enabled = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
+        if enabled and request.get_host() != settings.CORRECT_HOST:
             return HttpResponsePermanentRedirect(
                 '{scheme}://{host}{path}'.format(scheme=request.scheme,
                                                  host=settings.CORRECT_HOST,
                                                  path=request.get_full_path()))
-
-        response = self.get_response(request)
-        return response
+        return self.get_response(request)
 
 
 class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):

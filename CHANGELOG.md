@@ -38,6 +38,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - The `date` path converter now accepts zero-padded dates (e.g. `2020/02/29`).
 - `SpaceLessMiddleware` now compresses streaming HTML responses lazily (async streams included) and works in ASGI middleware chains.
 - `StaticView` with an explicit `content_type` no longer crashes with `UnboundLocalError`.
+- `RedirectCorrectHostnameMiddleware` now reads `DEBUG` and `CORRECT_HOST` per request.
 
 ## [3.0.1] - 2026-06-26
 
