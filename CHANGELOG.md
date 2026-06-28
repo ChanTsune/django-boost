@@ -40,6 +40,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `StaticView` with an explicit `content_type` no longer crashes with `UnboundLocalError`.
 - `RedirectCorrectHostnameMiddleware` now reads `DEBUG` and `CORRECT_HOST` per request.
 - `LogicalDeletionMixin.revive()` now honors its `using` and `force_update` arguments.
+- A custom `delete_flag_field` on `LogicalDeletionManager` now applies to its `alive()`/`dead()`/`revive()` queries.
 
 ## [3.0.1] - 2026-06-26
 
