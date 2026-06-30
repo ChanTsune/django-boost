@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import AsyncIterable, Iterable
+from typing import cast
+
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseBase,
+    StreamingHttpResponse,
+)
 from django.utils.deprecation import MiddlewareMixin
 
 from django_boost.utils.html import (
@@ -28,20 +37,29 @@ class SpaceLessMiddleware(MiddlewareMixin):
 
     """
 
-    def process_response(self, request, response):
+    def process_response(
+            self, request: HttpRequest,
+            response: HttpResponseBase) -> HttpResponseBase:
         if 'text/html' in response.get('Content-Type', ''):
             if response.streaming:
-                if response.is_async:
-                    response.streaming_content = acompress_stream(
-                        response.streaming_content, response.charset)
+                # streaming is only True for StreamingHttpResponse, which is
+                # what exposes is_async / streaming_content.
+                streaming = cast(StreamingHttpResponse, response)
+                if streaming.is_async:
+                    streaming.streaming_content = acompress_stream(
+                        cast(AsyncIterable[bytes],
+                             streaming.streaming_content),
+                        response.charset)
                 else:
-                    response.streaming_content = compress_stream(
-                        response.streaming_content, response.charset)
+                    streaming.streaming_content = compress_stream(
+                        cast(Iterable[bytes], streaming.streaming_content),
+                        response.charset)
                 # Length is unknown until the lazily-compressed stream is sent.
                 if response.has_header('Content-Length'):
                     del response['Content-Length']
             else:
-                response.content = strip_spaces_between_tags(
-                    response.content.decode(response.charset))
-                response['Content-Length'] = str(len(response.content))
+                full = cast(HttpResponse, response)
+                full.content = strip_spaces_between_tags(
+                    full.content.decode(response.charset))
+                full['Content-Length'] = str(len(full.content))
         return response
