@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- Signed-integer path converters `signed_int`, `positive_int`, `negative_int`, `non_negative_int`, `non_positive_int` and `non_zero_int` (registered by `register_boost_converters`), covering integer ranges Django's built-in `int` converter cannot express.
+
 ### Fixed
 
 - The `date` path converter now accepts years below 1000 (e.g. `48/2/29`).

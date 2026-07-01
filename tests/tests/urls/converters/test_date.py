@@ -1,76 +1,39 @@
-import os
+import re
+from calendar import isleap as _isleap
+from datetime import datetime
 
-from django.test import override_settings
 from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
 
 from django_boost.test import TestCase
 
-ROOT_PATH = os.path.dirname(__file__)
+from .base import ConverterTestCase
 
 
-@override_settings(
-    ROOT_URLCONF='tests.tests.urls_converters.urls',
-    TEMPLATES=[{
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(ROOT_PATH, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django_boost.context_processors.user_agent',
-            ],
-        },
-    }]
-)
-class TestConverter(TestCase):
+class TestDateConverter(ConverterTestCase):
 
-    def test_path_converters(self):
-        case = [('bin', '1010'),
-                ('bin', 12),
-                ('oct', '7'),
-                ('oct', 7),
-                ('hex', 'd'),
-                ('hex', 12),
-                ('bin_str', '1010'),
-                ('oct_str', '236'),
-                ('hex_str', '234'),
-                ('float', 1.1),
-                ('float', '1.1'),
-                ('float', 1),
-                ('float', '1'),
-                ('date', '2020/2/29'),
-                ]
-        for name, value in case:
-            url = reverse(name, kwargs={name: value})
-            response = self.client.get(url)
-            self.assertStatusCodeEqual(response, 200)
+    def test_matches_leap_day(self):
+        url = reverse('date', kwargs={'date': '2020/2/29'})
+        self.assertStatusCodeEqual(self.client.get(url), 200)
 
-    def test_failed_case(self):
-        from django.urls.exceptions import NoReverseMatch
-
-        with self.assertRaises(NoReverseMatch):
-            reverse('float', kwargs={'float': '1.'})
-
+    def test_rejects_invalid_leap_day(self):
         with self.assertRaises(NoReverseMatch):
             reverse('date', kwargs={'date': '2019/2/29'})
 
-    def test_date_accepts_zero_padded(self):
+    def test_accepts_zero_padded(self):
         response = self.client.get('/date/2020/02/29')
         self.assertStatusCodeEqual(response, 200)
 
-    def test_date_reverses_datetime(self):
-        from datetime import datetime
-
+    def test_reverses_datetime(self):
         url = reverse('date', kwargs={'date': datetime(2020, 1, 5)})
         self.assertEqual(url, '/date/2020/1/5')
         self.assertStatusCodeEqual(self.client.get(url), 200)
 
-    def test_date_accepts_short_year(self):
+    def test_accepts_short_year(self):
         response = self.client.get('/date/48/2/29')
         self.assertStatusCodeEqual(response, 200)
 
-    def test_date_reverses_short_year_datetime(self):
-        from datetime import datetime
-
+    def test_reverses_short_year_datetime(self):
         url = reverse('date', kwargs={'date': datetime(48, 2, 29)})
         self.assertEqual(url, '/date/48/2/29')
         self.assertStatusCodeEqual(self.client.get(url), 200)
@@ -83,8 +46,6 @@ class TestRegex(TestCase):
     DATE_TEST_CASE = [(m, d) for m in range(20) for d in range(40)]
 
     def test_year_regex(self):
-        import re
-        from calendar import isleap as _isleap
         from django_boost.urls.converters.date import REGEX_LEAP_YEAR
 
         regex_is_leap = re.compile(REGEX_LEAP_YEAR).fullmatch
@@ -99,7 +60,6 @@ class TestRegex(TestCase):
                 self.assertEqual(isleap(i), result)
 
     def test_date_31_regex(self):
-        import re
         from django_boost.urls.converters.date import REGEX_DATE_31
 
         regex_date_31_fullmatch = re.compile(REGEX_DATE_31).fullmatch
@@ -114,7 +74,6 @@ class TestRegex(TestCase):
                     self.assertFalse(result)
 
     def test_date_30_regex(self):
-        import re
         from django_boost.urls.converters.date import REGEX_DATE_30
 
         regex_date_30_fullmatch = re.compile(REGEX_DATE_30).fullmatch
@@ -129,7 +88,6 @@ class TestRegex(TestCase):
                     self.assertFalse(result)
 
     def test_date_29_regex(self):
-        import re
         from django_boost.urls.converters.date import REGEX_DATE_29
 
         regex_date_29_fullmatch = re.compile(REGEX_DATE_29).fullmatch
@@ -144,7 +102,6 @@ class TestRegex(TestCase):
                     self.assertFalse(result)
 
     def test_date_28_regex(self):
-        import re
         from django_boost.urls.converters.date import REGEX_DATE_28
 
         regex_date_28_fullmatch = re.compile(REGEX_DATE_28).fullmatch
@@ -159,8 +116,6 @@ class TestRegex(TestCase):
                     self.assertFalse(result)
 
     def test_date_time_regex(self):
-        import re
-        from datetime import datetime
         from django_boost.urls.converters.date import REGEX_DATE
 
         regex_fullmatch = re.compile(REGEX_DATE).fullmatch
