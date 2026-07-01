@@ -64,6 +64,17 @@ class TestConverter(TestCase):
         self.assertEqual(url, '/date/2020/1/5')
         self.assertStatusCodeEqual(self.client.get(url), 200)
 
+    def test_date_accepts_short_year(self):
+        response = self.client.get('/date/48/2/29')
+        self.assertStatusCodeEqual(response, 200)
+
+    def test_date_reverses_short_year_datetime(self):
+        from datetime import datetime
+
+        url = reverse('date', kwargs={'date': datetime(48, 2, 29)})
+        self.assertEqual(url, '/date/48/2/29')
+        self.assertStatusCodeEqual(self.client.get(url), 200)
+
 
 class TestRegex(TestCase):
 
