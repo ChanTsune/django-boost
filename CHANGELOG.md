@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - The `date` path converter now accepts years below 1000 (e.g. `48/2/29`).
+- The `boost_query` `filter`/`exclude` template filters now accept values containing `=`.
 
 ## [3.1.0] - 2026-07-01
 

@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.filter
 def filter(queryset, arg):
-    k, v = arg.split("=")
+    k, v = arg.split("=", 1)
     return queryset.filter(**{k: v})
 
 
@@ -20,7 +20,7 @@ def order_by(queryset, arg):
 
 @register.filter
 def exclude(queryset, arg):
-    k, v = arg.split("=")
+    k, v = arg.split("=", 1)
     return queryset.exclude(**{k: v})
 
 

@@ -35,6 +35,31 @@ class TestBoostQueryTemplateTag(TestCase):
             ["bravo", "charlie"],
         )
 
+    def test_filter_value_containing_equals(self):
+        from tests.models import RelatedItemModel
+        from django_boost.templatetags.boost_query import filter
+
+        item = RelatedItemModel.objects.create(name="a=b=c")
+        queryset = RelatedItemModel.objects.filter(pk__in=self.item_ids + [item.pk])
+
+        result = filter(queryset, "name=a=b=c")
+
+        self.assertEqual(list(result.values_list("name", flat=True)), ["a=b=c"])
+
+    def test_exclude_value_containing_equals(self):
+        from tests.models import RelatedItemModel
+        from django_boost.templatetags.boost_query import exclude
+
+        item = RelatedItemModel.objects.create(name="a=b=c")
+        queryset = RelatedItemModel.objects.filter(pk__in=self.item_ids + [item.pk])
+
+        result = exclude(queryset, "name=a=b=c")
+
+        self.assertEqual(
+            list(result.order_by("name").values_list("name", flat=True)),
+            ["alpha", "bravo", "charlie"],
+        )
+
     def test_order_by(self):
         from django_boost.templatetags.boost_query import order_by
 
