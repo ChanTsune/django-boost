@@ -4,14 +4,20 @@ from django_boost.urls.converters import (
     BinIntConverter, BinStrConverter,
     DateConverter,
     HexIntConverter, HexStrConverter,
+    NegativeIntConverter, NonNegativeIntConverter, NonPositiveIntConverter,
+    NonZeroIntConverter,
     OctIntConverter, OctStrConverter,
+    PositiveIntConverter, SignedIntConverter,
     register_boost_converters)
 from django_boost.urls.static import include_static_files
 
 
 __all__ = ['UrlSet', 'HexIntConverter', 'HexStrConverter',
            'OctIntConverter', 'OctStrConverter', 'BinIntConverter',
-           'BinStrConverter', 'DateConverter', 'register_boost_converters',
+           'BinStrConverter', 'DateConverter',
+           'SignedIntConverter', 'PositiveIntConverter', 'NegativeIntConverter',
+           'NonNegativeIntConverter', 'NonPositiveIntConverter',
+           'NonZeroIntConverter', 'register_boost_converters',
            'include_static_files']
 
 
