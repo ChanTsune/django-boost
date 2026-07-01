@@ -1,4 +1,4 @@
-"""This module provides python build-in functions for django template."""
+"""This module provides python built-in functions for django template."""
 
 from __future__ import annotations
 
