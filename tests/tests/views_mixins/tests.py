@@ -155,3 +155,33 @@ class TestViewMixins(TestCase):
         url = '/user_kwargs/'
         response = self.client.get(url)
         self.assertStatusCodeEqual(response, 200)
+
+
+class JsonRequestMixinBodyTests(TestCase):
+    """JsonRequestMixin.json honors a declared charset and falls back to {}
+    for an unreadable body, the same as for malformed JSON."""
+
+    def _json_for(self, body, content_type="application/json"):
+        from django.test import RequestFactory
+
+        from tests.tests.views_mixins.views import JsonRequestView
+
+        view = JsonRequestView()
+        view.request = RequestFactory().generic("POST", "/", data=body,
+                                                content_type=content_type)
+        return view.json
+
+    def test_respects_declared_charset(self):
+        body = '{"k": "あ"}'.encode("shift_jis")
+        self.assertEqual(
+            self._json_for(body, "application/json; charset=shift_jis"),
+            {"k": "あ"})
+
+    def test_non_utf8_body_falls_back_to_empty_dict(self):
+        self.assertEqual(self._json_for(b"\xff\xfe"), {})
+
+    def test_malformed_json_falls_back_to_empty_dict(self):
+        self.assertEqual(self._json_for(b"{"), {})
+
+    def test_valid_utf8_json_is_parsed(self):
+        self.assertEqual(self._json_for(b'{"a": 1}'), {"a": 1})

@@ -111,13 +111,14 @@ class JsonRequestMixin(AllowContentTypeMixin):
     encoding = 'utf-8'
 
     def get_encoding(self):
-        return self.encoding
+        # Honor a charset declared on the request; fall back to the default.
+        return self.request.content_params.get('charset') or self.encoding
 
     def __json(self):
         try:
-            encoding = self.get_encoding()
-            return json.loads(self.request.body.decode(encoding))
-        except json.JSONDecodeError:
+            return json.loads(self.request.body.decode(self.get_encoding()))
+        except (json.JSONDecodeError, UnicodeDecodeError, LookupError):
+            # Unreadable body (bad charset or bytes) is treated like malformed JSON.
             return {}
 
     @property
