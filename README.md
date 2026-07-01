@@ -1,5 +1,9 @@
 # Django-Boost
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ChanTsune/Django-Boost/master/icon.png" alt="django-boost logo" width="200">
+</p>
+
 Django Boost is a collection of custom extensions for the Django Framework.
 
 [![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
