@@ -800,21 +800,21 @@ Make the query set methods available in the template.
 If you use the LogicalDeletionMixin, you can also use `alive` and `dead`
 
 ```html+django
-{% qureyset|filter:"field=value"%}
+{% queryset|filter:"field=value"%}
 
-{% qureyset|exclude:"field=value"%}
+{% queryset|exclude:"field=value"%}
 
-{% qureyset|order_by:"field"%}
+{% queryset|order_by:"field"%}
 
 {# If it inherits LogicalDeletionMixin. #}
 
-{% qureyset|alive %}
+{% queryset|alive %}
 
-{% qureyset|dead %}
+{% queryset|dead %}
 
 ```
 
-## utilty functions
+## utility functions
 
 ### loop utils
 
