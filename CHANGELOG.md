@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-07-01
+
 ### Added
 
 - `iter`, `list`, `dict`, `set`, `tuple` and `frozenset` filters in the
@@ -401,7 +403,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.0.1...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/ChanTsune/django-boost/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/ChanTsune/django-boost/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/ChanTsune/django-boost/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/ChanTsune/django-boost/compare/v2.1.2...v2.2.0
