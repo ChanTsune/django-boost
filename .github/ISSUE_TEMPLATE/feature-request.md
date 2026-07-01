@@ -1,5 +1,5 @@
 ---
-name: Feture Request
+name: Feature Request
 about: New function addition or improvement request.
 title: "[REQUEST] "
 labels: request
