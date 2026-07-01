@@ -42,4 +42,7 @@ class DateConverter:
     def to_python(self, value: datetime | str) -> datetime:
         if isinstance(value, datetime):
             return value
-        return datetime.strptime(value, "%Y/%m/%d")
+        # strptime's %Y needs 4 digits, but the regex accepts 1-4; build the
+        # date directly so every year the pattern matches is parseable.
+        year, month, day = value.split("/")
+        return datetime(int(year), int(month), int(day))
