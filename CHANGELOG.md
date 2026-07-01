@@ -11,6 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - The `date` path converter now accepts years below 1000 (e.g. `48/2/29`).
 - The `boost_query` `filter`/`exclude` template filters now accept values containing `=`.
+- `LogicalDeletionModelAdmin`'s hard-delete action no longer leaks onto other model admins on the same site.
 
 ## [3.1.0] - 2026-07-01
 
