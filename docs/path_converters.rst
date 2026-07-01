@@ -84,3 +84,45 @@ date
 ``date`` matches dates that consider leap years like ``'Y/m/d'``
 
 This is passed as ``datetime.datetime`` type to python program.
+
+signed_int
+~~~~~~~~~~
+
+``signed_int`` matches ``-?[0-9]+`` (any integer, including negatives).
+
+This is passed as ``int`` type to the python program.
+
+positive_int
+~~~~~~~~~~~~
+
+``positive_int`` matches integers greater than ``0``.
+
+This is passed as ``int`` type to the python program.
+
+negative_int
+~~~~~~~~~~~~
+
+``negative_int`` matches integers less than ``0``.
+
+This is passed as ``int`` type to the python program.
+
+non_negative_int
+~~~~~~~~~~~~~~~~
+
+``non_negative_int`` matches integers greater than or equal to ``0``.
+
+This is passed as ``int`` type to the python program.
+
+non_positive_int
+~~~~~~~~~~~~~~~~
+
+``non_positive_int`` matches integers less than or equal to ``0``.
+
+This is passed as ``int`` type to the python program.
+
+non_zero_int
+~~~~~~~~~~~~
+
+``non_zero_int`` matches non-zero integers.
+
+This is passed as ``int`` type to the python program.

@@ -3,6 +3,9 @@ from __future__ import annotations
 from django.urls import register_converter
 
 from django_boost.urls.converters.date import DateConverter
+from django_boost.urls.converters.integer import (
+    NegativeIntConverter, NonNegativeIntConverter, NonPositiveIntConverter,
+    NonZeroIntConverter, PositiveIntConverter, SignedIntConverter)
 
 
 class HexConverter:
@@ -81,6 +84,12 @@ BOOST_CONVERTERS = {
     'hex_str': HexStrConverter,
     'float': FloatingPointConverter,
     'date': DateConverter,
+    'signed_int': SignedIntConverter,
+    'positive_int': PositiveIntConverter,
+    'negative_int': NegativeIntConverter,
+    'non_negative_int': NonNegativeIntConverter,
+    'non_positive_int': NonPositiveIntConverter,
+    'non_zero_int': NonZeroIntConverter,
 }
 
 
