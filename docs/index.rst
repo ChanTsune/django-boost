@@ -66,8 +66,8 @@ User-agent detection requires the optional ``useragent`` extra:
    form_fields
    path_converters
    shortcut_functions
-   routing_utilitys
-   admin_site_utilitys
+   routing_utilities
+   admin_site_utilities
    utility_functions
    template
    template_context
