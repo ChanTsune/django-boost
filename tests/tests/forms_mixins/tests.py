@@ -59,6 +59,19 @@ class TestRelatedModelInlineMixins(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
 
+    def test_reverse_one_to_one_update_without_related_row(self):
+        from .forms import ReverseOneToOneModelForm
+
+        # A parent with a pk but no related row yet: the reverse accessor
+        # raises RelatedObjectDoesNotExist, which must not break __init__.
+        r = self.ReverseOneToOneModel.objects.create(name='orphan')
+
+        form = ReverseOneToOneModelForm(
+            {'name': 'sample', 'reverse_name': 'x'}, instance=r)
+
+        self.assertTrue(form.is_valid())
+        self.assertIsNone(form.fields['reverse_name'].initial)
+
     def test_forward_many_to_many_create(self):
         from .forms import ForwardOneToOneHasManyToManyModelForm
 

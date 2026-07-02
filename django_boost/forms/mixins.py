@@ -144,8 +144,10 @@ class RelatedModelInlineMixin:
 
             for field_name, field_object in related_model_fields.items():
                 if self.instance and self.instance.pk:
+                    # default=None: a reverse relation may not exist yet.
                     setattr(field_object, 'initial', getattr_chain(
-                        self.instance, '%s.%s' % (field, field_name)))
+                        self.instance, '%s.%s' % (field, field_name),
+                        default=None))
                 self.fields['%s_%s' % (field, field_name)] = field_object
 
     def save(self, commit=True):
