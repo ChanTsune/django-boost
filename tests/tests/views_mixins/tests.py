@@ -185,3 +185,33 @@ class JsonRequestMixinBodyTests(TestCase):
 
     def test_valid_utf8_json_is_parsed(self):
         self.assertEqual(self._json_for(b'{"a": 1}'), {"a": 1})
+
+
+class ReAuthenticationRequiredMixinTests(TestCase):
+    """need_reauthentication must handle an authenticated user whose
+    last_login is None (never logged in / no update_last_login)."""
+
+    class _User:
+        def __init__(self, last_login):
+            self.last_login = last_login
+
+    def setUp(self):
+        from django_boost.views.mixins import ReAuthenticationRequiredMixin
+        self.mixin = ReAuthenticationRequiredMixin()
+
+    def test_requires_reauth_when_last_login_is_none(self):
+        from datetime import timedelta
+        self.assertTrue(
+            self.mixin.need_reauthentication(self._User(None), timedelta(hours=1)))
+
+    def test_no_reauth_when_recently_logged_in(self):
+        from datetime import timedelta
+        from django.utils.timezone import now
+        self.assertFalse(
+            self.mixin.need_reauthentication(self._User(now()), timedelta(hours=1)))
+
+    def test_requires_reauth_when_login_is_stale(self):
+        from datetime import timedelta
+        from django.utils.timezone import now
+        self.assertTrue(self.mixin.need_reauthentication(
+            self._User(now() - timedelta(hours=2)), timedelta(hours=1)))
