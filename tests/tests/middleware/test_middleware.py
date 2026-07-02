@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.test import RequestFactory, SimpleTestCase, override_settings
 
-from django_boost.http.response import Http301, Http402
+from django_boost.http.response import Http301, Http402, Http405
 from django_boost.middleware import (HttpStatusCodeExceptionMiddleware,
                                       RedirectCorrectHostnameMiddleware)
 
@@ -46,6 +46,33 @@ class HttpStatusCodeExceptionMiddlewareTests(SimpleTestCase):
     def test_unrelated_exception_is_not_handled(self):
         self.assertIsNone(self.middleware.process_exception(
             self.factory.get("/"), ValueError()))
+
+    @override_settings(DEBUG=False)
+    def test_method_not_allowed_sets_allow_and_keeps_body(self):
+        response = self.middleware.process_exception(
+            self.factory.get("/"), Http405(["GET", "POST"]))
+
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response["Allow"], "GET, POST")
+        self.assertEqual(response.content.decode(), "405 Method Not Allowed")
+
+    @override_settings(DEBUG=False)
+    def test_method_not_allowed_without_methods_has_empty_allow(self):
+        response = self.middleware.process_exception(
+            self.factory.get("/"), Http405())
+
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response["Allow"], "")
+        self.assertEqual(response.content.decode(), "405 Method Not Allowed")
+
+    @override_settings(DEBUG=True)
+    def test_method_not_allowed_does_not_crash_in_debug(self):
+        response = self.middleware.process_exception(
+            self.factory.get("/"), Http405(["GET"]))
+
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response["Allow"], "GET")
+        self.assertIn("Method Not Allowed", response.content.decode())
 
 
 class RedirectCorrectHostnameMiddlewareTests(SimpleTestCase):

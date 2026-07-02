@@ -8,6 +8,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 from django_boost.http import STATUS_MESSAGES
 from django_boost.http.response import (
+    Http405,
     HttpExceptionBase,
     HttpRedirectExceptionBase
 )
@@ -104,5 +105,10 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
         elif isinstance(e, HttpExceptionBase):
             response_text = self.get_template_from_status_code(
                 e.status_code, request)
+            if isinstance(e, Http405):
+                # HttpResponseNotAllowed takes the allowed methods first, not
+                # the body.
+                return e.response_class(e.permitted_methods,
+                                        content=response_text)
             return e.response_class(response_text)
         return None
