@@ -89,15 +89,21 @@ class BaseModelCLUDViews:
         kwargs.update({'model': self.model})
         return view_class.as_view(**kwargs)
 
+    def _form_view_kwargs(self, view_class):
+        # Default fields='__all__' only when the view has no form_class/fields
+        # of its own (fields + form_class is ImproperlyConfigured).
+        view_kwargs = {'success_url': self.get_success_url()}
+        if not getattr(view_class, 'form_class', None) and not getattr(view_class, 'fields', None):
+            view_kwargs['fields'] = '__all__'
+        return view_kwargs
+
     def update(self, request, *args, **kwargs):
-        view_kwargs = {'fields': '__all__',
-                       'success_url': self.get_success_url(), }
+        view_kwargs = self._form_view_kwargs(self.update_view)
         view = self._as_view(self.update_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
-        view_kwargs = {'fields': '__all__',
-                       'success_url': self.get_success_url(), }
+        view_kwargs = self._form_view_kwargs(self.create_view)
         view = self._as_view(self.create_view, **view_kwargs)
         return view(request, *args, **kwargs)
 

@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `ModelCRUDViews` create/update now works with a view that defines its own `form_class` or `fields`.
+
 ## [3.1.1] - 2026-07-02
 
 ### Fixed
