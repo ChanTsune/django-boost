@@ -6,6 +6,12 @@ from django_boost.urls.converters.date import DateConverter
 
 
 class HexConverter:
+    """Hexadecimal URL converter for non-negative integers.
+
+    Negative values are not supported: ``reverse()`` with one raises
+    ``NoReverseMatch``.
+    """
+
     regex = '[0-9a-fA-F]+'
 
     def to_url(self, value):
@@ -15,6 +21,12 @@ class HexConverter:
 
 
 class OctConverter:
+    """Octal URL converter for non-negative integers.
+
+    Negative values are not supported: ``reverse()`` with one raises
+    ``NoReverseMatch``.
+    """
+
     regex = '[0-7]+'
 
     def to_url(self, value):
@@ -24,6 +36,12 @@ class OctConverter:
 
 
 class BinConverter:
+    """Binary URL converter for non-negative integers.
+
+    Negative values are not supported: ``reverse()`` with one raises
+    ``NoReverseMatch``.
+    """
+
     regex = '[01]+'
 
     def to_url(self, value):
