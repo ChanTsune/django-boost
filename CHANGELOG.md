@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `AutoOneToOneField` reverse access on an unsaved parent now raises `RelatedObjectDoesNotExist` instead of a `ValueError`.
+
 ## [3.1.2] - 2026-07-03
 
 ### Fixed
