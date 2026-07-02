@@ -39,3 +39,15 @@ class LoopFunctionTests(TestCase):
             self.assertEqual([True, True][v], is_first_or_last)
         for is_first_or_last, v in loopfirstlast(self.test_list3):
             self.assertEqual([True, False, True][v], is_first_or_last)
+
+    def test_loopfirst_accepts_iterator(self):
+        self.assertEqual(list(loopfirst(x for x in range(3))),
+                         [(True, 0), (False, 1), (False, 2)])
+
+    def test_looplast_accepts_iterator(self):
+        self.assertEqual(list(looplast(x for x in range(3))),
+                         [(False, 0), (False, 1), (True, 2)])
+
+    def test_loopfirstlast_accepts_iterator(self):
+        self.assertEqual(list(loopfirstlast(x for x in range(3))),
+                         [(True, 0), (False, 1), (True, 2)])
