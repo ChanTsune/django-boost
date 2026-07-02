@@ -18,6 +18,10 @@ class AutoReverseOneToOneDescriptor(ReverseOneToOneDescriptor):
         try:
             return super().__get__(instance, cls)
         except model.DoesNotExist:
+            if instance.pk is None:
+                # No parent pk to create the related object against; surface the
+                # same RelatedObjectDoesNotExist a plain OneToOneField would.
+                raise
             obj, _ = model.objects.get_or_create(
                 **{self.related.field.name: instance})
 

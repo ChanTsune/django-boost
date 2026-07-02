@@ -1,8 +1,20 @@
 from django.db import models
 
+from django_boost.models.fields import AutoOneToOneField
+
 
 class RelatedItemModel(models.Model):
     name = models.CharField(max_length=128)
+
+
+class AutoOneToOneParentModel(models.Model):
+    name = models.CharField(max_length=128)
+
+
+class AutoOneToOneChildModel(models.Model):
+    parent = AutoOneToOneField(
+        to=AutoOneToOneParentModel, related_name='child',
+        on_delete=models.CASCADE)
 
 
 class ForwardOneToOneModel(models.Model):
