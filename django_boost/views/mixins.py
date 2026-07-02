@@ -200,6 +200,9 @@ class ReAuthenticationRequiredMixin(AccessMixin):
         return timedelta(seconds=self.interval)
 
     def need_reauthentication(self, user, delta):
+        if user.last_login is None:
+            # Never recorded a login (last_login is nullable); require re-auth.
+            return True
         return (user.last_login + delta) < now()
 
     def dispatch(self, request, *args, **kwargs):
