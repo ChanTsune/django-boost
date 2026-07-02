@@ -205,6 +205,10 @@ class Http403(HttpExceptionBase):
 class Http405(HttpExceptionBase):
     response_class = HttpResponseNotAllowed
 
+    def __init__(self, permitted_methods=(), *args):
+        self.permitted_methods = permitted_methods
+        super().__init__(*args)
+
 
 class Http406(HttpExceptionBase):
     response_class = HttpResponseNotAcceptable

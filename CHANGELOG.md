@@ -11,6 +11,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `ModelCRUDViews` create/update now works with a view that defines its own `form_class` or `fields`.
 - `RelatedModelInlineMixin` no longer raises `AttributeError` when a reverse one-to-one related row does not exist yet.
+- `Http405` via `HttpStatusCodeExceptionMiddleware` now returns a valid 405 with an `Allow` header set from its `permitted_methods` argument.
 
 ## [3.1.1] - 2026-07-02
 
