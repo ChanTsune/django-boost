@@ -114,3 +114,30 @@ class RedirectCorrectHostnameMiddlewareTests(SimpleTestCase):
             self.factory.get("/", HTTP_HOST="wrong.example.com"))
 
         self.assertEqual(response.status_code, 200)
+
+    def _async_middleware(self):
+        async def get_response(request):
+            self.downstream.append(request)
+            return HttpResponse()
+        return RedirectCorrectHostnameMiddleware(get_response)
+
+    @override_settings(DEBUG=False, CORRECT_HOST="correct.example.com",
+                       ALLOWED_HOSTS=["*"])
+    async def test_redirects_when_hostname_differs_async(self):
+        """Under ASGI (async get_response) the redirect path must not crash."""
+        response = await self._async_middleware()(
+            self.factory.get("/page?x=1", HTTP_HOST="wrong.example.com"))
+
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"],
+                         "http://correct.example.com/page?x=1")
+        self.assertEqual(self.downstream, [])  # not forwarded to the view
+
+    @override_settings(DEBUG=False, CORRECT_HOST="correct.example.com",
+                       ALLOWED_HOSTS=["*"])
+    async def test_no_redirect_when_hostname_matches_async(self):
+        response = await self._async_middleware()(
+            self.factory.get("/", HTTP_HOST="correct.example.com"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(self.downstream), 1)
