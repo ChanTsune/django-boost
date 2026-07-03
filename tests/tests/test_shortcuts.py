@@ -49,3 +49,12 @@ class TestShortCuts(TestCase):
         with self.assertRaises(MyException):
             get_list_or_exception(User, email='no',
                                   exception=MyException)
+
+    def test_bad_first_argument_error_names_the_called_function(self):
+        for func in (get_object_or_default, get_object_or_exception,
+                     get_list_or_default, get_list_or_exception):
+            with self.subTest(func=func.__name__):
+                with self.assertRaisesMessage(
+                        ValueError,
+                        'First argument to %s()' % func.__name__):
+                    func(42)
