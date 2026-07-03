@@ -23,4 +23,10 @@ class ContainAnyValidator(BaseValidator):
 
     def __call__(self, value: Any) -> None:
         if not contain_any(value, self.limit_value):
-            raise ValidationError(self.message % (self.limit_value,))
+            message: Any = self.message
+            try:
+                message = message % (self.limit_value,)
+            except TypeError:
+                # A custom message may omit the %-placeholder; use it verbatim.
+                pass
+            raise ValidationError(message)

@@ -70,6 +70,13 @@ class TestValidator(TestCase):
         self.assertNotEqual(
             ContainAnyValidator(("a",)), ContainAnyValidator(("b",)))
 
+    def test_contain_any_custom_message_without_placeholder(self):
+        # A custom message with no %-placeholder must still raise
+        # ValidationError, not a string-formatting TypeError.
+        validator = ContainAnyValidator(("a", "b"), "Supply a valid token")
+        with self.assertRaisesMessage(ValidationError, "Supply a valid token"):
+            validator("xyz")
+
 
 class NonZeroValidatorDeconstruct(TestCase):
     """`NonZeroValidator` serializes to its public path for migrations."""
