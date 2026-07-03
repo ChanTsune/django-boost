@@ -53,14 +53,19 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
     but it is useful when the setting is troublesome or when using services such as heroku.
     """
 
-    def __call__(self, request):
+    def process_request(self, request):
+        # Return the redirect from process_request rather than overriding
+        # __call__, so MiddlewareMixin's own __call__/__acall__ short-circuit
+        # correctly under both WSGI and ASGI. A synchronous __call__ override
+        # would return a bare HttpResponse on the async path, which Django then
+        # awaits -> TypeError.
         enabled = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
         if enabled and request.get_host() != settings.CORRECT_HOST:
             return HttpResponsePermanentRedirect(
                 '{scheme}://{host}{path}'.format(scheme=request.scheme,
                                                  host=settings.CORRECT_HOST,
                                                  path=request.get_full_path()))
-        return self.get_response(request)
+        return None
 
 
 class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):

@@ -9,6 +9,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
+- `RedirectCorrectHostnameMiddleware` no longer raises a `TypeError` on the redirect path under ASGI; it now redirects correctly on both WSGI and ASGI.
 - `AutoOneToOneField` reverse access on an unsaved parent now raises `RelatedObjectDoesNotExist` instead of a `ValueError`.
 - `adminsitelog`'s `--filter`/`--exclude` now split each condition on its leftmost operator, so a value containing `>=` or `<=` is no longer mis-parsed.
 - `looplast` and `loopfirstlast` now accept any iterable (e.g. a generator), matching `loopfirst`, instead of raising `TypeError`.
