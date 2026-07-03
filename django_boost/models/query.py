@@ -12,6 +12,15 @@ class LogicalDeletionQuerySet(QuerySet):
     def get_delete_flag_field_name(self):
         return self.delete_flag_field
 
+    def _clone(self):
+        # delete_flag_field is set as an instance attribute by the manager, but
+        # QuerySet._clone() only copies a fixed set of attributes, so carry it
+        # forward or a chained alive()/dead()/revive() would fall back to the
+        # class default and query the wrong column.
+        clone = super()._clone()
+        clone.delete_flag_field = self.delete_flag_field
+        return clone
+
     def delete(self, hard=False, deleted_at=None):
         if hard:
             return super().delete()
