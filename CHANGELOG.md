@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.1.2] - 2026-07-03
+
 ### Fixed
 
 - `ModelCRUDViews` create/update now works with a view that defines its own `form_class` or `fields`.
@@ -419,7 +421,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.1.1...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.1.2...HEAD
+[3.1.2]: https://github.com/ChanTsune/django-boost/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/ChanTsune/django-boost/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ChanTsune/django-boost/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/ChanTsune/django-boost/compare/v3.0.0...v3.0.1
