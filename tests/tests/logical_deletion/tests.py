@@ -420,3 +420,22 @@ class LogicalDeletionManagerCustomFieldTests(TestCase):
             queryset = CustomFieldModel.objects.get_queryset()
 
         self.assertEqual(queryset.get_delete_flag_field_name(), "removed_at")
+
+    def test_custom_delete_flag_field_survives_clone(self):
+        with isolate_apps("tests"):
+            class RemovedManager(LogicalDeletionManager):
+                delete_flag_field = "removed_at"
+
+            class CustomFieldModel(models.Model):
+                removed_at = models.DateTimeField(null=True, default=None)
+                objects = RemovedManager()
+
+                class Meta:
+                    app_label = "tests"
+
+            # A cloning method (filter/all/order_by) must not drop the custom
+            # field; alive() on the clone must filter on removed_at, not the
+            # class-default deleted_at (which would raise FieldError).
+            queryset = CustomFieldModel.objects.filter(pk__gt=0).alive()
+
+        self.assertEqual(queryset.get_delete_flag_field_name(), "removed_at")
