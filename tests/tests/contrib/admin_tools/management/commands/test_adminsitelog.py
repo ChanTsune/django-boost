@@ -149,6 +149,16 @@ class TestAdminSiteLog(TestCase):
             call_command(
                 'adminsitelog', '--filter', 'nooperatorhere', stdout=StringIO())
 
+    def test_invalid_filter_field_raises_command_error(self):
+        with self.assertRaises(CommandError):
+            call_command(
+                'adminsitelog', '--filter', 'badfield=1', stdout=StringIO())
+
+    def test_invalid_order_by_field_raises_command_error(self):
+        with self.assertRaises(CommandError):
+            call_command(
+                'adminsitelog', '--order_by', 'badfield', stdout=StringIO())
+
     def test_text_format_styles_changed_and_deleted_actions(self):
         LogEntry.objects.create(
             user=self.user, content_type=self.content_type, object_id='2',

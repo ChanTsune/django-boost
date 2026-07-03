@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.core.exceptions import FieldError
 from django.core.management.base import CommandError
 from django.db.models.sql.query import get_field_names_from_opts
 from django.utils.translation import gettext_lazy as _
@@ -145,10 +146,12 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         LogEntry = self.get_log_entry_model()
         queryset = LogEntry.objects.all()
 
-        queryset = queryset.filter(**self.parse_filter(options['filter']))
-        queryset = queryset.exclude(**self.parse_filter(options['exclude']))
-
-        queryset = queryset.order_by(*options['order_by'])
+        try:
+            queryset = queryset.filter(**self.parse_filter(options['filter']))
+            queryset = queryset.exclude(**self.parse_filter(options['exclude']))
+            queryset = queryset.order_by(*options['order_by'])
+        except FieldError as e:
+            raise CommandError(str(e))
 
         if queryset.count() == 0:
             self.stderr.write('No logs')

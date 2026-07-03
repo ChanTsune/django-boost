@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `adminsitelog` now reports an unknown `--filter`/`--exclude`/`--order_by` field name as a command error instead of an unhandled `FieldError` traceback.
+
 ## [3.2.0] - 2026-07-04
 
 ### Added
