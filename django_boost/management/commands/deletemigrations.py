@@ -17,18 +17,30 @@ class Command(ConfirmOptionMixin, QuitOptionMixin, AppCommand):
         self.add_quit_option(parser)
         self.add_confirm_option(parser)
 
+    @staticmethod
+    def _migration_files(migration_dir):
+        # Only the top-level migration modules; do not descend into nested
+        # packages (e.g. a migrations/helpers/ holding non-migration modules),
+        # which os.walk would sweep in and delete.
+        file_list = []
+        for name in sorted(os.listdir(migration_dir)):
+            path = os.path.join(migration_dir, name)
+            if not os.path.isfile(path):
+                continue
+            if name == '__init__.py' or not name.endswith('.py'):
+                continue
+            file_list.append(path)
+        return file_list
+
     def handle_app_config(self, app_config, **options):
         self.if_needed_make_quit(**options)
         app_path = app_config.path
         migration_dir = os.path.join(app_path, MIGRATIONS_MODULE_NAME)
         file_list = []
         if os.path.exists(migration_dir):
-            for d, dirs, files in os.walk(migration_dir):
-                for file in files:
-                    if file == '__init__.py' or not file.endswith('.py'):
-                        continue
-                    self.stdout.write(file)
-                    file_list.append(os.path.join(d, file))
+            file_list = self._migration_files(migration_dir)
+            for file in file_list:
+                self.stdout.write(os.path.basename(file))
         if not file_list:
             self.stderr.write(
                 'No migration files detected in %s' % app_config.name)
