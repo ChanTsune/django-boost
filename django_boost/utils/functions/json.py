@@ -35,5 +35,8 @@ def json_to_model(model_class, dic, fields=(), exclude=()):
             continue
         if exclude and f.name in exclude:
             continue
-        setattr(model, f.name, dic[f.name])
+        # Assign via attname so relation fields receive the stored pk on their
+        # *_id column; for plain fields name == attname. model_to_json keys the
+        # value by f.name but stores value_from_object (the attname value).
+        setattr(model, f.attname, dic[f.name])
     return model
