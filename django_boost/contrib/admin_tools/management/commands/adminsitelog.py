@@ -39,15 +39,24 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         return ", ".join(self.get_sortable_fields(self.get_log_entry_model()))
 
     def _parse_filter(self, condition):
-        for op in self.COMPARISON_OPERATION.keys():
-            field, op, value = condition.partition(op)
-            op = self.COMPARISON_OPERATION.get(op, None)
-            if op is not None:
-                return {"%s__%s" % (field, op): value}
-        raise CommandError(
-            "Unsupported filter operation in '%s'; "
-            "--filter and --exclude support: %s"
-            % (condition, ", ".join(self.COMPARISON_OPERATION)))
+        # Split on the operator that appears leftmost in the condition (so a
+        # comparison operator inside the value is not mistaken for the
+        # field/value boundary); at the same position prefer the longer
+        # operator so '>=' wins over '>'.
+        best = None
+        for op in self.COMPARISON_OPERATION:
+            index = condition.find(op)
+            if index != -1 and (best is None or (index, -len(op)) < best[0]):
+                best = ((index, -len(op)), op)
+        if best is None:
+            raise CommandError(
+                "Unsupported filter operation in '%s'; "
+                "--filter and --exclude support: %s"
+                % (condition, ", ".join(self.COMPARISON_OPERATION)))
+        index, op = best[0][0], best[1]
+        lookup = self.COMPARISON_OPERATION[op]
+        return {"%s__%s" % (condition[:index], lookup):
+                condition[index + len(op):]}
 
     def parse_filter(self, conditions):
         parsed = {}

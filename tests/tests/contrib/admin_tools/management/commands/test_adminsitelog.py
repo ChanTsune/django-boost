@@ -238,6 +238,21 @@ class TestAdminSiteLog(TestCase):
         self.assertEqual(
             self._ids_with_filter('action_flag<=1'), [str(self.log.id)])
 
+    def test_parse_filter_splits_on_leftmost_operator(self):
+        # A '>=' inside the value must not be picked over the leading '='; the
+        # leftmost operator is the field/value boundary.
+        self.assertEqual(
+            Command()._parse_filter('object_repr=val>=x'),
+            {'object_repr__exact': 'val>=x'})
+
+    def test_parse_filter_comparison_operators(self):
+        command = Command()
+        self.assertEqual(command._parse_filter('n>=5'), {'n__gte': '5'})
+        self.assertEqual(command._parse_filter('n<=5'), {'n__lte': '5'})
+        self.assertEqual(command._parse_filter('n>5'), {'n__gt': '5'})
+        self.assertEqual(command._parse_filter('n<5'), {'n__lt': '5'})
+        self.assertEqual(command._parse_filter('n=5'), {'n__exact': '5'})
+
     def test_order_by_orders_output(self):
         second = LogEntry.objects.create(
             user=self.user, content_type=self.content_type, object_id='2',

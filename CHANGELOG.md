@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - `AutoOneToOneField` reverse access on an unsaved parent now raises `RelatedObjectDoesNotExist` instead of a `ValueError`.
+- `adminsitelog`'s `--filter`/`--exclude` now split each condition on its leftmost operator, so a value containing `>=` or `<=` is no longer mis-parsed.
 
 ## [3.1.2] - 2026-07-03
 
