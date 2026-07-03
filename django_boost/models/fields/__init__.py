@@ -33,6 +33,14 @@ class ColorCodeField(CharField):
             self.normalize = self._no_convert
         super().__init__(*args, **kwargs)
 
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        if self.upper:
+            kwargs["upper"] = True
+        if self.lower:
+            kwargs["lower"] = True
+        return name, path, args, kwargs
+
     def _upper_convert(self, value):
         return value.upper() if value is not None else value
 
