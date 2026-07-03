@@ -152,39 +152,53 @@ class RelatedModelInlineMixin:
 
     def save(self, commit=True):
         object = super().save(commit=False)
-        for field, related_fields in self.inline_fields.items():
-            related_model = self._related_field_model[field]
-            rel_opts = related_model._meta
-            pk_field_name = rel_opts.pk.attname
-            rel_pk_field_name = '%s_%s' % (field, pk_field_name)
-            if not hasattr(object, rel_pk_field_name):
-                # case of reverse access
-                if hasattr(object, field):
+
+        def save_inline():
+            for field, related_fields in self.inline_fields.items():
+                related_model = self._related_field_model[field]
+                rel_opts = related_model._meta
+                pk_field_name = rel_opts.pk.attname
+                rel_pk_field_name = '%s_%s' % (field, pk_field_name)
+                if not hasattr(object, rel_pk_field_name):
+                    # case of reverse access
+                    if hasattr(object, field):
+                        target_field = getattr(object, field)
+                    else:
+                        name = None
+                        for f in rel_opts.fields:
+                            if f.related_model == type(object):
+                                name = f.name
+                                object.save()
+                        target_field = related_model(**{name: object})
+                elif getattr(object, rel_pk_field_name) is None:
+                    target_field = related_model()
+                else:
                     target_field = getattr(object, field)
-                else:
-                    name = None
-                    for f in rel_opts.fields:
-                        if f.related_model == type(object):
-                            name = f.name
-                            object.save()
-                    target_field = related_model(**{name: object})
-            elif getattr(object, rel_pk_field_name) is None:
-                target_field = related_model()
-            else:
-                target_field = getattr(object, field)
-            for related_field in related_fields:
-                value = self.cleaned_data['%s_%s' % (field, related_field)]
-                if self._is_many_to_many(rel_opts, related_field):
-                    target_field.save()
-                    getattr(target_field, related_field).set(value)
-                else:
-                    setattr(target_field, related_field, value)
-            if commit:
+                for related_field in related_fields:
+                    value = self.cleaned_data['%s_%s' % (field, related_field)]
+                    if self._is_many_to_many(rel_opts, related_field):
+                        target_field.save()
+                        getattr(target_field, related_field).set(value)
+                    else:
+                        setattr(target_field, related_field, value)
                 target_field.save()
-            setattr(object, rel_pk_field_name, target_field.pk)
-            setattr(object, field, target_field)
-        if commit:
+                setattr(object, rel_pk_field_name, target_field.pk)
+                setattr(object, field, target_field)
             object.save()
+
+        if commit:
+            save_inline()
+        else:
+            # Honor Django's ModelForm.save(commit=False) contract: perform no
+            # DB writes now and defer them (plus the base form's own m2m) to
+            # save_m2m(). The m2m branch in particular cannot run before the
+            # target row exists.
+            base_save_m2m = self.save_m2m
+
+            def save_m2m():
+                base_save_m2m()
+                save_inline()
+            self.save_m2m = save_m2m
         return object
 
     def _is_many_to_many(self, rel_opts, field_name):
