@@ -267,3 +267,23 @@ class JsonResponseMixinContextTests(TestCase):
         context = V().get_context_data(pk=1)
         self.assertEqual(context, {'site': 'x', 'pk': 1})
         self.assertIsNot(context, V.extra_context)
+
+
+class JsonResponseMixinResponseClassTests(TestCase):
+    """JsonResponseMixin.get must build the response with the configured
+    response_class, not a hardcoded JsonResponse."""
+
+    def test_get_uses_configured_response_class(self):
+        from django.http import JsonResponse
+        from django.test import RequestFactory
+
+        from django_boost.views.mixins import JsonResponseMixin
+
+        class MyJsonResponse(JsonResponse):
+            pass
+
+        class V(JsonResponseMixin):
+            response_class = MyJsonResponse
+
+        response = V().get(RequestFactory().get("/"))
+        self.assertIsInstance(response, MyJsonResponse)

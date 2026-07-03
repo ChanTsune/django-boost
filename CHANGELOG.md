@@ -12,6 +12,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `adminsitelog` now reports an unknown `--filter`/`--exclude`/`--order_by` field name as a command error instead of an unhandled `FieldError` traceback.
 - Comparing two `ContainAnyValidator` instances no longer raises `AttributeError`; `__init__` now initializes the inherited `limit_value`.
 - `ContainAnyValidator` no longer raises `TypeError` when its custom message omits the `%s` placeholder; it raises `ValidationError` with the message verbatim.
+- `JsonResponseMixin.get` now builds the response with the view's `response_class` instead of a hardcoded `JsonResponse`, so a custom response class takes effect.
 
 ## [3.2.0] - 2026-07-04
 

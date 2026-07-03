@@ -148,7 +148,7 @@ class JsonResponseMixin:
         return context
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse(self.get_context_data())
+        return self.response_class(self.get_context_data())
 
     post = get
     put = post
