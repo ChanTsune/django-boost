@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - `RelatedModelInlineMixin.save(commit=False)` no longer writes to the database; its inline related objects are now persisted by `save_m2m()`, following Django's `ModelForm` contract.
+- `json_to_model` no longer raises `ValueError` for models with a relation field; it round-trips `model_to_json` output by assigning to the field's `*_id` column.
 
 ## [3.2.1] - 2026-07-05
 

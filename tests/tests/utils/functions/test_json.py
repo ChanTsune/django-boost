@@ -1,6 +1,7 @@
 from django_boost.test import TestCase
-from django_boost.utils.functions import model_to_json
-from tests.models import RelatedItemModel
+from django_boost.utils.functions import json_to_model, model_to_json
+from tests.models import (ForwardOneToOneModel, RelatedItemModel,
+                          ReverseOneToOneModel)
 
 
 class ModelToJsonTests(TestCase):
@@ -19,3 +20,15 @@ class ModelToJsonTests(TestCase):
         result = model_to_json(queryset)
         self.assertIsInstance(result, list)
         self.assertEqual([d["name"] for d in result], ["a", "b"])
+
+
+class JsonToModelTests(TestCase):
+
+    def test_round_trip_with_relation_field(self):
+        r = ReverseOneToOneModel.objects.create(name="r")
+        f = ForwardOneToOneModel.objects.create(name="f", forward=r)
+
+        rebuilt = json_to_model(ForwardOneToOneModel, model_to_json(f))
+
+        self.assertEqual(rebuilt.name, "f")
+        self.assertEqual(rebuilt.forward_id, r.pk)
