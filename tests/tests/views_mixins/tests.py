@@ -215,3 +215,31 @@ class ReAuthenticationRequiredMixinTests(TestCase):
         from django.utils.timezone import now
         self.assertTrue(self.mixin.need_reauthentication(
             self._User(now() - timedelta(hours=2)), timedelta(hours=1)))
+
+
+class JsonResponseMixinContextTests(TestCase):
+    """get_context_data must not mutate or alias the class-level extra_context,
+    otherwise request-specific kwargs leak into later requests."""
+
+    def _view_class(self):
+        from django_boost.views.mixins import JsonResponseMixin
+
+        class V(JsonResponseMixin):
+            extra_context = {'site': 'x'}
+        return V
+
+    def test_does_not_mutate_class_extra_context(self):
+        V = self._view_class()
+        V().get_context_data(pk=1)
+        self.assertEqual(V.extra_context, {'site': 'x'})
+
+    def test_does_not_leak_kwargs_across_instances(self):
+        V = self._view_class()
+        V().get_context_data(pk=1)
+        self.assertEqual(V().get_context_data(), {'site': 'x'})
+
+    def test_returns_a_fresh_dict_not_the_class_attribute(self):
+        V = self._view_class()
+        context = V().get_context_data(pk=1)
+        self.assertEqual(context, {'site': 'x', 'pk': 1})
+        self.assertIsNot(context, V.extra_context)

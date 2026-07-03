@@ -139,7 +139,9 @@ class JsonResponseMixin:
     extra_context = None
 
     def get_context_data(self, **kwargs):
-        context = self.extra_context or {}
+        # Copy extra_context into a fresh dict; updating it in place would
+        # mutate the shared class attribute and leak kwargs across requests.
+        context = dict(self.extra_context or {})
         context.update(kwargs)
         return context
 
