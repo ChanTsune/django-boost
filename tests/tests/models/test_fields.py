@@ -18,6 +18,23 @@ class ColorCodeFieldTests(SimpleTestCase):
     def test_lower_keeps_none(self):
         self.assertIsNone(ColorCodeField(lower=True).to_python(None))
 
+    def test_deconstruct_preserves_upper(self):
+        name, path, args, kwargs = ColorCodeField(upper=True).deconstruct()
+        self.assertTrue(kwargs.get("upper"))
+        rebuilt = ColorCodeField(*args, **kwargs)
+        self.assertEqual(rebuilt.to_python("#abcdef"), "#ABCDEF")
+
+    def test_deconstruct_preserves_lower(self):
+        name, path, args, kwargs = ColorCodeField(lower=True).deconstruct()
+        self.assertTrue(kwargs.get("lower"))
+        rebuilt = ColorCodeField(*args, **kwargs)
+        self.assertEqual(rebuilt.to_python("#ABCDEF"), "#abcdef")
+
+    def test_deconstruct_omits_flags_by_default(self):
+        name, path, args, kwargs = ColorCodeField().deconstruct()
+        self.assertNotIn("upper", kwargs)
+        self.assertNotIn("lower", kwargs)
+
 
 class ColorCodeFiledDeprecationTests(SimpleTestCase):
     """`ColorCodeFiled` is the misspelled, deprecated alias of `ColorCodeField`."""
