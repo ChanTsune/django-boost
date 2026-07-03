@@ -63,7 +63,9 @@ def get_object_or_exception(klass, *args, exception=None, **kwargs):
     try:
         return queryset.get(*args, **kwargs)
     except queryset.model.DoesNotExist:
-        raise exception
+        if exception is not None:
+            raise exception
+        raise
 
 
 def get_list_or_default(klass, *args, default=None, **kwargs):
@@ -106,5 +108,9 @@ def get_list_or_exception(klass, *args, exception=None, **kwargs):
         )
     obj_list = list(queryset.filter(*args, **kwargs))
     if not obj_list:
-        raise exception
+        if exception is not None:
+            raise exception
+        raise queryset.model.DoesNotExist(
+            "%s matching query does not exist."
+            % queryset.model._meta.object_name)
     return obj_list
