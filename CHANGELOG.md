@@ -12,6 +12,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `RelatedModelInlineMixin.save(commit=False)` no longer writes to the database; its inline related objects are now persisted by `save_m2m()`, following Django's `ModelForm` contract.
 - `json_to_model` no longer raises `ValueError` for models with a relation field; it round-trips `model_to_json` output by assigning to the field's `*_id` column.
 - The admin hard-delete action now logs deletions with Django 5.1+'s bulk `log_deletions()` when available, avoiding the `log_deletion()` deprecation warning.
+- `get_object_or_exception` and `get_list_or_exception` now fall back to the model's `DoesNotExist` when called without an `exception`, instead of raising `TypeError` from `raise None`.
 
 ## [3.2.1] - 2026-07-05
 

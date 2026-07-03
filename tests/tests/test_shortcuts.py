@@ -50,6 +50,16 @@ class TestShortCuts(TestCase):
             get_list_or_exception(User, email='no',
                                   exception=MyException)
 
+    def test_get_object_or_exception_without_exception_raises_does_not_exist(self):
+        # Omitting exception must not `raise None` (TypeError); fall back to
+        # the model's DoesNotExist, like QuerySet.get().
+        with self.assertRaises(User.DoesNotExist):
+            get_object_or_exception(User, email='no')
+
+    def test_get_list_or_exception_without_exception_raises_does_not_exist(self):
+        with self.assertRaises(User.DoesNotExist):
+            get_list_or_exception(User, email='no')
+
     def test_bad_first_argument_error_names_the_called_function(self):
         for func in (get_object_or_default, get_object_or_exception,
                      get_list_or_default, get_list_or_exception):
