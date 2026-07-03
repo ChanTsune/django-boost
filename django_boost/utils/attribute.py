@@ -20,14 +20,19 @@ def getattr_chain(obj: object, name: str, default: Any = EMPTY) -> Any:
 
     getattr_chain(obj, '__class__.__name__')
     getattr_chain(obj, '__class__.__name__', default_value)
+
+    Without a default, the underlying ``AttributeError`` propagates unchanged,
+    so a descriptor that raises an ``AttributeError`` subclass (e.g. a reverse
+    one-to-one accessor) keeps its type and message. With a default, any
+    ``AttributeError`` yields the default, like the builtin ``getattr``.
     """
     try:
         for n in name.split('.'):
             obj = getattr(obj, n)
         return obj
-    except AttributeError as e:
+    except AttributeError:
         if is_empty(default):
-            raise AttributeError('%s has no Attribute %s' % (obj, name)) from e
+            raise
         return default
 
 
@@ -47,6 +52,10 @@ def hasattr_chain(obj: object, name: str) -> bool:
     example ::
 
     hasattr_chain(obj, '__class__.__name__')
+
+    Like the builtin ``hasattr``, this returns ``False`` when accessing any
+    segment raises ``AttributeError`` (including subclasses raised inside a
+    descriptor), so it cannot tell a missing attribute from a raising one.
     """
     try:
         for n in name.split('.'):

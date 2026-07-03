@@ -67,6 +67,30 @@ class TestAttribute(TestCase):
         with self.assertRaises(AttributeError):
             getattr_chain(i, '__class__.name')
 
+    def test_getattr_chain_preserves_descriptor_exception(self):
+        class Boom(AttributeError):
+            pass
+
+        class Obj:
+            @property
+            def rel(self):
+                raise Boom('descriptor raised')
+
+        # The attribute exists; its getter raised. The original exception must
+        # propagate, not be rewritten into a generic AttributeError.
+        with self.assertRaises(Boom):
+            getattr_chain(Obj(), 'rel.name')
+
+    def test_getattr_chain_with_default_swallows_descriptor_exception(self):
+        class Boom(AttributeError):
+            pass
+
+        class Obj:
+            @property
+            def rel(self):
+                raise Boom('descriptor raised')
+
+        self.assertIsNone(getattr_chain(Obj(), 'rel.name', default=None))
 
     def test_hasattrs(self):
         i = 1

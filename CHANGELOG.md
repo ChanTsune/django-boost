@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `getattr_chain` without a default now propagates the underlying `AttributeError` (preserving its type and message) instead of rewriting it into a generic one.
+
 ## [3.2.2] - 2026-07-06
 
 ### Fixed
