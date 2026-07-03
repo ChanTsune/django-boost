@@ -57,7 +57,7 @@ def get_object_or_exception(klass, *args, exception=None, **kwargs):
         klass__name = klass.__name__ if isinstance(
             klass, type) else klass.__class__.__name__
         raise ValueError(
-            "First argument to get_object_or_default() must be a Model, "
+            "First argument to get_object_or_exception() must be a Model, "
             "Manager, or QuerySet, not '%s'." % klass__name
         )
     try:
@@ -79,7 +79,7 @@ def get_list_or_default(klass, *args, default=None, **kwargs):
         klass__name = klass.__name__ if isinstance(
             klass, type) else klass.__class__.__name__
         raise ValueError(
-            "First argument to get_object_or_default() must be a Model, "
+            "First argument to get_list_or_default() must be a Model, "
             "Manager, or QuerySet, not '%s'." % klass__name
         )
     obj_list = list(queryset.filter(*args, **kwargs))
@@ -101,7 +101,7 @@ def get_list_or_exception(klass, *args, exception=None, **kwargs):
         klass__name = klass.__name__ if isinstance(
             klass, type) else klass.__class__.__name__
         raise ValueError(
-            "First argument to get_object_or_default() must be a Model, "
+            "First argument to get_list_or_exception() must be a Model, "
             "Manager, or QuerySet, not '%s'." % klass__name
         )
     obj_list = list(queryset.filter(*args, **kwargs))
