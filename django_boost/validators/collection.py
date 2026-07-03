@@ -18,10 +18,9 @@ class ContainAnyValidator(BaseValidator):
     message = _('The input must contain one of "%s"\'s.')
 
     def __init__(self, elements: Iterable[Any], message: Any = None) -> None:
-        self.elements = elements
-        if message:
-            self.message = message
+        # Set limit_value via BaseValidator so its __eq__ can compare validators.
+        super().__init__(elements, message)
 
     def __call__(self, value: Any) -> None:
-        if not contain_any(value, self.elements):
-            raise ValidationError(self.message % (self.elements,))
+        if not contain_any(value, self.limit_value):
+            raise ValidationError(self.message % (self.limit_value,))
