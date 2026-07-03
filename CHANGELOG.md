@@ -20,6 +20,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
+- `JsonResponseMixin.get_context_data` no longer mutates the shared class-level `extra_context`, so request-specific keyword arguments no longer leak into later requests.
 - `RedirectCorrectHostnameMiddleware` no longer raises a `TypeError` on the redirect path under ASGI; it now redirects correctly on both WSGI and ASGI.
 - `AutoOneToOneField` reverse access on an unsaved parent now raises `RelatedObjectDoesNotExist` instead of a `ValueError`.
 - `adminsitelog`'s `--filter`/`--exclude` now split each condition on its leftmost operator, so a value containing `>=` or `<=` is no longer mis-parsed.
