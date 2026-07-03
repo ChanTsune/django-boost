@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - `adminsitelog` now reports an unknown `--filter`/`--exclude`/`--order_by` field name as a command error instead of an unhandled `FieldError` traceback.
+- Comparing two `ContainAnyValidator` instances no longer raises `AttributeError`; `__init__` now initializes the inherited `limit_value`.
 
 ## [3.2.0] - 2026-07-04
 

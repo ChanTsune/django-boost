@@ -63,6 +63,13 @@ class TestValidator(TestCase):
                 with self.assertRaisesMessage(ValidationError, message):
                     validator(value)
 
+    def test_contain_any_validators_are_comparable(self):
+        # Regression: BaseValidator.__eq__ reads limit_value.
+        self.assertEqual(
+            ContainAnyValidator(("a", "b")), ContainAnyValidator(("a", "b")))
+        self.assertNotEqual(
+            ContainAnyValidator(("a",)), ContainAnyValidator(("b",)))
+
 
 class NonZeroValidatorDeconstruct(TestCase):
     """`NonZeroValidator` serializes to its public path for migrations."""
