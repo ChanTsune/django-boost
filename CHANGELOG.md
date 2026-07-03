@@ -9,6 +9,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
+- `deletemigrations` now deletes only the top-level migration modules, no longer descending into subpackages under `migrations/` and removing unrelated `.py` files.
 - `getattr_chain` without a default now propagates the underlying `AttributeError` instead of rewriting it into a generic one.
 - The `urlencode`/`urldecode` template filters now coerce a non-string value (e.g. an int or `None`) to `str`, instead of raising `TypeError`.
 
