@@ -24,9 +24,14 @@ def hard_delete_selected(modeladmin, request, queryset):
             raise PermissionDenied
         n = queryset.count()
         if n:
-            for obj in queryset:
-                obj_display = str(obj)
-                modeladmin.log_deletion(request, obj, obj_display)
+            # log_deletions() replaced the per-object log_deletion() in Django
+            # 5.1 (log_deletion() is deprecated); prefer it when available,
+            # falling back on Django 4.2/5.0.
+            if hasattr(modeladmin, 'log_deletions'):
+                modeladmin.log_deletions(request, queryset)
+            else:
+                for obj in queryset:
+                    modeladmin.log_deletion(request, obj, str(obj))
             modeladmin.hard_delete_queryset(request, queryset)
             modeladmin.message_user(request, _("Successfully deleted %(count)d %(items)s.") % {
                 "count": n, "items": model_ngettext(modeladmin.opts, n)
