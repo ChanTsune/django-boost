@@ -64,6 +64,7 @@ User-agent detection requires the optional ``useragent`` extra:
    form
    form_mixins
    form_fields
+   validators
    path_converters
    shortcut_functions
    routing_utilities
@@ -73,6 +74,7 @@ User-agent detection requires the optional ``useragent`` extra:
    template_context
    template_tags
    commands
+   test
 
 
 Indices and tables
