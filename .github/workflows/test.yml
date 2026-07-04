@@ -57,6 +57,9 @@ jobs:
         pip install -r requirements/ci.txt
         pip install django==$DJANGO_VERSION
         pip install .
+    - name: Check migrations
+      run: |
+        python manage.py makemigrations django_boost --check --dry-run
     - name: Tox
       run: |
         tox
