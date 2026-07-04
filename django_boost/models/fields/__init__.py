@@ -77,9 +77,9 @@ class SplitDateTimeField(models.DateTimeField):
     """
     A little convenient DateTimeField.
 
-    form_class in django.models.db.DateTimeField is replaced with
+    form_class in django.db.models.DateTimeField is replaced with
     django.forms.SplitDateTimeField.
-    The effect on DB is the same as django.models.db.DateTimeField.
+    The effect on DB is the same as django.db.models.DateTimeField.
     """
 
     def formfield(self, **kwargs):
