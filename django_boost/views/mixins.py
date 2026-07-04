@@ -4,11 +4,13 @@ import json
 from datetime import timedelta
 from typing import Sequence
 
+from django.conf import settings
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.views import (RedirectURLMixin, logout_then_login,
                                        redirect_to_login)
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
@@ -20,9 +22,9 @@ from django_boost.user_agents import parse_user_agent
 
 __all__ = ["CSRFExemptMixin", "DynamicRedirectMixin", "RedirectToDetailMixin",
            "AllowContentTypeMixin", "LimitedTermMixin", "JsonRequestMixin",
-           "JsonResponseMixin", "ReAuthenticationRequiredMixin",
-           "StaffMemberRequiredMixin", "SuperuserRequiredMixin",
-           "ViewUserKwargsMixin", "UserAgentMixin"]
+           "JsonResponseMixin", "AnonymousRequiredMixin",
+           "ReAuthenticationRequiredMixin", "StaffMemberRequiredMixin",
+           "SuperuserRequiredMixin", "ViewUserKwargsMixin", "UserAgentMixin"]
 
 
 class CSRFExemptMixin:
@@ -148,6 +150,37 @@ class JsonResponseMixin:
 
     post = get
     put = post
+
+
+class AnonymousRequiredMixin:
+    """
+    Require the user to be anonymous.
+
+    The inverse of Django's ``LoginRequiredMixin``: redirect an already
+    authenticated user away, e.g. from a login or sign-up page.
+
+    ::
+
+      from django.views.generic import TemplateView
+      from django_boost.views.mixins import AnonymousRequiredMixin
+
+      class SignUpView(AnonymousRequiredMixin, TemplateView):
+          template_name = "sign_up.html"
+          redirect_authenticated_url = "/dashboard/"
+
+    ``redirect_authenticated_url`` is where an authenticated user is sent;
+    when it is ``None`` it falls back to ``settings.LOGIN_REDIRECT_URL``.
+    """
+
+    redirect_authenticated_url = None
+
+    def get_redirect_authenticated_url(self):
+        return self.redirect_authenticated_url or settings.LOGIN_REDIRECT_URL
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(self.get_redirect_authenticated_url())
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ReAuthenticationRequiredMixin(AccessMixin):
