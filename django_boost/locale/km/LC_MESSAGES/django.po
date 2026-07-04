@@ -30,7 +30,7 @@ msgstr ""
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "តើលោកអ្នកប្រាកដទេ?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -43,7 +43,7 @@ msgstr "តើអ្នកចង់លុបកំណត់ហេតុទាំ
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "ពាក្យសំងាត់"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,7 +81,7 @@ msgstr "កាលបរិច្ឆេទលុប"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "គេហទំព័រ"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "ខ្ញុំច្បាស់​ជាចង់លប់"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"

@@ -21,16 +21,16 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "Таңдалған %(count)d %(items)s элемент өшірілді."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "%(name)s өшіру мүмкін емес"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "Осыған сенімдісіз бе?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -43,7 +43,7 @@ msgstr "Осы журналдарды жою керек пе?"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Құпия сөз"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,7 +81,7 @@ msgstr "жойылған күн"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Негізгі"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Иә, сенімдімін"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"

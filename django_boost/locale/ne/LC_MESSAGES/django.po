@@ -21,16 +21,16 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "सफलतापूर्वक मेटियो %(count)d %(items)s ।"
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "%(name)s मेट्न सकिएन "
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "के तपाई पक्का हुनुहुन्छ ?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -43,7 +43,7 @@ msgstr "के तपाईं यी लगहरू मेटाउन चा�
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "पासवर्ड"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,7 +81,7 @@ msgstr "मेटिएको मिति"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "गृह"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"

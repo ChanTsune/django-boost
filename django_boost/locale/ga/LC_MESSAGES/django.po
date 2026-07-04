@@ -16,22 +16,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : "
-"4);\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);\n"
 
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "D'éirigh le scriosadh %(count)d %(items)s."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "Ní féidir scriosadh %(name)s "
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "An bhfuil tú cinnte?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -44,7 +43,7 @@ msgstr "Ar mhaith leat na logaí seo a scriosadh"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Focal faire"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -82,7 +81,7 @@ msgstr "dáta scriosta"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Baile"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
@@ -112,15 +111,15 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "Oibiachtaí"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Táim cinnte"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "Ní hea, tóg ar ais mé"
 
 #: django_boost/validators/collection.py:18
 #, python-format

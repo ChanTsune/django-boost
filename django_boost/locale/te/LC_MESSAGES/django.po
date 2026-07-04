@@ -21,16 +21,16 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "%(count)d %(items)s జయప్రదముగా తీసేవేయబడినది."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "%(name)s తొలగించుట వీలుకాదు"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "మీరు ఖచ్చితంగా ఇలా చేయాలనుకుంటున్నారా?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -43,7 +43,7 @@ msgstr "మీరు ఈ లాగ్లను తొలగించాలను
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "సంకేతపదం"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,7 +81,7 @@ msgstr "తొలగించిన తేదీ"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "నివాసము"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "అవును "
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"

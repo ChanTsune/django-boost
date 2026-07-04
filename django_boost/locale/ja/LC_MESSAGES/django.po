@@ -21,21 +21,21 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "%(count)d 個の %(items)s を削除しました。"
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "%(name)s が削除できません"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "よろしいですか？"
 
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "選択された %(verbose_name_plural)s を物理削除する"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 #, fuzzy
@@ -45,7 +45,7 @@ msgstr "ログを削除しますか [y/n]?"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -83,11 +83,11 @@ msgstr "削除された日付"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "ホーム"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "複数のオブジェクトを物理削除"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -113,7 +113,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "オブジェクト"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
@@ -121,12 +121,12 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "戻る"
 
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "入力には「%s」のいずれかを含めてください。"
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -134,7 +134,7 @@ msgstr "#を含む6桁の16進数を入力してください。"
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "0 以外の整数を入力してください。"
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."

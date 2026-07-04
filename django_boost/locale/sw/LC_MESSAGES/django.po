@@ -21,21 +21,21 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "Umefanikiwa kufuta %(items)s %(count)d."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "Huwezi kufuta %(name)s"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "Una uhakika?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "Futa kabisa %(verbose_name_plural)s zilizochaguliwa"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -43,7 +43,7 @@ msgstr "Je! Unataka kufuta kumbukumbu hizi"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Nenosiri"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,11 +81,11 @@ msgstr "tarehe iliyofutwa"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Sebule"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "Futa kabisa vitu vingi"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -111,20 +111,20 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "Viumbile"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Ndiyo, Nina uhakika"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "Hapana, nirudishe"
 
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "Ingizo lazima liwe na mojawapo ya \"%s\"."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -132,7 +132,7 @@ msgstr "Ingiza nambari 6 ya hexadecimal ikiwa ni pamoja na #."
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "Weka nambari kamili isiyo sifuri."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."

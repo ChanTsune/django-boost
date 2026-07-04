@@ -21,21 +21,21 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "Successfully deleted %(count)d %(items)s."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "Cannot delete %(name)s"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "Are you sure?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "Hard delete selected %(verbose_name_plural)s"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -43,7 +43,7 @@ msgstr ""
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: django_boost/management/commands/deletemigrations.py:36
 msgid "Do you wish to delete?"
@@ -79,11 +79,11 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "Hard delete multiple objects"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -113,7 +113,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Yes, I'm sure"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
@@ -122,7 +122,7 @@ msgstr ""
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "The input must contain one of \"%s\"'s."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -130,7 +130,7 @@ msgstr ""
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "Enter a non-zero integer."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."

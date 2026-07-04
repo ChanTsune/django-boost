@@ -21,16 +21,16 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "%(items)s ээс   %(count)d-ийг амжилттай устгалаа."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "%(name)s устгаж чадахгүй."
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "Итгэлтэй байна уу?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
@@ -43,7 +43,7 @@ msgstr "Эдгээр бүртгэлийг устгахыг хүсч байна �
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Нууц үг "
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,7 +81,7 @@ msgstr "устгасан огноо"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Нүүр"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
@@ -111,7 +111,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "Бичлэгүүд"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
@@ -119,7 +119,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "Үгүй, намайг буцаа"
 
 #: django_boost/validators/collection.py:18
 #, python-format

@@ -16,27 +16,26 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "نجح حذف %(count)d من %(items)s."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "تعذّر حذف %(name)s"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "هل أنت متأكد؟"
 
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "حذف نهائي لـ %(verbose_name_plural)s المحددة"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -44,7 +43,7 @@ msgstr "هل تريد حذف هذه السجلات"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "كلمة المرور"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -82,11 +81,11 @@ msgstr "تاريخ محذوف"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "الرئيسية"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "حذف عدة عناصر نهائيًا"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -112,7 +111,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "عناصر"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
@@ -120,12 +119,12 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "لا, تراجع للخلف"
 
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "يجب أن يحتوي الإدخال على أحد \"%s\"."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -133,7 +132,7 @@ msgstr "أدخل الرقم السداسي عشري المكون من 6 أرقا
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "أدخل عددًا صحيحًا غير صفري."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."

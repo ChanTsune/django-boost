@@ -21,21 +21,21 @@ msgstr ""
 #: django_boost/admin/actions.py:31
 #, python-format
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
+msgstr "Het %(count)d %(items)s suksesvol geskrap."
 
 #: django_boost/admin/actions.py:40
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "Kan %(name)s nie skrap nie"
 
 #: django_boost/admin/actions.py:42
 msgid "Are you sure?"
-msgstr ""
+msgstr "Is u seker?"
 
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "Vee gekose %(verbose_name_plural)s permanent uit"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -43,7 +43,7 @@ msgstr "Wil u hierdie logboeke uitvee?"
 
 #: django_boost/forms/__init__.py:63
 msgid "Password"
-msgstr ""
+msgstr "Wagwoord"
 
 #: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
@@ -81,11 +81,11 @@ msgstr "geskrap datum"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
 msgid "Home"
-msgstr ""
+msgstr "Tuis"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "Vee veelvuldige objekte permanent uit"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -111,7 +111,7 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
 msgid "Objects"
-msgstr ""
+msgstr "Objekte"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
 msgid "Yes, I'm sure"
@@ -119,12 +119,12 @@ msgstr ""
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
 msgid "No, take me back"
-msgstr ""
+msgstr "Nee, ek wil teruggaan"
 
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "Die invoer moet een van \"%s\" bevat."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -132,7 +132,7 @@ msgstr "Voer 6-syferhexadesimale getal in, insluitend #."
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "Voer 'n heelgetal in wat nie nul is nie."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."
