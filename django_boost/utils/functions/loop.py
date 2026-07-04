@@ -34,7 +34,7 @@ def looplast(iterable: Iterable[_T]) -> Iterator[tuple[bool, _T]]:
 
 def loopfirstlast(iterable: Iterable[_T]) -> Iterator[tuple[bool, _T]]:
     """
-    A function combining `firstloop` and` lastloop`.
+    A function combining `loopfirst` and `looplast`.
 
     Yield True if the first and last element of the iterator object,
     False otherwise.
