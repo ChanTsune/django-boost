@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-07-04
+
 ### Added
 
 - Signed-integer path converters `signed_int`, `positive_int`, `negative_int`, `non_negative_int`, `non_positive_int` and `non_zero_int` (registered by `register_boost_converters`), covering integer ranges Django's built-in `int` converter cannot express.
@@ -443,7 +445,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.1.2...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/ChanTsune/django-boost/compare/v3.1.2...v3.2.0
 [3.1.2]: https://github.com/ChanTsune/django-boost/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/ChanTsune/django-boost/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ChanTsune/django-boost/compare/v3.0.1...v3.1.0
