@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 from django_boost.test import TestCase
 from django_boost.validators import (
-    ContainAnyValidator, JsonValidator,
-    validate_color_code, validate_json, validate_uuid4,
+    ContainAnyValidator, JsonValidator, NonZeroValidator,
+    validate_color_code, validate_json, validate_non_zero, validate_uuid4,
 )
 
 TEST_DATA = [
@@ -26,6 +26,13 @@ TEST_DATA = [
     (ContainAnyValidator("02"), "123", None),
     (ContainAnyValidator("4"), "123", ValidationError),
     (ContainAnyValidator(("4", "5")), "123", ValidationError),
+
+    (validate_non_zero, 0, ValidationError),
+    (validate_non_zero, 1, None),
+    (validate_non_zero, -1, None),
+    (validate_non_zero, 100, None),
+    (validate_non_zero, -100, None),
+    (validate_non_zero, None, None),
 ]
 
 
@@ -48,12 +55,21 @@ class TestValidator(TestCase):
         cases = [
             (ContainAnyValidator("1", "custom message with %s"), "0", "custom message with 1"),
             (JsonValidator("custom message"), "", "custom message"),
+            (NonZeroValidator("custom message"), 0, "custom message"),
         ]
         for validator, value, message in cases:
             name = validator.__class__.__name__
             with self.subTest(name, value=value):
                 with self.assertRaisesMessage(ValidationError, message):
                     validator(value)
+
+
+class NonZeroValidatorDeconstruct(TestCase):
+    """`NonZeroValidator` serializes to its public path for migrations."""
+
+    def test_deconstruct_reports_public_path(self):
+        path, args, kwargs = NonZeroValidator().deconstruct()
+        self.assertEqual(path, "django_boost.validators.NonZeroValidator")
 
 
 class ValidateUuid4Deprecation(TestCase):
