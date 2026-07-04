@@ -24,8 +24,8 @@ Example
 
   urlpatterns = [
       path('bin/<bin:id>', ~~),
-      path('oct/<bin:id>', ~~),
-      path('hex/<bin:id>', ~~),
+      path('oct/<oct:id>', ~~),
+      path('hex/<hex:id>', ~~),
       path('float/<float:id>', ~~),
   ]
 
@@ -49,7 +49,7 @@ This is passed as `int` type to the python program.
 hex
 ~~~~
 
-``hex`` match ``[0-9a-fA-F]``
+``hex`` match ``[0-9a-fA-F]+``
 
 This is passed as `int` type to the python program.
 
