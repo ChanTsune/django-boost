@@ -27,13 +27,13 @@ class FieldRenameMixin:
 
     ::
 
-      from django import form
+      from django import forms
       from django_boost.forms.mixins import FieldRenameMixin
 
       class MyForm(FieldRenameMixin,forms.Form):
           token_id = forms.CharField()
 
-          rename_field = {"token_id": "token-id"}
+          rename_fields = {"token_id": "token-id"}
 
       MyForm().cleaned_data["token-id"]
     """
