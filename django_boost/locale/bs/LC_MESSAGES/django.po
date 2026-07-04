@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-19 14:51+0000\n"
+"POT-Creation-Date: 2026-07-04 04:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,50 +16,125 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: django_boost/management/commands/adminsitelog.py:112
+#: django_boost/admin/actions.py:31
+#, python-format
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr ""
+
+#: django_boost/admin/actions.py:40
+#, python-format
+msgid "Cannot delete %(name)s"
+msgstr ""
+
+#: django_boost/admin/actions.py:42
+msgid "Are you sure?"
+msgstr ""
+
+#: django_boost/admin/actions.py:70
+#, python-format
+msgid "Hard delete selected %(verbose_name_plural)s"
+msgstr ""
+
+#: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
 msgstr "Želite li izbrisati ove zapisnike"
 
-#: django_boost/management/commands/deletemigrations.py:16
+#: django_boost/forms/__init__.py:63
+msgid "Password"
+msgstr ""
+
+#: django_boost/management/commands/deletemigrations.py:36
 #, fuzzy
 #| msgid "Do you want to delete these logs"
 msgid "Do you wish to delete?"
 msgstr "Želite li izbrisati ove zapisnike"
 
-#: django_boost/models/__init__.py:11
+#: django_boost/models/__init__.py:13
 msgid "username"
 msgstr ""
 
-#: django_boost/models/__init__.py:14
+#: django_boost/models/__init__.py:16
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: django_boost/models/__init__.py:19
+#: django_boost/models/__init__.py:21
 msgid "email address"
 msgstr ""
 
-#: django_boost/models/__init__.py:22
+#: django_boost/models/__init__.py:24
 msgid "A user with that email address already exists."
 msgstr "Korisnik s tom adresom e-pošte već postoji."
 
-#: django_boost/models/mixins.py:37
+#: django_boost/models/mixins.py:44
 msgid "created date"
 msgstr "stvoren datum"
 
-#: django_boost/models/mixins.py:38
+#: django_boost/models/mixins.py:45
 msgid "updated date"
 msgstr "ažurirani datum"
 
-#: django_boost/models/mixins.py:45
+#: django_boost/models/mixins.py:52
 msgid "deleted date"
 msgstr "izbrisan datum"
 
-#: django_boost/validators.py:17
-msgid "Enter valid JSON string."
-msgstr "Unesite važeći JSON niz."
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:14
+msgid "Home"
+msgstr ""
 
-#: django_boost/validators.py:36
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
+msgid "Hard delete multiple objects"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:30
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:37
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:39
+msgid "Objects"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:50
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:51
+msgid "No, take me back"
+msgstr ""
+
+#: django_boost/validators/collection.py:18
+#, python-format
+msgid "The input must contain one of \"%s\"'s."
+msgstr ""
+
+#: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
 msgstr "Unesite šesteroznamenkasti decimalni broj uključujući #."
+
+#: django_boost/validators/integer.py:22
+msgid "Enter a non-zero integer."
+msgstr ""
+
+#: django_boost/validators/json.py:18
+msgid "Enter valid JSON string."
+msgstr "Unesite važeći JSON niz."
