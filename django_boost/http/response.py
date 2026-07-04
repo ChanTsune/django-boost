@@ -322,5 +322,29 @@ class Http504(HttpExceptionBase):
     response_class = HttpResponseGatewayTimeout
 
 
+class Http505(HttpExceptionBase):
+    response_class = HttpResponseHTTPVersionNotSupported
+
+
+class Http506(HttpExceptionBase):
+    response_class = HttpResponseVariantAlsoNegotiates
+
+
 class Http507(HttpExceptionBase):
     response_class = HttpResponseInsufficientStorage
+
+
+class Http508(HttpExceptionBase):
+    response_class = HttpResponseLoopDetected
+
+
+class Http509(HttpExceptionBase):
+    response_class = HttpResponseBandwidthLimitExceeded
+
+
+class Http510(HttpExceptionBase):
+    response_class = HttpResponseNotExtended
+
+
+class Http511(HttpExceptionBase):
+    response_class = HttpResponseNetworkAuthenticationRequired

@@ -61,4 +61,5 @@ Support ``Http400``, ``Http401``, ``Http402``, ``Http403``, ``Http405``, ``Http4
   ...
     raise Http500(message...)
 
-Support ``Http500``, ``Http501``, ``Http502``, ``Http503``, ``Http504`` and ``Http507``.
+Support ``Http500``, ``Http501``, ``Http502``, ``Http503``, ``Http504``, ``Http505``, ``Http506``,
+``Http507``, ``Http508``, ``Http509``, ``Http510`` and ``Http511``.

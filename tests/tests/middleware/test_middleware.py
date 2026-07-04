@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.test import RequestFactory, SimpleTestCase, override_settings
 
-from django_boost.http.response import Http301, Http402, Http405
+from django_boost.http.response import (Http301, Http402, Http405, Http505,
+                                         Http506, Http508, Http509, Http510,
+                                         Http511)
 from django_boost.middleware import (HttpStatusCodeExceptionMiddleware,
                                       RedirectCorrectHostnameMiddleware)
 
@@ -35,6 +37,23 @@ class HttpStatusCodeExceptionMiddlewareTests(SimpleTestCase):
 
         self.assertEqual(response.status_code, 402)
         self.assertEqual(response.content.decode(), "402 Payment Required")
+
+    @override_settings(DEBUG=False)
+    def test_tail_5xx_exceptions_map_to_their_response(self):
+        cases = [
+            (Http505(), 505, "505 HTTP Version Not Supported"),
+            (Http506(), 506, "506 Variant Also Negotiates"),
+            (Http508(), 508, "508 Loop Detected"),
+            (Http509(), 509, "509 Bandwidth Limit Exceeded"),
+            (Http510(), 510, "510 Not Extended"),
+            (Http511(), 511, "511 Network Authentication Required"),
+        ]
+        for exc, code, body in cases:
+            with self.subTest(code=code):
+                response = self.middleware.process_exception(
+                    self.factory.get("/"), exc)
+                self.assertEqual(response.status_code, code)
+                self.assertEqual(response.content.decode(), body)
 
     def test_redirect_exception_becomes_a_redirect_response(self):
         response = self.middleware.process_exception(
