@@ -24,3 +24,7 @@ class TestCase(DjangoTestCase):
     def assertStatusCodeIn(self, response: HttpResponseBase,
                            codes: Iterable[int], msg: object = None) -> None:
         self.assertIn(response.status_code, codes, msg)
+
+    def assertStatusCodeNotIn(self, response: HttpResponseBase,
+                              codes: Iterable[int], msg: object = None) -> None:
+        self.assertNotIn(response.status_code, codes, msg)
