@@ -17,6 +17,7 @@ USER_AGENTS_PACKAGE = "user_agents"
 ADMIN_TOOLS_APP = "django_boost.contrib.admin_tools"
 LEGACY_ADMIN_TOOLS_APP = "django_boost.admin_tools"
 DJANGO_ADMIN_APP = "django.contrib.admin"
+EMAILUSER_MODEL = "django_boost.EmailUser"
 
 
 def _matches_dotted_path(value, dotted_path):
@@ -270,10 +271,27 @@ def check_admin_tools_requires_admin(app_configs, **kwargs):
     ]
 
 
+def check_emailuser_deprecated(app_configs, **kwargs):
+    if getattr(settings, "AUTH_USER_MODEL", None) != EMAILUSER_MODEL:
+        return []
+
+    return [
+        Warning(
+            "AUTH_USER_MODEL uses the deprecated built-in %s." % EMAILUSER_MODEL,
+            hint="%s is deprecated and will be removed in django-boost 4.0. Copy the model "
+                 "into one of your own apps (keep db_table='django_boost_emailuser') and run "
+                 "`manage.py migrate_emailuser`. See the Custom User docs." % EMAILUSER_MODEL,
+            obj=EMAILUSER_MODEL,
+            id="django_boost.W050",
+        )
+    ]
+
+
 CHECKS = (
     check_database_router,
     check_redirect_correct_hostname_middleware,
     check_user_agent_extra,
     check_logical_deletion_models,
     check_admin_tools_requires_admin,
+    check_emailuser_deprecated,
 )
