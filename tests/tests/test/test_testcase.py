@@ -19,6 +19,17 @@ class AssertStatusCodeTests(TestCase):
                                           msg="custom note")
         self.assertIn("custom note", str(cm.exception))
 
+    def test_not_in_passes_when_code_absent_and_fails_when_present(self):
+        self.assertStatusCodeNotIn(HttpResponse(status=200), [301, 302])
+        with self.assertRaises(AssertionError):
+            self.assertStatusCodeNotIn(HttpResponse(status=302), [301, 302])
+
+    def test_not_in_custom_msg_appears_in_failure(self):
+        with self.assertRaises(AssertionError) as cm:
+            self.assertStatusCodeNotIn(HttpResponse(status=302), [301, 302],
+                                       msg="custom note")
+        self.assertIn("custom note", str(cm.exception))
+
     def test_helper_frame_hidden_from_failure_traceback(self):
         class Inner(TestCase):
             def runTest(inner):
