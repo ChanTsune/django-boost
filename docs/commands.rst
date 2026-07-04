@@ -50,16 +50,16 @@ View and delete Admin Site logs.
     --no-color            Don't colorize the command output.
     -d, --delete          Delete displayed logs.
     --filter FILTER [FILTER ...]
-                          Filter the Log to be displayed. Supported filed is
+                          Filter the Log to be displayed. Supported field is
                           action_flag, action_time, change_message,
                           content_type, content_type_id, id, object_id,
                           object_repr, user, user_id. e.g.
                           "action_time>=2019-8-22"
     --exclude EXCLUDE [EXCLUDE ...]
-                          Exclude the Log to be displayed. Supported filed is
+                          Exclude the Log to be displayed. Supported field is
                           same as --filter. e.g. "user__username=admin"
     --order_by ORDER_BY [ORDER_BY ...]
-                          Order of Log to be displayed. Supported filed is
+                          Order of Log to be displayed. Supported field is
                           action_flag, action_time, change_message,
                           content_type, content_type_id, id, object_id,
                           object_repr, user, user_id. e.g. "-action_flag"
