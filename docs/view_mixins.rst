@@ -45,8 +45,6 @@ If the content type is not allowed, http415 response will be returned.
 You can disable restrictions by specifying ``strictly = False``
 
 
-.. autoclass:: django_boost.views.mixins.ReAuthenticationRequiredMixin
-
 LimitedTermMixin
 ~~~~~~~~~~~~~~~~~
 
@@ -56,7 +54,7 @@ LimitedTermMixin
   from django.views.generic import TemplateView
   from django_boost.views.mixins import LimitedTermMixin
 
-  class LimitedTermMixin(LimitedTermMixin, TemplateView):
+  class MyView(LimitedTermMixin, TemplateView):
       template_name = 'path/to/template'
       start_datetime = datetime(year=2019, month=1, day=1)
       end_datetime = datetime(year=2019, month=12, day=31)
@@ -72,6 +70,26 @@ You can specify the exception class to be thrown when the condition accessible t
 
 The default is the ``Http404`` exception.
 
+ReAuthenticationRequiredMixin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: django_boost.views.mixins.ReAuthenticationRequiredMixin
+
+StaffMemberRequiredMixin
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: django_boost.views.mixins.StaffMemberRequiredMixin
+
+SuperuserRequiredMixin
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: django_boost.views.mixins.SuperuserRequiredMixin
+
+AnonymousRequiredMixin
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: django_boost.views.mixins.AnonymousRequiredMixin
+
 Redirect Control Mixins
 ------------------------
 
@@ -82,7 +100,7 @@ You can control the redirect destination with ``next=~~`` in the URL query strin
 
 ::
 
-  from django.views,generic import FormView
+  from django.views.generic import FormView
   from django_boost.views.mixins import DynamicRedirectMixin
 
   class MyFormView(DynamicRedirectMixin, FormView):
@@ -99,7 +117,7 @@ UserAgentMixin
 
 ::
 
-  from django_boost.views.generic import TemplateView
+  from django.views.generic import TemplateView
   from django_boost.views.mixins import UserAgentMixin
 
   class SameView(UserAgentMixin, TemplateView):
@@ -113,7 +131,7 @@ Assign ``user_agent`` attribute to ``self.request`` and switch the template file
 
 If the user agent can not be determined, the template specified in ``template_name`` will be used.
 
-``pc_template_name``, ``tablet_template_name``, ``mobile_template_name`` has no arms, but ``template_name`` is required.
+``pc_template_name``, ``tablet_template_name`` and ``mobile_template_name`` are optional, but ``template_name`` is required.
 
 
 JsonRequestMixin
@@ -131,7 +149,7 @@ A specialized mixin for ``AllowContentTypeMixin`` for json.
 
       def get_context_data(self,**kwargs):
           posted_data = self.json
-          # {"send" : "from cliant"}
+          # {"send" : "from client"}
           return posted_data
 
 You can access the dictionary object parsed from the Json string sent by the client in ``self.json``
@@ -168,9 +186,3 @@ Specify ``strictly = True`` if you want to limit the Content-Type to Json only.
 
 
 If you use for the purpose of API ``JsonView`` below is recommended.
-
-.. autoclass:: django_boost.views.mixins.SuperuserRequiredMixin
-
-.. autoclass:: django_boost.views.mixins.StaffMemberRequiredMixin
-
-.. autoclass:: django_boost.views.mixins.AnonymousRequiredMixin
