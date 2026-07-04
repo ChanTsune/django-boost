@@ -58,6 +58,6 @@ SplitDateTimeField
 
 A little convenient DateTimeField.
 
-``SplitDateTimeField`` is the form_class of ``django.models.db.DateTimeField`` replaced with ``django.forms.SplitDateTimeField``.
+``SplitDateTimeField`` is the form_class of ``django.db.models.DateTimeField`` replaced with ``django.forms.SplitDateTimeField``.
 
-Internal DB field is the same as ``django.models.db.DateTimeField``.
+Internal DB field is the same as ``django.db.models.DateTimeField``.

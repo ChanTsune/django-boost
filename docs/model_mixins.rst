@@ -12,7 +12,7 @@ Mixins that replace ``id`` from ``AutoField`` to ``UUIDField``
 ::
 
   from django.db import models
-  from django_boost.models import UUIDModelMixin
+  from django_boost.models.mixins import UUIDModelMixin
 
   class Stock(UUIDModelMixin):
       name = models.CharField(max_length=128)
@@ -31,13 +31,13 @@ TimeStampModelMixin
       name = models.CharField(max_length=128)
       count = models.IntegerField()
 
-The fields ``posted_at`` and ``updated_at`` are added.
+The fields ``created_at`` and ``updated_at`` are added.
 
 The following fields are automatically added to the above model.
 
 ::
 
-  posted_at = models.DateTimeField(auto_now_add=True)
+  created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 
 

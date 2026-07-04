@@ -37,7 +37,7 @@ class UUIDModelMixin(models.Model):
 
 
 class TimeStampModelMixin(models.Model):
-    """The fields `posted_at` and `updated_at` are added."""
+    """The fields `created_at` and `updated_at` are added."""
 
     class Meta:
         abstract = True
