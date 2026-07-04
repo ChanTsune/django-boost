@@ -59,7 +59,7 @@ jobs:
         pip install .
     - name: Check migrations
       run: |
-        python manage.py makemigrations django_boost --check --dry-run
+        python manage.py makemigrations --check --dry-run
     - name: Tox
       run: |
         tox
