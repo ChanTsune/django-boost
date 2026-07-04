@@ -41,7 +41,7 @@ example::
   from django_boost.models import AbstractEmailUser
 
   class CustomUser(AbstractEmailUser):
-      is_flozen = models.BoolField(default=False)
+      is_frozen = models.BooleanField(default=False)
       homepage = models.URLField()
 
 
