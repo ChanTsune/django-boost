@@ -191,17 +191,17 @@ If you use the LogicalDeletionMixin, you can also use ``alive`` and ``dead``
 
 ::
 
-  {% queryset|filter:"field=value"%}
+  {% for obj in queryset|filter:"field=value" %}...{% endfor %}
 
-  {% queryset|exclude:"field=value"%}
+  {% for obj in queryset|exclude:"field=value" %}...{% endfor %}
 
-  {% queryset|order_by:"field"%}
+  {% for obj in queryset|order_by:"field" %}...{% endfor %}
 
   {# If it inherits LogicalDeletionMixin. #}
 
-  {% queryset|alive %}
+  {% for obj in queryset|alive %}...{% endfor %}
 
-  {% queryset|dead %}
+  {% for obj in queryset|dead %}...{% endfor %}
 
 
 MimeType Utility
