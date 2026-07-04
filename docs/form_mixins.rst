@@ -16,10 +16,11 @@ Mixin to add a method to get the queryset and object of the condition that match
   from .models import Customer
 
   class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
+      field_lookup = {'name': 'name__startswith'}  # filter lookup kwargs
+
       class Meta:
-          models = Customer
+          model = Customer
           fields = ('name', )
-          field_lookup = {'name' : 'name__startswith'} # filter lookup kwargs
 
 
 Set ``field_lookup`` to set detailed search conditions.
@@ -38,7 +39,7 @@ Set ``field_lookup`` to set detailed search conditions.
           object_list = form.get_list()  # get matched models objects queryset
 
 
-``MatchedObjectMixin`` provides ``get_object`` and ``get_list`` methods, each of which returns a ``model object`` or ``queryset`` that matches the form input content.
+``MatchedObjectGetMixin`` provides ``get_object`` and ``get_list`` methods, each of which returns a ``model object`` or ``queryset`` that matches the form input content.
 
 RelatedModelInlineMixin
 ------------------------
