@@ -35,7 +35,7 @@ msgstr ""
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "%(verbose_name_plural)s ကို ခက်ခက်ခဲခဲဖျက်ရန် ရွေးချယ်ထားသည်။"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -85,7 +85,7 @@ msgstr "ပင်မ"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "အရာဝတ္ထုများစွာကို ခက်ခဲစွာ ဖျက်ပစ်ပါ။"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -124,7 +124,7 @@ msgstr ""
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "ထည့်သွင်းမှုတွင် \"%s\" များထဲမှ တစ်ခု ပါဝင်ရပါမည်။"
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -132,7 +132,7 @@ msgstr "# အပါအဝင်ဂဏန်း ၆ လုံးပါတဲ့ h
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "သုညမဟုတ်သော ကိန်းပြည့်ကို ထည့်ပါ။"
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."

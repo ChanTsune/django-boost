@@ -35,7 +35,7 @@ msgstr "Сез инанып карар кылдыгызмы?"
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "Сайланган %(verbose_name_plural)s каты бетерү"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -85,7 +85,7 @@ msgstr "Башбит"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "Берничә объектны каты бетерү"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -124,7 +124,7 @@ msgstr ""
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "Керүдә \"%s\" ның берсе булырга тиеш."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -132,7 +132,7 @@ msgstr "6 санлы алты санлы санны кертегез."
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "Нуль булмаган бөтен санны кертегез."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."
