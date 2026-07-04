@@ -12,6 +12,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Signed-integer path converters `signed_int`, `positive_int`, `negative_int`, `non_negative_int`, `non_positive_int` and `non_zero_int` (registered by `register_boost_converters`), covering integer ranges Django's built-in `int` converter cannot express.
 - `NonZeroValidator` and `validate_non_zero`, rejecting a value of `0` — the one integer range Django's built-in `MinValueValidator`/`MaxValueValidator` cannot express as a single validator.
 
+### Deprecated
+
+- `django_boost.EmailUser` / `AbstractEmailUser` are deprecated and will be removed in 4.0. A system check (`django_boost.W050`) now warns when `AUTH_USER_MODEL` is `'django_boost.EmailUser'`. Copy the model into one of your own apps (keeping `db_table = 'django_boost_emailuser'`) and run the new `migrate_emailuser` command to adopt the existing table and its permissions. See the Custom User docs.
+
 ### Fixed
 
 - `RedirectCorrectHostnameMiddleware` no longer raises a `TypeError` on the redirect path under ASGI; it now redirects correctly on both WSGI and ASGI.

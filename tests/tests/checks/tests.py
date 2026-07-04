@@ -8,6 +8,7 @@ from django.test.utils import isolate_apps
 
 from django_boost.checks import (
     DATABASE_ROUTER,
+    EMAILUSER_MODEL,
     REDIRECT_CORRECT_HOSTNAME_MIDDLEWARE,
     USER_AGENT_CONTEXT_PROCESSOR,
     _app_labels,
@@ -16,6 +17,7 @@ from django_boost.checks import (
     _correct_host_is_allowed,
     check_admin_tools_requires_admin,
     check_database_router,
+    check_emailuser_deprecated,
     check_logical_deletion_models,
     check_redirect_correct_hostname_middleware,
     check_user_agent_extra,
@@ -326,3 +328,17 @@ class AdminToolsCheckTests(TestCase):
     def test_no_warning_when_admin_tools_absent(self):
         with patch("django_boost.checks.apps.is_installed", return_value=False):
             self.assertEqual(check_admin_tools_requires_admin(None), [])
+
+
+class EmailUserDeprecationCheckTests(TestCase):
+
+    def test_warns_when_emailuser_is_active(self):
+        fake_settings = SimpleNamespace(AUTH_USER_MODEL=EMAILUSER_MODEL)
+        with patch("django_boost.checks.settings", fake_settings):
+            messages = check_emailuser_deprecated(None)
+        self.assertEqual(check_ids(messages), ["django_boost.W050"])
+
+    def test_silent_for_other_user_model(self):
+        fake_settings = SimpleNamespace(AUTH_USER_MODEL="auth.User")
+        with patch("django_boost.checks.settings", fake_settings):
+            self.assertEqual(check_emailuser_deprecated(None), [])

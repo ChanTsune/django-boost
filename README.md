@@ -60,31 +60,6 @@ INSTALLED_APPS = [
 
 ## Brief introduction
 
-### EmailUser
-
-`settings.py`
-
-```py
-AUTH_USER_MODEL = 'django_boost.EmailUser'
-```
-
-Replace Django default user model
-Use email address instead of username when logging in
-
-### AbstractEmailUser
-
-```py
-from django.db import models
-from django_boost.models import AbstractEmailUser
-
-class CustomUser(AbstractEmailUser):
-    is_flozen = models.BoolField(default=False)
-    homepage = models.URLField()
-
-```
-
-Available when you want to add a field to EmailUser
-
 ### UUIDModelMixin
 
 ```py
