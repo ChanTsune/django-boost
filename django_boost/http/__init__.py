@@ -4,9 +4,28 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from django_boost.http.response import HttpResponseUnsupportedMediaType
+from django_boost.http.response import (Http301, Http302, Http307, Http308,
+                                        Http400, Http401, Http402, Http403,
+                                        Http405, Http406, Http407, Http408,
+                                        Http409, Http410, Http411, Http412,
+                                        Http413, Http414, Http415, Http416,
+                                        Http417, Http418, Http421, Http422,
+                                        Http423, Http424, Http425, Http426,
+                                        Http428, Http429, Http431, Http451,
+                                        Http500, Http501, Http502, Http503,
+                                        Http504, Http505, Http506, Http507,
+                                        Http508, Http509, Http510, Http511,
+                                        HttpResponseUnsupportedMediaType)
 
-__all__ = ['HttpResponseUnsupportedMediaType']
+__all__ = ['HttpResponseUnsupportedMediaType',
+           'Http301', 'Http302', 'Http307', 'Http308',
+           'Http400', 'Http401', 'Http402', 'Http403', 'Http405', 'Http406',
+           'Http407', 'Http408', 'Http409', 'Http410', 'Http411', 'Http412',
+           'Http413', 'Http414', 'Http415', 'Http416', 'Http417', 'Http418',
+           'Http421', 'Http422', 'Http423', 'Http424', 'Http425', 'Http426',
+           'Http428', 'Http429', 'Http431', 'Http451',
+           'Http500', 'Http501', 'Http502', 'Http503', 'Http504', 'Http505',
+           'Http506', 'Http507', 'Http508', 'Http509', 'Http510', 'Http511']
 
 STATUS_MESSAGES = defaultdict(lambda: '')
 STATUS_MESSAGES.update({
