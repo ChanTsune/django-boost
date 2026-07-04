@@ -35,7 +35,7 @@ msgstr "உறுதியாக சொல்கிறீர்களா?"
 #: django_boost/admin/actions.py:70
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
-msgstr ""
+msgstr "தேர்ந்தெடுக்கப்பட்ட %(verbose_name_plural)s ஐ கடினமாக நீக்கவும்"
 
 #: django_boost/contrib/admin_tools/management/commands/adminsitelog.py:158
 msgid "Do you want to delete these logs"
@@ -85,7 +85,7 @@ msgstr "வீடு"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:17
 msgid "Hard delete multiple objects"
-msgstr ""
+msgstr "பல பொருட்களை கடினமாக நீக்கவும்"
 
 #: django_boost/templates/boost/admin/hard_delete_selected_confirmation.html:23
 #, python-format
@@ -124,7 +124,7 @@ msgstr ""
 #: django_boost/validators/collection.py:18
 #, python-format
 msgid "The input must contain one of \"%s\"'s."
-msgstr ""
+msgstr "உள்ளீட்டில் \"%s\" இல் ஒன்று இருக்க வேண்டும்."
 
 #: django_boost/validators/color.py:15
 msgid "Enter 6-digit hexadecimal number including #."
@@ -132,7 +132,7 @@ msgstr "# உட்பட 6 இலக்க ஹெக்ஸாடெசிமல
 
 #: django_boost/validators/integer.py:22
 msgid "Enter a non-zero integer."
-msgstr ""
+msgstr "பூஜ்ஜியமற்ற முழு எண்ணை உள்ளிடவும்."
 
 #: django_boost/validators/json.py:18
 msgid "Enter valid JSON string."
