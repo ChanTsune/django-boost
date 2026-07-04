@@ -131,6 +131,13 @@ You can specify non-conversion characters in the argument.
 
   {{ url | urlencode:'abc' }}
 
+.. note::
+
+   Django ships an equivalent built-in ``urlencode`` filter (its argument is
+   named ``safe``), so prefer the built-in when you only need URL encoding.
+   This filter is kept mainly to pair with ``urldecode`` below, for which
+   Django has no built-in.
+
 
 urldecode
 ~~~~~~~~~~
