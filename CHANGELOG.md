@@ -9,7 +9,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
-- `getattr_chain` without a default now propagates the underlying `AttributeError` (preserving its type and message) instead of rewriting it into a generic one.
+- `getattr_chain` without a default now propagates the underlying `AttributeError` instead of rewriting it into a generic one.
+- The `urlencode`/`urldecode` template filters now coerce a non-string value (e.g. an int or `None`) to `str`, instead of raising `TypeError`.
 
 ## [3.2.2] - 2026-07-06
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from urllib import parse
 
 from django.template import Library
+from django.template.defaultfilters import stringfilter
 
 from django_boost.utils.itertools import chunked
 
@@ -13,11 +14,13 @@ register = Library()
 
 
 @register.filter(name="urlencode", is_safe=True)
+@stringfilter
 def urlencode(value, arg="/"):
     return parse.quote(value, safe=arg)
 
 
 @register.filter(name="urldecode")
+@stringfilter
 def urldecode(value):
     return parse.unquote(value)
 
