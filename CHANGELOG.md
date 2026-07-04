@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Added
 
 - Signed-integer path converters `signed_int`, `positive_int`, `negative_int`, `non_negative_int`, `non_positive_int` and `non_zero_int` (registered by `register_boost_converters`), covering integer ranges Django's built-in `int` converter cannot express.
+- `NonZeroValidator` and `validate_non_zero`, rejecting a value of `0` — the one integer range Django's built-in `MinValueValidator`/`MaxValueValidator` cannot express as a single validator.
 
 ### Fixed
 
