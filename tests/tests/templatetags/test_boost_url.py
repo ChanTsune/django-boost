@@ -14,6 +14,13 @@ class UrlencodeFilterTests(TestCase):
         for a, e in cases:
             self.assertEqual(urlencode(a), e)
 
+    def test_urlencode_coerces_non_string_input(self):
+        # Like Django's built-in urlencode filter, coerce to str instead of
+        # raising TypeError on a non-string value (e.g. an int or None).
+        from django_boost.templatetags.boost_url import urlencode
+        self.assertEqual(urlencode(123), "123")
+        self.assertEqual(urlencode(None), "None")
+
 
 class UrldecodeFilterTests(TestCase):
 
@@ -26,6 +33,11 @@ class UrldecodeFilterTests(TestCase):
         ]
         for a, e in cases:
             self.assertEqual(urldecode(a), e)
+
+    def test_urldecode_coerces_non_string_input(self):
+        from django_boost.templatetags.boost_url import urldecode
+        self.assertEqual(urldecode(123), "123")
+        self.assertEqual(urldecode(None), "None")
 
     def test_urldecode_output_is_escaped_in_autoescaped_template(self):
         from django.template import Context, Template
