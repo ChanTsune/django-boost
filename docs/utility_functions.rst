@@ -65,7 +65,7 @@ Yield True when the last element of the given iterator object, False otherwise.
 loopfirstlast
 ~~~~~~~~~~~~~~
 
-A function combining ``firstloop`` and ``lastloop``.
+A function combining ``loopfirst`` and ``looplast``.
 
 Yield True if the first and last element of the iterator object, False otherwise.
 

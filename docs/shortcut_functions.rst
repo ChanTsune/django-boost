@@ -1,7 +1,7 @@
 Shortcut Functions
 ===================
 
-:synopsis: Model mixins in django-boost
+:synopsis: Shortcut functions in django-boost
 
 
 ::
