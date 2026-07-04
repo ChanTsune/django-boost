@@ -121,6 +121,30 @@ class TestViewMixins(TestCase):
         self.assertStatusCodeEqual(response, 200)
         self.client.logout()
 
+    def test_anonymous_required(self):
+        url = '/anonymous_only/'
+        response = self.client.get(url)
+        self.assertStatusCodeEqual(response, 200)
+
+        self.client.force_login(self.user)
+        response = self.client.get(url)
+        self.assertStatusCodeEqual(response, 302)
+        self.client.logout()
+
+    @override_settings(LOGIN_REDIRECT_URL='/accounts/profile/')
+    def test_anonymous_required_redirects_to_login_redirect_url(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/anonymous_only/')
+        self.assertEqual(response.url, '/accounts/profile/')
+        self.client.logout()
+
+    def test_anonymous_required_honors_redirect_authenticated_url(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/anonymous_only/custom/')
+        self.assertStatusCodeEqual(response, 302)
+        self.assertEqual(response.url, '/custom/')
+        self.client.logout()
+
     def test_staff_member_required(self):
         url = '/staff_only/'
         response = self.client.get(url)

@@ -172,3 +172,5 @@ If you use for the purpose of API ``JsonView`` below is recommended.
 .. autoclass:: django_boost.views.mixins.SuperuserRequiredMixin
 
 .. autoclass:: django_boost.views.mixins.StaffMemberRequiredMixin
+
+.. autoclass:: django_boost.views.mixins.AnonymousRequiredMixin

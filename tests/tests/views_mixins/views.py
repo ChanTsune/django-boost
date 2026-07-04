@@ -6,7 +6,8 @@ from django.views.generic import FormView, TemplateView, View
 
 from django_boost.forms.mixins import FormUserKwargsMixin
 from django_boost.views.generic import TemplateView as BoostTemplateView
-from django_boost.views.mixins import (AllowContentTypeMixin, CSRFExemptMixin,
+from django_boost.views.mixins import (AllowContentTypeMixin,
+                                       AnonymousRequiredMixin, CSRFExemptMixin,
                                        DynamicRedirectMixin, JsonRequestMixin,
                                        JsonResponseMixin, LimitedTermMixin,
                                        ReAuthenticationRequiredMixin,
@@ -85,6 +86,15 @@ class ReAuthenticationRequiredView(ReAuthenticationRequiredMixin,
                                    TemplateView):
     template_name = "boost/test/index.html"
     interval = 100
+
+
+class AnonymousRequiredView(AnonymousRequiredMixin, TemplateView):
+    template_name = "boost/test/index.html"
+
+
+class AnonymousRequiredCustomRedirectView(AnonymousRequiredMixin, TemplateView):
+    template_name = "boost/test/index.html"
+    redirect_authenticated_url = '/custom/'
 
 
 class StaffMemberRequiredView(StaffMemberRequiredMixin, TemplateView):
