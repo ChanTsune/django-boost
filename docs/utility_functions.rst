@@ -24,7 +24,8 @@ loop
       forloop.first
       forloop.last
 
-Provides Django Template loops to Python programs.
+Provides Django Template loops to Python programs. ``loop()`` wraps *iterable*
+in a ``Loop`` instance (the ``forloop`` object above).
 
 loopfirst
 ~~~~~~~~~~
@@ -81,3 +82,87 @@ Yield True if the first and last element of the iterator object, False otherwise
   # False 2
   # False 3
   # True 4
+
+
+type utils
+-----------
+
+isiterable
+~~~~~~~~~~~
+
+::
+
+  from django_boost.utils import isiterable
+
+  isiterable([1, 2, 3])  # True
+  isiterable(1)          # False
+
+Return `True` if `obj` is iterable object, `False` otherwise.
+
+contain_any
+~~~~~~~~~~~~
+
+::
+
+  from django_boost.utils import contain_any
+
+  contain_any([1, 2, 3], [3, 4, 5])  # True
+  contain_any([1, 2, 3], [4, 5])     # False
+
+Return `True` if any of the `elements` are contained in `container`, `False`
+otherwise.
+
+
+itertools utils
+-----------------
+
+take
+~~~~~
+
+::
+
+  from django_boost.utils.itertools import take
+
+  take(3, range(10))  # [0, 1, 2]
+
+Return first *n* items of the iterable as a list.
+
+chunked
+~~~~~~~~
+
+::
+
+  from django_boost.utils.itertools import chunked
+
+  list(chunked([1, 2, 3, 4, 5, 6], 3))  # [[1, 2, 3], [4, 5, 6]]
+
+Break *iterable* into lists of length *n*.
+
+
+json utils
+-----------
+
+model_to_json
+~~~~~~~~~~~~~~
+
+::
+
+  from django_boost.utils.functions import model_to_json
+
+  model_to_json(my_model_instance)          # {'id': 1, 'name': 'x', ...}
+  model_to_json(MyModel.objects.filter())   # [{'id': 1, ...}, {'id': 2, ...}]
+
+Take a Model instance or QuerySet and return a dict, or a list of dicts,
+of its field values.
+
+json_to_model
+~~~~~~~~~~~~~~
+
+::
+
+  from django_boost.utils.functions import json_to_model
+
+  json_to_model(MyModel, model_to_json(my_model_instance))
+
+Build an unsaved ``MyModel`` instance from a dict shaped like
+``model_to_json``'s output.
