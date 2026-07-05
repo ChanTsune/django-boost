@@ -10,6 +10,7 @@ from django_boost.views.generic import StaticView
 class StaticFileConnector:
 
     def __init__(self, path):
+        """Build a ``urls.path()`` entry for every file under ``path``."""
         self._urls = []
 
         for base, _, files in os.walk(path):

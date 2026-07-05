@@ -14,6 +14,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
     WHITESPACE_PRESERVING_ELEMENTS = frozenset({'pre', 'textarea'})
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initialize the output buffer and whitespace-tracking state."""
         super().__init__(*args, **kwargs)
         self.buffer = StringIO()
         self._raw_depth = 0

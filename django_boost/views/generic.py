@@ -74,6 +74,7 @@ class BaseModelCLUDViews:
     success_url = None
 
     def __init__(self, app_name=None):
+        """Fall back to the model's lowercased class name when ``app_name`` is omitted."""
         if self.model:
             model_name = self.model.__name__.lower()
         else:

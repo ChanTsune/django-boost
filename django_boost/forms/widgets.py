@@ -34,6 +34,7 @@ class InvertCheckboxInput(CheckboxInput):
     """Returns false if checked, true if not checked."""
 
     def __init__(self, attrs=None, check_test=None):
+        """Fall back to treating ``False``, ``None``, and ``''`` as checked when ``check_test`` is omitted."""
         super().__init__(attrs)
         self.check_test = boolean_check if check_test is None else check_test
 

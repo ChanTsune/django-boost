@@ -166,6 +166,7 @@ class HttpExceptionBase(Exception):
 class HttpRedirectExceptionBase(HttpExceptionBase):
 
     def __init__(self, redirect_to, *args):
+        """Store the redirect target as ``self.url``."""
         self.url = redirect_to
         super(HttpRedirectExceptionBase, self).__init__(*args)
 
@@ -206,6 +207,7 @@ class Http405(HttpExceptionBase):
     response_class = HttpResponseNotAllowed
 
     def __init__(self, permitted_methods=(), *args):
+        """Store the allowed HTTP methods as ``self.permitted_methods``."""
         self.permitted_methods = permitted_methods
         super().__init__(*args)
 
