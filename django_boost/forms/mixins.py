@@ -9,9 +9,10 @@ from django_boost.utils.attribute import getattr_chain
 
 
 class FormUserKwargsMixin:
-    """Mixin to add `User model` to form instance variable."""
+    """Mixin that pulls a ``user`` keyword argument into ``self.user``."""
 
     def __init__(self, *args, **kwargs):
+        """Pop the ``user`` keyword argument into ``self.user`` before delegating to the form."""
         self.user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
 
