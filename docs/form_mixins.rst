@@ -84,3 +84,27 @@ Also can inline multiple relationships.
 
 .. autoclass:: django_boost.forms.mixins.FieldRenameMixin
 
+FormUserKwargsMixin
+---------------------
+
+Mixin that pulls a ``user`` keyword argument into ``self.user``.
+
+Pair it with ``django_boost.views.mixins.ViewUserKwargsMixin``, which adds
+the current request's user to the form kwargs, so the form can access it
+without the view passing it explicitly to ``form_valid``/``form_invalid``.
+
+::
+
+  from django import forms
+  from django_boost.forms.mixins import FormUserKwargsMixin
+  from django_boost.views.mixins import ViewUserKwargsMixin
+  from django.views.generic import FormView
+
+  class MyForm(FormUserKwargsMixin, forms.Form):
+      def clean(self):
+          cleaned_data = super().clean()
+          cleaned_data['owner'] = self.user
+          return cleaned_data
+
+  class MyFormView(ViewUserKwargsMixin, FormView):
+      form_class = MyForm
