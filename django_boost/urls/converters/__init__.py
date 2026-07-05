@@ -5,6 +5,10 @@ from __future__ import annotations
 from django.urls import register_converter
 
 from django_boost.urls.converters.date import DateConverter
+from django_boost.urls.converters.decimal import (
+    NegativeDecimalConverter, NonNegativeDecimalConverter,
+    NonPositiveDecimalConverter, NonZeroDecimalConverter,
+    PositiveDecimalConverter, SignedDecimalConverter)
 from django_boost.urls.converters.integer import (
     NegativeIntConverter, NonNegativeIntConverter, NonPositiveIntConverter,
     NonZeroIntConverter, PositiveIntConverter, SignedIntConverter)
@@ -110,6 +114,13 @@ BOOST_CONVERTERS = {
     'non_negative_int': NonNegativeIntConverter,
     'non_positive_int': NonPositiveIntConverter,
     'non_zero_int': NonZeroIntConverter,
+    'decimal': NonNegativeDecimalConverter,
+    'signed_decimal': SignedDecimalConverter,
+    'positive_decimal': PositiveDecimalConverter,
+    'negative_decimal': NegativeDecimalConverter,
+    'non_negative_decimal': NonNegativeDecimalConverter,
+    'non_positive_decimal': NonPositiveDecimalConverter,
+    'non_zero_decimal': NonZeroDecimalConverter,
 }
 
 

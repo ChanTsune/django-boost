@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- Decimal path converters `decimal`, `signed_decimal`, `positive_decimal`, `negative_decimal`, `non_negative_decimal`, `non_positive_decimal` and `non_zero_decimal`, covering decimal ranges Django's built-in `float` converter cannot express; `decimal` is an alias of `non_negative_decimal`.
+
 ## [3.2.4] - 2026-07-11
 
 ### Fixed

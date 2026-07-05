@@ -126,3 +126,52 @@ non_zero_int
 ``non_zero_int`` matches non-zero integers.
 
 This is passed as ``int`` type to the python program.
+
+decimal
+~~~~~~~
+
+``decimal`` matches ``[0-9]+([.][0-9]+)?`` (alias of ``non_negative_decimal``).
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+signed_decimal
+~~~~~~~~~~~~~~
+
+``signed_decimal`` matches any decimal number, including negatives.
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+positive_decimal
+~~~~~~~~~~~~~~~~
+
+``positive_decimal`` matches decimals greater than ``0``.
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+negative_decimal
+~~~~~~~~~~~~~~~~
+
+``negative_decimal`` matches decimals less than ``0``.
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+non_negative_decimal
+~~~~~~~~~~~~~~~~~~~~~
+
+``non_negative_decimal`` matches decimals greater than or equal to ``0``.
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+non_positive_decimal
+~~~~~~~~~~~~~~~~~~~~~
+
+``non_positive_decimal`` matches decimals less than or equal to ``0``.
+
+This is passed as ``decimal.Decimal`` type to the python program.
+
+non_zero_decimal
+~~~~~~~~~~~~~~~~
+
+``non_zero_decimal`` matches non-zero decimals.
+
+This is passed as ``decimal.Decimal`` type to the python program.
