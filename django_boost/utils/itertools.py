@@ -25,7 +25,7 @@ def take(n: int, iterable: Iterable[_T]) -> list[_T]:
 
 
 def chunked(iterable: Iterable[_T], n: int) -> Iterator[list[_T]]:
-    """Break *iterable* into lists of length *n*:
+    """Break *iterable* into lists of length *n*.
 
     example ::
 

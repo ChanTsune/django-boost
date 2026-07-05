@@ -33,8 +33,10 @@ def get_main_version(version: _Version | None = None) -> str:
 
 def get_complete_version(version: _Version | None = None) -> _Version:
     """
-    Return a tuple of the django version. If version argument is non-empty,
-    check for correctness of the tuple provided.
+    Return a tuple of the django version.
+
+    If version argument is non-empty, check for correctness of the tuple
+    provided.
     """
     if version is None:
         from django_boost import VERSION

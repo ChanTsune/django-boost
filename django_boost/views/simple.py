@@ -23,8 +23,7 @@ class ResponseContentMixin:
 
     def content_to_response(self, content, **response_kwargs):
         """
-        Return a response, using the `response_class` for this view, with
-        the given context.
+        Return a response, using the `response_class` for this view, with the given context.
 
         Pass response_kwargs to the constructor of the response class.
         """
