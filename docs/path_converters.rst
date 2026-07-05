@@ -74,7 +74,7 @@ The difference is that it is passed to the Python program as ``str``
 float
 ~~~~~~~
 
-``float`` match ``'[0-9]+([.][0-9]+)?'``
+``float`` matches ``[0-9]+([.][0-9]+)?`` (alias of ``non_negative_float``).
 
 This is passed as ``float`` type to the python program.
 
@@ -175,3 +175,45 @@ non_zero_decimal
 ``non_zero_decimal`` matches non-zero decimals.
 
 This is passed as ``decimal.Decimal`` type to the python program.
+
+signed_float
+~~~~~~~~~~~~
+
+``signed_float`` matches any decimal-notation float, including negatives.
+
+This is passed as ``float`` type to the python program.
+
+positive_float
+~~~~~~~~~~~~~~
+
+``positive_float`` matches floats greater than ``0``.
+
+This is passed as ``float`` type to the python program.
+
+negative_float
+~~~~~~~~~~~~~~
+
+``negative_float`` matches floats less than ``0``.
+
+This is passed as ``float`` type to the python program.
+
+non_negative_float
+~~~~~~~~~~~~~~~~~~~
+
+``non_negative_float`` matches floats greater than or equal to ``0``.
+
+This is passed as ``float`` type to the python program.
+
+non_positive_float
+~~~~~~~~~~~~~~~~~~~
+
+``non_positive_float`` matches floats less than or equal to ``0``.
+
+This is passed as ``float`` type to the python program.
+
+non_zero_float
+~~~~~~~~~~~~~~
+
+``non_zero_float`` matches non-zero floats.
+
+This is passed as ``float`` type to the python program.
