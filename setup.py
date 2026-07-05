@@ -62,7 +62,7 @@ version = __import__('django_boost').get_version()
 setup(
     name='django_boost',
     version=version,
-    description='Django Extension library',
+    description='Extra batteries for Django, the batteries-included framework',
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
     url='https://github.com/ChanTsune/Django-Boost',
