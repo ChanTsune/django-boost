@@ -22,7 +22,9 @@ class BaseSignedNumericConverter(Generic[_T]):
     """
 
     regex: ClassVar[str]
-    _parse: ClassVar[staticmethod[[str], _T]]
+    # Not ClassVar: PEP 526 disallows a type variable inside ClassVar, and
+    # mypy 1.x enforces it (mypy 2.x currently doesn't, but don't rely on that).
+    _parse: staticmethod[[str], _T]
 
     def to_python(self, value: str) -> _T:
         return self._parse(value)
