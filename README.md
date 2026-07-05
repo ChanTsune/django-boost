@@ -58,7 +58,58 @@ INSTALLED_APPS = [
 ]
 ```
 
-## Brief introduction
+## Features
+
+**Models**
+- [UUIDModelMixin](#uuidmodelmixin) — Replace a model's integer `id` (`AutoField`) primary key with a `UUIDField`.
+- [TimeStampModelMixin](#timestampmodelmixin) — Add `posted_at` and `updated_at` timestamp fields to a model.
+- [LogicalDeletionMixin](#logicaldeletionmixin) — Soft-delete models while preserving Django's deletion collector behavior (cascades, signals, return values).
+- [ColorCodeField](#colorcodefield) — Store a hexadecimal color code string, with optional upper/lower-case normalization.
+- [SplitDateTimeField](#splitdatetimefield) — A `DateTimeField` that renders using Django's `SplitDateTimeField` form widget.
+- [AutoOneToOneField](#autoonetoonefield) — A `OneToOneField` that creates the related object on first access if it doesn't exist yet.
+
+**Middleware**
+- [RedirectCorrectHostnameMiddleware](#redirectcorrecthostnamemiddleware) — Redirect all requests to the hostname configured in `CORRECT_HOST`.
+- [HttpStatusCodeExceptionMiddleware](#httpstatuscodeexceptionmiddleware) — Turn the `HttpStatusCode` exceptions below into HTTP responses.
+
+**HTTP**
+- [HttpStatusCode Exceptions](#httpstatuscode-exceptions) — Exception classes (`Http400`, `Http415`, ...) for status codes beyond Django's built-in `Http404`.
+
+**Template**
+- [User Agent in Template context](#user-agent-in-template-context) — Expose parsed user-agent info (`browser`, `os`, `is_mobile`, ...) to every template.
+- [Strict invalid template variables](#strict-invalid-template-variables) — Raise on missing template variables instead of silently rendering an empty string.
+- [Template Tags](#template-tags) — `isiterable`, `literal`, URL encode/decode, and queryset filters (`filter`, `exclude`, `order_by`, `alive`, `dead`).
+
+**Views**
+- [AllowContentTypeMixin](#allowcontenttypemixin) — Reject requests whose `Content-Type` isn't in an allow-list.
+- [LimitedTermMixin](#limitedtermmixin) — Restrict a view to a configurable date/time window.
+- [DynamicRedirectMixin](#dynamicredirectmixin) — Redirect to the URL given in a `?next=` query parameter, like Django's `LoginView`.
+- [UserAgentMixin](#useragentmixin) — Pick the template to render based on the requesting device (PC/tablet/mobile).
+- [JsonRequestMixin](#jsonrequestmixin) — Parse a JSON request body into `self.json`.
+- [JsonResponseMixin](#jsonresponsemixin) — Return a view's context as a JSON response.
+- [GenericView](#genericview) — `setup`/`after_view_process` hooks on every generic view, plus `ModelCRUDViews` for a ready-made CRUD view set.
+
+**Forms**
+- [MatchedObjectGetMixin](#matchedobjectgetmixin) — Fetch the model instance or queryset matching the submitted form data.
+- [RelatedModelInlineMixin](#relatedmodelinlinemixin) — Edit two related models through a single `ModelForm`.
+
+**URLs**
+- [Path Converters](#path-converters) — `hex`, `oct`, `bin` (and `_str` variants) URL path converters.
+- [UrlSet](#urlset) — Group a model's URL patterns into one class instead of repeating them per model in `urls.py`.
+
+**Admin**
+- [Admin Site Utilities](#admin-site-utilities) — Bulk-register every model in a `models.py` with the Django admin site.
+
+**Shortcuts**
+- [Shortcut Functions](#shortcut-functions) — `get_object_or_default` / `get_object_or_exception` and their queryset equivalents, in the style of `get_object_or_404`.
+
+**Utilities**
+- [loop utils](#loop-utils) — Django-template-style `forloop` info (`counter`, `first`, `last`, ...) for plain Python loops.
+
+**Commands**
+- [adminsitelog](#adminsitelog) — View, filter, and delete Django admin log entries from the command line.
+
+## Models
 
 ### UUIDModelMixin
 
@@ -176,6 +227,8 @@ class UserProfile(models.Model):
     home_page = models.URLField(max_length=255, blank=True)
 ```
 
+## Middleware
+
 ### RedirectCorrectHostnameMiddleware
 
 `settings.py`
@@ -218,7 +271,7 @@ MIDDLEWARE = [
 
 It is necessary to use the `HttpStatusCode exceptions` described later.
 
-### HttpStatusCode Exceptions
+## HttpStatusCode Exceptions
 
 Provides exceptions for other status codes as well as Django's standard `Http404` exception
 
@@ -234,6 +287,8 @@ def view(request):
 ```
 
 This Middleware is required when using `HttpStatusCodeExceptionMiddleware`
+
+## Template
 
 ### User Agent in Template context
 
@@ -299,6 +354,124 @@ TEMPLATES = [
 It only raises on Django's `string_if_invalid` resolution path, so it is not
 strict everywhere -- `{% if %}` / `{% for %}` and `alters_data` methods are not
 covered. See the docs for details.
+
+### Template Tags
+
+Make Python built-in functions available in DjangoTemplate.
+Some non-built-in functions are also provided as filters. An example is `isiterable` filter.
+
+#### Load filters
+
+```html+django
+{% load boost %}
+```
+
+##### isiterable
+
+isiterable filter returns True if it filters repeatable objects, and False otherwise.
+
+```html+django
+{% load boost %}
+
+{% if object|isiterable %}
+  {% for i in object %}
+    <p>{{ i }}</p>
+  {% endfor %}
+{% else %}
+  <p>{{ object }}</p>
+{% endif %}
+
+```
+
+#### literal
+
+Python literal from string.
+Using backend `ast.literal_eval`.
+
+```html+django
+{% load boost %}
+
+{% literal "[1, 2, 3]" as list %}
+
+{% for i in list %}
+    <p>{{ i }}</p>
+{% endfor %}
+```
+
+#### URL Utility
+
+```html+django
+{% load boost_url %}
+```
+
+##### urlencode
+
+URL encode the filtered string.
+You can specify non-conversion characters in the argument.
+
+```html+django
+{% load boost_url %}
+
+{{ url | urlencode }}
+
+{{ url | urlencode:'abc' }}
+
+```
+
+##### urldecode
+
+The reverse of `urlencode`.
+
+```html+django
+{% load boost_url %}
+
+{{ url | urldecode }}
+```
+
+##### replace_parameters
+
+Replace the query string of the current page URL with the argument.
+
+```html+django
+{% load boost_url %}
+
+{# case of current page's query string is `?id=2`#}
+{% replace_parameters request 'id' 1 'age' 20 %}
+
+{# The result of replacing is `?id=1&age=20` #}
+
+```
+
+Useful for pagination.
+
+#### Queryset Utility
+
+```html+django
+{% load boost_query %}
+```
+
+Make the query set methods available in the template.
+
+`filter`, `exclude`, `order_by` are available.
+
+If you use the LogicalDeletionMixin, you can also use `alive` and `dead`
+
+```html+django
+{% queryset|filter:"field=value"%}
+
+{% queryset|exclude:"field=value"%}
+
+{% queryset|order_by:"field"%}
+
+{# If it inherits LogicalDeletionMixin. #}
+
+{% queryset|alive %}
+
+{% queryset|dead %}
+
+```
+
+## Views
 
 ### AllowContentTypeMixin
 
@@ -420,64 +593,6 @@ Specify `strictly = True` if you want to limit the Content-Type to Json only.
 
 If you use for the purpose of API `JsonView` below is recommended.
 
-### MatchedObjectGetMixin
-
-Object of the condition that matches the form input content.
-Or mixin to add a method to get the queryset.
-
-```py
-from django import forms
-from django_boost.forms.mixins import MatchedObjectGetMixin
-from .models import Customer
-
-class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
-    class Meta:
-        models = Customer
-        fields = ('name', )
-        field_lookup = {'name' : 'name__startswith'} # filter lookup kwargs
-```
-
-Set `field_lookup` to set detailed search conditions.
-
-```py
-from django.views.generic import FormView
-from .forms import CustomerForm
-
-class CustomerSearchView(FormView):
-    template_name = "form.html"
-    form_class = CustomerForm
-
-    def form_valid(self,form):
-        object = form.get_object()  # get matched model object
-        object_list = form.get_list()  # get matched models objects queryset
-
-```
-
-`MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.
-
-### RelatedModelInlineMixin
-
-Mixin that treats two related `Model`'s as a single `Model`.
-
-```py
-class ModelA(models.Model):
-    text = models.TextField(...)
-
-
-class ModelB(models.Model):
-    name = models.CharField(...)
-    model_a = models.OneToOneField(to=ModelA, ...)
-```
-
-```py
-class ModelBForm(RelatedModelInlineMixin, forms.ModelForm):
-    inline_fields = {'model_a': ('text',)}
-
-    class Meta:
-        model = ModelB
-        fields = ('name', )
-```
-
 ### GenericView
 
 #### Extended Views
@@ -542,6 +657,68 @@ In the template you can use as follows.
 
 The name of the URL is defined under the namespace of the lower-cased model class name.
 
+## Forms
+
+### MatchedObjectGetMixin
+
+Object of the condition that matches the form input content.
+Or mixin to add a method to get the queryset.
+
+```py
+from django import forms
+from django_boost.forms.mixins import MatchedObjectGetMixin
+from .models import Customer
+
+class CustomerForm(MatchedObjectGetMixin, forms.ModelForm):
+    class Meta:
+        models = Customer
+        fields = ('name', )
+        field_lookup = {'name' : 'name__startswith'} # filter lookup kwargs
+```
+
+Set `field_lookup` to set detailed search conditions.
+
+```py
+from django.views.generic import FormView
+from .forms import CustomerForm
+
+class CustomerSearchView(FormView):
+    template_name = "form.html"
+    form_class = CustomerForm
+
+    def form_valid(self,form):
+        object = form.get_object()  # get matched model object
+        object_list = form.get_list()  # get matched models objects queryset
+
+```
+
+`MatchedObjectMixin` provides `get_object` and `get_list` methods, each of which returns a `model object` or `queryset` that matches the form input content.
+
+### RelatedModelInlineMixin
+
+Mixin that treats two related `Model`'s as a single `Model`.
+
+```py
+class ModelA(models.Model):
+    text = models.TextField(...)
+
+
+class ModelB(models.Model):
+    name = models.CharField(...)
+    model_a = models.OneToOneField(to=ModelA, ...)
+```
+
+```py
+class ModelBForm(RelatedModelInlineMixin, forms.ModelForm):
+    inline_fields = {'model_a': ('text',)}
+
+    class Meta:
+        model = ModelB
+        fields = ('name', )
+```
+
+## URLs
+
 ### Path Converters
 
 ```py
@@ -569,22 +746,6 @@ urlpatterns = [
 These are passed as `int` type to the python program.
 
 Keywords that end with `_str` are passed as `str` type to python program.
-
-### Shortcut Functions
-
-```py
-from django_boost.shortcuts import (
-    get_list_or_default, get_list_or_exception,
-    get_object_or_default, get_object_or_exception)
-
-my_model = MyModel.objects.get(id=1)
-get_object_or_default(MyModel, default=my_model, id=2)
-
-get_object_or_exception(MyModel, exception=Exception, id=2)
-
-```
-
-These behave like `get_object_or_404`
 
 ### UrlSet
 
@@ -650,7 +811,7 @@ urlpatterns = [
 
 URLs are grouped for easy reading.
 
-### Admin Site Utilities
+## Admin Site Utilities
 
 Easily register Models to Django admin site.
 
@@ -673,123 +834,23 @@ from django_boost.admin.sites import register_all
 register_all(models, admin_class=admin.CustomAdmin)
 ```
 
-### Template Tags
+## Shortcut Functions
 
-Make Python built-in functions available in DjangoTemplate.
-Some non-built-in functions are also provided as filters. An example is `isiterable` filter.
+```py
+from django_boost.shortcuts import (
+    get_list_or_default, get_list_or_exception,
+    get_object_or_default, get_object_or_exception)
 
-#### Load filters
+my_model = MyModel.objects.get(id=1)
+get_object_or_default(MyModel, default=my_model, id=2)
 
-```html+django
-{% load boost %}
-```
-
-##### isiterable
-
-isiterable filter returns True if it filters repeatable objects, and False otherwise.
-
-```html+django
-{% load boost %}
-
-{% if object|isiterable %}
-  {% for i in object %}
-    <p>{{ i }}</p>
-  {% endfor %}
-{% else %}
-  <p>{{ object }}</p>
-{% endif %}
+get_object_or_exception(MyModel, exception=Exception, id=2)
 
 ```
 
-#### literal
+These behave like `get_object_or_404`
 
-Python literal from string.
-Using backend `ast.literal_eval`.
-
-```html+django
-{% load boost %}
-
-{% literal "[1, 2, 3]" as list %}
-
-{% for i in list %}
-    <p>{{ i }}</p>
-{% endfor %}
-```
-
-#### URL Utility
-
-```html+django
-{% load boost_url %}
-```
-
-##### urlencode
-
-URL encode the filtered string.
-You can specify non-conversion characters in the argument.
-
-```html+django
-{% load boost_url %}
-
-{{ url | urlencode }}
-
-{{ url | urlencode:'abc' }}
-
-```
-
-##### urldecode
-
-The reverse of `urlencode`.
-
-```html+django
-{% load boost_url %}
-
-{{ url | urldecode }}
-```
-
-##### replace_parameters
-
-Replace the query string of the current page URL with the argument.
-
-```html+django
-{% load boost_url %}
-
-{# case of current page's query string is `?id=2`#}
-{% replace_parameters request 'id' 1 'age' 20 %}
-
-{# The result of replacing is `?id=1&age=20` #}
-
-```
-
-Useful for pagination.
-
-#### Queryset Utility
-
-```html+django
-{% load boost_query %}
-```
-
-Make the query set methods available in the template.
-
-`filter`, `exclude`, `order_by` are available.
-
-If you use the LogicalDeletionMixin, you can also use `alive` and `dead`
-
-```html+django
-{% queryset|filter:"field=value"%}
-
-{% queryset|exclude:"field=value"%}
-
-{% queryset|order_by:"field"%}
-
-{# If it inherits LogicalDeletionMixin. #}
-
-{% queryset|alive %}
-
-{% queryset|dead %}
-
-```
-
-## utility functions
+## Utilities
 
 ### loop utils
 
@@ -865,9 +926,9 @@ for first_or_last, v in loopfirstlast(range(5)):
 # True 4
 ```
 
-### Commands
+## Commands
 
-#### adminsitelog
+### adminsitelog
 
 ```bash
 python manage.py adminsitelog
@@ -877,7 +938,7 @@ View and delete Admin Site logs.
 
 > `adminsitelog` ships in the opt-in `django_boost.contrib.admin_tools` app (add it to `INSTALLED_APPS`) and requires `django.contrib.admin`.
 
-##### view all logs
+#### view all logs
 
 ```bash
 python manage.py adminsitelog
@@ -890,7 +951,7 @@ id| action | detail | user | time
 8 | Changed | Customer object (4) - Changed color. | admin | 2019-08-20 16:12:45.653693+00:00
 ```
 
-##### filter logs
+#### filter logs
 
 ```bash
 python manage.py adminsitelog --filter "action_time>=2019-8-01" --exclude "id=6"
@@ -902,7 +963,7 @@ id | action | detail | user | time
 8 | Changed | Customer object (4) - Changed color. | admin | 2019-08-20 16:12:45.653693+00:00
 ```
 
-##### delete all logs
+#### delete all logs
 
 ```bash
 python manage.py adminsitelog --delete
