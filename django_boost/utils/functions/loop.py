@@ -3,6 +3,8 @@ from __future__ import annotations
 from collections.abc import Collection, Iterable, Iterator
 from typing import TypeVar
 
+__all__ = ["loopfirst", "loopfirstlast", "looplast"]
+
 _T = TypeVar("_T")
 
 
