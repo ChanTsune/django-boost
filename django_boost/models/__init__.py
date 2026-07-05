@@ -30,12 +30,12 @@ class AbstractEmailUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    class Meta(AbstractUser.Meta):
+    class Meta(AbstractUser.Meta):  # noqa: D106
         abstract = True
 
 
 class EmailUser(AbstractEmailUser):
     """Email login user model."""
 
-    class Meta(AbstractEmailUser.Meta):
+    class Meta(AbstractEmailUser.Meta):  # noqa: D106
         swappable = 'AUTH_USER_MODEL'

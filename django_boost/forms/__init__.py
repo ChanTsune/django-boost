@@ -30,6 +30,8 @@ class UserCreationForm(BaseUserCreationForm):
     """A form that creates a user, with no privileges, from the active user model's ``USERNAME_FIELD`` and password."""
 
     class Meta(BaseUserCreationForm.Meta):
+        """Use the active user model and its ``USERNAME_FIELD`` instead of Django's hardcoded ``username``."""
+
         model = get_user_model()
         fields = (model.USERNAME_FIELD,)
         field_classes = {
@@ -41,6 +43,8 @@ class UserChangeForm(BaseUserChangeForm):
     """A form for changing an existing user, using the active user model's ``USERNAME_FIELD``."""
 
     class Meta(BaseUserChangeForm.Meta):
+        """Use the active user model and its ``USERNAME_FIELD`` instead of Django's hardcoded ``username``."""
+
         model = get_user_model()
         fields = "__all__"
         field_classes = {

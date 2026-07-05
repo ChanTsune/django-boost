@@ -30,7 +30,7 @@ class JsonMixin:
 class UUIDModelMixin(models.Model):
     """replace `id` from` AutoField` to `UUIDField`."""
 
-    class Meta:
+    class Meta:  # noqa: D106
         abstract = True
     id = models.UUIDField(default=uuid.uuid4,
                           primary_key=True, unique=True, editable=False)
@@ -39,7 +39,7 @@ class UUIDModelMixin(models.Model):
 class TimeStampModelMixin(models.Model):
     """The fields `created_at` and `updated_at` are added."""
 
-    class Meta:
+    class Meta:  # noqa: D106
         abstract = True
     created_at = models.DateTimeField(verbose_name=_("created date"), auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name=_("updated date"), auto_now=True)
@@ -51,7 +51,7 @@ class LogicalDeletionMixin(models.Model):
     deleted_at = models.DateTimeField(
         verbose_name=_("deleted date"), blank=True, null=True, default=None, editable=False)
 
-    class Meta:
+    class Meta:  # noqa: D106
         abstract = True
 
     objects = LogicalDeletionManager()
