@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from django.db import models
 
+__all__ = ["json_to_model", "model_to_json"]
+
 
 def model_to_json(model, fields=(), exclude=()):
     """
