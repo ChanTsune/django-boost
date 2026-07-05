@@ -39,7 +39,7 @@ class Loop(Iterator[tuple["Loop[_T]", _T]]):
 
 
 def loop(iterable: Sequence[_T]) -> Loop[_T]:
-    """Provides features such as Django template like loop."""
+    """Provide features such as Django template like loop."""
     return Loop(iterable)
 
 

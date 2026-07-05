@@ -9,10 +9,11 @@ __all__ = ["validate_uuid4"]
 
 
 def validate_uuid4(value: str) -> None:
-    """Deprecated UUID validator.
+    """Validate that `value` is a UUID4 string.
 
-    Raises a ``DeprecationWarning`` and will be removed in django-boost 4.0;
-    validate UUIDs with Django's ``UUIDField`` or :func:`uuid.UUID` instead.
+    Deprecated: raises a ``DeprecationWarning`` and will be removed in
+    django-boost 4.0; validate UUIDs with Django's ``UUIDField`` or
+    :func:`uuid.UUID` instead.
     """
     warnings.warn(
         "'validate_uuid4' is deprecated and will be removed in django-boost"
