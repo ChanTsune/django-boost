@@ -1,3 +1,5 @@
+"""General-purpose helper functions and classes."""
+
 from __future__ import annotations
 
 from collections.abc import Container, Iterable, Iterator, Sequence

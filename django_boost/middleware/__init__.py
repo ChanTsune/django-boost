@@ -1,3 +1,5 @@
+"""Middleware extensions for Django's request/response cycle."""
+
 from __future__ import annotations
 
 from django.conf import settings

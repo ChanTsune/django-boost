@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.template``."""
+
 from __future__ import annotations
 
 from django_boost.template.base import StrictInvalidTemplateVariable
