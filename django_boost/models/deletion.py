@@ -32,6 +32,7 @@ def get_logical_delete_field(model):
 class LogicalDeletionCollector(Collector):
 
     def __init__(self, using, origin=None, deleted_at=None):
+        """Store ``deleted_at`` to use as the logical-deletion timestamp/flag value."""
         super().__init__(using=using, origin=origin)
         self.origin = origin
         self.deleted_at = deleted_at

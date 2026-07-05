@@ -42,6 +42,7 @@ class FieldRenameMixin:
     rename_fields = {}
 
     def __init__(self, *args, **kwargs):
+        """Rename fields in ``self.fields`` per ``rename_fields`` after the form initializes."""
         super().__init__(*args, **kwargs)
         for key, value in self.rename_fields.items():
             if key != value:
@@ -131,6 +132,7 @@ class RelatedModelInlineMixin:
     inline_fields = None
 
     def __init__(self, *args, **kwargs):
+        """Add form fields for each related model's ``inline_fields`` after the form initializes."""
         super().__init__(*args, **kwargs)
         self._related_field_model = {}
         for field, related_fields in self.inline_fields.items():

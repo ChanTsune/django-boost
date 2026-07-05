@@ -11,6 +11,7 @@ class DatabaseRouter:
     """Route Django apps to database aliases from DATABASE_APPS_MAPPING."""
 
     def __init__(self) -> None:
+        """Load the app-to-database mapping from ``settings.DATABASE_APPS_MAPPING``."""
         self.db_map: dict[str, str] = getattr(
             settings, "DATABASE_APPS_MAPPING", {})
 

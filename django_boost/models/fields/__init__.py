@@ -20,6 +20,7 @@ class ColorCodeField(CharField):
     default_validators = [validate_color_code]
 
     def __init__(self, *args, upper=False, lower=False, **kwargs):
+        """Fix ``max_length`` to 7 and pick the upper/lower normalization to apply."""
         kwargs.update({"max_length": 7})
         if upper and lower:
             raise AssertionError(
@@ -73,6 +74,7 @@ class ColorCodeFiled(ColorCodeField):
     """
 
     def __init__(self, *args, **kwargs):
+        """Warn that ``ColorCodeFiled`` is deprecated before delegating to ``ColorCodeField``."""
         warnings.warn(
             "'ColorCodeFiled' is a deprecated misspelling of 'ColorCodeField'"
             " and will be removed in django-boost 4.0; use 'ColorCodeField'"

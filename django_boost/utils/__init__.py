@@ -22,6 +22,7 @@ class Loop(Iterator[tuple["Loop[_T]", _T]]):
     last: bool
 
     def __init__(self, iterable: Sequence[_T]) -> None:
+        """Wrap ``iterable`` in an ``enumerate()`` to track position per iteration."""
         self.iterable = enumerate(iterable)
         self.length = len(iterable)
 
