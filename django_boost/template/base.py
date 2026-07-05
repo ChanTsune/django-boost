@@ -34,5 +34,5 @@ class StrictInvalidTemplateVariable(str):
         obj.exception_class = exception_class
         return obj
 
-    def __mod__(self, missing):
+    def __mod__(self, missing):  # noqa: D105
         raise self.exception_class(self.message.format(name=missing))

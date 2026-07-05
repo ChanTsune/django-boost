@@ -14,6 +14,7 @@ class AutoReverseOneToOneDescriptor(ReverseOneToOneDescriptor):
 
     @atomic
     def __get__(self, instance, cls=None):
+        """Get the related object, creating it via ``get_or_create`` if it doesn't exist yet."""
         model = getattr(self.related, 'related_model', self.related.model)
         try:
             return super().__get__(instance, cls)
