@@ -26,10 +26,11 @@ class Loop(Iterator[tuple["Loop[_T]", _T]]):
         self.iterable = enumerate(iterable)
         self.length = len(iterable)
 
-    def __iter__(self) -> Loop[_T]:
+    def __iter__(self) -> Loop[_T]:  # noqa: D105
         return self
 
     def __next__(self) -> tuple[Loop[_T], _T]:
+        """Advance one item and return ``(self, item)`` for ``for forloop, item in loop(...)``."""
         i, item = next(self.iterable)
         # Shortcuts for current loop iteration number.
         self.counter0 = i
