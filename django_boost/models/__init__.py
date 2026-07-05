@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.db.models``."""
+
 from __future__ import annotations
 
 from django.contrib.auth.models import AbstractUser, UnicodeUsernameValidator

@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.forms``."""
+
 from __future__ import annotations
 
 from django import forms

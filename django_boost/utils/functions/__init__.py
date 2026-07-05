@@ -1,3 +1,5 @@
+"""Re-exported helpers from ``django_boost.utils.functions`` submodules."""
+
 from __future__ import annotations
 
 from django_boost.utils.functions.json import json_to_model, model_to_json

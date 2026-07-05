@@ -1,3 +1,5 @@
+"""Reusable Django extensions: drop-in replacements and add-ons for Django's built-in classes."""
+
 from __future__ import annotations
 
 from django_boost.utils.version import get_version

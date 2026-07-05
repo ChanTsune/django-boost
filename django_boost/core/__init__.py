@@ -1,3 +1,5 @@
+"""Internal helpers used across django_boost; not part of the public API."""
+
 from __future__ import annotations
 
 from django_boost import __version__ as VERSION

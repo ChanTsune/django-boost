@@ -1,3 +1,5 @@
+"""Custom model fields for Django's ``django.db.models``."""
+
 from __future__ import annotations
 
 import warnings
