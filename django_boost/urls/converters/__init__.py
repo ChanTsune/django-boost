@@ -9,6 +9,10 @@ from django_boost.urls.converters.decimal import (
     NegativeDecimalConverter, NonNegativeDecimalConverter,
     NonPositiveDecimalConverter, NonZeroDecimalConverter,
     PositiveDecimalConverter, SignedDecimalConverter)
+from django_boost.urls.converters.float import (
+    NegativeFloatConverter, NonNegativeFloatConverter,
+    NonPositiveFloatConverter, NonZeroFloatConverter,
+    PositiveFloatConverter, SignedFloatConverter)
 from django_boost.urls.converters.integer import (
     NegativeIntConverter, NonNegativeIntConverter, NonPositiveIntConverter,
     NonZeroIntConverter, PositiveIntConverter, SignedIntConverter)
@@ -89,16 +93,6 @@ class BinStrConverter(BinConverter):
         return value
 
 
-class FloatingPointConverter:
-    regex = '[0-9]+([.][0-9]+)?'
-
-    def to_python(self, value):
-        return float(value)
-
-    def to_url(self, value):
-        return str(value)
-
-
 BOOST_CONVERTERS = {
     'bin': BinIntConverter,
     'oct': OctIntConverter,
@@ -106,7 +100,13 @@ BOOST_CONVERTERS = {
     'bin_str': BinStrConverter,
     'oct_str': OctStrConverter,
     'hex_str': HexStrConverter,
-    'float': FloatingPointConverter,
+    'float': NonNegativeFloatConverter,
+    'signed_float': SignedFloatConverter,
+    'positive_float': PositiveFloatConverter,
+    'negative_float': NegativeFloatConverter,
+    'non_negative_float': NonNegativeFloatConverter,
+    'non_positive_float': NonPositiveFloatConverter,
+    'non_zero_float': NonZeroFloatConverter,
     'date': DateConverter,
     'signed_int': SignedIntConverter,
     'positive_int': PositiveIntConverter,
