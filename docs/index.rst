@@ -6,10 +6,12 @@
 Welcome to django-boost's documentation!
 ========================================
 
-Django Boost is a collection of custom extensions for the Django Framework.
+Extra batteries for Django, the batteries-included framework: model
+mixins, view mixins, middleware, and template tools that developers keep
+reinventing.
 
-These include management commands, additional database fields,
-admin extensions, view mixins, form mixins and much more.
+It also includes management commands, additional database fields,
+admin extensions, form mixins and much more.
 
 
 Getting Started

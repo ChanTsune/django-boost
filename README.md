@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/ChanTsune/Django-Boost/master/icon.png" alt="django-boost logo" width="200">
 </p>
 
-Django Boost is a collection of custom extensions for the Django Framework.
+Extra batteries for Django, the batteries-included framework: model mixins, view mixins, middleware, and template tools that developers keep reinventing.
 
 [![PyPI - License](https://img.shields.io/pypi/l/django_boost)](https://pypi.org/project/django-boost/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_boost)](https://pypi.org/project/django-boost/)
