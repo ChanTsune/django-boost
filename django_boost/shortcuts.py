@@ -1,7 +1,8 @@
 """
-This module collects helper functions and classes that "span" multiple levels
-of MVC. In other words, these functions/classes introduce controlled coupling
-for convenience's sake.
+This module collects helper functions and classes that "span" multiple levels of MVC.
+
+In other words, these functions/classes introduce controlled coupling for
+convenience's sake.
 """
 
 from __future__ import annotations
@@ -20,8 +21,7 @@ def _get_queryset(klass):
 
 def get_object_or_default(klass, *args, default=None, **kwargs):
     """
-    Use get() to return an object or return default if the object
-    does not exist.
+    Use get() to return an object or return default if the object does not exist.
 
     klass may be a Model, Manager, or QuerySet object. All other passed
     arguments and keyword arguments are used in the get() query.
@@ -44,8 +44,7 @@ def get_object_or_default(klass, *args, default=None, **kwargs):
 
 def get_object_or_exception(klass, *args, exception=None, **kwargs):
     """
-    Use get() to return an object, or raise exception if the object
-    does not exist.
+    Use get() to return an object, or raise exception if the object does not exist.
 
     klass may be a Model, Manager, or QuerySet object. All other passed
     arguments and keyword arguments are used in the get() query.
@@ -70,8 +69,7 @@ def get_object_or_exception(klass, *args, exception=None, **kwargs):
 
 def get_list_or_default(klass, *args, default=None, **kwargs):
     """
-    Use filter() to return a list of objects, or return default if
-    the list is empty.
+    Use filter() to return a list of objects, or return default if the list is empty.
 
     klass may be a Model, Manager, or QuerySet object. All other passed
     arguments and keyword arguments are used in the filter() query.
@@ -92,8 +90,7 @@ def get_list_or_default(klass, *args, default=None, **kwargs):
 
 def get_list_or_exception(klass, *args, exception=None, **kwargs):
     """
-    Use filter() to return a list of objects, or raise exception if
-    the list is empty.
+    Use filter() to return a list of objects, or raise exception if the list is empty.
 
     klass may be a Model, Manager, or QuerySet object. All other passed
     arguments and keyword arguments are used in the filter() query.

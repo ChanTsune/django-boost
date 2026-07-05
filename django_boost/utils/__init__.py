@@ -53,8 +53,5 @@ def isiterable(obj: object) -> TypeGuard[Iterable[object]]:
 
 
 def contain_any(container: Container[object], elements: Iterable[object]) -> bool:
-    """
-    Return `True` if any of the `elements` are contained in `container`,
-    `False` otherwise.
-    """
+    """Return `True` if any of the `elements` are contained in `container`, `False` otherwise."""
     return any(e in container for e in elements)

@@ -42,6 +42,6 @@ class InvertCheckboxInput(CheckboxInput):
 
 
 class Toggleswitch(CheckboxInput):
-    """toggle switch styled input"""
+    """Toggle switch styled input."""
 
     template_name = "boost/forms/widgets/toggleswitch.html"
