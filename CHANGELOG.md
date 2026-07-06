@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.2.2] - 2026-07-06
+
 ### Fixed
 
 - `RelatedModelInlineMixin.save(commit=False)` no longer writes to the database; its inline related objects are now persisted by `save_m2m()`, following Django's `ModelForm` contract.
