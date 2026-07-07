@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.2.3] - 2026-07-07
+
 ### Fixed
 
 - `deletemigrations` now deletes only the top-level migration modules, no longer descending into subpackages under `migrations/` and removing unrelated `.py` files.
