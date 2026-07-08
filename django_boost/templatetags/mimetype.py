@@ -11,6 +11,7 @@ register = Library()
 
 @register.filter(name="mimetype")
 def mimetype(value):
+    """Guess a MIME type from a bare extension, a leading-dot extension, or a full filename."""
     if "." not in value:
         value = "." + value
     if value.startswith("."):

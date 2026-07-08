@@ -16,17 +16,19 @@ register = Library()
 @register.filter(name="urlencode", is_safe=True)
 @stringfilter
 def urlencode(value, arg="/"):
+    """URL-encode ``value``, passing ``arg`` as the characters to leave unescaped."""
     return parse.quote(value, safe=arg)
 
 
 @register.filter(name="urldecode")
 @stringfilter
-def urldecode(value):
+def urldecode(value):  # noqa: D103
     return parse.unquote(value)
 
 
 @register.simple_tag
 def replace_parameters(request, *args):
+    """Return the current query string with the given ``key, value, ...`` pairs replaced."""
     arg_len = len(args)
     if arg_len % 2 != 0:
         raise LookupError(
@@ -38,5 +40,5 @@ def replace_parameters(request, *args):
 
 
 @register.simple_tag
-def get_querystring(request, value):
+def get_querystring(request, value):  # noqa: D103
     return request.GET.get(value, None)
