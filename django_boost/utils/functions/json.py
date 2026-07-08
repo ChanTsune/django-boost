@@ -31,6 +31,7 @@ def model_to_json(model, fields=(), exclude=()):
 
 
 def json_to_model(model_class, dic, fields=(), exclude=()):
+    """Build an unsaved ``model_class`` instance from a dict shaped like ``model_to_json``'s output."""
     model = model_class()
     for f in model._meta.fields:
         if fields and f.name not in fields:

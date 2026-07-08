@@ -11,6 +11,7 @@ from django.db.models.deletion import Collector
 
 
 def get_logical_delete_field(model):
+    """Return ``model``'s logical-deletion flag field, or ``None`` if it doesn't use logical deletion."""
     if not hasattr(model, 'get_deleted_value'):
         return None
 

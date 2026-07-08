@@ -114,5 +114,6 @@ BOOST_CONVERTERS = {
 
 
 def register_boost_converters():
+    """Register all of django_boost's URL converters (``BOOST_CONVERTERS``) with Django."""
     for name, klass in BOOST_CONVERTERS.items():
         register_converter(klass, name)

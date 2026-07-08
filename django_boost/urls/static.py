@@ -29,6 +29,7 @@ class StaticFileConnector:
 
 
 def load_static_files(path):
+    """Return the ``urls.path()`` entries built by ``StaticFileConnector`` for every file under ``path``."""
     return StaticFileConnector(path).urls
 
 
