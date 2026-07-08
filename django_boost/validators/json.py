@@ -33,5 +33,5 @@ class JsonValidator(BaseValidator):
 json_validator = JsonValidator()
 
 
-def validate_json(value: str) -> None:
+def validate_json(value: str) -> None:  # noqa: D103
     return json_validator(value)

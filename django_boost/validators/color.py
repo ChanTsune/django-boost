@@ -18,5 +18,5 @@ class ColorCodeValidator(RegexValidator):
 color_code_validator = ColorCodeValidator()
 
 
-def validate_color_code(value: str) -> None:
+def validate_color_code(value: str) -> None:  # noqa: D103
     return color_code_validator(value)
