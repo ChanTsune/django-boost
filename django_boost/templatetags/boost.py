@@ -274,4 +274,5 @@ register.simple_tag(literal_eval, name="literal")
 
 @register.simple_tag(name="var")
 def var(value):
+    """Return ``value`` unchanged, for assigning an expression to a template variable via ``as``."""
     return value
