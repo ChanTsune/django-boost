@@ -129,10 +129,12 @@ class HTMLSpaceLessCompressor(HTMLParser):
 
 
 def strip_spaces_between_tags(value: str) -> str:
+    """Remove ignorable whitespace between HTML tags in a single, already-complete string."""
     return HTMLSpaceLessCompressor().compress(value)
 
 
 def compress_stream(chunks: Iterable[bytes], charset: str) -> Iterator[bytes]:
+    """Remove ignorable whitespace between HTML tags across a chunked byte stream."""
     compressor = HTMLSpaceLessCompressor()
     decoder = codecs.getincrementaldecoder(charset)()
     for chunk in chunks:
@@ -147,6 +149,7 @@ def compress_stream(chunks: Iterable[bytes], charset: str) -> Iterator[bytes]:
 
 
 async def acompress_stream(chunks: AsyncIterable[bytes], charset: str) -> AsyncIterator[bytes]:
+    """Async counterpart to ``compress_stream``, for an async byte-chunk source."""
     compressor = HTMLSpaceLessCompressor()
     decoder = codecs.getincrementaldecoder(charset)()
     async for chunk in chunks:
