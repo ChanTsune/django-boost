@@ -49,6 +49,7 @@ def get_complete_version(version: _Version | None = None) -> _Version:
 
 
 def get_docs_version(version: _Version | None = None) -> str:
+    """Return the X.Y version used to pick a Read the Docs version, or ``'dev'`` for a pre-release."""
     version = get_complete_version(version)
     if version[3] != 'final':
         return 'dev'

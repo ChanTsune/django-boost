@@ -6,6 +6,7 @@ from django_boost import __version__ as VERSION
 
 
 def get_version() -> str:
+    """Return django_boost's version string (``django_boost.__version__``)."""
     return VERSION
 
 
@@ -17,4 +18,5 @@ EMPTY = Empty()
 
 
 def is_empty(obj: object) -> bool:
+    """Return `True` if `obj` is the `EMPTY` sentinel, `False` otherwise."""
     return isinstance(obj, Empty)
