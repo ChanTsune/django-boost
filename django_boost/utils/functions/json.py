@@ -28,8 +28,10 @@ def model_to_json(model, fields=(), exclude=()):
         json_data = [model_to_json(m, fields, exclude) for m in model]
         return json_data
 
-    raise TypeError('argument must be {} or {}'.format(
-        models.Model, models.QuerySet))
+    raise TypeError(
+        'model_to_json() argument must be a Model or QuerySet, not %s'
+        % type(model).__name__
+    )
 
 
 def json_to_model(model_class, dic, fields=(), exclude=()):
