@@ -11,6 +11,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 def parse_user_agent(agent):
+    """Parse a User-Agent string, raising ``ImproperlyConfigured`` if the ``user-agents`` extra isn't installed."""
     try:
         from user_agents import parse
     except ImportError as exc:

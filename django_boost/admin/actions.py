@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _, gettext_lazy
 
 
 def hard_delete_selected(modeladmin, request, queryset):
-
+    """Admin action that physically deletes the selection, bypassing logical deletion."""
     opts = modeladmin.model._meta
     app_label = opts.app_label
 

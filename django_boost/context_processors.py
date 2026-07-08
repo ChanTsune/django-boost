@@ -6,6 +6,7 @@ from django_boost.user_agents import parse_user_agent
 
 
 def user_agent(request):
+    """Add parsed user-agent details (browser, device, OS, bot/mobile/tablet flags) to the template context."""
     agent = request.META.get('HTTP_USER_AGENT', '')
     user_agent = parse_user_agent(agent)
     context = {'user_agent': agent,
