@@ -90,6 +90,7 @@ def _get_models(app_configs):
 
 
 def check_database_router(app_configs, **kwargs):
+    """Validate ``DATABASE_APPS_MAPPING`` when django_boost's router is enabled."""
     errors = []
     if not _setting_contains("DATABASE_ROUTERS", DATABASE_ROUTER):
         return errors
@@ -145,6 +146,7 @@ def check_database_router(app_configs, **kwargs):
 
 
 def check_redirect_correct_hostname_middleware(app_configs, **kwargs):
+    """Validate ``CORRECT_HOST`` when ``RedirectCorrectHostnameMiddleware`` is enabled."""
     errors = []
     if not _setting_contains("MIDDLEWARE", REDIRECT_CORRECT_HOSTNAME_MIDDLEWARE):
         return errors
@@ -186,6 +188,7 @@ def check_redirect_correct_hostname_middleware(app_configs, **kwargs):
 
 
 def check_user_agent_extra(app_configs, **kwargs):
+    """Require the optional ``user-agents`` package when the ``user_agent`` context processor is configured."""
     if not _templates_use_user_agent_context_processor() or _user_agents_available():
         return []
 
@@ -250,6 +253,7 @@ def _check_logical_deletion_model(model):
 
 
 def check_logical_deletion_models(app_configs, **kwargs):
+    """Validate every model using ``LogicalDeletionMixin`` across the project."""
     errors = []
     for model in _get_models(app_configs):
         errors.extend(_check_logical_deletion_model(model))
@@ -257,6 +261,7 @@ def check_logical_deletion_models(app_configs, **kwargs):
 
 
 def check_admin_tools_requires_admin(app_configs, **kwargs):
+    """Require ``django.contrib.admin`` when an admin_tools app is installed."""
     admin_tools_installed = apps.is_installed(ADMIN_TOOLS_APP) or apps.is_installed(LEGACY_ADMIN_TOOLS_APP)
     if not admin_tools_installed or apps.is_installed(DJANGO_ADMIN_APP):
         return []
@@ -272,6 +277,7 @@ def check_admin_tools_requires_admin(app_configs, **kwargs):
 
 
 def check_emailuser_deprecated(app_configs, **kwargs):
+    """Warn when ``AUTH_USER_MODEL`` still points at the deprecated built-in ``EmailUser``."""
     if getattr(settings, "AUTH_USER_MODEL", None) != EMAILUSER_MODEL:
         return []
 
