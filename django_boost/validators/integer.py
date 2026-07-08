@@ -35,5 +35,5 @@ class NonZeroValidator(BaseValidator):
 non_zero_validator = NonZeroValidator()
 
 
-def validate_non_zero(value: Any) -> None:
+def validate_non_zero(value: Any) -> None:  # noqa: D103
     return non_zero_validator(value)
