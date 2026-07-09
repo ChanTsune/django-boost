@@ -1,3 +1,5 @@
+"""Admin actions for Django's ``django.contrib.admin``."""
+
 from __future__ import annotations
 
 from django.contrib import messages

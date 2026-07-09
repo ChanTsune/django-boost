@@ -1,3 +1,5 @@
+"""Admin site helpers for Django's ``django.contrib.admin``."""
+
 from __future__ import annotations
 
 from inspect import getmembers, isclass
