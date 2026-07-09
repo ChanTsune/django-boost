@@ -1,3 +1,5 @@
+"""The ``SpaceLessMiddleware`` HTML-whitespace-compressing middleware."""
+
 from __future__ import annotations
 
 from collections.abc import AsyncIterable, Iterable
