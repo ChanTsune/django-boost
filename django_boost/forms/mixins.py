@@ -1,3 +1,5 @@
+"""Form mixins for Django's ``django.forms``."""
+
 from __future__ import annotations
 
 from django.core.exceptions import (ImproperlyConfigured,

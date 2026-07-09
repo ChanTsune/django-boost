@@ -1,3 +1,5 @@
+"""Custom form widgets for Django's ``django.forms``."""
+
 from __future__ import annotations
 
 from django.forms.widgets import CheckboxInput, Input, RadioSelect
