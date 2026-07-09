@@ -1,3 +1,5 @@
+"""Mirrors Django's own ``django.utils.version`` for django_boost's ``VERSION``."""
+
 from __future__ import annotations
 
 from typing import TypeAlias
