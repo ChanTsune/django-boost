@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.db.models.query``."""
+
 from __future__ import annotations
 
 import django

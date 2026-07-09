@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.db.models.manager``."""
+
 from __future__ import annotations
 
 from django.db.models.manager import Manager

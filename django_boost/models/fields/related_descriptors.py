@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.db.models.fields.related_descriptors``."""
+
 from __future__ import annotations
 
 from django.db.models.fields.related_descriptors import (
