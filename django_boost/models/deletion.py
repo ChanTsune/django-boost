@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.db.models.deletion``."""
+
 from __future__ import annotations
 
 from collections import Counter
