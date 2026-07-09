@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.test``."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable
