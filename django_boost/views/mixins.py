@@ -1,3 +1,5 @@
+"""View mixins for Django's ``django.views``."""
+
 from __future__ import annotations
 
 import json
