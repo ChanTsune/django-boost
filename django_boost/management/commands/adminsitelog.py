@@ -1,3 +1,5 @@
+"""Deprecated ``django_boost`` alias for ``contrib.admin_tools``'s ``adminsitelog`` command."""
+
 from __future__ import annotations
 
 import warnings

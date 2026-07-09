@@ -1,3 +1,5 @@
+"""The ``deletemigrations`` management command."""
+
 from __future__ import annotations
 
 import os
