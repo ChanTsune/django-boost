@@ -1,3 +1,5 @@
+"""App config for the deprecated ``django_boost.admin_tools`` app."""
+
 from __future__ import annotations
 
 import warnings

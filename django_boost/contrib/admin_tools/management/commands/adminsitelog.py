@@ -1,3 +1,5 @@
+"""The ``adminsitelog`` management command."""
+
 from __future__ import annotations
 
 from django.core.exceptions import FieldError
