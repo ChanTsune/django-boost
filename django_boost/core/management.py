@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.core.management``."""
+
 from __future__ import annotations
 
 from django.core.management import base
