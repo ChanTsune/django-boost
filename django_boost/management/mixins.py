@@ -1,3 +1,5 @@
+"""Mixins for django_boost's own management commands."""
+
 from __future__ import annotations
 
 import csv

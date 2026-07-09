@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.core.management.templates``."""
+
 from __future__ import annotations
 
 import os

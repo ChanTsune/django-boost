@@ -1,3 +1,5 @@
+"""The ``migrate_emailuser`` management command."""
+
 from __future__ import annotations
 
 from django.apps import apps

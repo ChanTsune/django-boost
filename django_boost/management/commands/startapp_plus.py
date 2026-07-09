@@ -1,3 +1,5 @@
+"""The ``startapp_plus`` management command."""
+
 from __future__ import annotations
 
 from django_boost.management.templates import TemplateCommand
