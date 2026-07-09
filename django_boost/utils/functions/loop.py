@@ -1,3 +1,5 @@
+"""Loop-position predicate helpers."""
+
 from __future__ import annotations
 
 from collections.abc import Collection, Iterable, Iterator
