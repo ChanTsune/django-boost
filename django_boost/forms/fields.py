@@ -1,3 +1,5 @@
+"""Custom form fields for Django's ``django.forms``."""
+
 from __future__ import annotations
 
 from django.forms import BooleanField, CharField
