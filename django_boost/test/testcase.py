@@ -14,6 +14,7 @@ __unittest = True
 
 
 class TestCase(DjangoTestCase):
+    """Django's own ``TestCase`` plus ``assertStatusCode*`` assertions."""
 
     def assertStatusCodeEqual(self, response: HttpResponseBase, code: int,
                               msg: object = None) -> None:

@@ -11,6 +11,7 @@ from typing import Any
 
 
 class HTMLSpaceLessCompressor(HTMLParser):
+    """Streaming HTML parser that removes ignorable whitespace between tags."""
 
     RAW_TEXT_ELEMENTS = frozenset({'script', 'style'})
     WHITESPACE_PRESERVING_ELEMENTS = frozenset({'pre', 'textarea'})
