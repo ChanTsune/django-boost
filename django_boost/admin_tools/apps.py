@@ -8,6 +8,8 @@ from django.apps import AppConfig
 
 
 class AdminToolsConfig(AppConfig):
+    """App config that warns on ``ready()`` that this app is a deprecated alias."""
+
     name = 'django_boost.admin_tools'
 
     def ready(self):
