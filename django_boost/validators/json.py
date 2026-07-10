@@ -16,6 +16,7 @@ __all__ = ["JsonValidator", "validate_json"]
 
 @deconstructible(path="django_boost.validators.JsonValidator")
 class JsonValidator(BaseValidator):
+    """Validate that the value is a JSON-parseable string."""
 
     message = _('Enter valid JSON string.')
     code = 'json value'

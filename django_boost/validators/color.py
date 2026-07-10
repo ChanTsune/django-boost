@@ -11,6 +11,8 @@ __all__ = ["ColorCodeValidator", "validate_color_code"]
 
 @deconstructible(path="django_boost.validators.ColorCodeValidator")
 class ColorCodeValidator(RegexValidator):
+    """Validate that the whole value is a 6-digit hexadecimal color code prefixed with ``#``."""
+
     # Anchored: RegexValidator matches with regex.search(), so without \A..\Z
     # any string merely containing a color code (e.g. "x#abcdef") would pass.
     regex = r'\A#[0-9a-fA-F]{6}\Z'
