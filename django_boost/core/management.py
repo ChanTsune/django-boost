@@ -17,8 +17,12 @@ class CommandVersion:
 
 
 class BaseCommand(CommandVersion, base.BaseCommand):
+    """Django's own ``BaseCommand`` plus ``--version`` support."""
+
     pass
 
 
 class AppCommand(CommandVersion, base.AppCommand):
+    """Django's own ``AppCommand`` plus ``--version`` support."""
+
     pass
