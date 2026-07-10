@@ -11,7 +11,7 @@ from django_boost.core.management import AppCommand
 from django_boost.management.mixins import ConfirmOptionMixin, QuitOptionMixin
 
 
-class Command(ConfirmOptionMixin, QuitOptionMixin, AppCommand):
+class Command(ConfirmOptionMixin, QuitOptionMixin, AppCommand):  # noqa: D101
     help = "delete migration files."
 
     def add_arguments(self, parser):

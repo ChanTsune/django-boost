@@ -5,7 +5,7 @@ from __future__ import annotations
 from django_boost.management.templates import TemplateCommand
 
 
-class Command(TemplateCommand):
+class Command(TemplateCommand):  # noqa: D101
     help = (
         "Creates a Django app directory structure for the given app name in "
         "the current directory or optionally in the given directory."
