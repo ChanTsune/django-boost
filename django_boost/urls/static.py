@@ -11,6 +11,7 @@ from django_boost.views.generic import StaticView
 
 
 class StaticFileConnector:
+    """Builds a list of ``urls.path()`` entries for every file under a directory."""
 
     def __init__(self, path):
         """Build a ``urls.re_path()`` entry for every file under ``path``."""
