@@ -7,6 +7,7 @@ from .filters import LogicalDeletedFilter
 
 
 class LogicalDeletionModelAdminMixin:
+    """Mixin that adds the hard-delete action and dead/alive filter to a ``ModelAdmin``."""
 
     def hard_delete_queryset(self, request, queryset):
         queryset.delete(hard=True)
