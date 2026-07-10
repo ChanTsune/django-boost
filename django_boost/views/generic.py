@@ -61,6 +61,8 @@ class JsonView(JsonRequestMixin, JsonResponseMixin, _View):
 
 
 class BaseModelCLUDViews:
+    """Assemble list/create/update/delete generic views under one URLconf via ``list_view`` etc."""
+
     model: type[models.Model] | None = None
     success_url = None
     list_view = None
@@ -150,6 +152,8 @@ class BaseModelCLUDViews:
 
 
 class ModelCRUDViews(BaseModelCLUDViews):
+    """``BaseModelCLUDViews`` wired up with Django's own generic view classes."""
+
     list_view = _ListView
     create_view = _CreateView
     detail_view = _DetailView
