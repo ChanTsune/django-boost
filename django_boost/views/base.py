@@ -6,7 +6,7 @@ import warnings
 from functools import update_wrapper
 
 from django.core.exceptions import ImproperlyConfigured
-from django.http import FileResponse
+from django.http import FileResponse, Http404
 from django.utils.decorators import classonlymethod
 from django.views import View as _View
 from django.views.generic import CreateView as _CreateView
@@ -115,4 +115,9 @@ class StaticResponseMixin:
 class StaticView(StaticResponseMixin, _View):
 
     def get(self, request, *args, **kwargs):
-        return self.create_response()
+        try:
+            return self.create_response()
+        except FileNotFoundError:
+            # A file present when the route was registered may be gone at
+            # request time; serve 404 as Django's own static view does.
+            raise Http404

@@ -112,3 +112,18 @@ class StaticViewContentTypeTests(TestCase):
             self.assertEqual(response.status_code, 200)
         finally:
             response.close()
+
+
+class StaticViewMissingFileTests(TestCase):
+    """A StaticView whose file is gone responds 404, not 500."""
+
+    def test_missing_file_raises_http404(self):
+        from django.http import Http404
+        from django.test import RequestFactory
+
+        class FileView(StaticView):
+            static_name = os.path.join(
+                os.path.dirname(__file__), 'does_not_exist.xyz')
+
+        with self.assertRaises(Http404):
+            FileView().get(RequestFactory().get('/missing'))
