@@ -45,7 +45,7 @@ def record_migration_applied(using, app_label, name) -> bool:
     return True
 
 
-class Command(BaseCommand):
+class Command(BaseCommand):  # noqa: D101
     help = ("Adopt the legacy django_boost_emailuser table and content type into your own "
             "AUTH_USER_MODEL app, then finish migrating.")
 
