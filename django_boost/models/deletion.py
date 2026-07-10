@@ -33,6 +33,7 @@ def get_logical_delete_field(model):
 
 
 class LogicalDeletionCollector(Collector):
+    """Django's own deletion ``Collector``, marking rows as deleted instead of deleting them."""
 
     def __init__(self, using, origin=None, deleted_at=None):
         """Store ``deleted_at`` to use as the logical-deletion timestamp/flag value."""

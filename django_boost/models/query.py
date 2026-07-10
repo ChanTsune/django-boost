@@ -9,6 +9,8 @@ from django_boost.models.deletion import LogicalDeletionCollector
 
 
 class LogicalDeletionQuerySet(QuerySet):
+    """QuerySet for ``LogicalDeletionMixin``; ``delete()`` marks rows dead instead of removing them."""
+
     delete_flag_field = "deleted_at"
 
     def get_delete_flag_field_name(self):

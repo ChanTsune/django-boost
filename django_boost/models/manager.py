@@ -8,6 +8,8 @@ from .query import LogicalDeletionQuerySet
 
 
 class LogicalDeletionManager(Manager):
+    """Default manager for ``LogicalDeletionMixin`` models; ``delete()`` marks rows dead instead of removing them."""
+
     delete_flag_field = "deleted_at"
 
     def get_deleted_flag_field_name(self):
