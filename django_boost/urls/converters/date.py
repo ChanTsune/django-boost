@@ -34,6 +34,8 @@ REGEX_DATE = REGEX_DATE.format(
 
 
 class DateConverter:
+    """URL converter for calendar dates in ``Y/M/D`` format, validating real dates via ``regex``."""
+
     regex: ClassVar[str] = REGEX_DATE
 
     def to_url(self, value: datetime | str) -> str:

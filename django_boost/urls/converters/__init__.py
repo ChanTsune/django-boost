@@ -63,32 +63,32 @@ class BinConverter:
         return str(value)
 
 
-class HexIntConverter(HexConverter):
+class HexIntConverter(HexConverter):  # noqa: D101
     def to_python(self, value):
         return int(value, 16)
 
 
-class OctIntConverter(OctConverter):
+class OctIntConverter(OctConverter):  # noqa: D101
     def to_python(self, value):
         return int(value, 8)
 
 
-class BinIntConverter(BinConverter):
+class BinIntConverter(BinConverter):  # noqa: D101
     def to_python(self, value):
         return int(value, 2)
 
 
-class HexStrConverter(HexConverter):
+class HexStrConverter(HexConverter):  # noqa: D101
     def to_python(self, value):
         return value
 
 
-class OctStrConverter(OctConverter):
+class OctStrConverter(OctConverter):  # noqa: D101
     def to_python(self, value):
         return value
 
 
-class BinStrConverter(BinConverter):
+class BinStrConverter(BinConverter):  # noqa: D101
     def to_python(self, value):
         return value
 
