@@ -15,6 +15,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - Comparing two `JsonValidator` (or two `NonZeroValidator`) instances no longer raises `AttributeError`.
+- The `mimetype` template filter now returns an empty string for an unknown extension (instead of the literal `None`) and accepts a non-string value instead of raising `TypeError`.
 
 ## [3.2.4] - 2026-07-11
 
