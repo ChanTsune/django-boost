@@ -18,6 +18,7 @@ __all__ = ["JsonMixin", "UUIDModelMixin",
 
 
 class JsonMixin:
+    """Mixin adding ``to_json``/``from_json`` conversion between a model instance and a dict."""
 
     def to_json(self, fields=(), exclude=()):
         """Return dict object."""
