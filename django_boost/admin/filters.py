@@ -6,6 +6,8 @@ from django.contrib import admin
 
 
 class LogicalDeletedFilter(admin.SimpleListFilter):
+    """Admin list filter for alive/dead items on a ``LogicalDeletionMixin`` model."""
+
     title = 'delete state'
     parameter_name = 'delete_state'
 

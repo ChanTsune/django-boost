@@ -18,6 +18,8 @@ __all__ = ["EmailUserAdmin",
 
 @admin.register(EmailUser)
 class EmailUserAdmin(UserAdmin):
+    """Admin registration for ``EmailUser``, Django's ``UserAdmin`` adapted to its email-based login."""
+
     add_form = UserCreationForm
     form = UserChangeForm
     add_fieldsets = (
