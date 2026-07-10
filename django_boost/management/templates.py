@@ -14,6 +14,7 @@ from django_boost.core.management import CommandVersion
 
 
 class TemplateCommand(CommandVersion, DjangoTemplateCommand):
+    """Django's own ``TemplateCommand`` plus ``--version`` support and a django-boost app template default."""
 
     def handle_template(self, template, subdir):
         base = super().handle_template(template, subdir)

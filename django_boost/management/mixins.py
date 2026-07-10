@@ -78,6 +78,7 @@ class OutputFormatMixin:
 
 
 class ConfirmOptionMixin:
+    """Add a ``-y`` option and a ``confirm()`` helper that prompts unless it's set."""
 
     def add_confirm_option(self, parser):
         parser.add_argument('-y', action='store_true')
@@ -97,6 +98,7 @@ class ConfirmOptionMixin:
 
 
 class QuitOptionMixin:
+    """Add a ``-q``/``--quit`` option that silences ``self.stdout``/``self.stderr``."""
 
     def add_quit_option(self, parser):
         parser.add_argument('-q', '--quit', action='store_true',
