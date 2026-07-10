@@ -30,6 +30,7 @@ __all__ = ["CSRFExemptMixin", "DynamicRedirectMixin", "RedirectToDetailMixin",
 
 
 class CSRFExemptMixin:
+    """Mixin that exempts the view's ``dispatch()`` from CSRF protection."""
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -37,6 +38,8 @@ class CSRFExemptMixin:
 
 
 class DynamicRedirectMixin(RedirectURLMixin):
+    """Mixin that prefers the ``?next=``-style redirect target over ``success_url``."""
+
     success_url = None
 
     def get_success_url(self):
@@ -45,6 +48,7 @@ class DynamicRedirectMixin(RedirectURLMixin):
 
 
 class RedirectToDetailMixin:
+    """Mixin that redirects to the object's detail view instead of a fixed ``success_url``."""
 
     success_url_name: str | None = None
     url_kwarg: str = 'pk'
@@ -138,6 +142,7 @@ class JsonRequestMixin(AllowContentTypeMixin):
 
 
 class JsonResponseMixin:
+    """Mixin that renders the view's context as a JSON response."""
 
     response_class = JsonResponse
     extra_context = None
@@ -289,6 +294,11 @@ class SuperuserRequiredMixin(AccessMixin):
 
 
 class ViewUserKwargsMixin:
+    """Mixin that adds the current request's user to the form kwargs.
+
+    Pairs with ``django_boost.forms.mixins.FormUserKwargsMixin``, which
+    consumes the ``user`` kwarg on the form side.
+    """
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -297,6 +307,7 @@ class ViewUserKwargsMixin:
 
 
 class UserAgentMixin:
+    """Mixin that swaps in a device-specific template based on the parsed user agent."""
 
     pc_template_name: str | None = None
     tablet_template_name: str | None = None

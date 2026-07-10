@@ -115,6 +115,7 @@ class StaticResponseMixin:
 
 
 class StaticView(StaticResponseMixin, _View):
+    """View that serves a single static file, e.g. via ``include_static_files``."""
 
     def get(self, request, *args, **kwargs):
         try:
