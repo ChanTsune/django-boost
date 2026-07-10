@@ -29,3 +29,20 @@ class TestStaticFileBelow(TestCase):
 
         for p in urlpatterns:
             self.assertTrue(isinstance(p, URLPattern))
+
+    def test_angle_bracket_filename_routes_literally(self):
+        import os
+        import shutil
+        import tempfile
+        from django_boost.urls.static import load_static_files
+
+        tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp)
+        with open(os.path.join(tmp, '<script>.js'), 'w') as f:
+            f.write('x')
+
+        (pattern,) = [p.pattern for p in load_static_files(tmp)]
+        # The file name must match itself literally, not act as a path
+        # converter that captures any "<something>.js".
+        self.assertIsNotNone(pattern.match('<script>.js'))
+        self.assertIsNone(pattern.match('anything.js'))
