@@ -25,9 +25,8 @@ class NonZeroValidator(BaseValidator):
     code = 'non_zero'
 
     def __init__(self, message: Any = None) -> None:
-        """Override the default message when one is given."""
-        if message:
-            self.message = message
+        """Delegate to ``BaseValidator`` so ``limit_value`` supports validator equality checks."""
+        super().__init__(None, message)
 
     def __call__(self, value: Any) -> None:
         if value == 0:
