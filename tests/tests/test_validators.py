@@ -77,6 +77,14 @@ class TestValidator(TestCase):
         with self.assertRaisesMessage(ValidationError, "Supply a valid token"):
             validator("xyz")
 
+    def test_json_and_non_zero_validators_are_comparable(self):
+        # Regression: BaseValidator.__eq__ reads limit_value, which was never
+        # initialized because __init__ skipped super().__init__().
+        self.assertEqual(JsonValidator(), JsonValidator())
+        self.assertEqual(NonZeroValidator(), NonZeroValidator())
+        self.assertNotEqual(JsonValidator(), JsonValidator("other"))
+        self.assertNotEqual(NonZeroValidator(), NonZeroValidator("other"))
+
 
 class NonZeroValidatorDeconstruct(TestCase):
     """`NonZeroValidator` serializes to its public path for migrations."""

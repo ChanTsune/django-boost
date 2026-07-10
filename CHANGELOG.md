@@ -12,6 +12,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Decimal path converters `decimal`, `signed_decimal`, `positive_decimal`, `negative_decimal`, `non_negative_decimal`, `non_positive_decimal` and `non_zero_decimal`, covering decimal ranges Django's built-in `float` converter cannot express; `decimal` is an alias of `non_negative_decimal`.
 - Float path converters `signed_float`, `positive_float`, `negative_float`, `non_negative_float`, `non_positive_float` and `non_zero_float`, symmetric with the existing signed-integer and decimal converter families; `float` is now an explicit alias of `non_negative_float` (same regex and behavior as before).
 
+### Fixed
+
+- Comparing two `JsonValidator` (or two `NonZeroValidator`) instances no longer raises `AttributeError`.
+
 ## [3.2.4] - 2026-07-11
 
 ### Fixed
