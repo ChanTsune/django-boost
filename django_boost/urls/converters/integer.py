@@ -24,25 +24,25 @@ class BaseIntConverter:
         return str(value)
 
 
-class SignedIntConverter(BaseIntConverter):
+class SignedIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'-?[0-9]+'
 
 
-class PositiveIntConverter(BaseIntConverter):
+class PositiveIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'0*[1-9][0-9]*'
 
 
-class NegativeIntConverter(BaseIntConverter):
+class NegativeIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'-0*[1-9][0-9]*'
 
 
-class NonNegativeIntConverter(BaseIntConverter):
+class NonNegativeIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'[0-9]+'
 
 
-class NonPositiveIntConverter(BaseIntConverter):
+class NonPositiveIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'0+|-0*[1-9][0-9]*'
 
 
-class NonZeroIntConverter(BaseIntConverter):
+class NonZeroIntConverter(BaseIntConverter):  # noqa: D101
     regex: ClassVar[str] = r'-?0*[1-9][0-9]*'
