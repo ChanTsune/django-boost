@@ -9,7 +9,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Fixed
 
-- `StaticView` now responds with a 404 instead of a 500 when its file is missing at request time (e.g. removed or rotated after the route was registered), matching Django's own static view.
+- `StaticView` now responds with a 404 instead of a 500 when its file is missing at request time.
+- `include_static_files` now routes each file name literally, so a name containing `<`/`>` (e.g. `<script>.js`) is no longer interpreted as a path converter that would match unrelated URLs.
 
 ## [3.2.3] - 2026-07-07
 

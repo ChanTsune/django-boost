@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 
 from django import urls
 
@@ -10,7 +11,7 @@ from django_boost.views.generic import StaticView
 class StaticFileConnector:
 
     def __init__(self, path):
-        """Build a ``urls.path()`` entry for every file under ``path``."""
+        """Build a ``urls.re_path()`` entry for every file under ``path``."""
         self._urls = []
 
         for base, _, files in os.walk(path):
@@ -19,9 +20,11 @@ class StaticFileConnector:
                 url_path = full_path[len(path):]
                 if url_path[0] == "/":
                     url_path = url_path[1:]
+                # Match the file name literally: re.escape keeps a name like
+                # "<x>.js" from being read as a path-converter route.
                 self._urls.append(
-                    urls.path(url_path,
-                              StaticView.as_view(static_name=full_path)))
+                    urls.re_path(r"^%s$" % re.escape(url_path),
+                                 StaticView.as_view(static_name=full_path)))
 
     @property
     def urls(self):
