@@ -88,6 +88,13 @@ class ReAuthenticationRequiredView(ReAuthenticationRequiredMixin,
     interval = 100
 
 
+class ReAuthenticationRequiredLogoutView(ReAuthenticationRequiredMixin,
+                                         TemplateView):
+    template_name = "boost/test/index.html"
+    interval = -1
+    logout = True
+
+
 class AnonymousRequiredView(AnonymousRequiredMixin, TemplateView):
     template_name = "boost/test/index.html"
 

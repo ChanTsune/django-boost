@@ -18,6 +18,7 @@ urlpatterns = [
          views.LimitedTermAfterStartView.as_view()),
     path('limited_term/after/end/', views.LimitedTermAfterEndView.as_view()),
     path('re_auth/', views.ReAuthenticationRequiredView.as_view()),
+    path('re_auth/logout/', views.ReAuthenticationRequiredLogoutView.as_view()),
     path('anonymous_only/', views.AnonymousRequiredView.as_view()),
     path('anonymous_only/custom/',
          views.AnonymousRequiredCustomRedirectView.as_view()),

@@ -7,9 +7,9 @@ from datetime import timedelta
 from typing import Sequence
 
 from django.conf import settings
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import AccessMixin
-from django.contrib.auth.views import (RedirectURLMixin, logout_then_login,
-                                       redirect_to_login)
+from django.contrib.auth.views import RedirectURLMixin, redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
@@ -259,9 +259,11 @@ class ReAuthenticationRequiredMixin(AccessMixin):
 
         delta = self.get_interval()
         if self.need_reauthentication(request.user, delta):
-
             if self.logout:
-                return logout_then_login(request, self.get_login_url())
+                # logout_then_login() dispatches to LogoutView, which only
+                # accepts POST from Django 5.0 (GET logout was removed); call
+                # auth_logout() directly so this works for any request method.
+                auth_logout(request)
 
             return redirect_to_login(self.request.get_full_path(),
                                      self.get_login_url(),
