@@ -31,7 +31,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
         self._pending_ws = ''
         self._run_started = False
 
-    def handle_data(self, data: str) -> None:
+    def handle_data(self, data: str) -> None:  # noqa: D102
         if self._raw_depth > 0:
             # Raw CDATA (script/style): escaping would corrupt the JS/CSS.
             self.buffer.write(data)
@@ -55,7 +55,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
         self._pending_ws = data[len(stripped):]
         self.buffer.write(escape(stripped, quote=False))
 
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:  # noqa: D102
         self._end_run()
         self.buffer.write("<%s" % tag)
         if attrs:
@@ -67,7 +67,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
         elif tag in self.WHITESPACE_PRESERVING_ELEMENTS:
             self._preserve_depth += 1
 
-    def handle_endtag(self, tag: str) -> None:
+    def handle_endtag(self, tag: str) -> None:  # noqa: D102
         self._end_run()
         self.buffer.write("</%s>" % tag)
         if tag in self.RAW_TEXT_ELEMENTS:
@@ -75,7 +75,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
         elif tag in self.WHITESPACE_PRESERVING_ELEMENTS:
             self._preserve_depth -= 1
 
-    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:  # noqa: D102
         self._end_run()
         self.buffer.write("<%s" % tag)
         if attrs:
@@ -83,11 +83,11 @@ class HTMLSpaceLessCompressor(HTMLParser):
             self.buffer.write(self._render_attrs(attrs))
         self.buffer.write("/>")
 
-    def handle_decl(self, decl: str) -> None:
+    def handle_decl(self, decl: str) -> None:  # noqa: D102
         self._end_run()
         self.buffer.write("<!%s>" % decl)
 
-    def handle_comment(self, data: str) -> None:
+    def handle_comment(self, data: str) -> None:  # noqa: D102
         # Comments are dropped, but a comment still ends the current text run
         # so the text on either side is stripped separately, as with a tag.
         self._end_run()
@@ -98,6 +98,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
             for name, value in attrs)
 
     def close(self) -> None:
+        """Close the parser, then drop the last text run's trailing whitespace."""
         # super().close() flushes text the parser was still buffering (e.g. a
         # trailing "&" that looked like the start of an entity); _end_run()
         # then drops that last run's trailing whitespace.
@@ -128,6 +129,7 @@ class HTMLSpaceLessCompressor(HTMLParser):
         return self._drain()
 
     def compress(self, data: str) -> str:
+        """Compress a single, already-complete string in one call."""
         return self.feed_chunk(data) + self.finalize()
 
 
