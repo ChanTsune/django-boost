@@ -1,3 +1,5 @@
+"""Extensions for Django's ``django.urls`` path converters."""
+
 from __future__ import annotations
 
 import decimal
