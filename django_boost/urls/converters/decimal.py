@@ -9,29 +9,29 @@ from django_boost.urls.converters._numeric import (
     BaseSignedNumericConverter, POSITIVE, ZERO)
 
 
-class BaseDecimalConverter(BaseSignedNumericConverter[decimal.Decimal]):
+class BaseDecimalConverter(BaseSignedNumericConverter[decimal.Decimal]):  # noqa: D101
     _parse = staticmethod(decimal.Decimal)
 
 
-class SignedDecimalConverter(BaseDecimalConverter):
+class SignedDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = r'-?[0-9]+(?:\.[0-9]+)?'
 
 
-class PositiveDecimalConverter(BaseDecimalConverter):
+class PositiveDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = POSITIVE
 
 
-class NegativeDecimalConverter(BaseDecimalConverter):
+class NegativeDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = f'-{POSITIVE}'
 
 
-class NonNegativeDecimalConverter(BaseDecimalConverter):
+class NonNegativeDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = r'[0-9]+(?:\.[0-9]+)?'
 
 
-class NonPositiveDecimalConverter(BaseDecimalConverter):
+class NonPositiveDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = f'{ZERO}|-{POSITIVE}'
 
 
-class NonZeroDecimalConverter(BaseDecimalConverter):
+class NonZeroDecimalConverter(BaseDecimalConverter):  # noqa: D101
     regex: ClassVar[str] = f'-?{POSITIVE}'
