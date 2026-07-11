@@ -17,10 +17,10 @@ class BaseIntConverter:
 
     regex: ClassVar[str]
 
-    def to_python(self, value: str) -> int:
+    def to_python(self, value: str) -> int:  # noqa: D102
         return int(value)
 
-    def to_url(self, value: int | str) -> str:
+    def to_url(self, value: int | str) -> str:  # noqa: D102
         return str(value)
 
 

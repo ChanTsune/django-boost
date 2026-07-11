@@ -27,7 +27,7 @@ class HexConverter:
 
     regex = '[0-9a-fA-F]+'
 
-    def to_url(self, value):
+    def to_url(self, value):  # noqa: D102
         if isinstance(value, int):
             return hex(value)[2:]
         return str(value)
@@ -42,7 +42,7 @@ class OctConverter:
 
     regex = '[0-7]+'
 
-    def to_url(self, value):
+    def to_url(self, value):  # noqa: D102
         if isinstance(value, int):
             return oct(value)[2:]
         return str(value)
@@ -57,39 +57,39 @@ class BinConverter:
 
     regex = '[01]+'
 
-    def to_url(self, value):
+    def to_url(self, value):  # noqa: D102
         if isinstance(value, int):
             return bin(value)[2:]
         return str(value)
 
 
 class HexIntConverter(HexConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return int(value, 16)
 
 
 class OctIntConverter(OctConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return int(value, 8)
 
 
 class BinIntConverter(BinConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return int(value, 2)
 
 
 class HexStrConverter(HexConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return value
 
 
 class OctStrConverter(OctConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return value
 
 
 class BinStrConverter(BinConverter):  # noqa: D101
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return value
 
 
