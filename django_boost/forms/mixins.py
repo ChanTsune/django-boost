@@ -66,6 +66,7 @@ class MatchedObjectGetMixin:
     field_lookup = {}
 
     def get_queryset(self):
+        """Return ``queryset``, or fall back to ``model``'s/the form's own default manager."""
         if self.queryset is None:
             if self.model:
                 return self.model._default_manager.all()
@@ -156,6 +157,7 @@ class RelatedModelInlineMixin:
                 self.fields['%s_%s' % (field, field_name)] = field_object
 
     def save(self, commit=True):
+        """Save the form, then create/update each related model from its ``inline_fields``."""
         object = super().save(commit=False)
 
         def save_inline():
