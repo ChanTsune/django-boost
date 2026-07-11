@@ -14,15 +14,15 @@ class Command(OutputFormatMixin, BaseCommand):
     help = "List super users."
     OUTPUT_FIELDS = ("email", "active", "staff", "last_login")
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser):  # noqa: D102
         self.add_format_option(parser)
 
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: D102
         User = get_user_model()
         return User.objects.filter(
             is_superuser=True).order_by(User.USERNAME_FIELD)
 
-    def get_row_data(self, user, **options):
+    def get_row_data(self, user, **options):  # noqa: D102
         email_field = user.get_email_field_name()
         return {
             "email": getattr(user, email_field, "") or "",
@@ -31,5 +31,5 @@ class Command(OutputFormatMixin, BaseCommand):
             "last_login": str(user.last_login) if user.last_login else "(never)",
         }
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # noqa: D102
         self.print_formatted(self.get_queryset(), **options)

@@ -11,13 +11,13 @@ class LogicalDeletedFilter(admin.SimpleListFilter):
     title = 'delete state'
     parameter_name = 'delete_state'
 
-    def lookups(self, request, model_admin):
+    def lookups(self, request, model_admin):  # noqa: D102
         return (
             ('alive', ('Alive')),
             ('dead', ('Dead')),
         )
 
-    def queryset(self, request, queryset):
+    def queryset(self, request, queryset):  # noqa: D102
         value = self.value()
         if value == 'alive':
             return queryset.alive()

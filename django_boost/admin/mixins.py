@@ -9,10 +9,10 @@ from .filters import LogicalDeletedFilter
 class LogicalDeletionModelAdminMixin:
     """Mixin that adds the hard-delete action and dead/alive filter to a ``ModelAdmin``."""
 
-    def hard_delete_queryset(self, request, queryset):
+    def hard_delete_queryset(self, request, queryset):  # noqa: D102
         queryset.delete(hard=True)
 
-    def get_actions(self, request):
+    def get_actions(self, request):  # noqa: D102
         # Add the action to this admin's own action set only; add_action()
         # would register it on the shared AdminSite and leak it to every
         # other model admin.
@@ -22,7 +22,7 @@ class LogicalDeletionModelAdminMixin:
             actions[name] = (func, name, description)
         return actions
 
-    def get_list_filter(self, request):
+    def get_list_filter(self, request):  # noqa: D102
         filters = super().get_list_filter(request)
         filters = list(filters) + [LogicalDeletedFilter]
         return filters
