@@ -12,7 +12,7 @@ class Command(TemplateCommand):  # noqa: D101
     )
     missing_args_message = "You must provide an application name."
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # noqa: D102
         app_name = options.pop('name')
         target = options.pop('directory')
         template_type = 'app'

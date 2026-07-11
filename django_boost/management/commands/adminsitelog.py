@@ -25,7 +25,7 @@ class Command(_Command):
     that have not migrated -- so correctly configured projects are not warned.
     """
 
-    def execute(self, *args, **options):
+    def execute(self, *args, **options):  # noqa: D102
         if not apps.is_installed(ADMIN_TOOLS_APP):
             warnings.warn(
                 "Running 'adminsitelog' from 'django_boost' is deprecated; add "

@@ -49,14 +49,14 @@ class Command(BaseCommand):  # noqa: D101
     help = ("Adopt the legacy django_boost_emailuser table and content type into your own "
             "AUTH_USER_MODEL app, then finish migrating.")
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser):  # noqa: D102
         parser.add_argument("--database", default=DEFAULT_DB_ALIAS)
         parser.add_argument(
             "--target-migration", default="0001_initial",
             help="Migration in the target app that creates the user model "
                  "(default: 0001_initial).")
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # noqa: D102
         using = options["database"]
         target = getattr(settings, "AUTH_USER_MODEL", "") or ""
         if target == LEGACY_USER_MODEL or "." not in target:
