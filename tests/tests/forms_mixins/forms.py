@@ -37,3 +37,12 @@ class ReverseOneToOneHasManyToManyModelForm(RelatedModelInlineMixin,
     class Meta:
         model = models.ReverseOneToOneHasManyToManyModel
         fields = ('name',)
+
+
+class ReverseOneToOneHasManyToManyRelatedModelForm(RelatedModelInlineMixin,
+                                                   forms.ModelForm):
+    inline_fields = {'forward': ('name',)}
+
+    class Meta:
+        model = models.ReverseOneToOneHasManyToManyRelatedModel
+        fields = ('items',)

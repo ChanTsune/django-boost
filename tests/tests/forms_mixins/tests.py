@@ -215,6 +215,18 @@ class TestRelatedModelInlineMixins(TestCase):
         self.assertEqual(obj.name, 'sample')
         self.assertEqual(list(obj.reverse.items.all()), [self.item2])
 
+    def test_commit_true_saves_base_forms_own_many_to_many(self):
+        from .forms import ReverseOneToOneHasManyToManyRelatedModelForm
+
+        form = ReverseOneToOneHasManyToManyRelatedModelForm(
+            {'items': [self.item1.pk], 'forward_name': 'sample'})
+        self.assertTrue(form.is_valid())
+
+        obj = form.save()
+
+        obj.refresh_from_db()
+        self.assertEqual(list(obj.items.all()), [self.item1])
+
     @classmethod
     def tearDownClass(cls):
         pass

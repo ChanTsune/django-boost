@@ -195,6 +195,7 @@ class RelatedModelInlineMixin:
 
         if commit:
             save_inline()
+            self._save_m2m()
         else:
             # Honor Django's ModelForm.save(commit=False) contract: perform no
             # DB writes now and defer them (plus the base form's own m2m) to
