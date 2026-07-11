@@ -85,7 +85,7 @@ class BaseModelCLUDViews:
             model_name = None
         self.app_name = app_name or model_name
 
-    def get_success_url(self):
+    def get_success_url(self):  # noqa: D102
         if self.success_url is None:
             return reverse('%s:list' % self.app_name)
         return self.success_url
@@ -102,32 +102,32 @@ class BaseModelCLUDViews:
             view_kwargs['fields'] = '__all__'
         return view_kwargs
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):  # noqa: D102
         view_kwargs = self._form_view_kwargs(self.update_view)
         view = self._as_view(self.update_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):  # noqa: D102
         view_kwargs = self._form_view_kwargs(self.create_view)
         view = self._as_view(self.create_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):  # noqa: D102
         view_kwargs = {'success_url': self.get_success_url(), }
         view = self._as_view(self.delete_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):  # noqa: D102
         view_kwargs = {}
         view = self._as_view(self.list_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
-    def detail(self, request, *args, **kwargs):
+    def detail(self, request, *args, **kwargs):  # noqa: D102
         view_kwargs = {}
         view = self._as_view(self.detail_view, **view_kwargs)
         return view(request, *args, **kwargs)
 
-    def get_urls(self):
+    def get_urls(self):  # noqa: D102
         urlpatterns = []
         if self.list_view:
             urlpatterns += [path(self.list_url_pattern,
@@ -147,7 +147,7 @@ class BaseModelCLUDViews:
         return urlpatterns
 
     @property
-    def urls(self):
+    def urls(self):  # noqa: D102
         return (self.get_urls(), self.app_name)
 
 
