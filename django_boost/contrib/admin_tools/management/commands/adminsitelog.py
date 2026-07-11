@@ -23,10 +23,11 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
                             ">": "gt", }
     OUTPUT_FIELDS = ("id", "action", "detail", "user", "time")
 
-    def get_sortable_fields(self, model):
+    def get_sortable_fields(self, model):  # noqa: D102
         return sorted(get_field_names_from_opts(model._meta))
 
     def get_log_entry_model(self):
+        """Return Django admin's ``LogEntry`` model, raising if ``django.contrib.admin`` isn't installed."""
         from django.apps import apps
         if not apps.is_installed("django.contrib.admin"):
             raise CommandError(
@@ -36,6 +37,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         return LogEntry
 
     def get_sortable_fields_help(self):
+        """Return the sortable field names for ``--help``, or a hint if admin isn't installed."""
         from django.apps import apps
         if not apps.is_installed("django.contrib.admin"):
             return "(requires 'django.contrib.admin' in INSTALLED_APPS)"
@@ -61,13 +63,14 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         return {"%s__%s" % (condition[:index], lookup):
                 condition[index + len(op):]}
 
-    def parse_filter(self, conditions):
+    def parse_filter(self, conditions):  # noqa: D102
         parsed = {}
         for condition in conditions:
             parsed.update(self._parse_filter(condition))
         return parsed
 
     def get_row_data(self, log, **options):
+        """Map a ``LogEntry`` to the OUTPUT_FIELDS row dict, classifying it as Added/Changed/Deleted."""
         if log.is_addition():
             action = "Added"
             detail = log.object_repr
@@ -87,6 +90,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         }
 
     def print_log(self, log, **options):
+        """Write one colorized ``id | action | object | user | time`` line for ``log``."""
         fmt = "{id} | {action} | {object} | {user} | {time}"
         fmap = self.get_row_data(log, **options)
         if fmap["action"] == "Added":
@@ -98,7 +102,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         fmap["object"] = fmap.pop("detail")
         self.stdout.write(fmt.format_map(fmap))
 
-    def print_text(self, rows, **options):
+    def print_text(self, rows, **options):  # noqa: D102
         self.stdout.write(" | ".join(self.OUTPUT_FIELDS))
         for log in rows:
             self.print_log(log, **options)
@@ -115,7 +119,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
             if hasattr(user, field):
                 return getattr(user, field)
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser):  # noqa: D102
         supported_fields_str = self.get_sortable_fields_help()
         parser.add_argument('-d', '--delete',
                             action='store_true', help='Delete displayed logs.')
@@ -144,7 +148,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
         self.add_format_option(parser)
         self.add_confirm_option(parser)
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # noqa: D102
         LogEntry = self.get_log_entry_model()
         queryset = LogEntry.objects.all()
 
