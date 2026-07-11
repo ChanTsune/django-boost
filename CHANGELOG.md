@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.2.4] - 2026-07-11
+
 ### Fixed
 
 - `StaticView` now responds with a 404 instead of a 500 when its file is missing at request time.
@@ -478,7 +480,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.2.1...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.2.4...HEAD
+[3.2.4]: https://github.com/ChanTsune/django-boost/compare/v3.2.3...v3.2.4
+[3.2.3]: https://github.com/ChanTsune/django-boost/compare/v3.2.2...v3.2.3
+[3.2.2]: https://github.com/ChanTsune/django-boost/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/ChanTsune/django-boost/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/ChanTsune/django-boost/compare/v3.1.2...v3.2.0
 [3.1.2]: https://github.com/ChanTsune/django-boost/compare/v3.1.1...v3.1.2
