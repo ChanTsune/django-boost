@@ -39,11 +39,13 @@ class DateConverter:
     regex: ClassVar[str] = REGEX_DATE
 
     def to_url(self, value: datetime | str) -> str:
+        """Render ``value`` as ``Y/M/D``, accepting either a ``datetime`` or an already-formatted string."""
         if isinstance(value, datetime):
             return f"{value.year}/{value.month}/{value.day}"
         return str(value)
 
     def to_python(self, value: datetime | str) -> datetime:
+        """Parse a ``Y/M/D`` string into a ``datetime``, passing an already-parsed ``datetime`` through."""
         if isinstance(value, datetime):
             return value
         # strptime's %Y needs 4 digits, but the regex accepts 1-4; build the

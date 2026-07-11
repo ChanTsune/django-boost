@@ -26,8 +26,8 @@ class BaseSignedNumericConverter(Generic[_T]):
     # mypy 1.x enforces it (mypy 2.x currently doesn't, but don't rely on that).
     _parse: staticmethod[[str], _T]
 
-    def to_python(self, value: str) -> _T:
+    def to_python(self, value: str) -> _T:  # noqa: D102
         return self._parse(value)
 
-    def to_url(self, value: _T | str) -> str:
+    def to_url(self, value: _T | str) -> str:  # noqa: D102
         return str(value)
