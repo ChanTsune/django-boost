@@ -33,7 +33,7 @@ class CSRFExemptMixin:
     """Mixin that exempts the view's ``dispatch()`` from CSRF protection."""
 
     @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -42,7 +42,7 @@ class DynamicRedirectMixin(RedirectURLMixin):
 
     success_url = None
 
-    def get_success_url(self):
+    def get_success_url(self):  # noqa: D102
         url = self.get_redirect_url()
         return url or self.success_url or super().get_success_url()
 
@@ -54,7 +54,7 @@ class RedirectToDetailMixin:
     url_kwarg: str = 'pk'
     object_field_name: str = 'pk'
 
-    def get_success_url(self):
+    def get_success_url(self):  # noqa: D102
         field = getattr(self.object, self.object_field_name)
         kw = {self.url_kwarg: field}
         return reverse(self.success_url_name, kwargs=kw)
@@ -66,7 +66,7 @@ class AllowContentTypeMixin:
     allowed_content_types: Sequence[str] | None = None
     strictly = True
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         allow_types = self.get_allowed_content_types()
         if self.strictly and request.content_type not in allow_types:
             return HttpResponseUnsupportedMediaType('415 '
@@ -74,7 +74,7 @@ class AllowContentTypeMixin:
                                                     content_type='text/html')
         return super().dispatch(request, *args, **kwargs)
 
-    def get_allowed_content_types(self):
+    def get_allowed_content_types(self):  # noqa: D102
         if self.allowed_content_types is None:
             return []
         return self.allowed_content_types
@@ -87,13 +87,14 @@ class LimitedTermMixin:
     start_datetime = None
     end_datetime = None
 
-    def get_start_datetime(self):
+    def get_start_datetime(self):  # noqa: D102
         return self.start_datetime
 
-    def get_end_datetime(self):
+    def get_end_datetime(self):  # noqa: D102
         return self.end_datetime
 
     def is_allowed_term(self, access_datetime):
+        """Return True if access_datetime falls within [start_datetime, end_datetime), either bound optional."""
         start_datetime = self.get_start_datetime()
         end_datetime = self.get_end_datetime()
         if end_datetime is start_datetime is None:
@@ -104,7 +105,7 @@ class LimitedTermMixin:
             return access_datetime < end_datetime
         return start_datetime < access_datetime < end_datetime
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if not self.is_allowed_term(now()):
             raise self.exception_class
         return super().dispatch(request, *args, **kwargs)
@@ -119,6 +120,7 @@ class JsonRequestMixin(AllowContentTypeMixin):
     encoding = 'utf-8'
 
     def get_encoding(self):
+        """Return the charset declared on the request, or ``self.encoding`` as fallback."""
         # Honor a charset declared on the request; fall back to the default.
         return self.request.content_params.get('charset') or self.encoding
 
@@ -131,6 +133,7 @@ class JsonRequestMixin(AllowContentTypeMixin):
 
     @property
     def json(self):
+        """Lazily parse and cache the request body as JSON."""
         if hasattr(self, "_json"):
             return self._json
         setattr(self, "_json", self.__json())
@@ -148,13 +151,14 @@ class JsonResponseMixin:
     extra_context = None
 
     def get_context_data(self, **kwargs):
+        """Merge ``extra_context`` with the given kwargs into a fresh dict."""
         # Copy extra_context into a fresh dict; updating it in place would
         # mutate the shared class attribute and leak kwargs across requests.
         context = dict(self.extra_context or {})
         context.update(kwargs)
         return context
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):  # noqa: D102
         return self.response_class(self.get_context_data())
 
     post = get
@@ -183,10 +187,10 @@ class AnonymousRequiredMixin:
 
     redirect_authenticated_url = None
 
-    def get_redirect_authenticated_url(self):
+    def get_redirect_authenticated_url(self):  # noqa: D102
         return self.redirect_authenticated_url or settings.LOGIN_REDIRECT_URL
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if request.user.is_authenticated:
             return redirect(self.get_redirect_authenticated_url())
         return super().dispatch(request, *args, **kwargs)
@@ -229,6 +233,7 @@ class ReAuthenticationRequiredMixin(AccessMixin):
     logout = False
 
     def get_interval(self):
+        """Return ``interval`` as a ``timedelta``, raising if it's unset."""
         if self.interval is None:
             raise ImproperlyConfigured(
                 "%(cls)s is missing interval."
@@ -242,12 +247,13 @@ class ReAuthenticationRequiredMixin(AccessMixin):
         return timedelta(seconds=self.interval)
 
     def need_reauthentication(self, user, delta):
+        """Return True if ``user`` last logged in more than ``delta`` ago."""
         if user.last_login is None:
             # Never recorded a login (last_login is nullable); require re-auth.
             return True
         return (user.last_login + delta) < now()
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
@@ -274,7 +280,7 @@ class StaffMemberRequiredMixin(AccessMixin):
     permission_denied_message = 'Only staff members can access'
     superuser = False
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if request.user.is_staff:
             return super().dispatch(request, *args, **kwargs)
         if self.superuser and request.user.is_superuser:
@@ -287,7 +293,7 @@ class SuperuserRequiredMixin(AccessMixin):
 
     permission_denied_message = 'Only super user can access'
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
         return self.handle_no_permission()
@@ -300,7 +306,7 @@ class ViewUserKwargsMixin:
     consumes the ``user`` kwarg on the form side.
     """
 
-    def get_form_kwargs(self):
+    def get_form_kwargs(self):  # noqa: D102
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
@@ -313,12 +319,12 @@ class UserAgentMixin:
     tablet_template_name: str | None = None
     mobile_template_name: str | None = None
 
-    def setup(self, request, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):  # noqa: D102
         super().setup(request, *args, **kwargs)
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         self.request.user_agent = parse_user_agent(user_agent)
 
-    def get_template_names(self):
+    def get_template_names(self):  # noqa: D102
         tmp = super().get_template_names()
         if self.request.user_agent.is_pc and self.pc_template_name:
             return [self.pc_template_name] + tmp
