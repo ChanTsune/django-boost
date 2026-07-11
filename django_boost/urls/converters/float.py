@@ -8,29 +8,29 @@ from django_boost.urls.converters._numeric import (
     BaseSignedNumericConverter, POSITIVE, ZERO)
 
 
-class BaseFloatConverter(BaseSignedNumericConverter[float]):
+class BaseFloatConverter(BaseSignedNumericConverter[float]):  # noqa: D101
     _parse = staticmethod(float)
 
 
-class SignedFloatConverter(BaseFloatConverter):
+class SignedFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = r'-?[0-9]+(?:\.[0-9]+)?'
 
 
-class PositiveFloatConverter(BaseFloatConverter):
+class PositiveFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = POSITIVE
 
 
-class NegativeFloatConverter(BaseFloatConverter):
+class NegativeFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = f'-{POSITIVE}'
 
 
-class NonNegativeFloatConverter(BaseFloatConverter):
+class NonNegativeFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = r'[0-9]+(?:\.[0-9]+)?'
 
 
-class NonPositiveFloatConverter(BaseFloatConverter):
+class NonPositiveFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = f'{ZERO}|-{POSITIVE}'
 
 
-class NonZeroFloatConverter(BaseFloatConverter):
+class NonZeroFloatConverter(BaseFloatConverter):  # noqa: D101
     regex: ClassVar[str] = f'-?{POSITIVE}'
