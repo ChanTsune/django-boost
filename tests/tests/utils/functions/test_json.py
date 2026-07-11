@@ -21,6 +21,13 @@ class ModelToJsonTests(TestCase):
         self.assertIsInstance(result, list)
         self.assertEqual([d["name"] for d in result], ["a", "b"])
 
+    def test_invalid_argument_raises_type_error(self):
+        with self.assertRaisesMessage(
+            TypeError,
+            "model_to_json() argument must be a Model or QuerySet, not str",
+        ):
+            model_to_json("not-a-model")
+
 
 class JsonToModelTests(TestCase):
 
