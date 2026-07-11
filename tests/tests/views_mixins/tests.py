@@ -121,6 +121,15 @@ class TestViewMixins(TestCase):
         self.assertStatusCodeEqual(response, 200)
         self.client.logout()
 
+    def test_re_authentication_required_logout(self):
+        from django.contrib.auth import get_user
+
+        self.client.force_login(self.user)
+        response = self.client.get('/re_auth/logout/')
+        self.assertStatusCodeEqual(response, 302)
+        self.assertEqual(response.url, '/accounts/login/?next=/re_auth/logout/')
+        self.assertFalse(get_user(self.client).is_authenticated)
+
     def test_anonymous_required(self):
         url = '/anonymous_only/'
         response = self.client.get(url)
