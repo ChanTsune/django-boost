@@ -19,5 +19,6 @@ class DjangoBoostConfig(AppConfig):
     default_auto_field = 'django.db.models.AutoField'
 
     def ready(self):
+        """Register django_boost's system checks (``django_boost.checks.CHECKS``)."""
         for check in CHECKS:
             checks.register(check, self.name)

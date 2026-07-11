@@ -23,7 +23,7 @@ class ContainAnyValidator(BaseValidator):
         """Delegate to ``BaseValidator`` so ``limit_value`` supports validator equality checks."""
         super().__init__(elements, message)
 
-    def __call__(self, value: Any) -> None:
+    def __call__(self, value: Any) -> None:  # noqa: D102
         if not contain_any(value, self.limit_value):
             message: Any = self.message
             try:

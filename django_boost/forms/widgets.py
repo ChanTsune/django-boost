@@ -40,7 +40,7 @@ class InvertCheckboxInput(CheckboxInput):
         super().__init__(attrs)
         self.check_test = boolean_check if check_test is None else check_test
 
-    def value_from_datadict(self, data, files, name):
+    def value_from_datadict(self, data, files, name):  # noqa: D102
         return not super().value_from_datadict(data, files, name)
 
 

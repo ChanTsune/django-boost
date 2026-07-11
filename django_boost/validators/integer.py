@@ -28,7 +28,7 @@ class NonZeroValidator(BaseValidator):
         """Delegate to ``BaseValidator`` so ``limit_value`` supports validator equality checks."""
         super().__init__(None, message)
 
-    def __call__(self, value: Any) -> None:
+    def __call__(self, value: Any) -> None:  # noqa: D102
         if value == 0:
             raise ValidationError(self.message, code=self.code)
 

@@ -56,6 +56,6 @@ class StringView(ResponseContentMixin, View):
 
     """
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):  # noqa: D102
         content = self.get_content(**kwargs)
         return self.content_to_response(content)

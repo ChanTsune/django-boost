@@ -163,7 +163,7 @@ class HttpExceptionBase(Exception):
     response_class = HttpResponse
 
     @property
-    def status_code(self):
+    def status_code(self):  # noqa: D102
         return self.response_class.status_code
 
 
