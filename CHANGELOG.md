@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Saving a `RelatedModelInlineMixin` form no longer discards the base model's own many-to-many field values.
+
 ## [3.3.0] - 2026-07-16
 
 ### Added
