@@ -55,7 +55,7 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
     but it is useful when the setting is troublesome or when using services such as heroku.
     """
 
-    def process_request(self, request):
+    def process_request(self, request):  # noqa: D102
         # Return the redirect from process_request rather than overriding
         # __call__, so MiddlewareMixin's own __call__/__acall__ short-circuit
         # correctly under both WSGI and ASGI. A synchronous __call__ override
@@ -93,6 +93,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
     """
 
     def get_template_from_status_code(self, status_code, request=None):
+        """Render the status page template for ``status_code``, falling back to a plain-text message."""
         message = STATUS_MESSAGES[status_code]
         try:
             if settings.DEBUG:
@@ -107,6 +108,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
             return "%s %s" % (status_code, message)
 
     def process_exception(self, request, e):
+        """Turn an ``HttpExceptionBase`` into its response, or a redirect for ``HttpRedirectExceptionBase``."""
         if isinstance(e, HttpRedirectExceptionBase):
             return e.response_class(e.url)
         elif isinstance(e, HttpExceptionBase):
