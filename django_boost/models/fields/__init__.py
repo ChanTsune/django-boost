@@ -36,7 +36,7 @@ class ColorCodeField(CharField):
             self.normalize = self._no_convert
         super().__init__(*args, **kwargs)
 
-    def deconstruct(self):
+    def deconstruct(self):  # noqa: D102
         name, path, args, kwargs = super().deconstruct()
         if self.upper:
             kwargs["upper"] = True
@@ -53,13 +53,13 @@ class ColorCodeField(CharField):
     def _no_convert(self, value):
         return value
 
-    def pre_save(self, model_instance, add):
+    def pre_save(self, model_instance, add):  # noqa: D102
         return self.normalize(super().pre_save(model_instance, add))
 
-    def to_python(self, value):
+    def to_python(self, value):  # noqa: D102
         return self.normalize(super().to_python(value))
 
-    def formfield(self, **kwargs):
+    def formfield(self, **kwargs):  # noqa: D102
         return super().formfield(**{
             'form_class': fields.ColorCodeField,
             **kwargs,
@@ -94,7 +94,7 @@ class SplitDateTimeField(models.DateTimeField):
     The effect on DB is the same as django.db.models.DateTimeField.
     """
 
-    def formfield(self, **kwargs):
+    def formfield(self, **kwargs):  # noqa: D102
         kwargs.update({'form_class': forms.SplitDateTimeField})
         return super().formfield(**kwargs)
 

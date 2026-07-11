@@ -42,6 +42,7 @@ class LogicalDeletionCollector(Collector):
         self.deleted_at = deleted_at
 
     def can_fast_delete(self, objs, from_field=None):
+        """Disable Django's fast-delete path for models that use logical deletion."""
         model = getattr(objs, 'model', None)
         if model is None:
             if hasattr(objs, '_meta'):
@@ -53,11 +54,12 @@ class LogicalDeletionCollector(Collector):
         return super().can_fast_delete(objs, from_field=from_field)
 
     def get_deleted_value(self, model):
+        """Return the explicit ``deleted_at`` override, or ``model``'s own default."""
         if self.deleted_at is not None:
             return self.deleted_at
         return model.get_deleted_value()
 
-    def delete(self):
+    def delete(self):  # noqa: D102
         for model, instances in self.data.items():
             self.data[model] = sorted(instances, key=attrgetter('pk'))
 

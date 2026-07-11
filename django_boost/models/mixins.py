@@ -61,9 +61,11 @@ class LogicalDeletionMixin(models.Model):
 
     @classmethod
     def get_deleted_value(cls):
+        """Return the default ``deleted_at`` timestamp; override to use a different sentinel."""
         return now()
 
     def delete(self, using=None, keep_parents=False, hard=False, deleted_at=None):
+        """Mark the instance dead, or physically delete it when ``hard=True``."""
         if hard:
             return super().delete(using=using, keep_parents=keep_parents)
         if self.pk is None:

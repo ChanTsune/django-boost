@@ -12,15 +12,15 @@ class LogicalDeletionManager(Manager):
 
     delete_flag_field = "deleted_at"
 
-    def get_deleted_flag_field_name(self):
+    def get_deleted_flag_field_name(self):  # noqa: D102
         return self.delete_flag_field
 
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: D102
         qs = LogicalDeletionQuerySet(self.model, using=self._db, hints=self._hints)
         qs.delete_flag_field = self.get_deleted_flag_field_name()
         return qs
 
-    def delete(self, hard=False, deleted_at=None):
+    def delete(self, hard=False, deleted_at=None):  # noqa: D102
         return self.get_queryset().delete(hard=hard, deleted_at=deleted_at)
 
     def alive(self):
