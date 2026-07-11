@@ -17,6 +17,7 @@ class TemplateCommand(CommandVersion, DjangoTemplateCommand):
     """Django's own ``TemplateCommand`` plus ``--version`` support and a django-boost app template default."""
 
     def handle_template(self, template, subdir):
+        """Resolve the template directory, overlaying django-boost's extras onto the built-in default."""
         base = super().handle_template(template, subdir)
         # Only enhance the built-in template; a user-supplied --template is left untouched.
         if template is not None:
