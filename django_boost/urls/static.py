@@ -30,7 +30,7 @@ class StaticFileConnector:
                                  StaticView.as_view(static_name=full_path)))
 
     @property
-    def urls(self):
+    def urls(self):  # noqa: D102
         return self._urls
 
 

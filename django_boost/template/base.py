@@ -19,6 +19,7 @@ class StrictInvalidTemplateVariable(str):
     default_message = "Template variable or property '{name}' is invalid or missing."
 
     def __new__(cls, message=None, exception_class=ValueError):
+        """Validate ``exception_class`` and ``message`` before building the ``'%s'`` sentinel instance."""
         if not (isinstance(exception_class, type) and issubclass(exception_class, Exception)):
             raise TypeError("exception_class must be an Exception subclass, "
                             "got %r." % (exception_class,))
