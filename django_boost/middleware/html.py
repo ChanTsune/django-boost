@@ -42,6 +42,7 @@ class SpaceLessMiddleware(MiddlewareMixin):
     def process_response(
             self, request: HttpRequest,
             response: HttpResponseBase) -> HttpResponseBase:
+        """Compress an HTML response's body, streaming or fixed, in place."""
         if 'text/html' in response.get('Content-Type', ''):
             if response.streaming:
                 # streaming is only True for StreamingHttpResponse, which is
