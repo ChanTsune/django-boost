@@ -9,6 +9,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Added
 
+- `LogicalDeletionModelAdmin` now includes a deletion-date filter with today, 7/30/90-day, older-than-90-day, and inclusive custom-range options.
 - Decimal path converters `decimal`, `signed_decimal`, `positive_decimal`, `negative_decimal`, `non_negative_decimal`, `non_positive_decimal` and `non_zero_decimal`, covering decimal ranges Django's built-in `float` converter cannot express; `decimal` is an alias of `non_negative_decimal`.
 - Float path converters `signed_float`, `positive_float`, `negative_float`, `non_negative_float`, `non_positive_float` and `non_zero_float`, symmetric with the existing signed-integer and decimal converter families; `float` is now an explicit alias of `non_negative_float` (same regex and behavior as before).
 

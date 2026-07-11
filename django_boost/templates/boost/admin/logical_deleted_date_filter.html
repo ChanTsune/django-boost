@@ -1,0 +1,37 @@
+{% load i18n %}
+<details data-filter-title="{{ title }}" open>
+  <summary>
+    {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+  </summary>
+  <ul>
+  {% for choice in choices %}
+    <li{% if choice.selected %} class="selected"{% endif %}>
+      <a href="{{ choice.query_string|iriencode }}">{{ choice.display }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+  <form method="get" style="box-sizing: border-box; padding: 0 15px 12px;">
+    {% for name, value in spec.preserved_parameters %}
+      <input type="hidden" name="{{ name }}" value="{{ value }}">
+    {% endfor %}
+    <p style="margin: 0 0 8px;">
+      <label for="boost-deleted-from" style="display: block; margin-bottom: 4px;">{% translate "From" %}</label>
+      <input id="boost-deleted-from" type="date" name="{{ spec.from_parameter }}" value="{{ spec.from_value }}" style="box-sizing: border-box; width: 100%;">
+    </p>
+    <p style="margin: 0 0 8px;">
+      <label for="boost-deleted-to" style="display: block; margin-bottom: 4px;">{% translate "To" %}</label>
+      <input id="boost-deleted-to" type="date" name="{{ spec.to_parameter }}" value="{{ spec.to_value }}" style="box-sizing: border-box; width: 100%;">
+    </p>
+    {% if spec.errors %}
+      <ul class="errorlist" style="margin: 0 0 8px; padding: 0;">
+      {% for error in spec.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button type="submit" class="button">{% translate "Apply" %}</button>
+      <a href="{{ choices.0.query_string|iriencode }}">{% translate "Clear" %}</a>
+    </div>
+  </form>
+</details>

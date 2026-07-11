@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from .actions import hard_delete_selected
-from .filters import LogicalDeletedFilter
+from .filters import LogicalDeletedDateFilter, LogicalDeletedFilter
 
 
 class LogicalDeletionModelAdminMixin:
-    """Mixin that adds the hard-delete action and dead/alive filter to a ``ModelAdmin``."""
+    """Mixin adding hard deletion and logical-deletion filters to a ``ModelAdmin``."""
 
     def hard_delete_queryset(self, request, queryset):  # noqa: D102
         queryset.delete(hard=True)
@@ -24,5 +24,11 @@ class LogicalDeletionModelAdminMixin:
 
     def get_list_filter(self, request):  # noqa: D102
         filters = super().get_list_filter(request)
-        filters = list(filters) + [LogicalDeletedFilter]
+        manager = self.model._default_manager
+        get_field_name = getattr(manager, 'get_deleted_flag_field_name', None)
+        field_name = get_field_name() if get_field_name else 'deleted_at'
+        filters = list(filters) + [
+            LogicalDeletedFilter,
+            (field_name, LogicalDeletedDateFilter),
+        ]
         return filters

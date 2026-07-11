@@ -834,6 +834,22 @@ from django_boost.admin.sites import register_all
 register_all(models, admin_class=admin.CustomAdmin)
 ```
 
+For models using `LogicalDeletionMixin`, `LogicalDeletionModelAdmin` adds the
+hard-delete action plus alive/deleted-state and deletion-date filters. The date
+filter includes common 7/30/90-day periods and an inclusive custom range.
+
+```py
+from django.contrib import admin
+from django_boost.admin import LogicalDeletionModelAdmin
+
+from .models import Article
+
+
+@admin.register(Article)
+class ArticleAdmin(LogicalDeletionModelAdmin):
+    pass
+```
+
 ## Shortcut Functions
 
 ```py

@@ -8,10 +8,11 @@ from django.contrib.auth.admin import UserAdmin
 from django_boost.forms import UserChangeForm, UserCreationForm
 from django_boost.models import EmailUser
 
+from .filters import LogicalDeletedDateFilter
 from .mixins import LogicalDeletionModelAdminMixin
 from .sites import register_all
 
-__all__ = ["EmailUserAdmin",
+__all__ = ["EmailUserAdmin", "LogicalDeletedDateFilter",
            "LogicalDeletionModelAdmin",
            "register_all"]
 
