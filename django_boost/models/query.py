@@ -13,7 +13,7 @@ class LogicalDeletionQuerySet(QuerySet):
 
     delete_flag_field = "deleted_at"
 
-    def get_delete_flag_field_name(self):
+    def get_delete_flag_field_name(self):  # noqa: D102
         return self.delete_flag_field
 
     def _clone(self):
@@ -26,6 +26,7 @@ class LogicalDeletionQuerySet(QuerySet):
         return clone
 
     def delete(self, hard=False, deleted_at=None):
+        """Mark matched rows dead, or physically delete them when ``hard=True``."""
         if hard:
             return super().delete()
         if hasattr(self, '_not_support_combined_queries'):
@@ -59,11 +60,11 @@ class LogicalDeletionQuerySet(QuerySet):
     delete.alters_data = True
     delete.queryset_only = True
 
-    def alive(self):
+    def alive(self):  # noqa: D102
         field_name = self.get_delete_flag_field_name()
         return self.filter(**{field_name: None})
 
-    def dead(self):
+    def dead(self):  # noqa: D102
         field_name = self.get_delete_flag_field_name()
         return self.exclude(**{field_name: None})
 
