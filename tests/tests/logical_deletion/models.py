@@ -1,5 +1,6 @@
 from django.db import models
 
+from django_boost.models.manager import LogicalDeletionManager
 from django_boost.models.mixins import LogicalDeletionMixin
 
 
@@ -68,3 +69,9 @@ class NonFastPhysicalGrandChild(models.Model):
         NonFastPhysicalChild, related_name='grandchildren',
         on_delete=models.CASCADE)
     name = models.CharField(max_length=8)
+
+
+class ManagerOnlyLogicalDeletionModel(models.Model):
+    name = models.CharField(max_length=8)
+    deleted_at = models.DateTimeField(null=True, default=None)
+    objects = LogicalDeletionManager()
