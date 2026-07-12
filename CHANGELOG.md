@@ -18,6 +18,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Comparing two `JsonValidator` (or two `NonZeroValidator`) instances no longer raises `AttributeError`.
 - The `mimetype` template filter now returns an empty string for an unknown extension (instead of the literal `None`) and accepts a non-string value instead of raising `TypeError`.
 - `ReAuthenticationRequiredMixin(logout=True)` no longer returns a 405 instead of logging out on Django 5.0+.
+- `LogicalDeletionMixin.revive`, `LogicalDeletionQuerySet.revive`, and `LogicalDeletionManager.delete`/`revive` can no longer be triggered by rendering a template variable, matching Django's own `delete`/`update`.
 
 ## [3.2.4] - 2026-07-11
 

@@ -72,3 +72,6 @@ class LogicalDeletionQuerySet(QuerySet):
         """Revive logical delete items."""
         field_name = self.get_delete_flag_field_name()
         return self.update(**{field_name: None})
+
+    revive.alters_data = True
+    revive.queryset_only = True

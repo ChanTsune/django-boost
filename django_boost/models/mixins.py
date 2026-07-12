@@ -83,6 +83,8 @@ class LogicalDeletionMixin(models.Model):
         self.deleted_at = None
         return self.save(force_update=force_update, using=using)
 
+    revive.alters_data = True
+
     def is_dead(self):
         """Return True if the item is dead."""
         return self.deleted_at is not None
