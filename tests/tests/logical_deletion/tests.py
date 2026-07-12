@@ -5,6 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.deletion import ProtectedError
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
+from django.template import Context, Template
 from django.test import TestCase, override_settings
 from django.test.utils import isolate_apps
 from django.utils.timezone import now
@@ -439,3 +440,49 @@ class LogicalDeletionManagerCustomFieldTests(TestCase):
             queryset = CustomFieldModel.objects.filter(pk__gt=0).alive()
 
         self.assertEqual(queryset.get_delete_flag_field_name(), "removed_at")
+
+
+class AltersDataTests(TestCase):
+    """Data-altering logical-deletion methods must not be callable from
+    templates, matching Django's own Model.delete/QuerySet.delete/update."""
+    from .models import LogicalDeletionModel
+
+    model = LogicalDeletionModel
+
+    def test_instance_revive_is_not_called_by_templates(self):
+        item = self.model.objects.create(name="0")
+        item.delete()
+
+        Template("{{ object.revive }}").render(Context({"object": item}))
+
+        item.refresh_from_db()
+        self.assertIsNotNone(item.deleted_at)
+
+    def test_queryset_revive_is_not_called_by_templates(self):
+        item = self.model.objects.create(name="1")
+        item.delete()
+        queryset = self.model.objects.filter(pk=item.pk)
+
+        Template("{{ queryset.revive }}").render(Context({"queryset": queryset}))
+
+        item.refresh_from_db()
+        self.assertIsNotNone(item.deleted_at)
+
+    def test_manager_delete_is_not_called_by_templates(self):
+        item = self.model.objects.create(name="2")
+
+        Template("{{ manager.delete }}").render(
+            Context({"manager": self.model.objects}))
+
+        item.refresh_from_db()
+        self.assertIsNone(item.deleted_at)
+
+    def test_manager_revive_is_not_called_by_templates(self):
+        item = self.model.objects.create(name="3")
+        item.delete()
+
+        Template("{{ manager.revive }}").render(
+            Context({"manager": self.model.objects}))
+
+        item.refresh_from_db()
+        self.assertIsNotNone(item.deleted_at)

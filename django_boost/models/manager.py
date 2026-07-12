@@ -23,6 +23,8 @@ class LogicalDeletionManager(Manager):
     def delete(self, hard=False, deleted_at=None):  # noqa: D102
         return self.get_queryset().delete(hard=hard, deleted_at=deleted_at)
 
+    delete.alters_data = True
+
     def alive(self):
         """Return not logically deleted items queryset."""
         return self.get_queryset().alive()
@@ -34,3 +36,5 @@ class LogicalDeletionManager(Manager):
     def revive(self):
         """Revive logical deleted items."""
         return self.get_queryset().revive()
+
+    revive.alters_data = True
