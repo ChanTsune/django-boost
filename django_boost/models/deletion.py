@@ -10,18 +10,19 @@ from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from django.db import models, transaction
 from django.db.models import signals, sql
 from django.db.models.deletion import Collector
+from django.utils.timezone import now
 
 
 def get_logical_delete_field(model):
     """Return ``model``'s logical-deletion flag field, or ``None`` if it doesn't use logical deletion."""
-    if not hasattr(model, 'get_deleted_value'):
-        return None
-
-    get_field_name = getattr(model._default_manager, 'get_deleted_flag_field_name', None)
+    manager = model._default_manager
+    get_field_name = getattr(manager, 'get_deleted_flag_field_name', None)
     if callable(get_field_name):
         field_name = get_field_name()
+    elif hasattr(manager, 'delete_flag_field'):
+        field_name = manager.delete_flag_field
     else:
-        field_name = getattr(model._default_manager, 'delete_flag_field', 'deleted_at')
+        return None
 
     try:
         return model._meta.get_field(field_name)
@@ -57,7 +58,9 @@ class LogicalDeletionCollector(Collector):
         """Return the explicit ``deleted_at`` override, or ``model``'s own default."""
         if self.deleted_at is not None:
             return self.deleted_at
-        return model.get_deleted_value()
+        if hasattr(model, 'get_deleted_value'):
+            return model.get_deleted_value()
+        return now()
 
     def delete(self):  # noqa: D102
         for model, instances in self.data.items():

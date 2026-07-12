@@ -486,3 +486,28 @@ class AltersDataTests(TestCase):
 
         item.refresh_from_db()
         self.assertIsNotNone(item.deleted_at)
+
+
+class ManagerOnlyLogicalDeletionTests(TestCase):
+    """LogicalDeletionManager must still soft-delete when the model does not
+    inherit LogicalDeletionMixin (manager-only configuration)."""
+    from .models import ManagerOnlyLogicalDeletionModel
+
+    model = ManagerOnlyLogicalDeletionModel
+
+    def test_delete_marks_row_dead_instead_of_removing_it(self):
+        item = self.model.objects.create(name="0")
+
+        self.model.objects.filter(pk=item.pk).delete()
+
+        item.refresh_from_db()
+        self.assertIsNotNone(item.deleted_at)
+        self.assertEqual(self.model.objects.count(), 1)
+
+    def test_alive_and_dead_reflect_the_delete(self):
+        item = self.model.objects.create(name="0")
+
+        self.model.objects.filter(pk=item.pk).delete()
+
+        self.assertEqual(self.model.objects.alive().count(), 0)
+        self.assertEqual(self.model.objects.dead().count(), 1)
