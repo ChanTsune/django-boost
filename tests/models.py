@@ -6,6 +6,9 @@ from django_boost.models.fields import AutoOneToOneField
 class RelatedItemModel(models.Model):
     name = models.CharField(max_length=128)
 
+    def get_absolute_url(self):
+        return '/items/%d/' % self.pk
+
 
 class AutoOneToOneParentModel(models.Model):
     name = models.CharField(max_length=128)
