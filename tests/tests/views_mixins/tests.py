@@ -296,3 +296,43 @@ class JsonResponseMixinResponseClassTests(TestCase):
 
         response = V().get(RequestFactory().get("/"))
         self.assertIsInstance(response, MyJsonResponse)
+
+
+class DynamicRedirectMixinModelFormTests(TestCase):
+    """DynamicRedirectMixin must not bypass ModelFormMixin.get_success_url()'s
+    success_url interpolation or its get_absolute_url() fallback."""
+
+    def test_interpolates_success_url_placeholder(self):
+        from django.test import RequestFactory
+        from django.views.generic import CreateView
+
+        from django_boost.views.mixins import DynamicRedirectMixin
+        from tests.models import RelatedItemModel
+
+        class V(DynamicRedirectMixin, CreateView):
+            model = RelatedItemModel
+            fields = ['name']
+            success_url = '/items/{id}/'
+
+        view = V()
+        view.request = RequestFactory().post('/')
+        view.object = RelatedItemModel.objects.create(name='x')
+
+        self.assertEqual(view.get_success_url(), '/items/%d/' % view.object.pk)
+
+    def test_falls_back_to_get_absolute_url_when_success_url_unset(self):
+        from django.test import RequestFactory
+        from django.views.generic import CreateView
+
+        from django_boost.views.mixins import DynamicRedirectMixin
+        from tests.models import RelatedItemModel
+
+        class V(DynamicRedirectMixin, CreateView):
+            model = RelatedItemModel
+            fields = ['name']
+
+        view = V()
+        view.request = RequestFactory().post('/')
+        view.object = RelatedItemModel.objects.create(name='y')
+
+        self.assertEqual(view.get_success_url(), view.object.get_absolute_url())

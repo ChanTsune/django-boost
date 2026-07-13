@@ -44,7 +44,12 @@ class DynamicRedirectMixin(RedirectURLMixin):
 
     def get_success_url(self):  # noqa: D102
         url = self.get_redirect_url()
-        return url or self.success_url or super().get_success_url()
+        if url:
+            return url
+        # Skip RedirectURLMixin.get_success_url() (needs next_page) and defer
+        # to the model/form view below it, e.g. ModelFormMixin's success_url
+        # interpolation and get_absolute_url() fallback.
+        return super(RedirectURLMixin, self).get_success_url()
 
 
 class RedirectToDetailMixin:
