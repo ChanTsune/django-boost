@@ -12,6 +12,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - Saving a `RelatedModelInlineMixin` form no longer discards the base model's own many-to-many field values.
 - `LogicalDeletionManager` used on a model without `LogicalDeletionMixin` now performs a logical delete instead of a physical delete.
 - `DynamicRedirectMixin` combined with `CreateView`/`UpdateView`/`DeleteView` now interpolates a `success_url` placeholder (e.g. `{id}`) and falls back to the object's `get_absolute_url()`, instead of returning the literal placeholder or raising `ImproperlyConfigured`.
+- `AutoOneToOneField`'s auto-created related object is now created on the database the router resolves for the parent instance, instead of always the default database.
 
 ## [3.3.0] - 2026-07-16
 
