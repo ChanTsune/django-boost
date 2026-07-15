@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
+
 ## [3.3.1] - 2026-07-17
 
 ### Fixed
