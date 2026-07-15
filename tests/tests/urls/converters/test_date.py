@@ -1,6 +1,6 @@
 import re
 from calendar import isleap as _isleap
-from datetime import datetime
+from datetime import date, datetime
 
 from django.urls import reverse
 from django.urls.exceptions import NoReverseMatch
@@ -36,6 +36,11 @@ class TestDateConverter(ConverterTestCase):
     def test_reverses_short_year_datetime(self):
         url = reverse('date', kwargs={'date': datetime(48, 2, 29)})
         self.assertEqual(url, '/date/48/2/29')
+        self.assertStatusCodeEqual(self.client.get(url), 200)
+
+    def test_reverses_date(self):
+        url = reverse('date', kwargs={'date': date(2020, 1, 5)})
+        self.assertEqual(url, '/date/2020/1/5')
         self.assertStatusCodeEqual(self.client.get(url), 200)
 
 
