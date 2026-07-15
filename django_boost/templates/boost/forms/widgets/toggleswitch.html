@@ -1,5 +1,5 @@
 <input class="boost-tgl boost-tgl-light" type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}/>
-<label class="boost-tgl-btn" for="{{ widget.id }}"></label>
+<label class="boost-tgl-btn" for="{{ widget.attrs.id }}"></label>
 <style>
     .boost-tgl {
         display: none;
