@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import ClassVar
 
 REGEX_LEAP_YEAR = r"(([48](00)?)|(([2468][048]|[13579][26])(00)?)|([1-9][0-9]?(0[48]|[2468][048]|[13579][26])))"
@@ -38,9 +38,9 @@ class DateConverter:
 
     regex: ClassVar[str] = REGEX_DATE
 
-    def to_url(self, value: datetime | str) -> str:
-        """Render ``value`` as ``Y/M/D``, accepting either a ``datetime`` or an already-formatted string."""
-        if isinstance(value, datetime):
+    def to_url(self, value: date | str) -> str:
+        """Render ``value`` as ``Y/M/D``, accepting either a ``date``/``datetime`` or an already-formatted string."""
+        if isinstance(value, date):
             return f"{value.year}/{value.month}/{value.day}"
         return str(value)
 
