@@ -31,7 +31,10 @@ class AbstractEmailUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    class Meta(AbstractUser.Meta):  # noqa: D106
+    # django-stubs 5.1.3 (paired with Django 4.2 in CI) doesn't declare a
+    # nested Meta on AbstractUser (added in a later stubs release); harmless
+    # to ignore since the base class is real at runtime in every version.
+    class Meta(AbstractUser.Meta):  # type: ignore[name-defined]  # noqa: D106
         abstract = True
 
 
