@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import os
 import re
+from collections.abc import Sequence
 
 from django import urls
+from django.urls import URLPattern, URLResolver
 
 from django_boost.views.generic import StaticView
 
@@ -13,9 +15,9 @@ from django_boost.views.generic import StaticView
 class StaticFileConnector:
     """Builds a list of ``urls.path()`` entries for every file under a directory."""
 
-    def __init__(self, path):
+    def __init__(self, path: str) -> None:
         """Build a ``urls.re_path()`` entry for every file under ``path``."""
-        self._urls = []
+        self._urls: list[URLPattern] = []
 
         for base, _, files in os.walk(path):
             for file in files:
@@ -30,16 +32,18 @@ class StaticFileConnector:
                                  StaticView.as_view(static_name=full_path)))
 
     @property
-    def urls(self):  # noqa: D102
+    def urls(self) -> list[URLPattern]:  # noqa: D102
         return self._urls
 
 
-def load_static_files(path):
+def load_static_files(path: str) -> list[URLPattern]:
     """Return the ``urls.path()`` entries built by ``StaticFileConnector`` for every file under ``path``."""
     return StaticFileConnector(path).urls
 
 
-def include_static_files(path):
+def include_static_files(
+    path: str,
+) -> tuple[Sequence[URLResolver | URLPattern], str | None, str | None]:
     """
     Add to routing that static files under the directory specified by the absolute path.
 
