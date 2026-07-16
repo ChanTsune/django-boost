@@ -27,7 +27,7 @@ __all__ = ['HttpResponseUnsupportedMediaType',
            'Http500', 'Http501', 'Http502', 'Http503', 'Http504', 'Http505',
            'Http506', 'Http507', 'Http508', 'Http509', 'Http510', 'Http511']
 
-STATUS_MESSAGES = defaultdict(lambda: '')
+STATUS_MESSAGES: defaultdict[int, str] = defaultdict(lambda: '')
 STATUS_MESSAGES.update({
     100: 'Continue',
     101: 'Switching Protocol',
