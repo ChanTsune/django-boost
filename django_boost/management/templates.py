@@ -6,6 +6,7 @@ import os
 import shutil
 import tempfile
 from os import path
+from typing import Any, cast
 
 from django.core.management.templates import TemplateCommand as DjangoTemplateCommand
 
@@ -16,25 +17,28 @@ from django_boost.core.management import CommandVersion
 class TemplateCommand(CommandVersion, DjangoTemplateCommand):
     """Django's own ``TemplateCommand`` plus ``--version`` support and a django-boost app template default."""
 
-    def handle_template(self, template, subdir):
+    def handle_template(self, template: str | None, subdir: str | None) -> str:
         """Resolve the template directory, overlaying django-boost's extras onto the built-in default."""
         base = super().handle_template(template, subdir)
         # Only enhance the built-in template; a user-supplied --template is left untouched.
         if template is not None:
             return base
+        assert subdir is not None
         overlay = path.join(django_boost.__path__[0], 'conf', subdir)
         if not path.isdir(overlay):
             return base
         return self._compose(base, overlay)
 
-    def _compose(self, base, overlay):
+    def _compose(self, base: str, overlay: str) -> str:
         """Layer django-boost's extra files onto Django's base template.
 
         Files already shipped by ``base`` win, so anything Django starts
         providing under the same name supersedes our overlay automatically.
         """
         composed = tempfile.mkdtemp()
-        self.paths_to_remove.append(composed)
+        # django-stubs types TemplateCommand.paths_to_remove as Sequence[Any],
+        # but Django's own __init__ always assigns a real list.
+        cast(list[Any], self.paths_to_remove).append(composed)
         shutil.copytree(base, composed, dirs_exist_ok=True)
         for root, _dirs, files in os.walk(overlay):
             rel = path.relpath(root, overlay)
