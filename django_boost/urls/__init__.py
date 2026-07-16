@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from django_boost.urls.converters import (
     BinIntConverter, BinStrConverter,
     DateConverter,
@@ -46,6 +48,6 @@ class UrlSet:
     ```
     """
 
-    urlpatterns = []
+    urlpatterns: list[Any] = []
     app_name = ""
     del app_name, urlpatterns
