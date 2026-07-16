@@ -9,7 +9,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ### Added
 
-- `LogicalDeletionQuerySet`/`LogicalDeletionManager` gained `deleted_since`, `deleted_before`, and `deleted_between` methods for filtering by deletion date outside the admin.
+- `LogicalDeletionQuerySet`/`LogicalDeletionManager` gained `deleted_since`, `deleted_before`, and `deleted_between` methods for filtering by deletion date.
 
 ### Fixed
 
