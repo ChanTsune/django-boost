@@ -1,5 +1,6 @@
 from datetime import date, datetime, timedelta, timezone as datetime_timezone
 from unittest import mock
+from zoneinfo import ZoneInfo
 
 import django
 from django.core.exceptions import ImproperlyConfigured
@@ -9,6 +10,7 @@ from django.db.models.signals import post_delete, post_save, pre_delete, pre_sav
 from django.template import Context, Template
 from django.test import TestCase, override_settings
 from django.test.utils import isolate_apps
+from django.utils import timezone
 from django.utils.timezone import now
 
 from django_boost.models.deletion import get_logical_delete_field
@@ -209,7 +211,9 @@ class TestLogicalDeletionDateLookups(TestCase):
     from .models import LogicalDeletionModel
 
     model = LogicalDeletionModel
-    now = datetime(2026, 7, 16, 12, tzinfo=datetime_timezone.utc)
+    # A past date on purpose: if the timezone.now mock ever stopped
+    # applying, a frozen "today" would keep passing until the next day.
+    now = datetime(2026, 1, 15, 12, tzinfo=datetime_timezone.utc)
 
     def setUp(self):
         self.alive = self.model.objects.create(name='alive')
@@ -285,14 +289,39 @@ class TestLogicalDeletionDateLookups(TestCase):
         self.assertNotIn(self.alive.pk, ids)
 
     def test_deleted_since_excludes_a_future_dated_deletion(self):
-        # A deleted_at set ahead of "now" (e.g. a scheduled/backdated delete)
-        # must not count as within the past N days.
+        # A deleted_at on a future calendar day (e.g. a scheduled delete) must
+        # not count as within the past N days. A later time on the current day
+        # would still count: the window runs to the start of tomorrow.
         future = self.model.objects.create(
             name='future', deleted_at=self.now + timedelta(days=5))
         with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
             ids = self._ids(self.model.objects.deleted_since(1))
 
         self.assertNotIn(future.pk, ids)
+
+    def test_deleted_since_zero_days_matches_nothing(self):
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            self.assertFalse(self.model.objects.deleted_since(0).exists())
+
+    def test_deleted_between_with_no_bounds_returns_all_deleted_items(self):
+        manager_ids = self._ids(self.model.objects.deleted_between())
+        queryset_ids = self._ids(
+            self.model.objects.filter(pk__gt=0).deleted_between())
+
+        expected = {item.pk for item in self.deleted.values()}
+        self.assertEqual(manager_ids, expected)
+        self.assertEqual(queryset_ids, expected)
+        self.assertNotIn(self.alive.pk, manager_ids)
+
+    def test_deleted_before_localizes_an_aware_datetime_boundary(self):
+        # 20:00 UTC on Jan 8 is already Jan 9 in Asia/Tokyo, so the cutoff must
+        # be the start of Jan 9 JST; the row deleted at Jan 8 12:00 UTC stays
+        # included.
+        boundary = datetime(2026, 1, 8, 20, tzinfo=datetime_timezone.utc)
+        with timezone.override(ZoneInfo('Asia/Tokyo')):
+            ids = self._ids(self.model.objects.deleted_before(boundary))
+
+        self.assertEqual(ids, {self.deleted[days].pk for days in (7, 8, 9)})
 
 
 class TestLogicalDeletionDjangoDeleteCompatibility(TestCase):
@@ -553,9 +582,8 @@ class LogicalDeletionManagerCustomFieldTests(TestCase):
                 CustomFieldModel.objects.deleted_between(start=today, end=today),
             )
 
-        # The generated SQL must reference removed_at, not the class default
-        # deleted_at, proving _filter_delete_flag() honors the custom field
-        # rather than hardcoding it.
+        # The generated SQL must reference removed_at, not the class-default
+        # deleted_at.
         for queryset in querysets:
             self.assertIn("removed_at", str(queryset.query))
 
