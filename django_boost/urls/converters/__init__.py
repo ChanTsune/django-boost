@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
+from typing import ClassVar, TYPE_CHECKING, cast
+
 from django.urls import register_converter
+
+if TYPE_CHECKING:
+    from django.urls.converters import _Converter
 
 from django_boost.urls.converters.date import DateConverter
 from django_boost.urls.converters.decimal import (
@@ -25,9 +30,9 @@ class HexConverter:
     ``NoReverseMatch``.
     """
 
-    regex = '[0-9a-fA-F]+'
+    regex: ClassVar[str] = '[0-9a-fA-F]+'
 
-    def to_url(self, value):  # noqa: D102
+    def to_url(self, value: int | str) -> str:  # noqa: D102
         if isinstance(value, int):
             return hex(value)[2:]
         return str(value)
@@ -40,9 +45,9 @@ class OctConverter:
     ``NoReverseMatch``.
     """
 
-    regex = '[0-7]+'
+    regex: ClassVar[str] = '[0-7]+'
 
-    def to_url(self, value):  # noqa: D102
+    def to_url(self, value: int | str) -> str:  # noqa: D102
         if isinstance(value, int):
             return oct(value)[2:]
         return str(value)
@@ -55,45 +60,49 @@ class BinConverter:
     ``NoReverseMatch``.
     """
 
-    regex = '[01]+'
+    regex: ClassVar[str] = '[01]+'
 
-    def to_url(self, value):  # noqa: D102
+    def to_url(self, value: int | str) -> str:  # noqa: D102
         if isinstance(value, int):
             return bin(value)[2:]
         return str(value)
 
 
 class HexIntConverter(HexConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> int:  # noqa: D102
         return int(value, 16)
 
 
 class OctIntConverter(OctConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> int:  # noqa: D102
         return int(value, 8)
 
 
 class BinIntConverter(BinConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> int:  # noqa: D102
         return int(value, 2)
 
 
 class HexStrConverter(HexConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> str:  # noqa: D102
         return value
 
 
 class OctStrConverter(OctConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> str:  # noqa: D102
         return value
 
 
 class BinStrConverter(BinConverter):  # noqa: D101
-    def to_python(self, value):  # noqa: D102
+    def to_python(self, value: str) -> str:  # noqa: D102
         return value
 
 
-BOOST_CONVERTERS = {
+# The converters mix ClassVar[str] regex (this package's local convention,
+# e.g. integer.py) with plain-str regex; mypy's type[X] <: type[_Converter]
+# check only recognizes the latter, so the heterogeneous mapping needs one
+# cast to assert what's structurally already true.
+BOOST_CONVERTERS = cast("dict[str, type[_Converter]]", {
     'bin': BinIntConverter,
     'oct': OctIntConverter,
     'hex': HexIntConverter,
@@ -121,10 +130,10 @@ BOOST_CONVERTERS = {
     'non_negative_decimal': NonNegativeDecimalConverter,
     'non_positive_decimal': NonPositiveDecimalConverter,
     'non_zero_decimal': NonZeroDecimalConverter,
-}
+})
 
 
-def register_boost_converters():
+def register_boost_converters() -> None:
     """Register all of django_boost's URL converters (``BOOST_CONVERTERS``) with Django."""
     for name, klass in BOOST_CONVERTERS.items():
         register_converter(klass, name)
