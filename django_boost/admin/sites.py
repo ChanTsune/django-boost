@@ -3,14 +3,21 @@
 from __future__ import annotations
 
 from inspect import getmembers, isclass
+from types import ModuleType
+from typing import Any
 
 from django.contrib import admin
+from django.contrib.admin.exceptions import AlreadyRegistered
 from django.db.models.base import ModelBase
 
 __all__ = ["register_all"]
 
 
-def register_all(models, admin_class=admin.ModelAdmin, **options):
+def register_all(
+    models: ModuleType,
+    admin_class: type[admin.ModelAdmin] = admin.ModelAdmin,
+    **options: Any,
+) -> None:
     """
     Easily register Models to Django admin site.
 
@@ -37,5 +44,5 @@ def register_all(models, admin_class=admin.ModelAdmin, **options):
         if isinstance(klass, ModelBase) and not klass._meta.abstract:
             try:
                 admin.site.register(klass, admin_class, **options)
-            except admin.sites.AlreadyRegistered:
+            except AlreadyRegistered:
                 pass
