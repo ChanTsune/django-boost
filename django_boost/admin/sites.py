@@ -7,7 +7,12 @@ from types import ModuleType
 from typing import Any
 
 from django.contrib import admin
-from django.contrib.admin.exceptions import AlreadyRegistered
+# AlreadyRegistered moved from admin.sites to admin.exceptions in Django 5.0;
+# admin.sites still re-exports it in every supported version (4.2-5.2), but
+# django-stubs' sites.pyi never declares it there -- import runtime-safely
+# and silence the resulting attr-defined error rather than importing from
+# admin.exceptions, which doesn't exist on Django 4.2.
+from django.contrib.admin.sites import AlreadyRegistered  # type: ignore[attr-defined]
 from django.db.models.base import ModelBase
 
 __all__ = ["register_all"]
