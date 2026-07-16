@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from django_boost.management.templates import TemplateCommand
 
 
@@ -12,7 +14,7 @@ class Command(TemplateCommand):  # noqa: D101
     )
     missing_args_message = "You must provide an application name."
 
-    def handle(self, *args, **options):  # noqa: D102
+    def handle(self, *args: Any, **options: Any) -> None:  # noqa: D102
         app_name = options.pop('name')
         target = options.pop('directory')
         template_type = 'app'
