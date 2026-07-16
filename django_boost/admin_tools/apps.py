@@ -12,7 +12,7 @@ class AdminToolsConfig(AppConfig):
 
     name = 'django_boost.admin_tools'
 
-    def ready(self):  # noqa: D102
+    def ready(self) -> None:  # noqa: D102
         warnings.warn(
             "'django_boost.admin_tools' is deprecated and will be removed in "
             "django-boost 4.0; use 'django_boost.contrib.admin_tools' instead.",
