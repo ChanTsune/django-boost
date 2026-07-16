@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from django_boost.utils.version import get_version
 
-VERSION = (3, 3, 0, 'alpha', 0)
+VERSION = (3, 3, 0, 'final', 0)
 
 
 __version__ = get_version()
