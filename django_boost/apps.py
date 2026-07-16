@@ -18,7 +18,7 @@ class DjangoBoostConfig(AppConfig):
     # migration of the user table's primary key.
     default_auto_field = 'django.db.models.AutoField'
 
-    def ready(self):
+    def ready(self) -> None:
         """Register django_boost's system checks (``django_boost.checks.CHECKS``)."""
         for check in CHECKS:
             checks.register(check, self.name)
