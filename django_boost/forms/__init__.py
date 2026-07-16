@@ -29,7 +29,11 @@ __all__ = (
 class UserCreationForm(BaseUserCreationForm):
     """A form that creates a user, with no privileges, from the active user model's ``USERNAME_FIELD`` and password."""
 
-    class Meta(BaseUserCreationForm.Meta):
+    # django-stubs 5.1.3 (CI's Django 4.2 cell) doesn't declare a nested
+    # Meta on BaseUserCreationForm (added in a later stubs release);
+    # harmless to ignore since the base class is real at runtime in every
+    # supported Django version.
+    class Meta(BaseUserCreationForm.Meta):  # type: ignore[name-defined]
         """Use the active user model and its ``USERNAME_FIELD`` instead of Django's hardcoded ``username``."""
 
         model = get_user_model()
@@ -42,7 +46,8 @@ class UserCreationForm(BaseUserCreationForm):
 class UserChangeForm(BaseUserChangeForm):
     """A form for changing an existing user, using the active user model's ``USERNAME_FIELD``."""
 
-    class Meta(BaseUserChangeForm.Meta):
+    # Same cross-stubs-version note as UserCreationForm.Meta above.
+    class Meta(BaseUserChangeForm.Meta):  # type: ignore[name-defined]
         """Use the active user model and its ``USERNAME_FIELD`` instead of Django's hardcoded ``username``."""
 
         model = get_user_model()
