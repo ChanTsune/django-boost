@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.3.0] - 2026-07-16
+
 ### Added
 
 - `LogicalDeletionModelAdmin` now includes a deletion-date filter with today, 7/30/90-day, older-than-90-day, and inclusive custom-range options.
@@ -493,7 +495,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.2.4...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.3.0...HEAD
+[3.3.0]: https://github.com/ChanTsune/django-boost/compare/v3.2.4...v3.3.0
 [3.2.4]: https://github.com/ChanTsune/django-boost/compare/v3.2.3...v3.2.4
 [3.2.3]: https://github.com/ChanTsune/django-boost/compare/v3.2.2...v3.2.3
 [3.2.2]: https://github.com/ChanTsune/django-boost/compare/v3.2.1...v3.2.2
