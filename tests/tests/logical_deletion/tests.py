@@ -1,4 +1,5 @@
-from datetime import timedelta
+from datetime import date, datetime, timedelta, timezone as datetime_timezone
+from unittest import mock
 
 import django
 from django.core.exceptions import ImproperlyConfigured
@@ -200,6 +201,98 @@ class TestLogicalDeletionManager(TestCase):
         self.assertEqual(len(self.model.objects.alive()), 10)
         self.assertEqual(len(self.model.objects.all()), 10)
         self._hard_delete()
+
+
+class TestLogicalDeletionDateLookups(TestCase):
+    """deleted_since/deleted_before/deleted_between on the queryset and manager."""
+
+    from .models import LogicalDeletionModel
+
+    model = LogicalDeletionModel
+    now = datetime(2026, 7, 16, 12, tzinfo=datetime_timezone.utc)
+
+    def setUp(self):
+        self.alive = self.model.objects.create(name='alive')
+        self.deleted = {
+            days: self.model.objects.create(
+                name=str(days), deleted_at=self.now - timedelta(days=days))
+            for days in (0, 6, 7, 8, 9)
+        }
+
+    def _ids(self, queryset):
+        return set(queryset.values_list('pk', flat=True))
+
+    def test_deleted_since_is_inclusive_of_today_and_the_boundary_day(self):
+        # deleted_since(9) covers today plus the 8 preceding days (offset 8
+        # inclusive); offset 9 falls outside that span.
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            manager_ids = self._ids(self.model.objects.deleted_since(9))
+            queryset_ids = self._ids(
+                self.model.objects.filter(pk__gt=0).deleted_since(9))
+
+        expected = {self.deleted[days].pk for days in (0, 6, 7, 8)}
+        self.assertEqual(manager_ids, expected)
+        self.assertEqual(queryset_ids, expected)
+        self.assertNotIn(self.deleted[9].pk, manager_ids)
+        self.assertNotIn(self.alive.pk, manager_ids)
+
+    def test_deleted_before_excludes_the_boundary_day_itself(self):
+        boundary = self.now.date() - timedelta(days=7)
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            manager_ids = self._ids(self.model.objects.deleted_before(boundary))
+            queryset_ids = self._ids(
+                self.model.objects.filter(pk__gt=0).deleted_before(boundary))
+
+        expected = {self.deleted[days].pk for days in (8, 9)}
+        self.assertEqual(manager_ids, expected)
+        self.assertEqual(queryset_ids, expected)
+        self.assertNotIn(self.deleted[7].pk, manager_ids)
+        self.assertNotIn(self.alive.pk, manager_ids)
+
+    def test_deleted_between_is_inclusive_of_both_boundary_days(self):
+        start = self.now.date() - timedelta(days=8)
+        end = self.now.date() - timedelta(days=7)
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            manager_ids = self._ids(
+                self.model.objects.deleted_between(start=start, end=end))
+            queryset_ids = self._ids(
+                self.model.objects.filter(pk__gt=0).deleted_between(
+                    start=start, end=end))
+
+        expected = {self.deleted[days].pk for days in (7, 8)}
+        self.assertEqual(manager_ids, expected)
+        self.assertEqual(queryset_ids, expected)
+        self.assertNotIn(self.deleted[6].pk, manager_ids)  # day after end
+        self.assertNotIn(self.deleted[9].pk, manager_ids)  # day before start
+        self.assertNotIn(self.alive.pk, manager_ids)
+
+    def test_deleted_between_start_only_leaves_the_upper_bound_open(self):
+        start = self.now.date() - timedelta(days=8)
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            ids = self._ids(self.model.objects.deleted_between(start=start))
+
+        self.assertEqual(ids, {self.deleted[days].pk for days in (0, 6, 7, 8)})
+        self.assertNotIn(self.deleted[9].pk, ids)
+        self.assertNotIn(self.alive.pk, ids)
+
+    def test_deleted_between_end_only_leaves_the_lower_bound_open(self):
+        end = self.now.date() - timedelta(days=7)
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            ids = self._ids(self.model.objects.deleted_between(end=end))
+
+        self.assertEqual(ids, {self.deleted[days].pk for days in (7, 8, 9)})
+        self.assertNotIn(self.deleted[6].pk, ids)
+        self.assertNotIn(self.alive.pk, ids)
+
+    def test_deleted_since_excludes_a_future_dated_deletion(self):
+        # A deleted_at set ahead of "now" (e.g. a scheduled/backdated delete)
+        # must not count as within the past N days.
+        future = self.model.objects.create(
+            name='future', deleted_at=self.now + timedelta(days=5))
+        with mock.patch('django_boost.models.query.timezone.now', return_value=self.now):
+            ids = self._ids(self.model.objects.deleted_since(1))
+
+        self.assertNotIn(future.pk, ids)
 
 
 class TestLogicalDeletionDjangoDeleteCompatibility(TestCase):
@@ -440,6 +533,31 @@ class LogicalDeletionManagerCustomFieldTests(TestCase):
             queryset = CustomFieldModel.objects.filter(pk__gt=0).alive()
 
         self.assertEqual(queryset.get_delete_flag_field_name(), "removed_at")
+
+    def test_custom_delete_flag_field_reaches_date_lookups(self):
+        with isolate_apps("tests"):
+            class RemovedManager(LogicalDeletionManager):
+                delete_flag_field = "removed_at"
+
+            class CustomFieldModel(models.Model):
+                removed_at = models.DateTimeField(null=True, default=None)
+                objects = RemovedManager()
+
+                class Meta:
+                    app_label = "tests"
+
+            today = date(2026, 7, 16)
+            querysets = (
+                CustomFieldModel.objects.deleted_since(7),
+                CustomFieldModel.objects.deleted_before(today),
+                CustomFieldModel.objects.deleted_between(start=today, end=today),
+            )
+
+        # The generated SQL must reference removed_at, not the class default
+        # deleted_at, proving _filter_delete_flag() honors the custom field
+        # rather than hardcoding it.
+        for queryset in querysets:
+            self.assertIn("removed_at", str(queryset.query))
 
 
 class AltersDataTests(TestCase):
