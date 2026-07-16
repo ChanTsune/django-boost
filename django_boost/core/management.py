@@ -12,7 +12,7 @@ __all__ = ["BaseCommand", "AppCommand"]
 class CommandVersion:
     """Django-Boost command version."""
 
-    def get_version(self):
+    def get_version(self) -> str:
         return get_version()
 
 
