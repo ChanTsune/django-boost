@@ -110,3 +110,17 @@ If you want to retrieve only the logically deleted items, you can use the ``dead
   Store.objects.alive() # get not logically deleted items queryset.
 
   Store.objects.dead() # get logically deleted items queryset.
+
+To filter by when items were logically deleted, ``deleted_since``, ``deleted_before`` and
+``deleted_between`` are available on both the manager and the queryset. All three compare
+against local calendar days (midnight to midnight in the current time zone). ``deleted_since``
+and ``deleted_between`` are inclusive of the day boundaries they name; ``deleted_before``
+excludes the named day itself.
+
+::
+
+  Store.objects.deleted_since(7) # deleted within the past 7 calendar days, today inclusive.
+
+  Store.objects.deleted_before(date(2024, 1, 1)) # deleted before the start of that day.
+
+  Store.objects.deleted_between(date(2024, 1, 1), date(2024, 1, 31)) # deleted on or between those days.

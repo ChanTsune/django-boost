@@ -33,6 +33,18 @@ class LogicalDeletionManager(Manager):
         """Return logically deleted items queryset."""
         return self.get_queryset().dead()
 
+    def deleted_since(self, days):
+        """Return items whose delete flag falls within the past ``days`` calendar days, today inclusive."""
+        return self.get_queryset().deleted_since(days)
+
+    def deleted_before(self, date):
+        """Return items whose delete flag is strictly before the local start of ``date``."""
+        return self.get_queryset().deleted_before(date)
+
+    def deleted_between(self, start=None, end=None):
+        """Return items whose delete flag falls within the inclusive local-calendar-day range ``[start, end]``."""
+        return self.get_queryset().deleted_between(start=start, end=end)
+
     def revive(self):
         """Revive logical deleted items."""
         return self.get_queryset().revive()

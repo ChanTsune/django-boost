@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, time, timedelta
+from datetime import timedelta
 
 from django.contrib import admin
 from django.contrib.admin.filters import ListFilter
@@ -129,26 +129,17 @@ class LogicalDeletedDateFilter(admin.FieldListFilter):
         if self.from_value or self.to_value:
             return self._range_queryset(queryset)
 
-        today = self._local_today()
-        tomorrow = self._start_of_day(today + timedelta(days=1))
         period = self.value()
-        lookups = {}
         if period == 'all_deleted':
-            lookups[f'{self.field_path}__isnull'] = False
-        elif period == 'today':
-            lookups[f'{self.field_path}__gte'] = self._start_of_day(today)
-            lookups[f'{self.field_path}__lt'] = tomorrow
-        elif period in {'past_7_days', 'past_30_days', 'past_90_days'}:
+            return queryset.dead()
+        if period == 'today':
+            return queryset.deleted_since(1)
+        if period in {'past_7_days', 'past_30_days', 'past_90_days'}:
             days = int(period.split('_')[1])
-            lookups[f'{self.field_path}__gte'] = self._start_of_day(
-                today - timedelta(days=days - 1))
-            lookups[f'{self.field_path}__lt'] = tomorrow
-        elif period == 'older_than_90_days':
-            lookups[f'{self.field_path}__lt'] = self._start_of_day(
-                today - timedelta(days=89))
-        else:
-            return queryset
-        return queryset.filter(**lookups)
+            return queryset.deleted_since(days)
+        if period == 'older_than_90_days':
+            return queryset.deleted_before(self._local_today() - timedelta(days=89))
+        return queryset
 
     def _range_queryset(self, queryset):
         date_field = DateField(input_formats=['%Y-%m-%d'])
@@ -166,13 +157,7 @@ class LogicalDeletedDateFilter(admin.FieldListFilter):
             self.errors.append(_('Start date must be on or before end date.'))
             return queryset
 
-        lookups = {}
-        if start:
-            lookups[f'{self.field_path}__gte'] = self._start_of_day(start)
-        if end:
-            lookups[f'{self.field_path}__lt'] = self._start_of_day(
-                end + timedelta(days=1))
-        return queryset.filter(**lookups)
+        return queryset.deleted_between(start=start, end=end)
 
     @staticmethod
     def _local_today():
@@ -180,10 +165,3 @@ class LogicalDeletedDateFilter(admin.FieldListFilter):
         if timezone.is_aware(now):
             now = timezone.localtime(now)
         return now.date()
-
-    @staticmethod
-    def _start_of_day(value):
-        result = datetime.combine(value, time.min)
-        if timezone.is_aware(timezone.now()):
-            result = timezone.make_aware(result, timezone.get_current_timezone())
-        return result

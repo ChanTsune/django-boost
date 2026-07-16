@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Added
+
+- `LogicalDeletionQuerySet`/`LogicalDeletionManager` gained `deleted_since`, `deleted_before`, and `deleted_between` methods for filtering by deletion date outside the admin.
+
 ### Fixed
 
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
