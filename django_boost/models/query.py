@@ -101,7 +101,13 @@ class LogicalDeletionQuerySet(QuerySet):
         return self._filter_delete_flag(lt=self._local_day_start(self._as_date(date)))
 
     def deleted_between(self, start=None, end=None):
-        """Return items whose delete flag falls within the inclusive local-calendar-day range ``[start, end]``."""
+        """Return items whose delete flag falls within the inclusive local-calendar-day range ``[start, end]``.
+
+        Either bound may be omitted to leave that side of the range open;
+        with both omitted, all logically deleted items are returned.
+        """
+        if start is None and end is None:
+            return self.dead()
         gte = self._local_day_start(self._as_date(start)) if start is not None else None
         lt = None
         if end is not None:

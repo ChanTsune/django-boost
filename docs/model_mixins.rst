@@ -115,9 +115,12 @@ To filter by when items were logically deleted, ``deleted_since``, ``deleted_bef
 ``deleted_between`` are available on both the manager and the queryset. All three compare
 against local calendar days (midnight to midnight in the current time zone). ``deleted_since``
 and ``deleted_between`` are inclusive of the day boundaries they name; ``deleted_before``
-excludes the named day itself.
+excludes the named day itself. Both bounds of ``deleted_between`` are optional: omitting one
+leaves that side of the range open, and omitting both returns all logically deleted items.
 
 ::
+
+  from datetime import date
 
   Store.objects.deleted_since(7) # deleted within the past 7 calendar days, today inclusive.
 
