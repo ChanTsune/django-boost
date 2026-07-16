@@ -2,12 +2,37 @@
 
 from __future__ import annotations
 
+from collections.abc import Collection, Mapping
+from typing import Any, TypeVar, overload
+
 from django.db import models
 
 __all__ = ["json_to_model", "model_to_json"]
 
+_M = TypeVar("_M", bound=models.Model)
 
-def model_to_json(model, fields=(), exclude=()):
+
+@overload
+def model_to_json(
+    model: models.Model,
+    fields: Collection[str] = ...,
+    exclude: Collection[str] = ...,
+) -> dict[str, Any]: ...
+
+
+@overload
+def model_to_json(
+    model: models.QuerySet[models.Model],
+    fields: Collection[str] = ...,
+    exclude: Collection[str] = ...,
+) -> list[dict[str, Any]]: ...
+
+
+def model_to_json(
+    model: models.Model | models.QuerySet[models.Model],
+    fields: Collection[str] = (),
+    exclude: Collection[str] = (),
+) -> dict[str, Any] | list[dict[str, Any]]:
     """
     Take Model or Model.QuerySet as an argument.
 
@@ -15,7 +40,7 @@ def model_to_json(model, fields=(), exclude=()):
     """
     if isinstance(model, models.Model):
         opts = model._meta
-        json_data = {}
+        json_data: dict[str, Any] = {}
         for f in opts.fields:
             if fields and f.name not in fields:
                 continue
@@ -25,8 +50,7 @@ def model_to_json(model, fields=(), exclude=()):
         return json_data
 
     elif isinstance(model, models.QuerySet):
-        json_data = [model_to_json(m, fields, exclude) for m in model]
-        return json_data
+        return [model_to_json(m, fields, exclude) for m in model]
 
     raise TypeError(
         'model_to_json() argument must be a Model or QuerySet, not %s'
@@ -34,7 +58,12 @@ def model_to_json(model, fields=(), exclude=()):
     )
 
 
-def json_to_model(model_class, dic, fields=(), exclude=()):
+def json_to_model(
+    model_class: type[_M],
+    dic: Mapping[str, Any],
+    fields: Collection[str] = (),
+    exclude: Collection[str] = (),
+) -> _M:
     """Build an unsaved ``model_class`` instance from a dict shaped like ``model_to_json``'s output."""
     model = model_class()
     for f in model._meta.fields:
