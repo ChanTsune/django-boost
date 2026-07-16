@@ -42,7 +42,11 @@ class LogicalDeletionManager(Manager):
         return self.get_queryset().deleted_before(date)
 
     def deleted_between(self, start=None, end=None):
-        """Return items whose delete flag falls within the inclusive local-calendar-day range ``[start, end]``."""
+        """Return items whose delete flag falls within the inclusive local-calendar-day range ``[start, end]``.
+
+        Either bound may be omitted to leave that side of the range open;
+        with both omitted, all logically deleted items are returned.
+        """
         return self.get_queryset().deleted_between(start=start, end=end)
 
     def revive(self):
