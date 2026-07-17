@@ -12,10 +12,15 @@ from django.db.models import Model
 class DatabaseRouter:
     """Route Django apps to database aliases from DATABASE_APPS_MAPPING."""
 
-    def __init__(self) -> None:
-        """Load the app-to-database mapping from ``settings.DATABASE_APPS_MAPPING``."""
-        self.db_map: dict[str, str] = getattr(
-            settings, "DATABASE_APPS_MAPPING", {})
+    @property
+    def db_map(self) -> dict[str, str]:
+        """Read ``settings.DATABASE_APPS_MAPPING`` fresh on every access.
+
+        Reading it here rather than caching it on ``self`` keeps the router
+        responsive to ``override_settings`` in tests, and at runtime to
+        anything that reassigns the setting.
+        """
+        return getattr(settings, "DATABASE_APPS_MAPPING", {})
 
     def db_for_read(self, model: type[Model], **hints: Any) -> str | None:  # noqa: D102
         return self.db_map.get(model._meta.app_label, None)
