@@ -134,6 +134,15 @@ class RedirectCorrectHostnameMiddlewareTests(SimpleTestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    @override_settings(DEBUG=False, CORRECT_HOST=None, ALLOWED_HOSTS=["*"])
+    def test_no_redirect_when_correct_host_is_none(self):
+        """CORRECT_HOST=os.environ.get(...) with an unset var must not redirect to 'None'."""
+        response = self._middleware()(
+            self.factory.get("/", HTTP_HOST="wrong.example.com"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(self.downstream), 1)
+
     def _async_middleware(self):
         async def get_response(request):
             self.downstream.append(request)

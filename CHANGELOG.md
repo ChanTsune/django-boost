@@ -16,6 +16,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
 - The `date` path converter now accepts a `datetime.date` value (e.g. from a `DateField`) in `reverse()`, instead of raising `NoReverseMatch`.
 - `strip_spaces_between_tags`/`compress_stream` no longer corrupt a `<script>` or `<style>` block that follows an unmatched stray closing tag earlier in the document.
+- `RedirectCorrectHostnameMiddleware` no longer redirects every request to a literal `http://None/...` URL when `CORRECT_HOST` is unset or `None`.
 
 ## [3.3.1] - 2026-07-17
 
