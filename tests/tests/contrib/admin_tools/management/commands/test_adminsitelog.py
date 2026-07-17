@@ -154,6 +154,18 @@ class TestAdminSiteLog(TestCase):
             call_command(
                 'adminsitelog', '--filter', 'badfield=1', stdout=StringIO())
 
+    def test_invalid_filter_value_raises_command_error(self):
+        with self.assertRaises(CommandError):
+            call_command(
+                'adminsitelog', '--filter', 'action_time>=banana',
+                stdout=StringIO())
+
+    def test_invalid_filter_int_value_raises_command_error(self):
+        with self.assertRaises(CommandError):
+            call_command(
+                'adminsitelog', '--filter', 'action_flag=abc',
+                stdout=StringIO())
+
     def test_invalid_order_by_field_raises_command_error(self):
         with self.assertRaises(CommandError):
             call_command(

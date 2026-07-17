@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - `register_all()` no longer registers a model merely imported into a `models.py` module (e.g. for a foreign key reference) — only models actually defined there.
+- `adminsitelog --filter`/`--exclude` with a value that doesn't match the field's type now reports a clear command error instead of a raw traceback.
 
 ## [3.4.0] - 2026-07-19
 
