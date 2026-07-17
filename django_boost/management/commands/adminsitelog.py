@@ -29,8 +29,9 @@ class Command(_Command):
     def execute(self, *args: Any, **options: Any) -> str | None:  # noqa: D102
         if not apps.is_installed(ADMIN_TOOLS_APP):
             warnings.warn(
-                "Running 'adminsitelog' from 'django_boost' is deprecated; add "
-                "'django_boost.contrib.admin_tools' to INSTALLED_APPS. The "
+                "Running 'adminsitelog' from 'django_boost' is deprecated; "
+                "replace 'django_boost.admin_tools' with "
+                "'django_boost.contrib.admin_tools' in INSTALLED_APPS. The "
                 "'django_boost' command alias will be removed in "
                 "django-boost 4.0.",
                 DeprecationWarning,
