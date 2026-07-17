@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Fixed
 
 - `SpaceLessMiddleware` no longer silently drops CDATA sections and processing instructions from HTML responses.
+- `DatabaseRouter` now picks up `DATABASE_APPS_MAPPING` changes made via `override_settings` at test/runtime instead of only reading it once when the router is first created.
 
 ## [3.4.1] - 2026-07-26
 

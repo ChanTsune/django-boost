@@ -49,6 +49,27 @@ class DatabaseRouterAllowMigrateTests(SimpleTestCase):
         self.assertIsNone(router.allow_migrate('otherdb', 'auth'))
 
 
+class DatabaseRouterDynamicMappingTests(SimpleTestCase):
+
+    def test_mapping_change_is_picked_up_by_an_already_constructed_router(self):
+        # The router instance predates the override, so this only passes if
+        # DATABASE_APPS_MAPPING is read fresh on each call rather than
+        # snapshotted at construction time.
+        router = DatabaseRouter()
+        with override_settings(DATABASE_APPS_MAPPING={'shop': 'shopdb'}):
+            self.assertTrue(router.allow_migrate('shopdb', 'shop'))
+            self.assertFalse(router.allow_migrate('default', 'shop'))
+
+    def test_mapping_seen_inside_override_does_not_leak_after_it_exits(self):
+        with override_settings(DATABASE_APPS_MAPPING={'shop': 'shopdb'}):
+            router = DatabaseRouter()
+            self.assertTrue(router.allow_migrate('shopdb', 'shop'))
+        # Back on the process-wide setting: the mapping seen during
+        # construction must not persist on the router past the override.
+        self.assertIsNone(router.allow_migrate('shopdb', 'shop'))
+        self.assertTrue(router.allow_migrate('example', 'example'))
+
+
 class DatabaseRouterConfiguredExampleTests(SimpleTestCase):
 
     def test_example_app_routes_to_configured_example_database(self):
