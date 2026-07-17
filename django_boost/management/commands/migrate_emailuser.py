@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from django.apps import apps
 from django.conf import settings
 from django.core.management import call_command
-from django.core.management.base import CommandError
+from django.core.management.base import CommandError, CommandParser
 from django.db import DEFAULT_DB_ALIAS, connections
 from django.db.migrations.recorder import MigrationRecorder
 
@@ -17,7 +19,9 @@ LEGACY_MODEL = "emailuser"
 LEGACY_USER_MODEL = "django_boost.EmailUser"
 
 
-def adopt_content_type(using, from_label, from_model, to_label, to_model) -> int:
+def adopt_content_type(
+    using: str, from_label: str, from_model: str, to_label: str, to_model: str,
+) -> int:
     """Rename the legacy ContentType in place so its permissions carry over.
 
     Returns the number of rows updated (0 if nothing to adopt).
@@ -32,7 +36,7 @@ def adopt_content_type(using, from_label, from_model, to_label, to_model) -> int
         app_label=to_label, model=to_model)
 
 
-def record_migration_applied(using, app_label, name) -> bool:
+def record_migration_applied(using: str, app_label: str, name: str) -> bool:
     """Record a migration as applied without running it. Idempotent.
 
     Returns True if a new record was written, False if it was already present.
@@ -49,14 +53,14 @@ class Command(BaseCommand):  # noqa: D101
     help = ("Adopt the legacy django_boost_emailuser table and content type into your own "
             "AUTH_USER_MODEL app, then finish migrating.")
 
-    def add_arguments(self, parser):  # noqa: D102
+    def add_arguments(self, parser: CommandParser) -> None:  # noqa: D102
         parser.add_argument("--database", default=DEFAULT_DB_ALIAS)
         parser.add_argument(
             "--target-migration", default="0001_initial",
             help="Migration in the target app that creates the user model "
                  "(default: 0001_initial).")
 
-    def handle(self, *args, **options):  # noqa: D102
+    def handle(self, *args: Any, **options: Any) -> None:  # noqa: D102
         using = options["database"]
         target = getattr(settings, "AUTH_USER_MODEL", "") or ""
         if target == LEGACY_USER_MODEL or "." not in target:
