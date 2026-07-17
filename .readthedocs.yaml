@@ -10,6 +10,12 @@ build:
   os: ubuntu-24.04
   tools:
     python: "3.10"
+  jobs:
+    # uv targets RTD's own virtualenv so the stock Sphinx build steps
+    # (and `formats: all`) keep working; only the install step is overridden.
+    install:
+      - pip install uv
+      - UV_PROJECT_ENVIRONMENT=$READTHEDOCS_VIRTUALENV_PATH uv sync --frozen --no-dev --group docs
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
@@ -17,8 +23,3 @@ sphinx:
 
 # If using Sphinx, optionally build your docs in additional formats
 formats: all
-
-# Optionally declare the Python requirements required to build your docs
-python:
-   install:
-   - requirements: requirements/docs.txt

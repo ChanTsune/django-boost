@@ -1,6 +1,0 @@
-wheel
-setuptools
-pillow
-tox-travis
-coverage
-user-agents>=2.0

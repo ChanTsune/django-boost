@@ -1,2 +1,0 @@
-Django>=4.2,<6; python_version < "3.13"
-Django>=5.1,<6; python_version >= "3.13"
