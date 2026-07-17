@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import call_command
 from django.core.management.base import CommandError
-from django.db import DEFAULT_DB_ALIAS, connections
+from django.db import DEFAULT_DB_ALIAS, OperationalError, connections
 from django.db.migrations.recorder import MigrationRecorder
 from django.test import override_settings
 
@@ -85,3 +85,20 @@ class MigrateEmailUserCommandTests(TestCase):
         names = [c[0] for c in manager.mock_calls]
         self.assertLess(names.index("adopt"), names.index("migrate"))
         self.assertLess(names.index("record"), names.index("migrate"))
+
+    @override_settings(AUTH_USER_MODEL="accounts.User")
+    def test_skips_adopt_content_type_on_fresh_unmigrated_database(self):
+        # On a fresh database, ContentType.objects...exists() (used internally by
+        # adopt_content_type) would raise this same error, before ever reaching the
+        # final call_command("migrate", ...) that would create the table.
+        module = "django_boost.management.commands.migrate_emailuser"
+        with patch(module + ".connections") as mock_connections, \
+                patch(module + ".adopt_content_type") as adopt, \
+                patch(module + ".call_command") as migrate:
+            mock_connections[DEFAULT_DB_ALIAS].introspection.table_names.return_value = []
+            adopt.side_effect = OperationalError("no such table: django_content_type")
+
+            call_command("migrate_emailuser", stdout=StringIO())
+
+        adopt.assert_not_called()
+        migrate.assert_called_once_with("migrate", database=DEFAULT_DB_ALIAS)

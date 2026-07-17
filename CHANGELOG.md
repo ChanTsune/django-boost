@@ -12,6 +12,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 - `register_all()` no longer registers a model merely imported into a `models.py` module (e.g. for a foreign key reference) — only models actually defined there.
 - `adminsitelog --filter`/`--exclude` with a value that doesn't match the field's type now reports a clear command error instead of a raw traceback.
 - The `adminsitelog` deprecation warning now correctly instructs users to replace `django_boost.admin_tools` with `django_boost.contrib.admin_tools` in `INSTALLED_APPS`, instead of suggesting to add the new app alongside the old one (which raised `ImproperlyConfigured` on startup).
+- `migrate_emailuser` no longer crashes before running `migrate` on a fresh, unmigrated database.
 
 ## [3.4.0] - 2026-07-19
 
