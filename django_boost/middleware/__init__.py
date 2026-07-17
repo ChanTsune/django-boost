@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from django.conf import settings
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpRequest, HttpResponseBase, HttpResponsePermanentRedirect
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.utils.deprecation import MiddlewareMixin
@@ -55,7 +55,7 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
     but it is useful when the setting is troublesome or when using services such as heroku.
     """
 
-    def process_request(self, request):  # noqa: D102
+    def process_request(self, request: HttpRequest) -> HttpResponsePermanentRedirect | None:  # noqa: D102
         # Return the redirect from process_request rather than overriding
         # __call__, so MiddlewareMixin's own __call__/__acall__ short-circuit
         # correctly under both WSGI and ASGI. A synchronous __call__ override
@@ -92,7 +92,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
 
     """
 
-    def get_template_from_status_code(self, status_code, request=None):
+    def get_template_from_status_code(self, status_code: int, request: HttpRequest | None = None) -> str:
         """Render the status page template for ``status_code``, falling back to a plain-text message."""
         message = STATUS_MESSAGES[status_code]
         try:
@@ -107,7 +107,7 @@ class HttpStatusCodeExceptionMiddleware(MiddlewareMixin):
         except TemplateDoesNotExist:
             return "%s %s" % (status_code, message)
 
-    def process_exception(self, request, e):
+    def process_exception(self, request: HttpRequest, e: Exception) -> HttpResponseBase | None:
         """Turn an ``HttpExceptionBase`` into its response, or a redirect for ``HttpRedirectExceptionBase``."""
         if isinstance(e, HttpRedirectExceptionBase):
             return e.response_class(e.url)
