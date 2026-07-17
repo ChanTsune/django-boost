@@ -6,7 +6,7 @@ from collections.abc import Iterable
 from typing import Any, ClassVar
 
 from django.contrib.admin.models import LogEntry
-from django.core.exceptions import FieldError
+from django.core.exceptions import FieldError, ValidationError
 from django.core.management.base import CommandError, CommandParser
 from django.db.models import Model
 from django.db.models.sql.query import get_field_names_from_opts  # type: ignore[attr-defined]
@@ -167,7 +167,7 @@ class Command(OutputFormatMixin, ConfirmOptionMixin, BaseCommand):
             queryset = queryset.filter(**self.parse_filter(options['filter']))
             queryset = queryset.exclude(**self.parse_filter(options['exclude']))
             queryset = queryset.order_by(*options['order_by'])
-        except FieldError as e:
+        except (FieldError, ValidationError, ValueError) as e:
             raise CommandError(str(e))
 
         if queryset.count() == 0:
