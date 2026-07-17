@@ -12,60 +12,57 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - python-version: '3.10.x'
+        - python-version: '3.10'
           django-version: '4.2.*'
-        - python-version: '3.11.x'
+        - python-version: '3.11'
           django-version: '4.2.*'
-        - python-version: '3.12.x'
+        - python-version: '3.12'
           django-version: '4.2.*'
-        - python-version: '3.10.x'
+        - python-version: '3.10'
           django-version: '5.0.*'
-        - python-version: '3.11.x'
+        - python-version: '3.11'
           django-version: '5.0.*'
-        - python-version: '3.12.x'
+        - python-version: '3.12'
           django-version: '5.0.*'
-        - python-version: '3.10.x'
+        - python-version: '3.10'
           django-version: '5.1.*'
-        - python-version: '3.11.x'
+        - python-version: '3.11'
           django-version: '5.1.*'
-        - python-version: '3.12.x'
+        - python-version: '3.12'
           django-version: '5.1.*'
-        - python-version: '3.13.x'
+        - python-version: '3.13'
           django-version: '5.1.*'
-        - python-version: '3.10.x'
+        - python-version: '3.10'
           django-version: '5.2.*'
-        - python-version: '3.11.x'
+        - python-version: '3.11'
           django-version: '5.2.*'
-        - python-version: '3.12.x'
+        - python-version: '3.12'
           django-version: '5.2.*'
-        - python-version: '3.13.x'
+        - python-version: '3.13'
           django-version: '5.2.*'
     runs-on: ubuntu-latest
     env:
       DJANGO_VERSION: ${{ matrix.django-version }}
     steps:
     - uses: actions/checkout@v7
-    - name: 'Set up Python ${{ matrix.python-version }}'
-      uses: actions/setup-python@v6
+    - name: 'Install uv (Python ${{ matrix.python-version }})'
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: ${{ matrix.python-version }}
-        cache: pip
-        cache-dependency-path: "requirements/ci.txt"
+        enable-cache: true
     - name: Install dependencies
       run: |
-        pip install -U pip
-        pip install -r requirements/ci.txt
-        pip install django==$DJANGO_VERSION
-        pip install .
+        uv sync --locked
+        uv pip install django==$DJANGO_VERSION
     - name: Check migrations
       run: |
-        python manage.py makemigrations --check --dry-run
+        uv run --no-sync python manage.py makemigrations --check --dry-run
     - name: Tox
       run: |
-        tox
+        uv run --no-sync tox
     - name: Test
       run: |
-        coverage run --parallel-mode manage.py test
+        uv run --no-sync coverage run --parallel-mode manage.py test
     - name: Upload coverage data
       uses: actions/upload-artifact@v7
       with:
