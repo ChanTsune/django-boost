@@ -15,6 +15,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
 - The `date` path converter now accepts a `datetime.date` value (e.g. from a `DateField`) in `reverse()`, instead of raising `NoReverseMatch`.
+- The `float` and `decimal` path converters (and their signed/positive/negative variants) no longer raise `NoReverseMatch` for very small or very large values, such as `0.00001` or `1e16`.
 
 ## [3.3.1] - 2026-07-17
 
