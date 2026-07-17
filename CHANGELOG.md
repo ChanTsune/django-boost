@@ -15,6 +15,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
 - The `date` path converter now accepts a `datetime.date` value (e.g. from a `DateField`) in `reverse()`, instead of raising `NoReverseMatch`.
+- `DatabaseRouter` now picks up `DATABASE_APPS_MAPPING` changes made via `override_settings` at test/runtime instead of only reading it once when the router is first created.
 
 ## [3.3.1] - 2026-07-17
 
