@@ -6,6 +6,7 @@ import json
 from datetime import timedelta
 from typing import Sequence
 
+import django
 from django.conf import settings
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import AccessMixin
@@ -20,6 +21,14 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django_boost.http import HttpResponseUnsupportedMediaType
 from django_boost.user_agents import parse_user_agent
+
+if django.VERSION >= (5, 1):
+    from django.contrib.auth.decorators import login_not_required
+else:
+    # login_not_required was added in Django 5.1; on older versions there is
+    # no LoginRequiredMiddleware to exempt views from, so this is a no-op.
+    def login_not_required(view_func):
+        return view_func
 
 
 __all__ = ["CSRFExemptMixin", "DynamicRedirectMixin", "RedirectToDetailMixin",
@@ -170,6 +179,7 @@ class JsonResponseMixin:
     put = post
 
 
+@method_decorator(login_not_required, name="dispatch")
 class AnonymousRequiredMixin:
     """
     Require the user to be anonymous.

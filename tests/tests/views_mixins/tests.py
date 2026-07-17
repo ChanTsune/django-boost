@@ -1,5 +1,7 @@
 import os
+import unittest
 
+import django
 from django.contrib.auth import get_user_model
 from django.test import override_settings
 
@@ -296,6 +298,30 @@ class JsonResponseMixinResponseClassTests(TestCase):
 
         response = V().get(RequestFactory().get("/"))
         self.assertIsInstance(response, MyJsonResponse)
+
+
+@unittest.skipUnless(django.VERSION >= (5, 1),
+                     "LoginRequiredMiddleware was added in Django 5.1")
+class AnonymousRequiredMixinLoginRequiredMiddlewareTests(TestCase):
+    """AnonymousRequiredMixin views are anonymous-only by definition, so
+    Django's opt-in LoginRequiredMiddleware must not gate them behind login."""
+
+    def test_passes_through_middleware_for_anonymous_user(self):
+        from django.contrib.auth.middleware import LoginRequiredMiddleware
+        from django.contrib.auth.models import AnonymousUser
+        from django.http import HttpResponse
+        from django.test import RequestFactory
+
+        from tests.tests.views_mixins.views import AnonymousRequiredView
+
+        request = RequestFactory().get('/anonymous_only/')
+        request.user = AnonymousUser()
+        middleware = LoginRequiredMiddleware(get_response=lambda r: HttpResponse())
+
+        result = middleware.process_view(
+            request, AnonymousRequiredView.as_view(), (), {})
+
+        self.assertIsNone(result)
 
 
 class DynamicRedirectMixinModelFormTests(TestCase):
