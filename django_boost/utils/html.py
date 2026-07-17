@@ -92,6 +92,18 @@ class HTMLSpaceLessCompressor(HTMLParser):
         # so the text on either side is stripped separately, as with a tag.
         self._end_run()
 
+    def unknown_decl(self, data: str) -> None:
+        """Preserve marked sections (e.g. CDATA in inline SVG/MathML) instead of the base no-op."""
+        self._end_run()
+        # HTMLParser strips the outer "<![" and "]]>" before calling this hook.
+        self.buffer.write("<![%s]]>" % data)
+
+    def handle_pi(self, data: str) -> None:
+        """Preserve processing instructions instead of the base no-op."""
+        self._end_run()
+        # HTMLParser strips the outer "<?" and trailing ">" before calling this hook.
+        self.buffer.write("<?%s>" % data)
+
     def _render_attrs(self, attrs: list[tuple[str, str | None]]) -> str:
         return ' '.join(
             name if value is None else '%s="%s"' % (name, escape(value))
