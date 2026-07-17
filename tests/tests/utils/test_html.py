@@ -170,6 +170,23 @@ class SpaceLessRawTextElementTests(TestCase):
             '<textarea>  a  b  </textarea>')
 
 
+class SpaceLessStrayClosingTagTests(TestCase):
+    """A stray closing tag with no matching opener must not desync the
+    raw-text depth counter and corrupt a later, well-formed block."""
+
+    def test_stray_closing_script_tag_does_not_corrupt_later_script(self):
+        self.assertEqual(
+            strip_spaces_between_tags(
+                '</script><script>if(a<b)y()</script>'),
+            '</script><script>if(a<b)y()</script>')
+
+    def test_stray_closing_style_tag_does_not_corrupt_later_style(self):
+        self.assertEqual(
+            strip_spaces_between_tags(
+                '</style><style>p > a { color: red; }</style>'),
+            '</style><style>p > a { color: red; }</style>')
+
+
 class SpaceLessStreamRawTextTests(TestCase):
     """script/style/textarea must stream identically to batch for any split."""
 

@@ -70,10 +70,13 @@ class HTMLSpaceLessCompressor(HTMLParser):
     def handle_endtag(self, tag: str) -> None:  # noqa: D102
         self._end_run()
         self.buffer.write("</%s>" % tag)
+        # Clamped at 0: a stray closing tag with no matching opener (malformed
+        # input) must not send the counter negative, or the next legitimate
+        # element of that kind would be misread as outside its region.
         if tag in self.RAW_TEXT_ELEMENTS:
-            self._raw_depth -= 1
+            self._raw_depth = max(0, self._raw_depth - 1)
         elif tag in self.WHITESPACE_PRESERVING_ELEMENTS:
-            self._preserve_depth -= 1
+            self._preserve_depth = max(0, self._preserve_depth - 1)
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:  # noqa: D102
         self._end_run()
