@@ -170,6 +170,21 @@ class SpaceLessRawTextElementTests(TestCase):
             '<textarea>  a  b  </textarea>')
 
 
+class SpaceLessCDataAndProcessingInstructionTests(TestCase):
+    """CDATA sections (valid in inline SVG/MathML) and processing
+    instructions must be preserved, not silently dropped."""
+
+    def test_cdata_section_is_preserved(self):
+        self.assertEqual(
+            strip_spaces_between_tags('<svg><text><![CDATA[a<b]]></text></svg>'),
+            '<svg><text><![CDATA[a<b]]></text></svg>')
+
+    def test_processing_instruction_is_preserved(self):
+        self.assertEqual(
+            strip_spaces_between_tags('a<?instruction?>b'),
+            'a<?instruction?>b')
+
+
 class SpaceLessStreamRawTextTests(TestCase):
     """script/style/textarea must stream identically to batch for any split."""
 
