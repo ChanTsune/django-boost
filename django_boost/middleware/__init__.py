@@ -61,11 +61,12 @@ class RedirectCorrectHostnameMiddleware(MiddlewareMixin):
         # correctly under both WSGI and ASGI. A synchronous __call__ override
         # would return a bare HttpResponse on the async path, which Django then
         # awaits -> TypeError.
-        enabled = not settings.DEBUG and hasattr(settings, 'CORRECT_HOST')
-        if enabled and request.get_host() != settings.CORRECT_HOST:
+        correct_host = getattr(settings, 'CORRECT_HOST', None)
+        enabled = not settings.DEBUG and correct_host
+        if enabled and request.get_host() != correct_host:
             return HttpResponsePermanentRedirect(
                 '{scheme}://{host}{path}'.format(scheme=request.scheme,
-                                                 host=settings.CORRECT_HOST,
+                                                 host=correct_host,
                                                  path=request.get_full_path()))
         return None
 
