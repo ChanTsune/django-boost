@@ -71,14 +71,14 @@ class Command(BaseCommand):  # noqa: D101
         target_app, target_model = target.split(".", 1)
         model_name = target_model.lower()
 
-        adopted = adopt_content_type(
-            using, LEGACY_APP_LABEL, LEGACY_MODEL, target_app, model_name)
-        if adopted:
-            self.stdout.write(
-                "Adopted content type %s.%s -> %s.%s (permissions preserved)."
-                % (LEGACY_APP_LABEL, LEGACY_MODEL, target_app, model_name))
-
         if LEGACY_TABLE in connections[using].introspection.table_names():
+            adopted = adopt_content_type(
+                using, LEGACY_APP_LABEL, LEGACY_MODEL, target_app, model_name)
+            if adopted:
+                self.stdout.write(
+                    "Adopted content type %s.%s -> %s.%s (permissions preserved)."
+                    % (LEGACY_APP_LABEL, LEGACY_MODEL, target_app, model_name))
+
             migration = options["target_migration"]
             if record_migration_applied(using, target_app, migration):
                 self.stdout.write(
