@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django_boost"
+description = "Extra batteries for Django, the batteries-included framework"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "ChanTsune", email = "yshegou@gmail.com" },
+]
+keywords = ["django", "extension"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+]
+dependencies = [
+    'Django>=4.2,<6; python_version < "3.13"',
+    'Django>=5.1,<6; python_version >= "3.13"',
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+useragent = ["user-agents>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/ChanTsune/Django-Boost"
+
+# attr: falls back to importing django_boost because __version__ is computed
+# (= get_version()); the module imports no Django, so this is safe at build time.
+[tool.setuptools.dynamic]
+version = { attr = "django_boost.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["django_boost*"]
+
+# setuptools package-data globs do not support '**' recursion reliably,
+# hence the per-depth template patterns.
+[tool.setuptools.package-data]
+django_boost = [
+    "locale/*/LC_MESSAGES/*.po",
+    "locale/*/LC_MESSAGES/*.mo",
+    "templates/boost/*.html",
+    "templates/boost/*/*.html",
+    "templates/boost/*/*/*.html",
+    "static/script/*.js",
+    "conf/app_template/*.py-tpl",
+]
