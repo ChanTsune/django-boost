@@ -43,6 +43,13 @@ class TestFloatConversion(TestCase):
         self.assertEqual(PositiveFloatConverter().to_url(7.25), '7.25')
         self.assertEqual(SignedFloatConverter().to_url(0.0), '0.0')
 
+    def test_to_url_avoids_exponential_notation(self):
+        # str(0.00001) == '1e-05' and str(1e16) == '1e+16'; neither matches
+        # the converter's own regex, so reverse() must not produce them.
+        self.assertEqual(SignedFloatConverter().to_url(0.00001), '0.00001')
+        self.assertEqual(
+            SignedFloatConverter().to_url(1e16), '10000000000000000')
+
 
 class TestFloatRegex(TestCase):
 
@@ -134,3 +141,11 @@ class TestFloatConverter(ConverterTestCase):
         self.assertEqual(
             reverse('non_positive_float', kwargs={'non_positive_float': 0.0}),
             '/non_positive_float/0.0')
+
+    def test_reverse_avoids_exponential_notation(self):
+        self.assertEqual(
+            reverse('signed_float', kwargs={'signed_float': 0.00001}),
+            '/signed_float/0.00001')
+        self.assertEqual(
+            reverse('signed_float', kwargs={'signed_float': 1e16}),
+            '/signed_float/10000000000000000')

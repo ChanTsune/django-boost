@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import decimal
 from typing import ClassVar, Generic, TypeVar
 
 _T = TypeVar('_T')
@@ -30,4 +31,12 @@ class BaseSignedNumericConverter(Generic[_T]):
         return self._parse(value)
 
     def to_url(self, value: _T | str) -> str:  # noqa: D102
-        return str(value)
+        # A string is passed through verbatim, so a malformed one still
+        # fails the reverse match. For an actual numeric value, str(value)
+        # can switch to exponential notation at extreme magnitudes (a float
+        # < 1e-4 or >= 1e16, or a Decimal with a positive exponent), which
+        # the fixed-point ``regex`` above rejects; re-rendering it through
+        # Decimal keeps it in fixed-point notation without rounding it.
+        if isinstance(value, str):
+            return value
+        return format(decimal.Decimal(str(value)), 'f')

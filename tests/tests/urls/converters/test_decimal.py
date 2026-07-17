@@ -56,6 +56,17 @@ class TestDecimalConversion(TestCase):
         self.assertEqual(
             SignedDecimalConverter().to_url(decimal.Decimal('0')), '0')
 
+    def test_to_url_avoids_exponential_notation(self):
+        # Decimal's own str() switches to scientific notation once the
+        # adjusted exponent is < -6 or > 0; neither form matches the
+        # converter's regex, so reverse() must not produce them.
+        self.assertEqual(
+            SignedDecimalConverter().to_url(decimal.Decimal('1E-7')),
+            '0.0000001')
+        self.assertEqual(
+            SignedDecimalConverter().to_url(decimal.Decimal('1E+16')),
+            '10000000000000000')
+
 
 class TestDecimalRegex(TestCase):
 
@@ -151,3 +162,13 @@ class TestDecimalConverter(ConverterTestCase):
             reverse('non_positive_decimal',
                     kwargs={'non_positive_decimal': decimal.Decimal('0')}),
             '/non_positive_decimal/0')
+
+    def test_reverse_avoids_exponential_notation(self):
+        self.assertEqual(
+            reverse('signed_decimal',
+                    kwargs={'signed_decimal': decimal.Decimal('1E-7')}),
+            '/signed_decimal/0.0000001')
+        self.assertEqual(
+            reverse('signed_decimal',
+                    kwargs={'signed_decimal': decimal.Decimal('1E+16')}),
+            '/signed_decimal/10000000000000000')
