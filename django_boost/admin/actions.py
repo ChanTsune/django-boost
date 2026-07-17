@@ -2,15 +2,33 @@
 
 from __future__ import annotations
 
-from django.contrib import messages
+from typing import TYPE_CHECKING
+
+from django.contrib import admin, messages
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import model_ngettext
 from django.core.exceptions import PermissionDenied
+from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _, gettext_lazy
 
+if TYPE_CHECKING:
+    # mixins.py imports hard_delete_selected from this module at runtime, so
+    # a real import of LogicalDeletionModelAdminMixin back here would be
+    # circular. Declared locally instead of under TYPE_CHECKING import: mypy
+    # doesn't resolve the mixin's own TYPE_CHECKING-only base across an
+    # import cycle, even a type-only one, so this restates its shape
+    # (ModelAdmin + hard_delete_queryset) without depending on mixins.py.
+    class _HardDeleteModelAdmin(admin.ModelAdmin):
+        def hard_delete_queryset(self, request: HttpRequest, queryset: QuerySet) -> None: ...
 
-def hard_delete_selected(modeladmin, request, queryset):
+
+def hard_delete_selected(
+    modeladmin: _HardDeleteModelAdmin,
+    request: HttpRequest,
+    queryset: QuerySet,
+) -> HttpResponse | None:
     """Admin action that physically deletes the selection, bypassing logical deletion."""
     opts = modeladmin.model._meta
     app_label = opts.app_label
@@ -28,12 +46,13 @@ def hard_delete_selected(modeladmin, request, queryset):
         if n:
             # log_deletions() replaced the per-object log_deletion() in Django
             # 5.1 (log_deletion() is deprecated); prefer it when available,
-            # falling back on Django 4.2/5.0.
+            # falling back on Django 4.2/5.0. django-stubs no longer declares
+            # the deprecated log_deletion, hence the ignore on that branch.
             if hasattr(modeladmin, 'log_deletions'):
                 modeladmin.log_deletions(request, queryset)
             else:
                 for obj in queryset:
-                    modeladmin.log_deletion(request, obj, str(obj))
+                    modeladmin.log_deletion(request, obj, str(obj))  # type: ignore[attr-defined]
             modeladmin.hard_delete_queryset(request, queryset)
             modeladmin.message_user(request, _("Successfully deleted %(count)d %(items)s.") % {
                 "count": n, "items": model_ngettext(modeladmin.opts, n)
@@ -73,5 +92,6 @@ def hard_delete_selected(modeladmin, request, queryset):
     ], context)
 
 
-hard_delete_selected.allowed_permissions = ('delete',)
-hard_delete_selected.short_description = gettext_lazy("Hard delete selected %(verbose_name_plural)s")
+hard_delete_selected.allowed_permissions = ('delete',)  # type: ignore[attr-defined]
+hard_delete_selected.short_description = (  # type: ignore[attr-defined]
+    gettext_lazy("Hard delete selected %(verbose_name_plural)s"))
