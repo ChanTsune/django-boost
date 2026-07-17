@@ -26,8 +26,10 @@ $ git clone https://github.com/ChanTsune/django-boost.git
 
 ```bash
 $ cd django_boost
-$ pip install -r requirements/develop.txt
+$ uv sync
 ```
+
+[uv](https://docs.astral.sh/uv/) creates the virtual environment and installs the development dependencies from the lockfile.
 
 ## Testing
 
@@ -97,7 +99,7 @@ The code will be merged into this project once it has been reviewed and the pull
 **Before submitting a pull request,** please make sure the following is done:
 
 1. Fork the repository and create your branch from master.
-1. Run `pip install requirements/develop.txt` in the repository root.
+1. Run `uv sync` in the repository root.
 1. If you’ve fixed a bug or added code that should be tested, add tests!
 1. Ensure the test suite passes (`python manage.py test`).
 1. Format your code with pep8.

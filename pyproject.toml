@@ -37,6 +37,24 @@ useragent = ["user-agents>=2.0"]
 [project.urls]
 Homepage = "https://github.com/ChanTsune/Django-Boost"
 
+[dependency-groups]
+dev = [
+    "tox",
+    "autopep8",
+    "coverage",
+    "pillow",
+    "user-agents>=2.0",
+    # Pinned to the primary type-check (Django 5.2); CI also runs a Django 4.2
+    # cell on its own stubs pin — see .github/workflows/test.yml.
+    "mypy==2.1.0",
+    "django-stubs[compatible-mypy]==6.0.7",
+    "django-stubs-ext==6.0.7",
+]
+docs = [
+    "Sphinx>=2.0",
+    "sphinx_rtd_theme",
+]
+
 # attr: falls back to importing django_boost because __version__ is computed
 # (= get_version()); the module imports no Django, so this is safe at build time.
 [tool.setuptools.dynamic]
