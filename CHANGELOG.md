@@ -15,6 +15,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.
 - The `date` path converter now accepts a `datetime.date` value (e.g. from a `DateField`) in `reverse()`, instead of raising `NoReverseMatch`.
+- `AnonymousRequiredMixin` views are no longer redirected to the login page by Django's `LoginRequiredMiddleware` (Django 5.1+) before the view can run.
 
 ## [3.3.1] - 2026-07-17
 
