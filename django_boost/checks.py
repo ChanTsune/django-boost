@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from importlib.util import find_spec
+from typing import Any
 
-from django.apps import apps
+from django.apps import AppConfig, apps
 from django.conf import settings
-from django.core.checks import Error, Warning
+from django.core.checks import CheckMessage, Error, Warning
 from django.core.exceptions import FieldDoesNotExist
+from django.db.models import Model
 from django.http.request import split_domain_port, validate_host
 
 DATABASE_ROUTER = "django_boost.db.router.DatabaseRouter"
@@ -20,7 +23,7 @@ DJANGO_ADMIN_APP = "django.contrib.admin"
 EMAILUSER_MODEL = "django_boost.EmailUser"
 
 
-def _matches_dotted_path(value, dotted_path):
+def _matches_dotted_path(value: Any, dotted_path: str) -> bool:
     if value == dotted_path:
         return True
 
@@ -35,20 +38,20 @@ def _matches_dotted_path(value, dotted_path):
     return module is not None and qualname is not None and "%s.%s" % (module, qualname) == dotted_path
 
 
-def _setting_contains(setting_name, dotted_path):
+def _setting_contains(setting_name: str, dotted_path: str) -> bool:
     values = getattr(settings, setting_name, ()) or ()
     if isinstance(values, (str, bytes)):
         values = (values,)
     return any(_matches_dotted_path(value, dotted_path) for value in values)
 
 
-def _app_labels():
+def _app_labels() -> set[str] | None:
     if not apps.ready:
         return None
     return {app_config.label for app_config in apps.get_app_configs()}
 
 
-def _correct_host_is_allowed(host, allowed_hosts):
+def _correct_host_is_allowed(host: Any, allowed_hosts: Any) -> bool:
     if not isinstance(host, str):
         return False
 
@@ -56,7 +59,7 @@ def _correct_host_is_allowed(host, allowed_hosts):
     return bool(domain and validate_host(domain, allowed_hosts or ()))
 
 
-def _correct_host_has_invalid_format(host):
+def _correct_host_has_invalid_format(host: Any) -> bool:
     if not isinstance(host, str):
         return True
     return host != host.strip() or "://" in host or "/" in host or "\\" in host or any(
@@ -64,7 +67,7 @@ def _correct_host_has_invalid_format(host):
     )
 
 
-def _templates_use_user_agent_context_processor():
+def _templates_use_user_agent_context_processor() -> bool:
     for template_config in getattr(settings, "TEMPLATES", ()):
         context_processors = template_config.get("OPTIONS", {}).get("context_processors", ())
         if USER_AGENT_CONTEXT_PROCESSOR in context_processors:
@@ -72,26 +75,26 @@ def _templates_use_user_agent_context_processor():
     return False
 
 
-def _user_agents_available():
+def _user_agents_available() -> bool:
     try:
         return find_spec(USER_AGENTS_PACKAGE) is not None
     except (ImportError, ValueError):
         return False
 
 
-def _get_models(app_configs):
+def _get_models(app_configs: Sequence[AppConfig] | None) -> list[type[Model]]:
     if app_configs is None:
         return apps.get_models()
 
-    models = []
+    models: list[type[Model]] = []
     for app_config in app_configs:
         models.extend(app_config.get_models())
     return models
 
 
-def check_database_router(app_configs, **kwargs):
+def check_database_router(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Validate ``DATABASE_APPS_MAPPING`` when django_boost's router is enabled."""
-    errors = []
+    errors: list[CheckMessage] = []
     if not _setting_contains("DATABASE_ROUTERS", DATABASE_ROUTER):
         return errors
 
@@ -145,9 +148,11 @@ def check_database_router(app_configs, **kwargs):
     return errors
 
 
-def check_redirect_correct_hostname_middleware(app_configs, **kwargs):
+def check_redirect_correct_hostname_middleware(
+    app_configs: Sequence[AppConfig] | None, **kwargs: Any,
+) -> list[CheckMessage]:
     """Validate ``CORRECT_HOST`` when ``RedirectCorrectHostnameMiddleware`` is enabled."""
-    errors = []
+    errors: list[CheckMessage] = []
     if not _setting_contains("MIDDLEWARE", REDIRECT_CORRECT_HOSTNAME_MIDDLEWARE):
         return errors
 
@@ -187,7 +192,7 @@ def check_redirect_correct_hostname_middleware(app_configs, **kwargs):
     return errors
 
 
-def check_user_agent_extra(app_configs, **kwargs):
+def check_user_agent_extra(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Require the optional ``user-agents`` package when the ``user_agent`` context processor is configured."""
     if not _templates_use_user_agent_context_processor() or _user_agents_available():
         return []
@@ -202,13 +207,13 @@ def check_user_agent_extra(app_configs, **kwargs):
     ]
 
 
-def _check_logical_deletion_model(model):
+def _check_logical_deletion_model(model: type[Model]) -> list[CheckMessage]:
     from django_boost.models.mixins import LogicalDeletionMixin
 
     if model is LogicalDeletionMixin or not issubclass(model, LogicalDeletionMixin):
         return []
 
-    errors = []
+    errors: list[CheckMessage] = []
     try:
         deleted_at = model._meta.get_field("deleted_at")
     except FieldDoesNotExist:
@@ -252,15 +257,15 @@ def _check_logical_deletion_model(model):
     return errors
 
 
-def check_logical_deletion_models(app_configs, **kwargs):
+def check_logical_deletion_models(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Validate every model using ``LogicalDeletionMixin`` across the project."""
-    errors = []
+    errors: list[CheckMessage] = []
     for model in _get_models(app_configs):
         errors.extend(_check_logical_deletion_model(model))
     return errors
 
 
-def check_admin_tools_requires_admin(app_configs, **kwargs):
+def check_admin_tools_requires_admin(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Require ``django.contrib.admin`` when an admin_tools app is installed."""
     admin_tools_installed = apps.is_installed(ADMIN_TOOLS_APP) or apps.is_installed(LEGACY_ADMIN_TOOLS_APP)
     if not admin_tools_installed or apps.is_installed(DJANGO_ADMIN_APP):
@@ -276,7 +281,7 @@ def check_admin_tools_requires_admin(app_configs, **kwargs):
     ]
 
 
-def check_emailuser_deprecated(app_configs, **kwargs):
+def check_emailuser_deprecated(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Warn when ``AUTH_USER_MODEL`` still points at the deprecated built-in ``EmailUser``."""
     if getattr(settings, "AUTH_USER_MODEL", None) != EMAILUSER_MODEL:
         return []
