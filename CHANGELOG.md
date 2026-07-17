@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `register_all()` no longer registers a model merely imported into a `models.py` module (e.g. for a foreign key reference) — only models actually defined there.
+
 ## [3.4.0] - 2026-07-19
 
 ### Added

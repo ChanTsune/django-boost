@@ -46,6 +46,10 @@ def register_all(
       register_all(models, admin_class=admin.CustomAdmin)
     """
     for _, klass in getmembers(models, isclass):
+        # Skip classes merely imported into `models` (e.g. for an FK reference)
+        # rather than defined there -- only the latter matches the docstring above.
+        if klass.__module__ != models.__name__:
+            continue
         if isinstance(klass, ModelBase) and not klass._meta.abstract:
             try:
                 admin.site.register(klass, admin_class, **options)
