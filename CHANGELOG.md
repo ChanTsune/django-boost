@@ -11,6 +11,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - `LogicalDeletionQuerySet`/`LogicalDeletionManager` gained `deleted_since`, `deleted_before`, and `deleted_between` methods for filtering by deletion date.
 
+### Changed
+
+- Documented that `JsonRequestMixin` does not restrict the request's Content-Type unless `strictly = True` is set.
+
 ### Fixed
 
 - The `Toggleswitch` widget's visible label is now clickable; its `for` attribute now matches the input's `id`.

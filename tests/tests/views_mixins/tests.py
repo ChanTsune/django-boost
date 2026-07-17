@@ -79,6 +79,8 @@ class TestViewMixins(TestCase):
 
     def test_json_request(self):
         url = '/json_request/'
+        # Default content-type here is multipart/form-data (not JSON); this
+        # passes because JsonRequestMixin.strictly defaults to False.
         response = self.client.post(url)
         self.assertStatusCodeEqual(response, 302)
 
