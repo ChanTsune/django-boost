@@ -6,4 +6,4 @@ user-agents>=2.0
 # on its own stubs pin — see .github/workflows/test.yml.
 mypy==2.1.0
 django-stubs[compatible-mypy]==6.0.7
-django-stubs-ext==6.0.6
+django-stubs-ext==6.0.7

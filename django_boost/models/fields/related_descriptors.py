@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from django.db import router
 from django.db.models.fields.related_descriptors import (
     ReverseOneToOneDescriptor)
 from django.db.transaction import atomic
@@ -14,7 +15,6 @@ class AutoReverseOneToOneDescriptor(ReverseOneToOneDescriptor):
     The descriptor that handles the object creation for an AutoOneToOneField.
     """
 
-    @atomic
     def __get__(self, instance, cls=None):
         """Get the related object, creating it via ``get_or_create`` if it doesn't exist yet."""
         model = getattr(self.related, 'related_model', self.related.model)
@@ -25,8 +25,14 @@ class AutoReverseOneToOneDescriptor(ReverseOneToOneDescriptor):
                 # No parent pk to create the related object against; surface the
                 # same RelatedObjectDoesNotExist a plain OneToOneField would.
                 raise
-            obj, _ = model.objects.get_or_create(
-                **{self.related.field.name: instance})
+            # Route on the parent instance, matching the hint Django's own
+            # ReverseOneToOneDescriptor.get_queryset() uses for the read above,
+            # instead of always creating on the default alias.
+            db = router.db_for_write(model, instance=instance)
+            with atomic(using=db):
+                obj, _ = model._base_manager.db_manager(
+                    hints={'instance': instance}).get_or_create(
+                    **{self.related.field.name: instance})
 
             self.related.set_cached_value(instance, obj)
             self.related.field.set_cached_value(obj, instance)
