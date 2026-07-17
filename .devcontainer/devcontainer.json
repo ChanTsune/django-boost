@@ -4,8 +4,8 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "onCreateCommand": "python -m pip install --upgrade pip && python -m pip install -e . -r requirements/develop.txt -r requirements/ci.txt",
-  "postCreateCommand": "python -m pip install -r requirements/docs.txt && pip install \"django==${DJANGO_VERSION:-4.2.*}\"",
+  "onCreateCommand": "python -m pip install --upgrade pip uv && uv sync --group docs",
+  "postCreateCommand": "uv pip install -p \"$UV_PROJECT_ENVIRONMENT\" \"django==${DJANGO_VERSION:-4.2.*}\"",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -16,7 +16,7 @@
         "lextudio.restructuredtext"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python",
         "python.testing.unittestEnabled": true,
         "python.testing.unittestArgs": [
           "discover",
@@ -26,8 +26,9 @@
       }
     }
   },
-  "remoteEnv": {
+  "containerEnv": {
     "PIP_DISABLE_PIP_VERSION_CHECK": "1",
-    "DJANGO_VERSION": "${localEnv:DJANGO_VERSION}"
+    "DJANGO_VERSION": "${localEnv:DJANGO_VERSION}",
+    "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
   }
 }
