@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.4.0] - 2026-07-19
+
 ### Added
 
 - `LogicalDeletionQuerySet`/`LogicalDeletionManager` gained `deleted_since`, `deleted_before`, and `deleted_between` methods for filtering by deletion date.
@@ -515,7 +517,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.3.1...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.4.0...HEAD
+[3.4.0]: https://github.com/ChanTsune/django-boost/compare/v3.3.1...v3.4.0
 [3.3.1]: https://github.com/ChanTsune/django-boost/compare/v3.3.0...v3.3.1
 [3.3.0]: https://github.com/ChanTsune/django-boost/compare/v3.2.4...v3.3.0
 [3.2.4]: https://github.com/ChanTsune/django-boost/compare/v3.2.3...v3.2.4
