@@ -118,7 +118,12 @@ class LimitedTermMixin:
 
 @method_decorator(csrf_exempt, name="dispatch")
 class JsonRequestMixin(AllowContentTypeMixin):
-    """Only allow json request mixin."""
+    """Mixin that exposes ``self.json``, the parsed JSON request body.
+
+    By default this does not restrict the request's Content-Type; set
+    ``strictly = True`` to reject requests whose Content-Type is not in
+    ``allowed_content_types`` (415).
+    """
 
     allowed_content_types = ["application/json"]
     strictly = False
