@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.4.1] - 2026-07-26
+
 ### Fixed
 
 - `register_all()` no longer registers a model merely imported into a `models.py` module (e.g. for a foreign key reference) — only models actually defined there.
@@ -524,7 +526,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.4.0...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.4.1...HEAD
+[3.4.1]: https://github.com/ChanTsune/django-boost/compare/v3.4.0...v3.4.1
 [3.4.0]: https://github.com/ChanTsune/django-boost/compare/v3.3.1...v3.4.0
 [3.3.1]: https://github.com/ChanTsune/django-boost/compare/v3.3.0...v3.3.1
 [3.3.0]: https://github.com/ChanTsune/django-boost/compare/v3.2.4...v3.3.0
