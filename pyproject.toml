@@ -48,7 +48,7 @@ dev = [
     # cell on its own stubs pin — see .github/workflows/test.yml.
     "mypy==2.3.0",
     "django-stubs[compatible-mypy]==6.0.7",
-    "django-stubs-ext==6.0.7",
+    "django-stubs-ext==6.0.9",
 ]
 docs = [
     "Sphinx>=2.0",
