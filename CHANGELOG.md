@@ -7,6 +7,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+## [3.4.2] - 2026-09-06
+
 ### Fixed
 
 - `SpaceLessMiddleware` no longer silently drops CDATA sections and processing instructions from HTML responses.
@@ -533,7 +535,8 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 - First release.
 
-[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.4.1...HEAD
+[Unreleased]: https://github.com/ChanTsune/django-boost/compare/v3.4.2...HEAD
+[3.4.2]: https://github.com/ChanTsune/django-boost/compare/v3.4.1...v3.4.2
 [3.4.1]: https://github.com/ChanTsune/django-boost/compare/v3.4.0...v3.4.1
 [3.4.0]: https://github.com/ChanTsune/django-boost/compare/v3.3.1...v3.4.0
 [3.3.1]: https://github.com/ChanTsune/django-boost/compare/v3.3.0...v3.3.1
