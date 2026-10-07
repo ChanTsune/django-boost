@@ -154,6 +154,8 @@ A specialized mixin for ``AllowContentTypeMixin`` for json.
 
 You can access the dictionary object parsed from the Json string sent by the client in ``self.json``
 
+By default this mixin does not restrict the request's Content-Type. Specify ``strictly = True`` if you want to limit the Content-Type to Json only.
+
 If you use for the purpose of API, ``JsonView`` is recommended.
 
 ResponseMixins
@@ -180,9 +182,3 @@ Returns the response in Json format
 The usage of ``extra_context`` and ``get_context_data`` is basically the same as ``TemplateView``.
 
 The difference is that ``TemplateView`` is passed directly to the template context, whereas ``JsonResponseMixin`` is a direct response.
-
-
-Specify ``strictly = True`` if you want to limit the Content-Type to Json only.
-
-
-If you use for the purpose of API ``JsonView`` below is recommended.
