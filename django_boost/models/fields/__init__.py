@@ -64,7 +64,6 @@ class ColorCodeField(CharField):
         })
 
 
-
 class SplitDateTimeField(models.DateTimeField):
     """
     A little convenient DateTimeField.
