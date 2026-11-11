@@ -10,6 +10,7 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
+- Raise the minimum supported Django version to 5.2 for the next major release.
 
 ## [3.4.2] - 2026-09-06
 

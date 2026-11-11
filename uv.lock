@@ -384,8 +384,7 @@ docs = [
 
 [package.metadata]
 requires-dist = [
-    { name = "django", marker = "python_full_version < '3.13'", specifier = ">=4.2,<6" },
-    { name = "django", marker = "python_full_version >= '3.13'", specifier = ">=5.1,<6" },
+    { name = "django", specifier = ">=5.2,<6" },
     { name = "user-agents", marker = "extra == 'useragent'", specifier = ">=2.0" },
 ]
 provides-extras = ["useragent"]

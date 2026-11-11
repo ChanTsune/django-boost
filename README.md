@@ -43,7 +43,8 @@ python setup.py install
 
 The released 3.x line supports Python 3.10-3.13 and Django 4.2-5.2 where the
 Django/Python combination is supported by Django. The upcoming 4.0 release
-requires Python 3.12 or newer. User-agent detection requires
+requires Python 3.12+ and Django 5.2.x (Django 6 is not yet supported).
+User-agent detection requires
 the optional `useragent` extra:
 `pip install django-boost[useragent]`.
 

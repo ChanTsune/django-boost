@@ -5,7 +5,7 @@
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "onCreateCommand": "python -m pip install --upgrade pip uv && uv sync --group docs",
-  "postCreateCommand": "uv pip install -p \"$UV_PROJECT_ENVIRONMENT\" \"django==${DJANGO_VERSION:-4.2.*}\"",
+  "postCreateCommand": "uv pip install -p \"$UV_PROJECT_ENVIRONMENT\" \"django==${DJANGO_VERSION:-5.2.*}\"",
   "customizations": {
     "vscode": {
       "extensions": [
