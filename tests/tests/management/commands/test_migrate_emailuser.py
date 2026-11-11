@@ -72,9 +72,13 @@ class MigrateEmailUserCommandTests(TestCase):
     def test_adopts_and_records_before_migrate(self):
         module = "django_boost.management.commands.migrate_emailuser"
         manager = Mock()
-        with patch(module + ".adopt_content_type", return_value=1) as adopt, \
+        with patch(module + ".connections") as mock_connections, \
+                patch(module + ".adopt_content_type", return_value=1) as adopt, \
                 patch(module + ".record_migration_applied", return_value=True) as record, \
                 patch(module + ".call_command") as migrate:
+            mock_connections[DEFAULT_DB_ALIAS].introspection.table_names.return_value = [
+                "django_boost_emailuser"
+            ]
             manager.attach_mock(adopt, "adopt")
             manager.attach_mock(record, "record")
             manager.attach_mock(migrate, "migrate")
