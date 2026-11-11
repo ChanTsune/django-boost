@@ -44,6 +44,10 @@ If neither is set, the string is saved without any changes.
 
 Default is ``upper=False``, ``lower=False``.
 
+The misspelled ``ColorCodeFiled`` class was removed in django-boost 4.0.
+Replace references (including any serialized migration imports) with
+``ColorCodeField`` before upgrading.
+
 
 SplitDateTimeField
 -------------------

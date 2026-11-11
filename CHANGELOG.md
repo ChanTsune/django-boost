@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the deprecated `ColorCodeFiled` model field alias; use `ColorCodeField` instead. Update serialized migration references before upgrading.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
