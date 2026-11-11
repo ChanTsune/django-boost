@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove deprecated `django_boost.views.base`/`generic` view aliases and the `after_view_process` hook; use Django's native views and `dispatch()` or middleware.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
