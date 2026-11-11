@@ -1,21 +1,15 @@
-from uuid import uuid4
+"""The removed UUID validator is no longer part of the public API."""
 
-from django.core.exceptions import ValidationError
+from importlib.util import find_spec
 
+from django_boost import validators
 from django_boost.test import TestCase
-from django_boost.validators import validate_uuid4
 
 
-class ValidateUuid4Deprecation(TestCase):
-    """`validate_uuid4` is deprecated; removal is planned for django-boost 4.0."""
+class RemovedUuidValidatorTests(TestCase):
+    def test_validator_is_not_exported(self):
+        self.assertNotIn("validate_uuid4", validators.__all__)
+        self.assertFalse(hasattr(validators, "validate_uuid4"))
 
-    def test_warns_on_call(self):
-        with self.assertWarns(DeprecationWarning):
-            validate_uuid4(str(uuid4()))
-
-    def test_still_validates_under_warning(self):
-        with self.assertWarns(DeprecationWarning):
-            self.assertIsNone(validate_uuid4(str(uuid4())))
-        with self.assertWarns(DeprecationWarning):
-            with self.assertRaises(ValidationError):
-                validate_uuid4("not-a-uuid")
+    def test_legacy_module_is_removed(self):
+        self.assertIsNone(find_spec("django_boost.validators.uuid"))

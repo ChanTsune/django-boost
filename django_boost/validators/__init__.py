@@ -8,8 +8,7 @@ from django_boost.validators.color import (ColorCodeValidator,
 from django_boost.validators.integer import (NonZeroValidator,
                                              validate_non_zero)
 from django_boost.validators.json import JsonValidator, validate_json
-from django_boost.validators.uuid import validate_uuid4
 
-__all__ = ["validate_json", "validate_uuid4", "validate_color_code",
+__all__ = ["validate_json", "validate_color_code",
            "validate_non_zero", "ContainAnyValidator", "NonZeroValidator",
            "ColorCodeValidator", "JsonValidator"]
