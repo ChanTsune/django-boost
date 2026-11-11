@@ -1,4 +1,5 @@
 from io import StringIO
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import Group, Permission
@@ -56,10 +57,11 @@ class RecordMigrationAppliedTests(TestCase):
 
 class MigrateEmailUserCommandTests(TestCase):
 
-    @override_settings(AUTH_USER_MODEL="django_boost.EmailUser")
     def test_refuses_when_target_not_set(self):
-        with self.assertRaisesRegex(CommandError, "AUTH_USER_MODEL"):
-            call_command("migrate_emailuser", stdout=StringIO())
+        fake_settings = SimpleNamespace(AUTH_USER_MODEL="django_boost.EmailUser")
+        with patch("django_boost.management.commands.migrate_emailuser.settings", fake_settings):
+            with self.assertRaisesRegex(CommandError, "AUTH_USER_MODEL"):
+                call_command("migrate_emailuser", stdout=StringIO())
 
     @override_settings(AUTH_USER_MODEL="nouserdot")
     def test_refuses_when_target_has_no_dot(self):

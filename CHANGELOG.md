@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the deprecated `EmailUser`, `AbstractEmailUser`, and `EmailUserAdmin` APIs. Run `migrate_emailuser` on 3.x before upgrading; historical migrations remain, with a state-only removal that preserves the legacy database table.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
