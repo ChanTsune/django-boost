@@ -5,7 +5,6 @@ from django.utils.timezone import now
 from django.views.generic import FormView, TemplateView, View
 
 from django_boost.forms.mixins import FormUserKwargsMixin
-from django_boost.views.generic import TemplateView as BoostTemplateView
 from django_boost.views.mixins import (AllowContentTypeMixin,
                                        AnonymousRequiredMixin, CSRFExemptMixin,
                                        DynamicRedirectMixin, JsonRequestMixin,
@@ -112,7 +111,7 @@ class SuperuserRequiredView(SuperuserRequiredMixin, TemplateView):
     template_name = "boost/test/index.html"
 
 
-class UserAgentView(UserAgentMixin, BoostTemplateView):
+class UserAgentView(UserAgentMixin, TemplateView):
     template_name = "boost/test/index.html"
 
 
