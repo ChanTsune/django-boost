@@ -191,7 +191,5 @@ Use ``--format csv`` or ``--format tsv`` for machine-readable output::
 
    ``listsuperuser`` ships in the optional ``django_boost.contrib.admin_tools``
    application (see :doc:`installation_instructions`). Installing it under the
-   legacy ``'django_boost.admin_tools'`` ``INSTALLED_APPS`` entry still works
-   but warns on startup; switch the entry to
-   ``'django_boost.contrib.admin_tools'``. The legacy entry will be removed in
-   django-boost 4.0.
+   legacy ``'django_boost.admin_tools'`` app path was removed in 4.0;
+   use ``'django_boost.contrib.admin_tools'`` in ``INSTALLED_APPS``.
