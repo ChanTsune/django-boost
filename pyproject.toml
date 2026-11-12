@@ -40,7 +40,7 @@ dev = [
     "user-agents>=2.0",
     # Development type-check dependencies for the Django 5.2 baseline.
     "mypy==2.3.1",
-    "django-stubs[compatible-mypy]==6.0.9",
+    "django-stubs[compatible-mypy]==6.1.2",
     "django-stubs-ext==6.1.2",
 ]
 docs = [
