@@ -1,6 +1,7 @@
 from django.test import SimpleTestCase
 
-from django_boost.models.fields import ColorCodeField, ColorCodeFiled
+import django_boost.models.fields as boost_fields
+from django_boost.models.fields import ColorCodeField
 
 
 class ColorCodeFieldTests(SimpleTestCase):
@@ -36,17 +37,10 @@ class ColorCodeFieldTests(SimpleTestCase):
         self.assertNotIn("lower", kwargs)
 
 
-class ColorCodeFiledDeprecationTests(SimpleTestCase):
-    """`ColorCodeFiled` is the misspelled, deprecated alias of `ColorCodeField`."""
+class RemovedColorCodeFiledTests(SimpleTestCase):
+    def test_misspelled_alias_is_no_longer_exported(self):
+        self.assertFalse(hasattr(boost_fields, "ColorCodeFiled"))
 
-    def test_is_subclass_of_color_code_field(self):
-        self.assertTrue(issubclass(ColorCodeFiled, ColorCodeField))
-
-    def test_instantiation_warns(self):
-        with self.assertWarns(DeprecationWarning):
-            ColorCodeFiled()
-
-    def test_still_functional(self):
-        with self.assertWarns(DeprecationWarning):
-            field = ColorCodeFiled(upper=True)
-        self.assertEqual(field.max_length, 7)
+    def test_canonical_field_still_works(self):
+        field = ColorCodeField(upper=True)
+        self.assertEqual(field.to_python("#abcdef"), "#ABCDEF")
