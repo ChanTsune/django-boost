@@ -301,27 +301,11 @@ class AdminToolsCheckTests(TestCase):
             messages = check_admin_tools_requires_admin(None)
         self.assertEqual(check_ids(messages), ["django_boost.W040"])
 
-    def test_warns_when_legacy_admin_tools_without_django_admin(self):
-        with patch(
-            "django_boost.checks.apps.is_installed",
-            side_effect=lambda name: name == "django_boost.admin_tools",
-        ):
-            messages = check_admin_tools_requires_admin(None)
-        self.assertEqual(check_ids(messages), ["django_boost.W040"])
-
     def test_no_warning_when_contrib_admin_tools_with_django_admin(self):
         with patch(
             "django_boost.checks.apps.is_installed",
             side_effect=lambda name: name in (
                 "django_boost.contrib.admin_tools", "django.contrib.admin"),
-        ):
-            self.assertEqual(check_admin_tools_requires_admin(None), [])
-
-    def test_no_warning_when_legacy_admin_tools_with_django_admin(self):
-        with patch(
-            "django_boost.checks.apps.is_installed",
-            side_effect=lambda name: name in (
-                "django_boost.admin_tools", "django.contrib.admin"),
         ):
             self.assertEqual(check_admin_tools_requires_admin(None), [])
 

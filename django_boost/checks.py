@@ -18,7 +18,6 @@ REDIRECT_CORRECT_HOSTNAME_MIDDLEWARE = "django_boost.middleware.RedirectCorrectH
 USER_AGENT_CONTEXT_PROCESSOR = "django_boost.context_processors.user_agent"
 USER_AGENTS_PACKAGE = "user_agents"
 ADMIN_TOOLS_APP = "django_boost.contrib.admin_tools"
-LEGACY_ADMIN_TOOLS_APP = "django_boost.admin_tools"
 DJANGO_ADMIN_APP = "django.contrib.admin"
 EMAILUSER_MODEL = "django_boost.EmailUser"
 
@@ -267,7 +266,7 @@ def check_logical_deletion_models(app_configs: Sequence[AppConfig] | None, **kwa
 
 def check_admin_tools_requires_admin(app_configs: Sequence[AppConfig] | None, **kwargs: Any) -> list[CheckMessage]:
     """Require ``django.contrib.admin`` when an admin_tools app is installed."""
-    admin_tools_installed = apps.is_installed(ADMIN_TOOLS_APP) or apps.is_installed(LEGACY_ADMIN_TOOLS_APP)
+    admin_tools_installed = apps.is_installed(ADMIN_TOOLS_APP)
     if not admin_tools_installed or apps.is_installed(DJANGO_ADMIN_APP):
         return []
 
