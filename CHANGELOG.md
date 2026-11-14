@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the deprecated core `adminsitelog` command alias; install `django_boost.contrib.admin_tools` for the supported command.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
