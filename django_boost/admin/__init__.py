@@ -3,32 +3,15 @@
 from __future__ import annotations
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
-from django_boost.forms import UserChangeForm, UserCreationForm
-from django_boost.models import EmailUser
 
 from .filters import LogicalDeletedDateFilter
 from .mixins import LogicalDeletionModelAdminMixin
 from .sites import register_all
 
-__all__ = ["EmailUserAdmin", "LogicalDeletedDateFilter",
+__all__ = ["LogicalDeletedDateFilter",
            "LogicalDeletionModelAdmin",
            "register_all"]
-
-
-@admin.register(EmailUser)
-class EmailUserAdmin(UserAdmin):
-    """Admin registration for ``EmailUser``, Django's ``UserAdmin`` adapted to its email-based login."""
-
-    add_form = UserCreationForm
-    form = UserChangeForm
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
-        }),
-    )
 
 
 class LogicalDeletionModelAdmin(LogicalDeletionModelAdminMixin, admin.ModelAdmin):

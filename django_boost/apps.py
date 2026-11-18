@@ -13,9 +13,8 @@ class DjangoBoostConfig(AppConfig):
 
     name = 'django_boost'
     verbose_name = 'Django Boost'
-    # EmailUser shipped its migration with an AutoField primary key; keep the
-    # auto field as AutoField so adopters are not forced into an INT->BIGINT
-    # migration of the user table's primary key.
+    # Retain the historical AutoField default for pre-4.0 EmailUser migration
+    # state, so adopters do not accidentally change the legacy table's PK type.
     default_auto_field = 'django.db.models.AutoField'
 
     def ready(self) -> None:

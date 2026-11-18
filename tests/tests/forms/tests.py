@@ -5,7 +5,7 @@ class FormTest(TestCase):
 
     def test_form(self):
         from django_boost.forms import UserCreationForm
-        form = UserCreationForm({'email': 'sample@sample.com',
+        form = UserCreationForm({'username': 'sample',
                                  'password1': 'django_boost',
                                  'password2': 'django_boost'
                                  })
@@ -25,16 +25,16 @@ class FormTest(TestCase):
         from django.contrib.auth import get_user_model
         from django_boost.forms import UserCreationForm
 
-        form = UserCreationForm({'email': 'created@sample.com',
+        form = UserCreationForm({'username': 'created',
                                  'password1': 'django_boost',
                                  'password2': 'django_boost'
                                  })
         self.assertTrue(form.is_valid())
         user = form.save()
 
-        self.assertEqual(user.email, 'created@sample.com')
+        self.assertEqual(user.username, 'created')
         self.assertTrue(
-            get_user_model().objects.filter(email='created@sample.com').exists())
+            get_user_model().objects.filter(username='created').exists())
 
     def test_user_change_form_uses_usernamefield_for_identifier(self):
         from django.contrib.auth import get_user_model

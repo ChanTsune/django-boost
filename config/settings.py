@@ -100,7 +100,7 @@ DATABASE_APPS_MAPPING = {
     'example': 'example',
 }
 
-AUTH_USER_MODEL = 'django_boost.EmailUser'
+AUTH_USER_MODEL = 'auth.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

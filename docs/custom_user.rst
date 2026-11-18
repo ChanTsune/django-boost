@@ -1,54 +1,19 @@
 Custom User
-=========================
+===========
 
-:synopsis: django-boost custom user
+Legacy EmailUser migration
+--------------------------
 
-
-EmailUser
-----------
-
-.. deprecated:: 3.2
-   ``EmailUser`` and ``AbstractEmailUser`` are deprecated and will be removed in
-   django-boost 4.0. Copy the model into one of your own apps and drop the
-   django_boost dependency. See `Migrating off EmailUser`_.
-
-
-Configuration
-^^^^^^^^^^^^^
-
-Setting of your Django project *settings.py* file.
-
-::
-
-  AUTH_USER_MODEL = 'django_boost.EmailUser'
-
-
-Replace Django default user model.
-
-Use email address instead of username when logging in.
-
-
-AbstractEmailUser
------------------
-
-Available when you want to add a field to ``EmailUser``.
-
-Inherit ``AbstractEmailUser`` and add fields.
-
-example::
-
-  from django.db import models
-  from django_boost.models import AbstractEmailUser
-
-  class CustomUser(AbstractEmailUser):
-      is_frozen = models.BooleanField(default=False)
-      homepage = models.URLField()
-
+``django_boost.models.EmailUser`` and ``AbstractEmailUser`` were removed in
+**django-boost 4.0**. Applications still using either class must migrate to an
+application-owned user model **while running django-boost 3.x**, before
+upgrading to 4.0. The ``migrate_emailuser`` command remains available for
+that transition, and historical migrations are preserved.
 
 Migrating off EmailUser
 -----------------------
 
-``EmailUser`` is a swappable ``AUTH_USER_MODEL``. The underlying table is
+The historical ``EmailUser`` was a swappable ``AUTH_USER_MODEL``. The underlying table is
 ``django_boost_emailuser``; keep that table name and you move **no data**.
 
 1. Add an equivalent model to one of *your own* apps (a fresh app is simplest).
@@ -86,7 +51,7 @@ Migrating off EmailUser
 
 4. In *settings.py*: ``AUTH_USER_MODEL = 'accounts.User'``.
 
-5. ``python manage.py migrate_emailuser``
+5. **Before upgrading to django-boost 4.0**, run ``python manage.py migrate_emailuser``
 
    The command adopts the existing content type (so assigned permissions carry
    over), records your app's initial migration as applied (the table already

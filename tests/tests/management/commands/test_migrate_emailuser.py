@@ -1,4 +1,5 @@
 from io import StringIO
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import Group, Permission
@@ -56,10 +57,11 @@ class RecordMigrationAppliedTests(TestCase):
 
 class MigrateEmailUserCommandTests(TestCase):
 
-    @override_settings(AUTH_USER_MODEL="django_boost.EmailUser")
     def test_refuses_when_target_not_set(self):
-        with self.assertRaisesRegex(CommandError, "AUTH_USER_MODEL"):
-            call_command("migrate_emailuser", stdout=StringIO())
+        fake_settings = SimpleNamespace(AUTH_USER_MODEL="django_boost.EmailUser")
+        with patch("django_boost.management.commands.migrate_emailuser.settings", fake_settings):
+            with self.assertRaisesRegex(CommandError, "AUTH_USER_MODEL"):
+                call_command("migrate_emailuser", stdout=StringIO())
 
     @override_settings(AUTH_USER_MODEL="nouserdot")
     def test_refuses_when_target_has_no_dot(self):
@@ -70,9 +72,13 @@ class MigrateEmailUserCommandTests(TestCase):
     def test_adopts_and_records_before_migrate(self):
         module = "django_boost.management.commands.migrate_emailuser"
         manager = Mock()
-        with patch(module + ".adopt_content_type", return_value=1) as adopt, \
+        with patch(module + ".connections") as mock_connections, \
+                patch(module + ".adopt_content_type", return_value=1) as adopt, \
                 patch(module + ".record_migration_applied", return_value=True) as record, \
                 patch(module + ".call_command") as migrate:
+            mock_connections[DEFAULT_DB_ALIAS].introspection.table_names.return_value = [
+                "django_boost_emailuser"
+            ]
             manager.attach_mock(adopt, "adopt")
             manager.attach_mock(record, "record")
             manager.attach_mock(migrate, "migrate")
