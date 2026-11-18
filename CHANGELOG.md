@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the deprecated `validate_uuid4` validator. Use Django's `UUIDField` or `uuid.UUID` instead.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.

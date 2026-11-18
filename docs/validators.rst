@@ -74,9 +74,7 @@ the one range they cannot express as a single validator.
 Use the ``NonZeroValidator`` class to supply a custom message.
 
 
-validate_uuid4
---------------
+UUID validation
+---------------
 
-.. deprecated:: 3.1.0
-   ``validate_uuid4`` will be removed in django-boost 4.0. Validate UUIDs with
-   Django's ``UUIDField`` or ``uuid.UUID`` instead.
+Use Django's ``UUIDField`` or Python's ``uuid.UUID`` for UUID validation.
