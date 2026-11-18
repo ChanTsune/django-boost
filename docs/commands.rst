@@ -17,8 +17,8 @@ View and delete Admin Site logs.
    ``adminsitelog`` ships in the optional ``django_boost.contrib.admin_tools``
    application (see :doc:`installation_instructions`) and also requires
    ``django.contrib.admin``; without it the command exits with an error.
-   Running ``adminsitelog`` through ``django_boost`` alone still works but is
-   deprecated and will be removed in django-boost 4.0.
+   The core ``django_boost`` app no longer provides a command alias in 4.0;
+   install ``django_boost.contrib.admin_tools`` to use ``adminsitelog``.
 
 ::
 
