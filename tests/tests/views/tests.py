@@ -34,58 +34,24 @@ class TestStringView(TestCase):
             response = self.client.get(reverse('dynamic', kwargs=e))
             self.assertEqual(response.content, str(e).encode('utf-8'))
 
-    def test_after_view_process(self):
-        response = self.client.get(reverse('after'))
-        self.assertEqual(response.content, b'processed')
-        self.assertEqual(response["X-After-View-Process"], "yes")
 
-    def test_after_view_process_on_short_circuit(self):
-        # A mixin ahead of View in the MRO returns a 415 without calling
-        # super().dispatch(); after_view_process must still run on it.
-        response = self.client.get(reverse('after_short_circuit'))
-        self.assertEqual(response.status_code, 415)
-        self.assertEqual(response.get("X-After-View-Process"), "yes")
-
-    def test_after_view_process_on_generic_view(self):
-        # The hook fires through a generic view's full dispatch/render path.
-        response = self.client.get(reverse('after_generic'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get("X-After-View-Process"), "yes")
-
-    def test_after_view_process_on_head(self):
-        response = self.client.head(reverse('after'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get("X-After-View-Process"), "yes")
-
-
-class DeprecatedViewLayerTests(TestCase):
-
-    DEPRECATED_NAMES = [
-        "View", "TemplateView", "FormView", "CreateView",
-        "ListView", "DetailView", "UpdateView", "DeleteView",
-    ]
-
-    def test_base_module_access_warns(self):
+class RemovedLegacyViewsTests(TestCase):
+    def test_legacy_classes_are_not_available(self):
         import django_boost.views.base as base
-        for name in self.DEPRECATED_NAMES:
-            with self.assertWarns(DeprecationWarning):
-                getattr(base, name)
-
-    def test_generic_module_access_warns(self):
         import django_boost.views.generic as generic
-        for name in self.DEPRECATED_NAMES:
-            with self.assertWarns(DeprecationWarning):
-                getattr(generic, name)
 
-    def test_kept_views_do_not_warn(self):
-        import warnings
+        legacy_names = (
+            "View", "TemplateView", "FormView", "CreateView",
+            "ListView", "DetailView", "UpdateView", "DeleteView",
+        )
+        for module in (base, generic):
+            for name in legacy_names:
+                with self.subTest(module=module.__name__, name=name):
+                    self.assertFalse(hasattr(module, name))
 
-        import django_boost.views.generic as generic
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", DeprecationWarning)
-            generic.JsonView
-            generic.StaticView
-            generic.ModelCRUDViews
+    def test_supported_views_remain_available(self):
+        from django_boost.views.generic import JsonView, ModelCRUDViews, StaticView
+        self.assertTrue(all((JsonView, ModelCRUDViews, StaticView)))
 
 
 class StaticViewContentTypeTests(TestCase):

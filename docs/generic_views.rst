@@ -4,30 +4,6 @@ Generic Views
 :synopsis: Generic view class in django-boost
 
 
-Extended Views (deprecated)
----------------------------
-
-.. note::
-
-   The base ``View`` class, its ``after_view_process`` hook, and the
-   generic-view aliases (``TemplateView``, ``FormView``, ``CreateView``,
-   ``ListView``, ``DetailView``, ``UpdateView``, ``DeleteView``) are
-   **deprecated** and will be removed in django-boost 4.0. They re-implement
-   ``as_view`` and do not support async views. Use Django's own
-   ``django.views.generic`` classes, and override ``dispatch()`` (or use
-   middleware) where you previously used ``after_view_process``:
-
-   ::
-
-     from django.views.generic import TemplateView
-
-     class YourView(TemplateView):
-
-         def dispatch(self, request, *args, **kwargs):
-             response = super().dispatch(request, *args, **kwargs)
-             ## post-process the response here, e.g. add a header
-             return response
-
 JsonView
 ---------
 
