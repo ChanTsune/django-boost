@@ -208,6 +208,11 @@ class TestAdminSiteLog(TestCase):
         self.assertEqual(
             Command()._get_user_name(user), 'audit@example.com')
 
+    def test_user_name_fallback_without_username_or_email(self):
+        # A custom user model may use an identifier other than either field.
+        user = SimpleNamespace(phone_number='0123456789')
+        self.assertIsNone(Command()._get_user_name(user))
+
     def test_reports_when_no_logs(self):
         LogEntry.objects.all().delete()
         stderr = StringIO()

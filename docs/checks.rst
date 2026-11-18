@@ -72,7 +72,6 @@ Check IDs
   ``NULL``.
 
 ``django_boost.W040``
-  ``django_boost.contrib.admin_tools`` (or the deprecated
-  ``django_boost.admin_tools``) is in ``INSTALLED_APPS`` without
+  ``django_boost.contrib.admin_tools`` is in ``INSTALLED_APPS`` without
   ``django.contrib.admin``. Add ``django.contrib.admin``; the ``adminsitelog``
   command requires it.

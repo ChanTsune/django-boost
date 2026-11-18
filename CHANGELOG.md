@@ -7,6 +7,10 @@ Version numbers follow [PEP 440](https://peps.python.org/pep-0440/).
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the deprecated `django_boost.admin_tools` application path and its legacy `listsuperuser` command shim; use `django_boost.contrib.admin_tools` instead.
+
 ### Changed
 
 - Raise the minimum supported Python version to 3.12 for the next major release.
